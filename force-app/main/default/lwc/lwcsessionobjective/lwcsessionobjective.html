@@ -1,0 +1,50 @@
+<template>
+ <lightning-card title="Mark Session Objectives in Bulk - V0.1.3 [Prototype]">
+      <br/>DEBUG: The parent recordid passed to this LWC component is: {recordId} <br/>
+      <br/>DEBUG: Now using JSON array for performance  - <bold>{recordsProcessed}</bold> records processed. <br/>
+
+      <lightning-button-group>
+
+      <lightning-button
+   variant="success"
+   label="Mark Correct"
+   title="Test Correct"
+   onclick={handleClickArray}>
+</lightning-button>
+
+<lightning-button
+variant="neutral"
+label="Mark Incorrect"
+title="Test Incorrect"
+onclick={handleClickArray}>
+</lightning-button>
+
+<lightning-button
+variant="neutral"
+label="Mark Prompted"
+title="Test Prompted"
+onclick={handleClickArray}>
+</lightning-button>
+
+<lightning-button
+variant="neutral"
+name="fred"
+label="Experimental"
+title="Test Prompted"
+onclick={handleClickArray}>
+</lightning-button>
+
+<lightning-button
+      variant="destructive"
+      label="DELETE ALL Current Session Objectives -- CAUTION!"
+      title="Delete SO"
+      onclick={handleClickDelete}>
+      </lightning-button>
+
+</lightning-button-group>
+  <br/>DEBUG: These are the current Session Objectives. Select one or more and press Correct, Incorrect, Prompted.  The DELETE ALL bad boy doesn't care what you select. Session record page refresh currently required to see results. Toast confirmation coming.
+         <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
+  
+</lightning-card>
+  DEBUG: End of List. Looks like we're done Listing Session Objectives.
+</template>

@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Create Session Objectives in Bulk - V0.1.1 [Prototype]">
+         <br/>DEBUG: The parent recordid passed to this LWC component is: {recordId} <br/>
+         <lightning-button-group>
+
+            <lightning-button
+         variant="success"
+         label="Auto Create Session Objectives in Bulk"
+         title="Test Correct"
+         onclick={handleClickCreate}>
+      </lightning-button>
+      
+      
+      
+      <lightning-button
+      
+      label="Cancel"
+      title="Test Prompted"
+      onclick={handleClickCancel}>
+      </lightning-button>
+      </lightning-button-group>
+
+     <br/>DEBUG: Heres a list of candidate Objectives. Select one or more for creation of Session Objectives. Session record page refresh currently required to see results. Toast confirmation coming.
+            <lightning-datatable key-field="Id" data={objectives.data} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
+     
+   </lightning-card>
+     DEBUG: End of Objectives List.
+   </template>
