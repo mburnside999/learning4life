@@ -29,104 +29,6 @@ export default class Lwcsessionobjective extends LightningElement {
 @track columns = columns;
 @track recordsProcessed=0;
 
-
-handleClickCorrect(event) {
-  console.log('=====> sessionObjectives: '+JSON.stringify(this.sessionObjectives.data));
-  console.log('ZZZZZZZZZZZ '+event.target.label);
-
-  if (this.selectedRows) {
-    for (let i = 0; i < this.selectedRows.length; i++){
-        //alert("BUTTON PRESS  You selected: " + this.selectedRows[i].Id+' '+this.selectedRows[i].Name);  
-        console.log('Commencing imperative Call to setSessionObjectivesCorrect(key) ');
-        setSessionObjectives({key: this.selectedRows[i].Id, val:'Correct'})
-        .then(result => {
-            console.log('RETURNED');
-            
-        })
-        .then(() => {
-            console.log('Refreshing');
-            return refreshApex(this.sessionObjectives);
-        })
-        .catch(error => {
-            this.error = error;
-            console.log('ERRORED' +JSON.stringify(error));
-        });       
-    }
-}
-}
-
-handleClickIncorrect(event) {
-    if (this.selectedRows) {
-        console.log('SELECTED ROWS = '+JSON.stringify(this.selectedRows));
-    for (let i = 0; i < this.selectedRows.length; i++){
-        //alert("BUTTON PRESS  You selected: " + this.selectedRows[i].Id+' '+this.selectedRows[i].Name);  
-        console.log('Commencing imperative Call to setSessionObjectivesCorrect(key) ');
-        setSessionObjectives({key: this.selectedRows[i].Id, val:'Incorrect'})
-        .then(result => {
-            console.log('RETURNED');
-            
-        })
-        .then(() => {
-            console.log('Refreshing');
-            return refreshApex(this.sessionObjectives);
-        })
-        .catch(error => {
-            this.error = error;
-            console.log('ERRORED' +JSON.stringify(error));
-        });       
-    }
-}
-}
-
-handleClickPrompted(event) {
-    if (this.selectedRows) {
-    for (let i = 0; i < this.selectedRows.length; i++){
-        //alert("BUTTON PRESS  You selected: " + this.selectedRows[i].Id+' '+this.selectedRows[i].Name);  
-        console.log('Commencing imperative Call to setSessionObjectivesCorrect(key) ');
-        setSessionObjectives({key: this.selectedRows[i].Id, val:'Prompted'})
-        .then(result => {
-            console.log('RETURNED');
-            
-        })
-        .then(() => {
-            console.log('Refreshing');
-            return refreshApex(this.sessionObjectives);
-        })
-        .catch(error => {
-            this.error = error;
-            console.log('ERRORED' +JSON.stringify(error));
-        });       
-    }
-}
-}
-
-
-
-handleClickPromptedArray(event) {
-    console.log('ZZZZZZZZZZZ '+event.target.label);
-    if (this.selectedRows) {
-   
-        //alert("BUTTON PRESS  You selected: " + this.selectedRows[i].Id+' '+this.selectedRows[i].Name);  
-        console.log('Commencing imperative Call to setSessionObjectivesCorrectByArray(key) ');
-        setSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), val:'Prompted'})
-        .then(result => {
-            console.log('RETURNED');
-            this.test=result;
-            console.log('xxxxxxxxxxxx '+this.test);
-            
-        })
-        .then(() => {
-            console.log('Refreshing');
-            return refreshApex(this.sessionObjectives);
-        })
-        .catch(error => {
-            this.error = error;
-            console.log('ERRORED' +JSON.stringify(error));
-        });       
-    }
-}
-
-
 handleClickArray(event) {
     console.log('Received event from button '+event.target.label);
     let mode='';
@@ -151,7 +53,6 @@ handleClickArray(event) {
     
     if (this.selectedRows) {
    
-        //alert("BUTTON PRESS  You selected: " + this.selectedRows[i].Id+' '+this.selectedRows[i].Name);  
         console.log('Commencing imperative Call to setSessionObjectivesCorrectByArray(key) ');
         setSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), val:mode})
         .then(result => {
@@ -172,7 +73,6 @@ handleClickArray(event) {
 }
 
 handleClickDelete(event) {
-   
     
     console.log('Commencing imperative Call to deleteSessionObjectives(session) ');
     deleteSessionObjectives({sessionid: this.recordId})
