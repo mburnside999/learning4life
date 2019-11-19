@@ -67,13 +67,43 @@ update so;
     }
 
 
+@AuraEnabled 
+    public static Integer createSessionObjectivesByArray(String jsonstr,String sess ) {
+
+//deserailise the object array      
+ List<Objective__c> objDeserialized = (List<Objective__c>) JSON.deserializeStrict(jsonstr, List<Objective__c>.class);
+
+// // prepare a list for insertion in bulk
+List<Session_Obj__c> soList = new List<Session_Obj__c>();
+
+// loop thru the deserialised objectives
+for(Objective__c o : objDeserialized){
+
+// prepare a sess_obj__c and add to array
+Session_Obj__c so = new Session_Obj__c();
+so.Session__c=sess;
+so.Objective__c=o.Id;
+so.Correct__C=false;
+so.Incorrect__c=false;
+so.Prompted__c=false;  
+
+
+soList.add(so);
+}
+
+insert soList;   
+
+return objDeserialized.size();
+
+
+}
+
 
 @AuraEnabled 
     public static Integer setSessionObjectivesByArray(String jsonstr, String val) {
         
- List<Session_Obj__c> soDeserialized = (List<Session_Obj__c>) JSON.deserializeStrict(jsonstr, List<Session_Obj__c>.class);
- 
- for(Session_Obj__c so : soDeserialized){
+    List<Session_Obj__c> soDeserialized = (List<Session_Obj__c>) JSON.deserializeStrict(jsonstr, List<Session_Obj__c>.class);
+   for(Session_Obj__c so : soDeserialized){
 
    switch on val {
    when 'Correct' {
@@ -96,16 +126,10 @@ update so;
    }
 }
 
-update soDeserialized;
-
-
-      
- }
-
+update soDeserialized;      
+}
 
 return soDeserialized.size();
-
-
 
 }
 

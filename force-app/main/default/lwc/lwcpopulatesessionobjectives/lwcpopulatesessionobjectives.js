@@ -2,7 +2,10 @@
 /* eslint-disable no-console */
 import { LightningElement,api,wire,track } from 'lwc';
 import getObjectives from '@salesforce/apex/MBSessionObjectives.getObjectives';
+import createSessionObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArray';
 import createSessionObjectives from '@salesforce/apex/MBSessionObjectives.createSessionObjectives';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 
 import { refreshApex } from '@salesforce/apex';
 
@@ -18,9 +21,9 @@ export default class Lwcpopulatesessionobjectives extends LightningElement {
 @api recordId='a3N2v000003GqRzEAK';
 
 @wire(getObjectives, { sess: '$recordId' }) objectives;
-
 @track error;
 @track columns = columns;
+@track recordsProcessed=0;
 
 getSelectedName(event) {
     let myselectedRows=event.detail.selectedRows;
@@ -51,9 +54,48 @@ handleClickCreate(event) {
           });       
       }
   }
-  }
+}
+  handleClickArray(event) {
+    if (this.selectedRows) {
+        console.log('logging.........'+JSON.stringify(this.selectedRows)) ;
+        console.log('XXXXXXXXXXXX session: '+this.recordId);
+        console.log('Commencing imperative Call to createSessionObjectivesByArray(sessionid, jsonstr) ');
+        createSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), sess: this.recordId})
+        .then(result => {
+            console.log('RETURNED');
+            this.recordsProcessed=result;
+            console.log(this.recordsProcessed + 'records processed.');
+
+        })
+        .then(() => {
+            console.log('Refreshing');
+            return refreshApex(this.objectives);
+        })
+        .then(() => {
+            this.showNotification('Success',this.recordsProcessed+ ' records processed.','success');
+
+        })
+        .catch(error => {
+            this.error = error;
+            console.log('ERRORED' +JSON.stringify(error));
+        });       
+    }
+}
 
 
+
+
+
+  showNotification(t,m,v) {
+    console.log('Toast...');
+
+    const evt = new ShowToastEvent({
+        title: t,
+        message: m,
+        variant: v,
+    });
+    this.dispatchEvent(evt);
+}
   
 
   handleClickCancel(event) {
