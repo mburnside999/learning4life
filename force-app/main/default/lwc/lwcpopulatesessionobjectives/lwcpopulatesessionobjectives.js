@@ -20,7 +20,7 @@ export default class Lwcpopulatesessionobjectives extends LightningElement {
 
 @api recordId='a3N2v000003GqRzEAK';
 @track allObjectives ={};
-//@wire(getObjectives, { sess: '$recordId' }) objectives;
+@wire(getObjectives, { sess: '$recordId' }) objectives;
 @track error;
 @track columns = columns;
 @track recordsProcessed=0;
@@ -88,13 +88,13 @@ handleClickCreate(event) {
         })
         .then(() => {
             console.log('Refreshing');
-            this.objectives=this.allObjectives;
-            return refreshApex(this.objectives);
+           
         })
         .then(() => {
             this.showNotification('Success',this.recordsProcessed+ ' records processed.','success');
+            
 
-        })
+        }) 
         .catch(error => {
             this.error = error;
             console.log('ERRORED' +JSON.stringify(error));

@@ -1,5 +1,5 @@
 <template>
- <lightning-card title="Mark Session Objectives in Bulk - V0.1.3 [Prototype]">
+ <lightning-card title="Mark Session Objectives in Bulk - V0.1.4 [Prototype]">
       <br/>DEBUG: The parent recordid passed to this LWC component is: {recordId} <br/>
       <br/>DEBUG: Now using JSON array for performance  - <bold>{recordsProcessed}</bold> records processed. <br/>
 
@@ -42,7 +42,7 @@ onclick={handleClickArray}>
       </lightning-button>
 
 </lightning-button-group>
-  <br/>DEBUG: These are the current Session Objectives. Select one or more and press Correct, Incorrect, Prompted.  The DELETE ALL bad boy doesn't care what you select. Session record page refresh currently required to see results. Toast confirmation coming.
+  <br/>DEBUG: These are the current Session Objectives. Select one or more and press Correct, Incorrect, Prompted.  The DELETE ALL bad boy doesn't care what you select. 
          <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
   
 </lightning-card>
