@@ -3,11 +3,11 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
-            "c/lwcsessionobjective": [
-                "lwcsessionobjective/lwcsessionobjective.js"
-            ],
             "c/lwcpopulatesessionobjectives": [
                 "lwcpopulatesessionobjectives/lwcpopulatesessionobjectives.js"
+            ],
+            "c/lwcsessionobjective": [
+                "lwcsessionobjective/lwcsessionobjective.js"
             ]
         }
     },

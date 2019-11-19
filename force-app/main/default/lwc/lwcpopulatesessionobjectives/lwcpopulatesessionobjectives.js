@@ -19,11 +19,30 @@ const selectedRows = {};
 export default class Lwcpopulatesessionobjectives extends LightningElement {
 
 @api recordId='a3N2v000003GqRzEAK';
-
-@wire(getObjectives, { sess: '$recordId' }) objectives;
+@track allObjectives ={};
+//@wire(getObjectives, { sess: '$recordId' }) objectives;
 @track error;
 @track columns = columns;
 @track recordsProcessed=0;
+@track objectives;
+
+connectedCallback() {
+    
+      
+    getObjectives({ sess: '$recordId' })
+        .then(result => {
+            console.log('RETURNED');
+            this.objectives=result;
+            this.allObjectives=result;
+            console.log(JSON.stringify(this.filtered));
+
+        })
+        .catch(error => {
+            this.error = error;
+            console.log('ERROR' +JSON.stringify(error));
+        });    
+
+}
 
 getSelectedName(event) {
     let myselectedRows=event.detail.selectedRows;
@@ -57,8 +76,8 @@ handleClickCreate(event) {
 }
   handleClickArray(event) {
     if (this.selectedRows) {
-        console.log('logging.........'+JSON.stringify(this.selectedRows)) ;
-        console.log('XXXXXXXXXXXX session: '+this.recordId);
+        console.log('logging JSON: '+JSON.stringify(this.selectedRows)) ;
+        console.log('loging session: '+this.recordId);
         console.log('Commencing imperative Call to createSessionObjectivesByArray(sessionid, jsonstr) ');
         createSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), sess: this.recordId})
         .then(result => {
@@ -69,6 +88,7 @@ handleClickCreate(event) {
         })
         .then(() => {
             console.log('Refreshing');
+            this.objectives=this.allObjectives;
             return refreshApex(this.objectives);
         })
         .then(() => {
@@ -83,7 +103,12 @@ handleClickCreate(event) {
 }
 
 
-
+handleSearchKeyInput(event) {
+    const searchKey = event.target.value.toLowerCase();
+    this.objectives = this.allObjectives.filter(
+      so => so.Name.toLowerCase().includes(searchKey) || so.Program__c.toLowerCase().includes(searchKey) ||so.SD_Name__c.toLowerCase().includes(searchKey)
+    );
+  }
 
 
   showNotification(t,m,v) {

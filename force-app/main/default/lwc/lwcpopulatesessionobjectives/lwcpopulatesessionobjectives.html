@@ -1,6 +1,9 @@
 <template>
-    <lightning-card title="Create Session Objectives in Bulk - V0.1.1 [Prototype]">
-         <br/>DEBUG: The parent recordid passed to this LWC component is: {recordId} <br/>
+    <lightning-card title="Create Session Objectives in Bulk - V0.1.3 [Prototype]">
+      <input size="30" type="search" placeholder="Search Name, Program or SD..."
+      oninput={handleSearchKeyInput} />
+      
+      <br/>DEBUG: The parent recordid passed to this LWC component is: {recordId} <br/>
          <lightning-button-group>
 
             <lightning-button
@@ -20,8 +23,8 @@
       </lightning-button>
       </lightning-button-group>
 
-     <br/>DEBUG: Heres a list of candidate Objectives. Select one or more for creation of Session Objectives. Session record page refresh currently required to see results. Toast confirmation coming.
-            <lightning-datatable key-field="Id" data={objectives.data} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
+     <br/>DEBUG: Heres a list of candidate Objectives. Select one or more for creation of Session Objectives. Session record page refresh currently required to see results. Now with Live filtering across Name,Program and SD.
+            <lightning-datatable key-field="Id" data={objectives} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
      
    </lightning-card>
      DEBUG: End of Objectives List.
