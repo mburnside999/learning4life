@@ -1,7 +1,8 @@
 <template>
- <lightning-card title="Mark Session Objectives in Bulk - V0.1.4 [Prototype]">
+ <lightning-card title="Mark Session Objectives in Bulk - V0.1.5 [Prototype]">
       <br/>DEBUG: The parent recordid passed to this LWC component is: {recordId} <br/>
       <br/>DEBUG: Now using JSON array for performance  - <bold>{recordsProcessed}</bold> records processed. <br/>
+      <br/>DEBUG: Added Delete selected<br/>
 
       <lightning-button-group>
 
@@ -27,10 +28,9 @@ onclick={handleClickArray}>
 </lightning-button>
 
 <lightning-button
-variant="neutral"
-name="fred"
-label="Experimental"
-title="Test Prompted"
+variant="destructive"
+label="Delete"
+title="Delete selected"
 onclick={handleClickArray}>
 </lightning-button>
 

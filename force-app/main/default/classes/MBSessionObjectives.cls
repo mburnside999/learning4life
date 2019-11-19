@@ -101,8 +101,13 @@ return objDeserialized.size();
 
 @AuraEnabled 
     public static Integer setSessionObjectivesByArray(String jsonstr, String val) {
-        
+    
+    boolean del=false;
+    
     List<Session_Obj__c> soDeserialized = (List<Session_Obj__c>) JSON.deserializeStrict(jsonstr, List<Session_Obj__c>.class);
+  
+    
+
    for(Session_Obj__c so : soDeserialized){
 
    switch on val {
@@ -110,24 +115,32 @@ return objDeserialized.size();
       so.Correct__c=true;
       so.Incorrect__c=false;
       so.Prompted__c=false; 
+      update so;
    }
    when 'Incorrect' {
       so.Correct__c=false;
       so.Incorrect__c=true;
       so.Prompted__c=false; 
+      update so;
+
    }
     when 'Prompted' {
        so.Correct__c=false;
        so.Incorrect__c=false;
        so.Prompted__c=true; 
+       update so;
+   }  
+   when 'Delete' {
+       delete so;
    }
-   when else {
-       System.debug('default');
-   }
-}
 
-update soDeserialized;      
-}
+   }
+
+   
+   }
+     
+
+   
 
 return soDeserialized.size();
 

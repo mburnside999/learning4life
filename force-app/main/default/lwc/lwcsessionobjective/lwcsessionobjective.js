@@ -44,8 +44,8 @@ handleClickArray(event) {
           case 'Mark Prompted':
             mode='Prompted';
           break;
-          case 'Experimental':
-            mode='Correct';
+          case 'Delete':
+            mode='Delete';
           break;
         default:
           // code block
@@ -54,6 +54,7 @@ handleClickArray(event) {
     if (this.selectedRows) {
         
         console.log('Commencing imperative Call to setSessionObjectivesCorrectByArray(key) ');
+        console.log('mode='+mode);
         setSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), val:mode})
         .then(result => {
             console.log('RETURNED');
