@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { LightningElement,api,wire,track } from 'lwc';
 import getObjectives from '@salesforce/apex/MBSessionObjectives.getObjectives';

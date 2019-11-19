@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { LightningElement,api,wire,track } from 'lwc';
 import getSessionObjectives from '@salesforce/apex/MBSessionObjectives.getSessionObjectives';
 import setSessionObjectives from '@salesforce/apex/MBSessionObjectives.setSessionObjectives';
 import setSessionObjectivesByArray from '@salesforce/apex/MBSessionObjectives.setSessionObjectivesByArray';
-
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import deleteSessionObjectives from '@salesforce/apex/MBSessionObjectives.deleteSessionObjectives';
 
 import { refreshApex } from '@salesforce/apex';
@@ -31,6 +32,8 @@ export default class Lwcsessionobjective extends LightningElement {
 
 handleClickArray(event) {
     console.log('Received event from button '+event.target.label);
+   
+   
     let mode='';
     let label=event.target.label;
 
@@ -52,7 +55,7 @@ handleClickArray(event) {
       }
     
     if (this.selectedRows) {
-   
+        
         console.log('Commencing imperative Call to setSessionObjectivesCorrectByArray(key) ');
         setSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), val:mode})
         .then(result => {
@@ -64,6 +67,11 @@ handleClickArray(event) {
         .then(() => {
             console.log('Refreshing');
             return refreshApex(this.sessionObjectives);
+        }) 
+        .then (() => {
+           
+           this.showNotification('Success!','Marked '+this.recordsProcessed+ ' records as '+mode+'.','success');
+            
         })
         .catch(error => {
             this.error = error;
@@ -73,7 +81,7 @@ handleClickArray(event) {
 }
 
 handleClickDelete(event) {
-    
+
     console.log('Commencing imperative Call to deleteSessionObjectives(session) ');
     deleteSessionObjectives({sessionid: this.recordId})
     .then(result => {
@@ -83,6 +91,10 @@ handleClickDelete(event) {
     .then(() => {
         console.log('Refreshing');
         return refreshApex(this.sessionObjectives);
+    })
+    .then(() => {
+        console.log('Toasty');
+        this.showNotification('Success!','Deleted all Session Objective records for this session.','success');
     })
     .catch(error => {
         this.error = error;
@@ -98,6 +110,17 @@ getSelectedName(event) {
     //for (let i = 0; i < selectedRows.length; i++){
         //alert("You selected: " + selectedRows[i].Name);
     //}
+}
+
+showNotification(t,m,v) {
+    console.log('Toast...');
+
+    const evt = new ShowToastEvent({
+        title: t,
+        message: m,
+        variant: v,
+    });
+    this.dispatchEvent(evt);
 }
 
 }
