@@ -29,7 +29,7 @@ export default class Lwcpopulatsessionobjectives extends LightningElement {
 connectedCallback() {
     
       
-    getObjectives({ sess: '$recordId' })
+    getObjectives({ sess: this.recordId })
         .then(result => {
             console.log('RETURNED');
             this.objectives=result;

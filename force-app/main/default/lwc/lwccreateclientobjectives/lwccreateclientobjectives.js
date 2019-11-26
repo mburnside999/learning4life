@@ -1,5 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+
 import { LightningElement,api,wire,track } from 'lwc';
-import getObjectives from '@salesforce/apex/MBSessionObjectives.getObjectives';
+//import getObjectives from '@salesforce/apex/MBSessionObjectives.getObjectives';
+import getUnusedObjectives from '@salesforce/apex/MBSessionObjectives.getUnusedObjectives';
+
 import createClientObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createClientObjectivesByArray';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord } from 'lightning/uiRecordApi';
@@ -21,7 +26,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
 
 
 @track allObjectives ={};
-//@wire(getObjectives, { sess: '$recordId' }) objectives;
+@wire(getUnusedObjectives, { sess: '$recordId' }) objectives;
 @track error;
 @track columns = columns;
 @track recordsProcessed=0;
@@ -29,8 +34,8 @@ export default class Lwccreateclientobjectives extends LightningElement {
 
 connectedCallback() {
     
-      console.log('starting');
-    getObjectives({ sess: '$recordId' })
+      console.log('starting, getting objectives, recordId = '+this.recordId);
+    getUnusedObjectives({ sess: this.recordId })
         .then(result => {
             console.log('RETURNED');
             this.objectives=result;
@@ -45,6 +50,24 @@ connectedCallback() {
 
 }
 
+refresh() {
+console.log('IN REFRESH');
+    getUnusedObjectives({ sess: this.recordId })
+    .then(result => {
+        console.log('REFRESH RETURNED');
+        this.objectives=result;
+        this.allObjectives=result;
+        console.log(JSON.stringify(this.objectives));
+
+    })
+    .catch(error => {
+        this.error = error;
+        console.log('REFRESH ERROR' +JSON.stringify(error));
+    });   
+
+
+}
+
 getSelectedName(event) {
     let myselectedRows=event.detail.selectedRows;
     this.selectedRows=myselectedRows;
@@ -54,29 +77,7 @@ getSelectedName(event) {
     //}
 }
 
-handleClickCreate(event) {
-      if (this.selectedRows) {
-      for (let i = 0; i < this.selectedRows.length; i++){
-          //alert("BUTTON PRESS  You selected: " + this.selectedRows[i].Id+' '+this.selectedRows[i].Name);  
-          console.log('Commencing imperative Call to createSessionObjectives(sessionid, objective) ');
-          createSessionObjectives({sessionid: this.recordId, objective: this.selectedRows[i].Id})
-          .then(result => {
-              console.log('RETURNED');
-              
-          })
-          .then(() => {
-              console.log('Refreshing');
-              return refreshApex(this.objectives);
-             
 
-          })
-          .catch(error => {
-              this.error = error;
-              console.log('ERRORED' +JSON.stringify(error));
-          });       
-      }
-  }
-}
   handleClickArray(event) {
     if (this.selectedRows) {
         console.log('logging JSON: '+JSON.stringify(this.selectedRows)) ;
@@ -90,7 +91,7 @@ handleClickCreate(event) {
 
         })
         .then(() => {
-            console.log('Refreshing');
+               
            
         })
         .then(() => {
@@ -99,9 +100,12 @@ handleClickCreate(event) {
 
         }) 
         .finally(() => {
-            console.log('attempting to refresh client record');
+            console.log('FINALLY');
+            
+            //this.refresh();
+            //console.log('attempting to refresh client record');
 
-            updateRecord({ fields: { Id: this.recordId } });
+            //updateRecord({ fields: { Id: this.recordId } });
 
         })
         .catch(error => {
