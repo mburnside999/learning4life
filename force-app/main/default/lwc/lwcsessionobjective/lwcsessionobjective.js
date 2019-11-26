@@ -10,6 +10,7 @@ import { refreshApex } from '@salesforce/apex';
 
 const columns = [
     {label: 'Name', fieldName: 'Name', type: 'text'},      
+    {label: 'Program', fieldName: 'Program__c', type:'text'},
     {label: 'Objective', fieldName: 'Objective_Name__c', type:'text'}, 
     {label: 'SD', fieldName: 'SD__c', type:'text'},
     {label: 'Correct', fieldName: 'Correct__c',type:'boolean'}, 
@@ -19,15 +20,22 @@ const columns = [
 ];
 const selectedRows = {};
 
-
-
 export default class Lwcsessionobjective extends LightningElement {
 
+@track allObjectives ={};
 @api recordId='a3N2v000003GqRzEAK';
 @wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
 @track error;
 @track columns = columns;
 @track recordsProcessed=0;
+@track sessionObjectives;
+
+handleSearchKeyInput(event) {
+    const searchKey = event.target.value.toLowerCase();
+    this.sessionObjectives = this.allObjectives.filter(
+      so => so.Name.toLowerCase().includes(searchKey) 
+    );
+  }
 
 handleClickArray(event) {
     console.log('Received event from button '+event.target.label);

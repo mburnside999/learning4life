@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import { LightningElement,api,wire,track } from 'lwc';
 import getObjectives from '@salesforce/apex/MBSessionObjectives.getObjectives';
-import createSessionObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArray';
-import createSessionObjectives from '@salesforce/apex/MBSessionObjectives.createSessionObjectives';
+import createClientObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createClientObjectivesByArray';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { updateRecord } from 'lightning/uiRecordApi';
 
 
 import { refreshApex } from '@salesforce/apex';
@@ -16,9 +14,12 @@ const columns = [
 ];
 const selectedRows = {};
 
-export default class Lwcpopulatsessionobjectives extends LightningElement {
+export default class Lwccreateclientobjectives extends LightningElement {
 
-@api recordId='a3N2v000003GqRzEAK';
+//@api recordId='a3N2v000003GqRzEAK';
+@api recordId='0012v00002fY86nAAC'; 
+
+
 @track allObjectives ={};
 //@wire(getObjectives, { sess: '$recordId' }) objectives;
 @track error;
@@ -28,7 +29,7 @@ export default class Lwcpopulatsessionobjectives extends LightningElement {
 
 connectedCallback() {
     
-      
+      console.log('starting');
     getObjectives({ sess: '$recordId' })
         .then(result => {
             console.log('RETURNED');
@@ -66,6 +67,8 @@ handleClickCreate(event) {
           .then(() => {
               console.log('Refreshing');
               return refreshApex(this.objectives);
+             
+
           })
           .catch(error => {
               this.error = error;
@@ -78,8 +81,8 @@ handleClickCreate(event) {
     if (this.selectedRows) {
         console.log('logging JSON: '+JSON.stringify(this.selectedRows)) ;
         console.log('loging session: '+this.recordId);
-        console.log('Commencing imperative Call to createSessionObjectivesByArray(sessionid, jsonstr) ');
-        createSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), sess: this.recordId})
+        console.log('Commencing imperative Call to createClientObjectivesByArray(sessionid, jsonstr) ');
+        createClientObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), sess: this.recordId})
         .then(result => {
             console.log('RETURNED');
             this.recordsProcessed=result;
@@ -95,6 +98,12 @@ handleClickCreate(event) {
             
 
         }) 
+        .finally(() => {
+            console.log('attempting to refresh client record');
+
+            updateRecord({ fields: { Id: this.recordId } });
+
+        })
         .catch(error => {
             this.error = error;
             console.log('ERRORED' +JSON.stringify(error));
@@ -109,6 +118,7 @@ handleSearchKeyInput(event) {
       so => so.Name.toLowerCase().includes(searchKey) || so.Program__c.toLowerCase().includes(searchKey) ||so.SD_Name__c.toLowerCase().includes(searchKey)
     );
   }
+
 
 
   showNotification(t,m,v) {

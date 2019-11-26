@@ -1,9 +1,6 @@
 <template>
- <lightning-card title="Mark Session Objectives in Bulk - V0.1.5 [Prototype]">
-      <br/>DEBUG: The parent recordid passed to this LWC component is: {recordId} <br/>
-      <br/>DEBUG: Now using JSON array for performance  - <bold>{recordsProcessed}</bold> records processed. <br/>
-      <br/>DEBUG: Added Delete selected<br/>
-
+ <lightning-card title="Mark Session Objectives in Bulk - V0.1.6 [Prototype]">
+      
       <lightning-button-group>
 
       <lightning-button
@@ -26,7 +23,7 @@ label="Mark Prompted"
 title="Test Prompted"
 onclick={handleClickArray}>
 </lightning-button>
-
+<!--
 <lightning-button
 variant="destructive"
 label="Delete"
@@ -41,10 +38,9 @@ onclick={handleClickArray}>
       onclick={handleClickDelete}>
       </lightning-button>
 
+    -->
 </lightning-button-group>
-  <br/>DEBUG: These are the current Session Objectives. Select one or more and press Correct, Incorrect, Prompted.  The DELETE ALL bad boy doesn't care what you select. 
          <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
   
 </lightning-card>
-  DEBUG: End of List. Looks like we're done Listing Session Objectives.
 </template>

@@ -4,16 +4,21 @@ public with sharing class MBSessionObjectives {
     @AuraEnabled(cacheable=true) 
     public static List<Session_obj__c> getSessionObjectives (String sess) {
         
-        return [SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,SD__c FROM Session_Obj__c where Session__c = :sess];
+        return [SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,SD__c,Program__c FROM Session_Obj__c where Session__c = :sess order by Program__c,SD__c];
     }
 
 
  @AuraEnabled(cacheable=true) 
     public static List<Objective__c> getObjectives (String sess) {
         
-        return [SELECT Id,Name,Program__c,SD_Name__c FROM Objective__c order by Program__c,Name limit 20];
+        return [SELECT Id,Name,Program__c,SD_Name__c FROM Objective__c order by Program__c,Name];
     }
 
+ @AuraEnabled(cacheable=true) 
+    public static List<Objective__c> getUnusedObjectives (String sess) {
+        
+        return [SELECT Id,Name,Program__c,SD_Name__c FROM Objective__c order by Program__c,Name];
+    }
 
  @AuraEnabled
     public static void deleteSessionObjectives (String sessionid) {
@@ -67,6 +72,9 @@ update so;
     }
 
 
+
+
+
 @AuraEnabled 
     public static Integer createSessionObjectivesByArray(String jsonstr,String sess ) {
 
@@ -97,6 +105,39 @@ return objDeserialized.size();
 
 
 }
+
+@AuraEnabled 
+    public static Integer createClientObjectivesByArray(String jsonstr,String sess ) {
+
+//deserailise the object array      
+ List<Objective__c> objDeserialized = (List<Objective__c>) JSON.deserializeStrict(jsonstr, List<Objective__c>.class);
+
+// // prepare a list for insertion in bulk
+List<Client_Objective__c> coList = new List<Client_Objective__c>();
+
+// loop thru the deserialised objectives
+for(Objective__c o : objDeserialized){
+
+// prepare a sess_obj__c and add to array
+Client_Objective__c co = new Client_Objective__c();
+co.Client__c=sess;
+co.Objective__c=o.Id;
+co.Status__c='CIP';
+ 
+
+
+coList.add(co);
+}
+
+insert coList;   
+
+return objDeserialized.size();
+
+
+}
+
+
+
 
 
 @AuraEnabled 
