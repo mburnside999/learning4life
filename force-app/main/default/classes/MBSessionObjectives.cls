@@ -1,14 +1,19 @@
 public with sharing class MBSessionObjectives {
-   
-
-    @AuraEnabled(cacheable=true) 
-    public static List<Session_obj__c> getSessionObjectives (String sess) {
+       
+ @AuraEnabled(cacheable=true) 
+   public static List<Session_obj__c> getSessionObjectives (String sess) {
         
         return [SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,SD__c,Program__c FROM Session_Obj__c where Session__c = :sess order by Program__c,SD__c];
     }
 
 
- @AuraEnabled(cacheable=true) 
+    @AuraEnabled
+   public static List<Client_Objective__c> getClientObjectives(String searchKey) {
+        
+        return [SELECT Id,Name,Client__c,Objective_Name__c,SD_Name__c,Program_Name__c,Status__c FROM Client_Objective__c where Client__c = :searchKey];
+    }
+
+@AuraEnabled(cacheable=true) 
     public static List<Objective__c> getObjectives (String sess) {
         
         return [SELECT Id,Name,Program__c,SD_Name__c FROM Objective__c order by Program__c,Name];
@@ -122,7 +127,7 @@ for(Objective__c o : objDeserialized){
 Client_Objective__c co = new Client_Objective__c();
 co.Client__c=sess;
 co.Objective__c=o.Id;
-co.Status__c='CIP';
+//co.Status__c='CIP';
  
 
 
@@ -133,14 +138,8 @@ insert coList;
 
 return objDeserialized.size();
 
-
 }
-
-
-
-
-
-@AuraEnabled 
+@AuraEnabled  
     public static Integer setSessionObjectivesByArray(String jsonstr, String val) {
     
     boolean del=false;

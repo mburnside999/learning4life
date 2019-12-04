@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Display Client Objectives - V0.0.1" icon-name="custom:custom63">
+
+        <input size="30" type="search" placeholder="Search Name, Program or SD..."
+        oninput={handleSearchKeyInput} />
+       <lightning-button label="Refresh" title="Non-primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+   
+      
+            <lightning-datatable key-field="Id" data={clientobjectives} columns={columns}></lightning-datatable>
+
+    </lightning-card>
+</template>

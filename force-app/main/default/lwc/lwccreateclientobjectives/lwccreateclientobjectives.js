@@ -8,7 +8,8 @@ import getUnusedObjectives from '@salesforce/apex/MBSessionObjectives.getUnusedO
 import createClientObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createClientObjectivesByArray';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord } from 'lightning/uiRecordApi';
-
+import { fireEvent } from 'c/pubsub'
+import {CurrentPageReference} from 'lightning/navigation';
 
 import { refreshApex } from '@salesforce/apex';
 
@@ -24,7 +25,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
 //@api recordId='a3N2v000003GqRzEAK';
 @api recordId='0012v00002fY86nAAC'; 
 
-
+@wire(CurrentPageReference) pageRef;
 @track allObjectives ={};
 @wire(getUnusedObjectives, { sess: '$recordId' }) objectives;
 @track error;
@@ -102,11 +103,8 @@ getSelectedName(event) {
         .finally(() => {
             console.log('FINALLY');
             
-            //this.refresh();
-            //console.log('attempting to refresh client record');
-
-            //updateRecord({ fields: { Id: this.recordId } });
-
+            console.log('firing input change event');
+            fireEvent(this.pageRef, 'inputChangeEvent', this.recordId);
         })
         .catch(error => {
             this.error = error;
