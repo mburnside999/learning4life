@@ -86,15 +86,18 @@ handleChange(inpVal) {
   } 
 
 handleSearchKeyInput(event) {
+    
     const searchKey = event.target.value.toLowerCase();
+    console.log('SEARCHKEY='+searchKey+'. this.allObjectives= '+JSON.stringify(this.allObjectives));
+    
+    
     this.clientobjectives = this.allObjectives.filter(
-      so => so.Name.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey) ||so.Program_Name__c.toLowerCase().includes(searchKey)||so.SD_Name__c.toLowerCase().includes(searchKey)||so.Status__c.toLowerCase().includes(searchKey)
+      so => so.Name.toLowerCase().includes(searchKey) || so.SD_Name__c.toLowerCase().includes(searchKey) ||so.Program_Name__c.toLowerCase().includes(searchKey)||so.Objective_Name__c.toLowerCase().includes(searchKey)
     );
+ 
+    console.log('this.clientobjectives='+JSON.stringify(this.clientobjectives));
   }
 
-//connectedCallback function is similar to init method in Lightning Components.
-   // connectedCallback(){
-        //this.searchKey = '0012v00002fY86nAAC';
-  //  }
+
 
 }
