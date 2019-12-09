@@ -2,6 +2,8 @@
 /* eslint-disable no-console */
 import { LightningElement,api,wire,track } from 'lwc';
 import getObjectives from '@salesforce/apex/MBSessionObjectives.getObjectives';
+import getClientObjectivesForSession from '@salesforce/apex/MBSessionObjectives.getClientObjectivesForSession';
+
 import createSessionObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArray';
 import createSessionObjectives from '@salesforce/apex/MBSessionObjectives.createSessionObjectives';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -10,10 +12,14 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 
 const columns = [
-    {label: 'Name', fieldName: 'Name', type: 'text'},  
-    {label: 'Program', fieldName: 'Program__c', type: 'text'},   
-    {label: 'SD Name', fieldName: 'SD_Name__c', type: 'text'},  
+    {label: 'Program', fieldName: 'Program_Name__c', type: 'text'},   
+    {label: 'SD Name', fieldName: 'SD_Name__c', type: 'text'}, 
+    {label: 'Objective', fieldName: 'Objective_Name__c', type: 'text'}, 
+    {label: 'Status', fieldName: 'Status__c', type: 'text'},  
+ 
 ];
+
+
 const selectedRows = {};
 
 export default class Lwcpopulatsessionobjectives extends LightningElement {
@@ -29,7 +35,7 @@ export default class Lwcpopulatsessionobjectives extends LightningElement {
 connectedCallback() {
     
       
-    getObjectives({ sess: this.recordId })
+    getClientObjectivesForSession({ searchKey: this.recordId })
         .then(result => {
             console.log('RETURNED');
             this.objectives=result;
@@ -53,6 +59,7 @@ getSelectedName(event) {
     //}
 }
 
+/* DEPRECATED
 handleClickCreate(event) {
       if (this.selectedRows) {
       for (let i = 0; i < this.selectedRows.length; i++){
@@ -74,6 +81,7 @@ handleClickCreate(event) {
       }
   }
 }
+*/
   handleClickArray(event) {
     if (this.selectedRows) {
         console.log('logging JSON: '+JSON.stringify(this.selectedRows)) ;
@@ -102,13 +110,45 @@ handleClickCreate(event) {
     }
 }
 
+/*  DEPRECATED
+handleClickArrayOld(event) {
+    if (this.selectedRows) {
+        console.log('logging JSON: '+JSON.stringify(this.selectedRows)) ;
+        console.log('loging session: '+this.recordId);
+        console.log('Commencing imperative Call to createSessionObjectivesByArray(sessionid, jsonstr) ');
+        createSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), sess: this.recordId})
+        .then(result => {
+            console.log('RETURNED');
+            this.recordsProcessed=result;
+            console.log(this.recordsProcessed + 'records processed.');
+
+        })
+        .then(() => {
+            console.log('Refreshing');
+           
+        })
+        .then(() => {
+            this.showNotification('Success',this.recordsProcessed+ ' records processed.','success');
+            
+
+        }) 
+        .catch(error => {
+            this.error = error;
+            console.log('ERRORED' +JSON.stringify(error));
+        });       
+    }
+}
+*/
+
+
 
 handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
-    this.objectives = this.allObjectives.filter(
-      so => so.Name.toLowerCase().includes(searchKey) || so.Program__c.toLowerCase().includes(searchKey) ||so.SD_Name__c.toLowerCase().includes(searchKey)
+   this.objectives = this.allObjectives.filter(
+      so => so.Program_Name__c.toLowerCase().includes(searchKey) ||so.SD_Name__c.toLowerCase().includes(searchKey)||so.Objective_Name__c.toLowerCase().includes(searchKey)
     );
   }
+
 
 
   showNotification(t,m,v) {

@@ -6,6 +6,13 @@ public with sharing class MBSessionObjectives {
         return [SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,SD__c,Program__c FROM Session_Obj__c where Session__c = :sess order by Program__c,SD__c];
     }
 
+ @AuraEnabled
+   public static List<Client_Objective__c> getClientObjectivesForSession(String searchKey) {
+        
+        return [select Id,Objective__c,Objective_Name__c,Client__c,Program_Name__c,SD_Name__c,Status__c from client_objective__c where Client__c in (select client__c from session__c where id=:searchKey)
+ ];
+    }
+
 
     @AuraEnabled
    public static List<Client_Objective__c> getClientObjectives(String searchKey) {
@@ -81,7 +88,7 @@ update so;
 
 
 @AuraEnabled 
-    public static Integer createSessionObjectivesByArray(String jsonstr,String sess ) {
+    public static Integer createSessionObjectivesByArrayOld(String jsonstr,String sess ) {
 
 //deserailise the object array      
  List<Objective__c> objDeserialized = (List<Objective__c>) JSON.deserializeStrict(jsonstr, List<Objective__c>.class);
@@ -96,6 +103,38 @@ for(Objective__c o : objDeserialized){
 Session_Obj__c so = new Session_Obj__c();
 so.Session__c=sess;
 so.Objective__c=o.Id;
+so.Correct__C=false;
+so.Incorrect__c=false;
+so.Prompted__c=false;  
+
+
+soList.add(so);
+}
+
+insert soList;   
+
+return objDeserialized.size();
+
+
+}
+
+
+@AuraEnabled 
+    public static Integer createSessionObjectivesByArray(String jsonstr,String sess ) {
+
+//deserailise the object array      
+ List<Client_Objective__c> objDeserialized = (List<Client_Objective__c>) JSON.deserializeStrict(jsonstr, List<Client_Objective__c>.class);
+
+// // prepare a list for insertion in bulk
+List<Session_Obj__c> soList = new List<Session_Obj__c>();
+
+// loop thru the deserialised objectives
+for(Client_Objective__c o : objDeserialized){
+
+// prepare a sess_obj__c and add to array
+Session_Obj__c so = new Session_Obj__c();
+so.Session__c=sess;
+so.Objective__c=o.Objective__c;
 so.Correct__C=false;
 so.Incorrect__c=false;
 so.Prompted__c=false;  

@@ -6,6 +6,7 @@ import { LightningElement,api,wire,track } from 'lwc';
 import getUnusedObjectives from '@salesforce/apex/MBSessionObjectives.getUnusedObjectives';
 
 import createClientObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createClientObjectivesByArray';
+import getClientObjectivesForSession from '@salesforce/apex/MBSessionObjectives.getClientObjectivesForSession';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { fireEvent } from 'c/pubsub'
@@ -14,15 +15,18 @@ import {CurrentPageReference} from 'lightning/navigation';
 import { refreshApex } from '@salesforce/apex';
 
 const columns = [
-    {label: 'Name', fieldName: 'Name', type: 'text'},  
-    {label: 'Program', fieldName: 'Program__c', type: 'text'},   
-    {label: 'SD Name', fieldName: 'SD_Name__c', type: 'text'},  
+    {label: 'Objective__c', fieldName: 'Objective__C', type: 'text'},  
+    {label: 'Client__c', fieldName: 'Client__c', type: 'text'},   
+    {label: 'Program_Name__c', fieldName: 'Program_Name__c', type: 'text'},  
+    {label: 'SD_Name__c', fieldName: 'SD_Name__c', type: 'text'},  
 ];
+
+
 const selectedRows = {};
 
 export default class Lwccreateclientobjectives extends LightningElement {
 
-//@api recordId='a3N2v000003GqRzEAK';
+//@api recordId='a3N2v000003Gr33EAC';
 @api recordId='0012v00002fY86nAAC'; 
 
 @wire(CurrentPageReference) pageRef;
@@ -53,7 +57,7 @@ connectedCallback() {
 
 refresh() {
 console.log('IN REFRESH');
-    getUnusedObjectives({ sess: this.recordId })
+    getClientObjectivesForSession({ sess: this.recordId })
     .then(result => {
         console.log('REFRESH RETURNED');
         this.objectives=result;
@@ -83,7 +87,7 @@ getSelectedName(event) {
     if (this.selectedRows) {
         console.log('logging JSON: '+JSON.stringify(this.selectedRows)) ;
         console.log('loging session: '+this.recordId);
-        console.log('Commencing imperative Call to createClientObjectivesByArray(sessionid, jsonstr) ');
+        console.log('Commencing imperative Call to getClientObejctivesForSession(sessionid) ');
         createClientObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), sess: this.recordId})
         .then(result => {
             console.log('RETURNED');
