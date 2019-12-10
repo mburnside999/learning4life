@@ -5,6 +5,18 @@ import getSessionObjectives from '@salesforce/apex/MBSessionObjectives.getSessio
 import setSessionObjectivesByArray from '@salesforce/apex/MBSessionObjectives.setSessionObjectivesByArray';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import deleteSessionObjectives from '@salesforce/apex/MBSessionObjectives.deleteSessionObjectives';
+import { registerListener, unregisterAllListeners, fireEvent } from 'c/pubsub';
+import { CurrentPageReference} from 'lightning/navigation';
+import { updateRecord } from 'lightning/uiRecordApi';
+
+import COMMENT_FIELD from '@salesforce/schema/Session_Obj__c.Comment__c';
+import CORRECT_FIELD from '@salesforce/schema/Session_Obj__c.Correct__c';
+
+import INCORRECT_FIELD from '@salesforce/schema/Session_Obj__c.Incorrect__c';
+
+import PROMPTED_FIELD from '@salesforce/schema/Session_Obj__c.Prompted__c';
+
+import ID_FIELD from '@salesforce/schema/Session_Obj__c.Id';
 
 import { refreshApex } from '@salesforce/apex';
 
@@ -13,22 +25,72 @@ const columns = [
     {label: 'Program', fieldName: 'Program__c', type:'text'},
     {label: 'Objective', fieldName: 'Objective_Name__c', type:'text'}, 
     {label: 'SD', fieldName: 'SD__c', type:'text'},
-    {label: 'Correct', fieldName: 'Correct__c',type:'boolean'}, 
-    {label: 'Incorrect', fieldName: 'Incorrect__c',type:'boolean'}, 
-    {label: 'Prompted', fieldName: 'Prompted__c',type:'boolean'}, 
-   
+    {label: 'Correct', fieldName: 'Correct__c',type:'boolean',editable:true}, 
+    {label: 'Incorrect', fieldName: 'Incorrect__c',type:'boolean',editable:true}, 
+    {label: 'Prompted', fieldName: 'Prompted__c',type:'boolean',editable:true},
+    {label: 'Comment', fieldName: 'Comment__c',type:'text', editable: true}  
 ];
 const selectedRows = {};
 
 export default class Lwcsessionobjective extends LightningElement {
 
 @track allObjectives ={};
-@api recordId='a3N2v000003GqRzEAK';
+@api recordId='a3N2v000003GqRzEAK'; //session 23
 @wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
 @track error;
 @track columns = columns;
 @track recordsProcessed=0;
 @track sessionObjectives;
+@wire(CurrentPageReference) pageRef;
+@track draftValues = [];
+
+connectedCallback() {
+    console.log('subscribing to pub sub inputChangeEvent');
+    registerListener('inputChangeEvent', this.handleChange, this);  
+}
+
+handleChange(inpVal) {
+    console.log('PLACEHOLDER lwcsessionobjective component received pub sub input event');    
+  } 
+
+  handleSave(event) {
+
+    const fields = {};
+    
+    fields[ID_FIELD.fieldApiName] = event.detail.draftValues[0].Id;
+    fields[COMMENT_FIELD.fieldApiName] = event.detail.draftValues[0].Comment__c;
+    fields[CORRECT_FIELD.fieldApiName] = event.detail.draftValues[0].Correct__c;
+    fields[INCORRECT_FIELD.fieldApiName] = event.detail.draftValues[0].Incorrect__c;
+    fields[PROMPTED_FIELD.fieldApiName] = event.detail.draftValues[0].Prompted__c;
+
+
+    const recordInput = {fields};
+
+    updateRecord(recordInput)
+    .then(() => {
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Success',
+                message: 'Session Objective updated',
+                variant: 'success'
+            })
+        );
+        // Clear all draft values
+        this.draftValues = [];
+
+        // Display fresh data in the datatable
+        return refreshApex(this.sessionObjectives);
+    }).catch(error => {
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Error creating record',
+                message: error.body.message,
+                variant: 'error'
+            })
+        );
+    });
+}
+
 
 handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();

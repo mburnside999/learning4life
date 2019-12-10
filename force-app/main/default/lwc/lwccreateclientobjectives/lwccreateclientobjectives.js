@@ -2,22 +2,18 @@
 /* eslint-disable no-console */
 
 import { LightningElement,api,wire,track } from 'lwc';
-//import getObjectives from '@salesforce/apex/MBSessionObjectives.getObjectives';
 import getUnusedObjectives from '@salesforce/apex/MBSessionObjectives.getUnusedObjectives';
 
 import createClientObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createClientObjectivesByArray';
-import getClientObjectivesForSession from '@salesforce/apex/MBSessionObjectives.getClientObjectivesForSession';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { updateRecord } from 'lightning/uiRecordApi';
-import { fireEvent } from 'c/pubsub'
+import { fireEvent } from 'c/pubsub';
 import {CurrentPageReference} from 'lightning/navigation';
 
 import { refreshApex } from '@salesforce/apex';
 
 const columns = [
-    {label: 'Objective__c', fieldName: 'Objective__C', type: 'text'},  
-    {label: 'Client__c', fieldName: 'Client__c', type: 'text'},   
-    {label: 'Program_Name__c', fieldName: 'Program_Name__c', type: 'text'},  
+    {label: 'Name', fieldName: 'Name', type: 'text'},  
+    {label: 'Program', fieldName: 'Program__c', type: 'text'},   
     {label: 'SD_Name__c', fieldName: 'SD_Name__c', type: 'text'},  
 ];
 
@@ -40,24 +36,13 @@ export default class Lwccreateclientobjectives extends LightningElement {
 connectedCallback() {
     
       console.log('starting, getting objectives, recordId = '+this.recordId);
-    getUnusedObjectives({ sess: this.recordId })
-        .then(result => {
-            console.log('RETURNED');
-            this.objectives=result;
-            this.allObjectives=result;
-            console.log(JSON.stringify(this.objectives));
-
-        })
-        .catch(error => {
-            this.error = error;
-            console.log('ERROR' +JSON.stringify(error));
-        });    
+    this.refresh();
 
 }
 
 refresh() {
 console.log('IN REFRESH');
-    getClientObjectivesForSession({ sess: this.recordId })
+    getUnusedObjectives({ sess: this.recordId })
     .then(result => {
         console.log('REFRESH RETURNED');
         this.objectives=result;

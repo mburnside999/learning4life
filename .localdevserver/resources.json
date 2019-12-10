@@ -1,5 +1,5 @@
 {
-    "dbc436f0e0": {
+    "6600b0eb42": {
         "view://home@en_US": {
             "dev": "bf81bce448"
         },
@@ -12,11 +12,11 @@
         "view://preview@en_US": {
             "dev": "08a7bab2aa"
         },
-        "component://c/lwcpopulatesessionobjectives@en_US": {
-            "dev": "cad088fbbb"
+        "component://c/lwcsessionobjective@en_US": {
+            "dev": "2f4a9afc4a"
         }
     },
-    "de9ec49a26": {
+    "d7c13933e1": {
         "view://home@en_US": {
             "dev": "bf81bce448"
         },
@@ -29,11 +29,11 @@
         "view://preview@en_US": {
             "dev": "08a7bab2aa"
         },
-        "component://c/lwcpopulatesessionobjectives@en_US": {
-            "dev": "fedb26a016"
+        "component://c/lwcsessionobjective@en_US": {
+            "dev": "a9f28457cd"
         }
     },
-    "844e7aa749": {
+    "b7ff495909": {
         "view://home@en_US": {
             "dev": "bf81bce448"
         },
@@ -46,11 +46,11 @@
         "view://preview@en_US": {
             "dev": "08a7bab2aa"
         },
-        "component://c/lwcpopulatesessionobjectives@en_US": {
-            "dev": "b4a15b6c54"
+        "component://c/lwcsessionobjective@en_US": {
+            "dev": "3e585c8c03"
         }
     },
-    "885332de38": {
+    "df244456a9": {
         "view://home@en_US": {
             "dev": "bf81bce448"
         },
@@ -63,8 +63,42 @@
         "view://preview@en_US": {
             "dev": "08a7bab2aa"
         },
-        "component://c/lwcpopulatesessionobjectives@en_US": {
-            "dev": "7321c4c984"
+        "component://c/lwcsessionobjective@en_US": {
+            "dev": "141f84ad7d"
+        }
+    },
+    "a9c7142f51": {
+        "view://home@en_US": {
+            "dev": "bf81bce448"
+        },
+        "component://force/lds@en_US": {
+            "dev": "67bd332a20"
+        },
+        "view://mainLayout@en_US": {
+            "dev": "67133358b1"
+        },
+        "view://preview@en_US": {
+            "dev": "08a7bab2aa"
+        },
+        "component://c/lwcsessionobjective@en_US": {
+            "dev": "9c4f2a9423"
+        }
+    },
+    "2c94c5c9a9": {
+        "view://home@en_US": {
+            "dev": "bf81bce448"
+        },
+        "component://force/lds@en_US": {
+            "dev": "67bd332a20"
+        },
+        "view://mainLayout@en_US": {
+            "dev": "67133358b1"
+        },
+        "view://preview@en_US": {
+            "dev": "08a7bab2aa"
+        },
+        "component://c/lwcsessionobjective@en_US": {
+            "dev": "b1a9d454b5"
         }
     }
 }

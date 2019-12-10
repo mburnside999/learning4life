@@ -1,4 +1,4 @@
-Webruntime.moduleRegistry.define('c/lwcpopulatesessionobjectives', ['lwc', 'lightning/configProvider', 'force/lds', 'wire-service'], function (lwc, configProvider, lds, wireService) { 'use strict';
+Webruntime.moduleRegistry.define('c/lwcsessionobjective', ['lwc', 'lightning/configProvider', 'force/lds', 'wire-service', 'lightning/navigation'], function (lwc, configProvider, lds, wireService, navigation) { 'use strict';
 
     function stylesheet(hostSelector, shadowSelector, nativeShadow) {
       return "_:-ms-lang(x)" + shadowSelector + ", svg" + shadowSelector + " {pointer-events: none;}\n";
@@ -28848,63 +28848,62 @@ Webruntime.moduleRegistry.define('c/lwcpopulatesessionobjectives', ['lwc', 'ligh
     function tmpl$1i($api, $cmp, $slotset, $ctx) {
       const {
         b: api_bind,
-        h: api_element,
         c: api_custom_element
       } = $api;
       const {
         _m0,
         _m1,
         _m2,
-        _m3
+        _m3,
+        _m4
       } = $ctx;
       return [api_custom_element("lightning-card", _lightningCard, {
         props: {
-          "title": "Populate Session Objectives - V0.1.8 [Prototype]"
+          "title": "Mark Session Objectives in Bulk - V0.1.8 [Prototype]"
         },
         key: 2
-      }, [api_element("input", {
-        attrs: {
-          "size": "30",
-          "type": "search",
-          "placeholder": "Search Name, Program or SD..."
-        },
-        key: 3,
-        on: {
-          "input": _m0 || ($ctx._m0 = api_bind($cmp.handleSearchKeyInput))
-        }
-      }, []), api_element("br", {
-        key: 4
-      }, []), api_element("br", {
-        key: 5
-      }, []), api_custom_element("lightning-button-group", _lightningButtonGroup, {
-        key: 6
+      }, [api_custom_element("lightning-button-group", _lightningButtonGroup, {
+        key: 3
       }, [api_custom_element("lightning-button", _lightningButton, {
         props: {
-          "label": "Auto Create Session Objectives in Bulk",
+          "label": "Mark Correct",
           "title": "Test Correct"
         },
-        key: 7,
+        key: 4,
+        on: {
+          "click": _m0 || ($ctx._m0 = api_bind($cmp.handleClickArray))
+        }
+      }, []), api_custom_element("lightning-button", _lightningButton, {
+        props: {
+          "variant": "neutral",
+          "label": "Mark Incorrect",
+          "title": "Test Incorrect"
+        },
+        key: 5,
         on: {
           "click": _m1 || ($ctx._m1 = api_bind($cmp.handleClickArray))
         }
       }, []), api_custom_element("lightning-button", _lightningButton, {
         props: {
-          "label": "Cancel",
+          "variant": "neutral",
+          "label": "Mark Prompted",
           "title": "Test Prompted"
         },
-        key: 8,
+        key: 6,
         on: {
-          "click": _m2 || ($ctx._m2 = api_bind($cmp.handleClickCancel))
+          "click": _m2 || ($ctx._m2 = api_bind($cmp.handleClickArray))
         }
       }, [])]), api_custom_element("lightning-datatable", _lightningDatatable, {
         props: {
           "keyField": "Id",
-          "data": $cmp.objectives,
-          "columns": $cmp.columns
+          "data": $cmp.sessionObjectives.data,
+          "columns": $cmp.columns,
+          "draftValues": $cmp.draftValues
         },
-        key: 9,
+        key: 7,
         on: {
-          "rowselection": _m3 || ($ctx._m3 = api_bind($cmp.getSelectedName))
+          "rowselection": _m3 || ($ctx._m3 = api_bind($cmp.getSelectedName)),
+          "save": _m4 || ($ctx._m4 = api_bind($cmp.handleSave))
         }
       }, [])])];
     }
@@ -28912,21 +28911,15 @@ Webruntime.moduleRegistry.define('c/lwcpopulatesessionobjectives', ['lwc', 'ligh
     var _tmpl$N = lwc.registerTemplate(tmpl$1i);
     tmpl$1i.stylesheets = [];
     tmpl$1i.stylesheetTokens = {
-      hostAttribute: "lwc-lwcpopulatesessionobjectives_lwcpopulatesessionobjectives-host",
-      shadowAttribute: "lwc-lwcpopulatesessionobjectives_lwcpopulatesessionobjectives"
+      hostAttribute: "lwc-lwcsessionobjective_lwcsessionobjective-host",
+      shadowAttribute: "lwc-lwcsessionobjective_lwcsessionobjective"
     };
 
-    const apexInvoker = lds.getApexInvoker("", "MBSessionObjectives", "getObjectives", false);
-    wireService.register(apexInvoker, lds.generateGetApexWireAdapter("", "MBSessionObjectives", "getObjectives", false));
+    const apexInvoker = lds.getApexInvoker("", "MBSessionObjectives", "getSessionObjectives", false);
+    wireService.register(apexInvoker, lds.generateGetApexWireAdapter("", "MBSessionObjectives", "getSessionObjectives", false));
 
-    const apexInvoker$1 = lds.getApexInvoker("", "MBSessionObjectives", "getClientObjectivesForSession", false);
-    wireService.register(apexInvoker$1, lds.generateGetApexWireAdapter("", "MBSessionObjectives", "getClientObjectivesForSession", false));
-
-    const apexInvoker$2 = lds.getApexInvoker("", "MBSessionObjectives", "createSessionObjectivesByArray", false);
-    wireService.register(apexInvoker$2, lds.generateGetApexWireAdapter("", "MBSessionObjectives", "createSessionObjectivesByArray", false));
-
-    const apexInvoker$3 = lds.getApexInvoker("", "MBSessionObjectives", "createSessionObjectives", false);
-    wireService.register(apexInvoker$3, lds.generateGetApexWireAdapter("", "MBSessionObjectives", "createSessionObjectives", false));
+    const apexInvoker$1 = lds.getApexInvoker("", "MBSessionObjectives", "setSessionObjectivesByArray", false);
+    wireService.register(apexInvoker$1, lds.generateGetApexWireAdapter("", "MBSessionObjectives", "setSessionObjectivesByArray", false));
 
     const DEFAULT_TOAST_MODE = 'dismissible';
     const DEFAULT_VARIANT$1 = 'info';
@@ -29174,46 +29167,213 @@ Webruntime.moduleRegistry.define('c/lwcpopulatesessionobjectives', ['lwc', 'ligh
 
     }
 
+    const apexInvoker$2 = lds.getApexInvoker("", "MBSessionObjectives", "deleteSessionObjectives", false);
+    wireService.register(apexInvoker$2, lds.generateGetApexWireAdapter("", "MBSessionObjectives", "deleteSessionObjectives", false));
+
+    /**
+     * A basic pub-sub mechanism for sibling component communication
+     *
+     * TODO - adopt standard flexipage sibling communication mechanism when it's available.
+     */
+    const events = {};
+    /**
+     * Registers a callback for an event
+     * @param {string} eventName - Name of the event to listen for.
+     * @param {function} callback - Function to invoke when said event is fired.
+     * @param {object} thisArg - The value to be passed as the this parameter to the callback function is bound.
+     */
+
+
+    const registerListener = (eventName, callback, thisArg) => {
+      // Checking that the listener has a pageRef property. We rely on that property for filtering purpose in fireEvent()
+      if (!thisArg.pageRef) {
+        throw new Error('pubsub listeners need a "@wire(CurrentPageReference) pageRef" property');
+      }
+
+      if (!events[eventName]) {
+        events[eventName] = [];
+      }
+
+      const duplicate = events[eventName].find(listener => {
+        return listener.callback === callback && listener.thisArg === thisArg;
+      });
+
+      if (!duplicate) {
+        events[eventName].push({
+          callback,
+          thisArg
+        });
+      }
+    };
+
+    var COMMENT_FIELD = {"fieldApiName":"Comment__c","objectApiName":"Session_Obj__c"};
+
+    var CORRECT_FIELD = {"fieldApiName":"Correct__c","objectApiName":"Session_Obj__c"};
+
+    var INCORRECT_FIELD = {"fieldApiName":"Incorrect__c","objectApiName":"Session_Obj__c"};
+
+    var PROMPTED_FIELD = {"fieldApiName":"Prompted__c","objectApiName":"Session_Obj__c"};
+
+    var ID_FIELD = {"fieldApiName":"Id","objectApiName":"Session_Obj__c"};
+
     const columns = [{
-      label: 'Program',
-      fieldName: 'Program_Name__c',
+      label: 'Name',
+      fieldName: 'Name',
       type: 'text'
     }, {
-      label: 'SD Name',
-      fieldName: 'SD_Name__c',
+      label: 'Program',
+      fieldName: 'Program__c',
       type: 'text'
     }, {
       label: 'Objective',
       fieldName: 'Objective_Name__c',
       type: 'text'
     }, {
-      label: 'Status',
-      fieldName: 'Status__c',
+      label: 'SD',
+      fieldName: 'SD__c',
       type: 'text'
+    }, {
+      label: 'Correct',
+      fieldName: 'Correct__c',
+      type: 'boolean',
+      editable: true
+    }, {
+      label: 'Incorrect',
+      fieldName: 'Incorrect__c',
+      type: 'boolean',
+      editable: true
+    }, {
+      label: 'Prompted',
+      fieldName: 'Prompted__c',
+      type: 'boolean',
+      editable: true
+    }, {
+      label: 'Comment',
+      fieldName: 'Comment__c',
+      type: 'text',
+      editable: true
     }];
 
-    class Lwcpopulatsessionobjectives extends lwc.LightningElement {
+    class Lwcsessionobjective extends lwc.LightningElement {
       constructor(...args) {
         super(...args);
-        this.recordId = 'a3N2v000003GqRzEAK';
         this.allObjectives = {};
+        this.recordId = 'a3N2v000003GqRzEAK';
+        this.sessionObjectives = void 0;
         this.error = void 0;
         this.columns = columns;
         this.recordsProcessed = 0;
-        this.objectives = void 0;
+        this.sessionObjectives = void 0;
+        this.pageRef = void 0;
+        this.draftValues = [];
       }
 
       connectedCallback() {
-        apexInvoker$1({
-          searchKey: this.recordId
+        console.log('subscribing to pub sub inputChangeEvent');
+        registerListener('inputChangeEvent', this.handleChange, this);
+      }
+
+      handleChange(inpVal) {
+        console.log('PLACEHOLDER lwcsessionobjective component received pub sub input event');
+      }
+
+      handleSave(event) {
+        const fields = {};
+        fields[ID_FIELD.fieldApiName] = event.detail.draftValues[0].Id;
+        fields[COMMENT_FIELD.fieldApiName] = event.detail.draftValues[0].Comment__c;
+        fields[CORRECT_FIELD.fieldApiName] = event.detail.draftValues[0].Correct__c;
+        fields[INCORRECT_FIELD.fieldApiName] = event.detail.draftValues[0].Incorrect__c;
+        fields[PROMPTED_FIELD.fieldApiName] = event.detail.draftValues[0].Prompted__c;
+        const recordInput = {
+          fields
+        };
+        lds.updateRecord(recordInput).then(() => {
+          this.dispatchEvent(new ShowToastEvent({
+            title: 'Success',
+            message: 'Session Objective updated',
+            variant: 'success'
+          })); // Clear all draft values
+
+          this.draftValues = []; // Display fresh data in the datatable
+
+          return lds.refresh(this.sessionObjectives);
+        }).catch(error => {
+          this.dispatchEvent(new ShowToastEvent({
+            title: 'Error creating record',
+            message: error.body.message,
+            variant: 'error'
+          }));
+        });
+      }
+
+      handleSearchKeyInput(event) {
+        const searchKey = event.target.value.toLowerCase();
+        this.sessionObjectives = this.allObjectives.filter(so => so.Name.toLowerCase().includes(searchKey));
+      }
+
+      handleClickArray(event) {
+        console.log('Received event from button ' + event.target.label);
+        let mode = '';
+        let label = event.target.label;
+
+        switch (label) {
+          case 'Mark Correct':
+            mode = 'Correct';
+            break;
+
+          case 'Mark Incorrect':
+            mode = 'Incorrect';
+            break;
+
+          case 'Mark Prompted':
+            mode = 'Prompted';
+            break;
+
+          case 'Delete':
+            mode = 'Delete';
+            break;
+
+          default: // code block
+
+        }
+
+        if (this.selectedRows) {
+          console.log('Commencing imperative Call to setSessionObjectivesCorrectByArray(key) ');
+          console.log('mode=' + mode);
+          apexInvoker$1({
+            jsonstr: JSON.stringify(this.selectedRows),
+            val: mode
+          }).then(result => {
+            console.log('RETURNED');
+            this.recordsProcessed = result;
+            console.log(this.recordsProcessed + 'records processed.');
+          }).then(() => {
+            console.log('Refreshing');
+            return lds.refresh(this.sessionObjectives);
+          }).then(() => {
+            this.showNotification('Success!', 'Marked ' + this.recordsProcessed + ' records as ' + mode + '.', 'success');
+          }).catch(error => {
+            this.error = error;
+            console.log('ERRORED' + JSON.stringify(error));
+          });
+        }
+      }
+
+      handleClickDelete(event) {
+        console.log('Commencing imperative Call to deleteSessionObjectives(session) ');
+        apexInvoker$2({
+          sessionid: this.recordId
         }).then(result => {
           console.log('RETURNED');
-          this.objectives = result;
-          this.allObjectives = result;
-          console.log(JSON.stringify(this.objectives));
+        }).then(() => {
+          console.log('Refreshing');
+          return lds.refresh(this.sessionObjectives);
+        }).then(() => {
+          console.log('Toasty');
+          this.showNotification('Success!', 'Deleted all Session Objective records for this session.', 'success');
         }).catch(error => {
           this.error = error;
-          console.log('ERROR' + JSON.stringify(error));
+          console.log('ERRORED' + JSON.stringify(error));
         });
       }
 
@@ -29223,78 +29383,6 @@ Webruntime.moduleRegistry.define('c/lwcpopulatesessionobjectives', ['lwc', 'ligh
         //for (let i = 0; i < selectedRows.length; i++){
         //alert("You selected: " + selectedRows[i].Name);
         //}
-      }
-
-      handleClickCreate(event) {
-        if (this.selectedRows) {
-          for (let i = 0; i < this.selectedRows.length; i++) {
-            //alert("BUTTON PRESS  You selected: " + this.selectedRows[i].Id+' '+this.selectedRows[i].Name);  
-            console.log('Commencing imperative Call to createSessionObjectives(sessionid, objective) ');
-            apexInvoker$3({
-              sessionid: this.recordId,
-              objective: this.selectedRows[i].Id
-            }).then(result => {
-              console.log('RETURNED');
-            }).then(() => {
-              console.log('Refreshing');
-              return lds.refresh(this.objectives);
-            }).catch(error => {
-              this.error = error;
-              console.log('ERRORED' + JSON.stringify(error));
-            });
-          }
-        }
-      }
-
-      handleClickArray(event) {
-        if (this.selectedRows) {
-          console.log('logging JSON: ' + JSON.stringify(this.selectedRows));
-          console.log('loging session: ' + this.recordId);
-          console.log('Commencing imperative Call to createSessionObjectivesByArray(sessionid, jsonstr) ');
-          apexInvoker$2({
-            jsonstr: JSON.stringify(this.selectedRows),
-            sess: this.recordId
-          }).then(result => {
-            console.log('RETURNED');
-            this.recordsProcessed = result;
-            console.log(this.recordsProcessed + 'records processed.');
-          }).then(() => {
-            console.log('Refreshing');
-          }).then(() => {
-            this.showNotification('Success', this.recordsProcessed + ' records processed.', 'success');
-          }).catch(error => {
-            this.error = error;
-            console.log('ERRORED' + JSON.stringify(error));
-          });
-        }
-      }
-
-      handleClickArrayOld(event) {
-        if (this.selectedRows) {
-          console.log('logging JSON: ' + JSON.stringify(this.selectedRows));
-          console.log('loging session: ' + this.recordId);
-          console.log('Commencing imperative Call to createSessionObjectivesByArray(sessionid, jsonstr) ');
-          apexInvoker$2({
-            jsonstr: JSON.stringify(this.selectedRows),
-            sess: this.recordId
-          }).then(result => {
-            console.log('RETURNED');
-            this.recordsProcessed = result;
-            console.log(this.recordsProcessed + 'records processed.');
-          }).then(() => {
-            console.log('Refreshing');
-          }).then(() => {
-            this.showNotification('Success', this.recordsProcessed + ' records processed.', 'success');
-          }).catch(error => {
-            this.error = error;
-            console.log('ERRORED' + JSON.stringify(error));
-          });
-        }
-      }
-
-      handleSearchKeyInput(event) {
-        const searchKey = event.target.value.toLowerCase();
-        this.objectives = this.allObjectives.filter(so => so.Program_Name__c.toLowerCase().includes(searchKey) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey));
       }
 
       showNotification(t, m, v) {
@@ -29307,16 +29395,24 @@ Webruntime.moduleRegistry.define('c/lwcpopulatesessionobjectives', ['lwc', 'ligh
         this.dispatchEvent(evt);
       }
 
-      handleClickCancel(event) {
-        console.log('Cancelled');
-      }
-
     }
 
-    lwc.registerDecorators(Lwcpopulatsessionobjectives, {
+    lwc.registerDecorators(Lwcsessionobjective, {
       publicProps: {
         recordId: {
           config: 0
+        }
+      },
+      wire: {
+        sessionObjectives: {
+          adapter: apexInvoker,
+          params: {
+            sess: "recordId"
+          },
+          static: {}
+        },
+        pageRef: {
+          adapter: navigation.CurrentPageReference
         }
       },
       track: {
@@ -29324,14 +29420,15 @@ Webruntime.moduleRegistry.define('c/lwcpopulatesessionobjectives', ['lwc', 'ligh
         error: 1,
         columns: 1,
         recordsProcessed: 1,
-        objectives: 1
+        sessionObjectives: 1,
+        draftValues: 1
       }
     });
 
-    var lwcpopulatesessionobjectives = lwc.registerComponent(Lwcpopulatsessionobjectives, {
+    var lwcsessionobjective = lwc.registerComponent(Lwcsessionobjective, {
       tmpl: _tmpl$N
     });
 
-    return lwcpopulatesessionobjectives;
+    return lwcsessionobjective;
 
 });

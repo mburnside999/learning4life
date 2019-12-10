@@ -3,13 +3,13 @@ public with sharing class MBSessionObjectives {
  @AuraEnabled(cacheable=true) 
    public static List<Session_obj__c> getSessionObjectives (String sess) {
         
-        return [SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,SD__c,Program__c FROM Session_Obj__c where Session__c = :sess order by Program__c,SD__c];
+        return [SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,SD__c,Program__c,Comment__c FROM Session_Obj__c where Session__c = :sess order by Program__c,Id];
     }
 
  @AuraEnabled
    public static List<Client_Objective__c> getClientObjectivesForSession(String searchKey) {
         
-        return [select Id,Objective__c,Objective_Name__c,Client__c,Program_Name__c,SD_Name__c,Status__c from client_objective__c where Client__c in (select client__c from session__c where id=:searchKey)
+        return [select Id,Name,Objective__c,Objective_Name__c,Client__c,Program_Name__c,SD_Name__c,Status__c from client_objective__c where Client__c in (select client__c from session__c where id=:searchKey) order by Program_Name__c
  ];
     }
 
@@ -17,7 +17,7 @@ public with sharing class MBSessionObjectives {
     @AuraEnabled
    public static List<Client_Objective__c> getClientObjectives(String searchKey) {
         
-        return [SELECT Id,Name,Client__c,Objective_Name__c,SD_Name__c,Program_Name__c,Status__c FROM Client_Objective__c where Client__c = :searchKey order by Program_Name__c];
+        return [SELECT Id,Name,Client__c,Objective_Name__c,SD_Name__c,Program_Name__c,Status__c FROM Client_Objective__c where Client__c = :searchKey order by Program_Name__c,Name];
     }
 
 @AuraEnabled(cacheable=true) 
@@ -131,7 +131,7 @@ List<Session_Obj__c> soList = new List<Session_Obj__c>();
 // loop thru the deserialised objectives
 for(Client_Objective__c o : objDeserialized){
 
-// prepare a sess_obj__c and add to array
+// prepare a session_obj__c and add to array
 Session_Obj__c so = new Session_Obj__c();
 so.Session__c=sess;
 so.Objective__c=o.Objective__c;

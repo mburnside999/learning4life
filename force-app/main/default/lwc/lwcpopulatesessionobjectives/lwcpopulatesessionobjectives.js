@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { LightningElement,api,wire,track } from 'lwc';
-import getObjectives from '@salesforce/apex/MBSessionObjectives.getObjectives';
 import getClientObjectivesForSession from '@salesforce/apex/MBSessionObjectives.getClientObjectivesForSession';
-
 import createSessionObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArray';
-import createSessionObjectives from '@salesforce/apex/MBSessionObjectives.createSessionObjectives';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+import { fireEvent } from 'c/pubsub';
+import {CurrentPageReference} from 'lightning/navigation';
 
 import { refreshApex } from '@salesforce/apex';
 
@@ -23,7 +21,7 @@ const columns = [
 const selectedRows = {};
 
 export default class Lwcpopulatsessionobjectives extends LightningElement {
-
+@wire(CurrentPageReference) pageRef;
 @api recordId='a3N2v000003GqRzEAK';
 @track allObjectives ={};
 //@wire(getObjectives, { sess: '$recordId' }) objectives;
@@ -34,19 +32,28 @@ export default class Lwcpopulatsessionobjectives extends LightningElement {
 
 connectedCallback() {
     
-      
-    getClientObjectivesForSession({ searchKey: this.recordId })
-        .then(result => {
-            console.log('RETURNED');
-            this.objectives=result;
-            this.allObjectives=result;
-            console.log(JSON.stringify(this.objectives));
+   console.log('in connetedCallback calling refresh()');
+   this.refresh();
 
-        })
-        .catch(error => {
-            this.error = error;
-            console.log('ERROR' +JSON.stringify(error));
-        });    
+}
+
+refresh() {
+
+    console.log('in refactored refresh()');
+    getClientObjectivesForSession({ searchKey: this.recordId })
+    .then(result => {
+        console.log('RETURNED');
+        this.objectives=result;
+        this.allObjectives=result;
+        console.log(JSON.stringify(this.objectives));
+
+    })
+    .catch(error => {
+        this.error = error;
+        console.log('ERROR' +JSON.stringify(error));
+    }); 
+
+
 
 }
 
@@ -100,8 +107,10 @@ handleClickCreate(event) {
         })
         .then(() => {
             this.showNotification('Success',this.recordsProcessed+ ' records processed.','success');
-            
-
+        }) 
+        .finally(() => {
+            console.log('firing event to notify listeners that the sesion objectives have been saved');
+            fireEvent(this.pageRef, 'inputChangeEvent', this.recordId);  
         }) 
         .catch(error => {
             this.error = error;

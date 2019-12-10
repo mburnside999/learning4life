@@ -29,38 +29,36 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     connectedCallback() {
         console.log('subscribing to pub sub inputChangeEvent');
         registerListener('inputChangeEvent', this.handleChange, this);
+        console.log('starting, getting client objectives, recordId = '+this.recordId);
+    this.refresh();
+  
+  }
 
-     console.log('starting, getting client objectives, recordId = '+this.recordId);
-      getClientObjectives({ searchKey: this.recordId })
-          .then(result => {
-              console.log('RETURNED');
-              this.clientobjectives=result;
-              this.allObjectives=result;
-              console.log(JSON.stringify(this.clientobjectives));
-  
-          })
-          .catch(error => {
-              this.error = error;
-              console.log('ERROR' +JSON.stringify(error));
-          });    
-  
+  refresh() {
+
+console.log('in refactored this.refresh()');
+    console.log('starting, getting client objectives, recordId = '+this.recordId);
+    getClientObjectives({ searchKey: this.recordId })
+        .then(result => {
+            console.log('RETURNED');
+            this.clientobjectives=result;
+            this.allObjectives=result;
+            console.log(JSON.stringify(this.clientobjectives));
+
+        })
+        .catch(error => {
+            this.error = error;
+            console.log('ERROR' +JSON.stringify(error));
+        });    
+
+
+
   }
 
   handleClick(event) {
     //this.clientobjectives={};
-    getClientObjectives({ searchKey: this.recordId })
-          .then(result => {
-              console.log('RETURNED');
-              this.clientobjectives=result;
-              this.allObjectives=result;
-              console.log(JSON.stringify(this.clientobjectives));
-  
-          })
-          .catch(error => {
-              this.error = error;
-              console.log('ERROR' +JSON.stringify(error));
-          });    
-  
+    this.refresh();
+
     
 }
 

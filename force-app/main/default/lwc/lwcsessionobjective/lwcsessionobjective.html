@@ -1,5 +1,5 @@
 <template>
- <lightning-card title="Mark Session Objectives in Bulk - V0.1.7 [Prototype]">
+ <lightning-card title="Edit Session Objectives - V0.1.9 [Prototype]">
       
       <lightning-button-group>
 
@@ -40,7 +40,11 @@ onclick={handleClickArray}>
 
     -->
 </lightning-button-group>
-         <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
+         <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} 
+         onrowselection={getSelectedName}
+         onsave={handleSave}
+         draft-values={draftValues}>
+         </lightning-datatable>
   
 </lightning-card>
 </template>
