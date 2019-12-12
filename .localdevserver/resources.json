@@ -185,5 +185,22 @@
         "component://c/lwcsessionobjective@en_US": {
             "dev": "b89708c1de"
         }
+    },
+    "782d39740f": {
+        "view://home@en_US": {
+            "dev": "bf81bce448"
+        },
+        "component://force/lds@en_US": {
+            "dev": "67bd332a20"
+        },
+        "view://mainLayout@en_US": {
+            "dev": "67133358b1"
+        },
+        "view://preview@en_US": {
+            "dev": "08a7bab2aa"
+        },
+        "component://c/lwcsessionobjective@en_US": {
+            "dev": "b89708c1de"
+        }
     }
 }
