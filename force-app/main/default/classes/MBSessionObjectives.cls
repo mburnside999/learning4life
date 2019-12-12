@@ -3,7 +3,7 @@ public with sharing class MBSessionObjectives {
  @AuraEnabled(cacheable=true) 
    public static List<Session_obj__c> getSessionObjectives (String sess) {
         
-        return [SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,SD__c,Program__c,Comment__c FROM Session_Obj__c where Session__c = :sess order by Program__c,Id];
+        return [SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,SD__c,Program__c,Comment__c,Previous_Status__c FROM Session_Obj__c where Session__c = :sess order by Program__c,Id];
     }
 
  @AuraEnabled
@@ -14,7 +14,7 @@ public with sharing class MBSessionObjectives {
     }
 
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=false) 
    public static List<Client_Objective__c> getClientObjectives(String searchKey) {
         
         return [SELECT Id,Name,Client__c,Objective_Name__c,SD_Name__c,Program_Name__c,Status__c FROM Client_Objective__c where Client__c = :searchKey order by Program_Name__c,Name];
@@ -137,7 +137,9 @@ so.Session__c=sess;
 so.Objective__c=o.Objective__c;
 so.Correct__C=false;
 so.Incorrect__c=false;
-so.Prompted__c=false;  
+so.Prompted__c=false; 
+so.previous_status__c=o.status__c;
+ 
 
 
 soList.add(so);

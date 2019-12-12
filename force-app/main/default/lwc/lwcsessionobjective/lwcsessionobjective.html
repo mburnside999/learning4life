@@ -1,5 +1,5 @@
 <template>
- <lightning-card title="Edit Session Objectives - V0.1.9 [Prototype]">
+ <lightning-card title="Edit/Delete Session Objectives Inline - V1.0.1">
       
       <lightning-button-group>
 
@@ -43,7 +43,8 @@ onclick={handleClickArray}>
          <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} 
          onrowselection={getSelectedName}
          onsave={handleSave}
-         draft-values={draftValues}>
+         draft-values={draftValues}
+         onrowaction={handleRowAction}>
          </lightning-datatable>
   
 </lightning-card>

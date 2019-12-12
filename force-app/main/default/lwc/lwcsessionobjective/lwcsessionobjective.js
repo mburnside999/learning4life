@@ -11,24 +11,32 @@ import { updateRecord } from 'lightning/uiRecordApi';
 
 import COMMENT_FIELD from '@salesforce/schema/Session_Obj__c.Comment__c';
 import CORRECT_FIELD from '@salesforce/schema/Session_Obj__c.Correct__c';
-
 import INCORRECT_FIELD from '@salesforce/schema/Session_Obj__c.Incorrect__c';
-
 import PROMPTED_FIELD from '@salesforce/schema/Session_Obj__c.Prompted__c';
-
 import ID_FIELD from '@salesforce/schema/Session_Obj__c.Id';
-
 import { refreshApex } from '@salesforce/apex';
+import { deleteRecord } from 'lightning/uiRecordApi';
 
+
+
+const actions = [
+   
+    { label: 'Delete', name: 'delete' },
+  ];
 const columns = [
-    {label: 'Name', fieldName: 'Name', type: 'text'},      
+    {label: 'Name', fieldName: 'Name', initialWidth:80,type: 'text'},      
     {label: 'Program', fieldName: 'Program__c', type:'text'},
     {label: 'Objective', fieldName: 'Objective_Name__c', type:'text'}, 
     {label: 'SD', fieldName: 'SD__c', type:'text'},
-    {label: 'Correct', fieldName: 'Correct__c',type:'boolean',editable:true}, 
-    {label: 'Incorrect', fieldName: 'Incorrect__c',type:'boolean',editable:true}, 
-    {label: 'Prompted', fieldName: 'Prompted__c',type:'boolean',editable:true},
-    {label: 'Comment', fieldName: 'Comment__c',type:'text', editable: true}  
+    {label: 'C', fieldName: 'Correct__c',type:'boolean',initialWidth:60,editable:true}, 
+    {label: 'I', fieldName: 'Incorrect__c',type:'boolean',initialWidth:60,editable:true}, 
+    {label: 'P', fieldName: 'Prompted__c',type:'boolean',initialWidth:60,editable:true},
+    {label: 'Comment', fieldName: 'Comment__c',type:'text', editable: true},
+    {label: 'Previous', fieldName: 'Previous_Status__c',type:'text'},{
+        type: 'action',
+        typeAttributes: { rowActions: actions },
+    },
+ 
 ];
 const selectedRows = {};
 
@@ -40,7 +48,7 @@ export default class Lwcsessionobjective extends LightningElement {
 @track error;
 @track columns = columns;
 @track recordsProcessed=0;
-@track sessionObjectives;
+//@track sessionObjectives;
 @wire(CurrentPageReference) pageRef;
 @track draftValues = [];
 
@@ -50,47 +58,81 @@ connectedCallback() {
 }
 
 handleChange(inpVal) {
-    console.log('PLACEHOLDER lwcsessionobjective component received pub sub input event');    
+    console.log('PLACEHOLDER lwcsessionobjective component received pub sub input event');  
+    return refreshApex(this.sessionObjectives);
   } 
 
+
+
+  handleRowAction(event) {
+    const actionName = event.detail.action.name;
+    const row = event.detail.row;
+    console.log(JSON.stringify(row));
+    switch (actionName) {
+        case 'delete':
+            console.log('DELETING');
+          deleteRecord(row.Id)
+          .then(() => {
+              this.dispatchEvent(
+                  new ShowToastEvent({
+                      title: 'Success',
+                      message: 'Session Objective deleted',
+                      variant: 'success'
+                  })
+              );
+              return refreshApex(this.sessionObjectives);
+          })
+          .catch(error => {
+              this.dispatchEvent(
+                  new ShowToastEvent({
+                      title: 'Error deleting record',
+                      message: 'Error',
+                      variant: 'error'
+                  })
+              );
+          });
+            break;
+        case 'edit_details':
+            
+            console.log('EDIT DETAILS');
+            
+            
+
+
+
+            break;
+        default:
+    }
+}
+
+
+
+
   handleSave(event) {
+    console.log(JSON.stringify(event.detail.draftValues));
+    const recordInputs =  event.detail.draftValues.slice().map(draft => {
+        const fields = Object.assign({}, draft);
+        return { fields };
+    });
 
-    const fields = {};
-    
-    fields[ID_FIELD.fieldApiName] = event.detail.draftValues[0].Id;
-    fields[COMMENT_FIELD.fieldApiName] = event.detail.draftValues[0].Comment__c;
-    fields[CORRECT_FIELD.fieldApiName] = event.detail.draftValues[0].Correct__c;
-    fields[INCORRECT_FIELD.fieldApiName] = event.detail.draftValues[0].Incorrect__c;
-    fields[PROMPTED_FIELD.fieldApiName] = event.detail.draftValues[0].Prompted__c;
-
-
-    const recordInput = {fields};
-
-    updateRecord(recordInput)
-    .then(() => {
+    const promises = recordInputs.map(recordInput => updateRecord(recordInput));
+    Promise.all(promises).then(contacts => {
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Success',
-                message: 'Session Objective updated',
+                message: 'Session objectives updated',
                 variant: 'success'
             })
         );
-        // Clear all draft values
-        this.draftValues = [];
+         // Clear all draft values
+         this.draftValues = [];
 
-        // Display fresh data in the datatable
-        return refreshApex(this.sessionObjectives);
+         // Display fresh data in the datatable
+         return refreshApex(this.sessionObjectives);
     }).catch(error => {
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: 'Error creating record',
-                message: error.body.message,
-                variant: 'error'
-            })
-        );
+        // Handle error
     });
 }
-
 
 handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
