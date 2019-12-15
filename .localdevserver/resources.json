@@ -86,5 +86,22 @@
         "component://c/lwcrelatedclientobjectives@en_US": {
             "dev": "a756f5020c"
         }
+    },
+    "2c91be61b6": {
+        "view://home@en_US": {
+            "dev": "bf81bce448"
+        },
+        "component://force/lds@en_US": {
+            "dev": "67bd332a20"
+        },
+        "view://mainLayout@en_US": {
+            "dev": "67133358b1"
+        },
+        "view://preview@en_US": {
+            "dev": "08a7bab2aa"
+        },
+        "component://c/lwcrelatedclientobjectives@en_US": {
+            "dev": "a756f5020c"
+        }
     }
 }
