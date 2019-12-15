@@ -43,7 +43,7 @@ const selectedRows = {};
 export default class Lwcsessionobjective extends LightningElement {
 
 @track allObjectives ={};
-@api recordId='a3N2v000003GqRzEAK'; //session 23
+@api recordId='a3N2v000003GqRzEAK'; //this is session 23
 @wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
 @track error;
 @track columns = columns;
