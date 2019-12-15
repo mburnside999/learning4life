@@ -1,5 +1,5 @@
 {
-    "0a54d72382": {
+    "2e82a8d9ea": {
         "view://preview@en_US": {
             "dev": "08a7bab2aa"
         },
@@ -11,182 +11,12 @@
         },
         "view://home@en_US": {
             "dev": "bf81bce448"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "4dfe2dbde6"
-        }
-    },
-    "77c25cc410": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "3f08fbb0a5"
-        }
-    },
-    "0c2151765a": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "71cb3ec140"
-        }
-    },
-    "2a3346414d": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "2774f14f33"
-        }
-    },
-    "454913ef67": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "f9332533c4"
-        }
-    },
-    "89c69993b2": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "d81ab1fdd9"
-        }
-    },
-    "59400de93b": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "48f1d48d78"
-        }
-    },
-    "972a9dd3ab": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "77384b7dde"
-        }
-    },
-    "a8462d1cd6": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "b48b7402a9"
-        }
-    },
-    "19b1960ba3": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
-        },
-        "component://c/lwcsessionobjective@en_US": {
-            "dev": "4cbcf8c400"
-        }
-    },
-    "dd5bab7920": {
-        "view://home@en_US": {
-            "dev": "bf81bce448"
-        },
-        "component://force/lds@en_US": {
-            "dev": "67bd332a20"
-        },
-        "view://mainLayout@en_US": {
-            "dev": "67133358b1"
-        },
-        "view://preview@en_US": {
-            "dev": "08a7bab2aa"
         },
         "component://c/lwcsessionobjective@en_US": {
             "dev": "b89708c1de"
         }
     },
-    "782d39740f": {
+    "a7d5a610ef": {
         "view://home@en_US": {
             "dev": "bf81bce448"
         },
@@ -200,7 +30,7 @@
             "dev": "08a7bab2aa"
         },
         "component://c/lwcsessionobjective@en_US": {
-            "dev": "b89708c1de"
+            "dev": "db4a8548d1"
         }
     }
 }

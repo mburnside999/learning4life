@@ -24,7 +24,7 @@ const actions = [
     { label: 'Delete', name: 'delete' },
   ];
 const columns = [
-    {label: 'Name', fieldName: 'Name', initialWidth:80,type: 'text'},      
+          
     {label: 'Program', fieldName: 'Program__c', type:'text'},
     {label: 'Objective', fieldName: 'Objective_Name__c', type:'text'}, 
     {label: 'SD', fieldName: 'SD__c', type:'text'},

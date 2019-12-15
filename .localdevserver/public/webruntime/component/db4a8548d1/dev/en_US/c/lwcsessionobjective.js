@@ -28855,11 +28855,12 @@ Webruntime.moduleRegistry.define('c/lwcsessionobjective', ['lwc', 'lightning/con
         _m1,
         _m2,
         _m3,
-        _m4
+        _m4,
+        _m5
       } = $ctx;
       return [api_custom_element("lightning-card", _lightningCard, {
         props: {
-          "title": "Edit Session Objectives Inline - V1.0.1"
+          "title": "Edit/Delete Session Objectives Inline - V1.0.1"
         },
         key: 2
       }, [api_custom_element("lightning-button-group", _lightningButtonGroup, {
@@ -28903,7 +28904,8 @@ Webruntime.moduleRegistry.define('c/lwcsessionobjective', ['lwc', 'lightning/con
         key: 7,
         on: {
           "rowselection": _m3 || ($ctx._m3 = api_bind($cmp.getSelectedName)),
-          "save": _m4 || ($ctx._m4 = api_bind($cmp.handleSave))
+          "save": _m4 || ($ctx._m4 = api_bind($cmp.handleSave)),
+          "rowaction": _m5 || ($ctx._m5 = api_bind($cmp.handleRowAction))
         }
       }, [])])];
     }
@@ -29206,11 +29208,11 @@ Webruntime.moduleRegistry.define('c/lwcsessionobjective', ['lwc', 'lightning/con
       }
     };
 
+    const actions = [{
+      label: 'Delete',
+      name: 'delete'
+    }];
     const columns = [{
-      label: 'Name',
-      fieldName: 'Name',
-      type: 'text'
-    }, {
       label: 'Program',
       fieldName: 'Program__c',
       type: 'text'
@@ -29226,19 +29228,19 @@ Webruntime.moduleRegistry.define('c/lwcsessionobjective', ['lwc', 'lightning/con
       label: 'C',
       fieldName: 'Correct__c',
       type: 'boolean',
-      initialWidth: 80,
+      initialWidth: 60,
       editable: true
     }, {
       label: 'I',
       fieldName: 'Incorrect__c',
       type: 'boolean',
-      initialWidth: 80,
+      initialWidth: 60,
       editable: true
     }, {
       label: 'P',
       fieldName: 'Prompted__c',
       type: 'boolean',
-      initialWidth: 80,
+      initialWidth: 60,
       editable: true
     }, {
       label: 'Comment',
@@ -29249,6 +29251,11 @@ Webruntime.moduleRegistry.define('c/lwcsessionobjective', ['lwc', 'lightning/con
       label: 'Previous',
       fieldName: 'Previous_Status__c',
       type: 'text'
+    }, {
+      type: 'action',
+      typeAttributes: {
+        rowActions: actions
+      }
     }];
 
     class Lwcsessionobjective extends lwc.LightningElement {
@@ -29272,6 +29279,38 @@ Webruntime.moduleRegistry.define('c/lwcsessionobjective', ['lwc', 'lightning/con
       handleChange(inpVal) {
         console.log('PLACEHOLDER lwcsessionobjective component received pub sub input event');
         return lds.refresh(this.sessionObjectives);
+      }
+
+      handleRowAction(event) {
+        const actionName = event.detail.action.name;
+        const row = event.detail.row;
+        console.log(JSON.stringify(row));
+
+        switch (actionName) {
+          case 'delete':
+            console.log('DELETING');
+            lds.deleteRecord(row.Id).then(() => {
+              this.dispatchEvent(new ShowToastEvent({
+                title: 'Success',
+                message: 'Session Objective deleted',
+                variant: 'success'
+              }));
+              return lds.refresh(this.sessionObjectives);
+            }).catch(error => {
+              this.dispatchEvent(new ShowToastEvent({
+                title: 'Error deleting record',
+                message: 'Error',
+                variant: 'error'
+              }));
+            });
+            break;
+
+          case 'edit_details':
+            console.log('EDIT DETAILS');
+            break;
+
+          default:
+        }
       }
 
       handleSave(event) {
