@@ -31,8 +31,6 @@ const columns = [
   },
 ];
 
-
-
 export default class lwcrelatedclientobjectives extends LightningElement {
     @track searchKey = '';
     @api recordId='0012v00002fY86nAAC';
