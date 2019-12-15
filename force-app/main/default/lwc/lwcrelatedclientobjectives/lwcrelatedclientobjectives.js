@@ -21,7 +21,6 @@ const actions = [
 ];
 
 const columns = [
-    {label: 'Name', fieldName: 'Name', type: 'text'},  
     {label: 'Program', fieldName: 'Program_Name__c', type: 'text'},    
     {label: 'SD', fieldName: 'SD_Name__c', type: 'text'},  
     {label: 'Objective', fieldName: 'Objective_Name__c', type: 'text'},   
