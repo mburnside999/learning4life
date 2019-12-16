@@ -13,7 +13,9 @@ const columns = [
     {label: 'Program', fieldName: 'Program_Name__c', type: 'text'},   
     {label: 'SD Name', fieldName: 'SD_Name__c', type: 'text'}, 
     {label: 'Objective', fieldName: 'Objective_Name__c', type: 'text'}, 
-    {label: 'Status', fieldName: 'Status__c', type: 'text'},  
+    {label: 'Status', fieldName: 'Status__c', type: 'text'}, 
+    {label: 'Days', fieldName: 'Days_Since_Tested_Correct__c', type: 'number'},  
+    {label: 'Retest Due', fieldName: 'Re_Test_Recommended__c', type: 'boolean'},  
  
 ];
 

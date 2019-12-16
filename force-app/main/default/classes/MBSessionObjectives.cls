@@ -9,7 +9,7 @@ public with sharing class MBSessionObjectives {
     @AuraEnabled
     public static List < Client_Objective__c > getClientObjectivesForSession(String searchKey) {
 
-        return [select Id, Name, Objective__c, Objective_Name__c, Client__c, Program_Name__c, SD_Name__c, Status__c from client_objective__c where Client__c in (select client__c from session__c where id =: searchKey) order by Program_Name__c];
+        return [select Id, Name, Objective__c, Objective_Name__c, Client__c, Program_Name__c, SD_Name__c, Status__c,Re_Test_Recommended__c,Days_Since_Tested_Correct__c from client_objective__c where Client__c in (select client__c from session__c where id =: searchKey) order by Program_Name__c];
     }
 
 
