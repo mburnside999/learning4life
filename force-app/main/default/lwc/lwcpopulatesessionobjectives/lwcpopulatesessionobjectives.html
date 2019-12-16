@@ -1,29 +1,19 @@
 <template>
-    <lightning-card title="Populate Session Objectives - V1.0.2">
-      <input size="30" type="search" placeholder="Search Name, Program or SD..."
-      oninput={handleSearchKeyInput} />
-      <br/><br/>
-         <lightning-button-group>
+   <lightning-card title="Populate Session Objectives - V1.0.2">
+      
+     <input size="30" type="search" placeholder="Search Name, Program or SD..." oninput={handleSearchKeyInput} />
+       <br /><br />
+       <lightning-button-group>
 
-            <lightning-button
-         
-         label="Create Session Objectives"
-         title="Test Correct"
-         onclick={handleClickArray}>
-      </lightning-button>
-      
-      
-      
-      <lightning-button
-      
-      label="Cancel"
-      title="Test Prompted"
-      onclick={handleClickCancel}>
-      </lightning-button>
-      </lightning-button-group>
+           <lightning-button label="Create Session Objectives" title="Create Session Objectives" onclick={handleClickArray}>
+           </lightning-button>
 
-            <lightning-datatable key-field="Id" data={objectives} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
-     
+           <lightning-button label="Cancel" title="Canceld" onclick={handleClickCancel}>
+           </lightning-button>
+       </lightning-button-group>
+
+       <lightning-datatable key-field="Id" data={objectives} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
+
    </lightning-card>
-    
-   </template>
+
+</template>
