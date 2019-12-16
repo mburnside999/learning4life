@@ -90,13 +90,7 @@ handleChange(inpVal) {
           });
             break;
         case 'edit_details':
-            
-            console.log('EDIT DETAILS');
-            
-            
-
-
-
+            console.log('EDIT DETAILS');   
             break;
         default:
     }
