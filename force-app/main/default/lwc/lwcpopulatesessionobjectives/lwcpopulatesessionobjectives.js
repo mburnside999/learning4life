@@ -28,7 +28,7 @@ const columns = [{
         type: 'text'
     },
     {
-        label: 'Days',
+        label: 'Days Since Correct',
         fieldName: 'Days_Since_Tested_Correct__c',
         type: 'number'
     },
