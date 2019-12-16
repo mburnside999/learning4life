@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Objective__c</columns>
+    <columns>Program_Name__c</columns>
+    <columns>SD_Name__c</columns>
+    <columns>Status__c</columns>
+    <columns>Frequency__c</columns>
+    <columns>Days_Since_Tested_Correct__c</columns>
+    <columns>Last_Tested_Correct__c</columns>
+    <columns>Re_Test_Recommended__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

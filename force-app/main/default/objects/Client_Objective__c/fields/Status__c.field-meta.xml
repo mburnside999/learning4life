@@ -26,6 +26,16 @@
                 <default>false</default>
                 <label>CIP</label>
             </value>
+            <value>
+                <fullName>Held</fullName>
+                <default>false</default>
+                <label>Held</label>
+            </value>
+            <value>
+                <fullName>Absorbed</fullName>
+                <default>false</default>
+                <label>Absorbed</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

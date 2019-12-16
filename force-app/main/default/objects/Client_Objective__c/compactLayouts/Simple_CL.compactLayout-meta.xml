@@ -7,5 +7,6 @@
     <fields>Objective_Name__c</fields>
     <fields>SD_Name__c</fields>
     <fields>Status__c</fields>
+    <fields>Frequency__c</fields>
     <label>Simple CL</label>
 </CompactLayout>
