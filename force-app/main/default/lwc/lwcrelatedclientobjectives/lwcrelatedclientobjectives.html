@@ -1,37 +1,14 @@
 <template>
     <lightning-card title="Edit/Delete Client Objectives - V1.0.3" icon-name="custom:custom63">
-
         <template if:true={areDetailsVisible}>
-      
-   
-            <lightning-record-form
-                record-id={COrecordId}
-                object-api-name={COobjectApiName}
-                columns="2"
-                mode="edit"
-                onsuccess={handleSuccess}
-                oncancel={handleCancel}
-                layout-type="Compact">
+            <lightning-record-form record-id={COrecordId} object-api-name={COobjectApiName} columns="2" mode="edit" onsuccess={handleSuccess} oncancel={handleCancel} layout-type="Compact">
             </lightning-record-form>
-       
-     </template>
-
-     
-        <input size="30" type="search" placeholder="Search Name, Program or SD..."
-        oninput={handleSearchKeyInput} />
-       <lightning-button label="Refresh" title="Refresh" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
-   
-
+        </template>
       
-            <lightning-datatable hide-checkbox-column key-field="Id" 
-            data={clientobjectives} columns={columns}
-         onrowaction={handleRowAction}>
-        
+        <input size="30" type="search" placeholder="Search Name, Program or SD..." oninput={handleSearchKeyInput} />
+        <lightning-button label="Refresh" title="Refresh" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        <lightning-datatable hide-checkbox-column key-field="Id" data={clientobjectives} columns={columns} onrowaction={handleRowAction}>
         </lightning-datatable>
-   
 
-       
-</lightning-card>
-
-   
+    </lightning-card>
 </template>
