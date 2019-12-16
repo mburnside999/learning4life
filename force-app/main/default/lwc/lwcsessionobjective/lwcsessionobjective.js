@@ -14,17 +14,16 @@ import CORRECT_FIELD from '@salesforce/schema/Session_Obj__c.Correct__c';
 import INCORRECT_FIELD from '@salesforce/schema/Session_Obj__c.Incorrect__c';
 import PROMPTED_FIELD from '@salesforce/schema/Session_Obj__c.Prompted__c';
 import ID_FIELD from '@salesforce/schema/Session_Obj__c.Id';
+
 import { refreshApex } from '@salesforce/apex';
 import { deleteRecord } from 'lightning/uiRecordApi';
 
 
-
 const actions = [
-   
     { label: 'Delete', name: 'delete' },
   ];
-const columns = [
-          
+
+const columns = [     
     {label: 'Program', fieldName: 'Program__c', type:'text'},
     {label: 'Objective', fieldName: 'Objective_Name__c', type:'text'}, 
     {label: 'SD', fieldName: 'SD__c', type:'text'},
@@ -61,8 +60,6 @@ handleChange(inpVal) {
     console.log('PLACEHOLDER lwcsessionobjective component received pub sub input event');  
     return refreshApex(this.sessionObjectives);
   } 
-
-
 
   handleRowAction(event) {
     const actionName = event.detail.action.name;
@@ -104,9 +101,6 @@ handleChange(inpVal) {
         default:
     }
 }
-
-
-
 
   handleSave(event) {
     console.log(JSON.stringify(event.detail.draftValues));
@@ -164,7 +158,6 @@ handleClickArray(event) {
       }
     
     if (this.selectedRows) {
-        
         console.log('Commencing imperative Call to setSessionObjectivesCorrectByArray(key) ');
         console.log('mode='+mode);
         setSessionObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), val:mode})
@@ -191,7 +184,6 @@ handleClickArray(event) {
 }
 
 handleClickDelete(event) {
-
     console.log('Commencing imperative Call to deleteSessionObjectives(session) ');
     deleteSessionObjectives({sessionid: this.recordId})
     .then(result => {
@@ -224,7 +216,6 @@ getSelectedName(event) {
 
 showNotification(t,m,v) {
     console.log('Toast...');
-
     const evt = new ShowToastEvent({
         title: t,
         message: m,

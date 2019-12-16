@@ -1,49 +1,19 @@
 <template>
- <lightning-card title="Edit/Delete Session Objectives Inline - V1.0.2">
-      
-      <lightning-button-group>
-      <lightning-button
-   label="Mark Correct"
-   title="Test Correct"
-   onclick={handleClickArray}>
-</lightning-button>
+   <lightning-card title="Edit/Delete Session Objectives Inline - V1.0.2">
 
-<lightning-button
-variant="neutral"
-label="Mark Incorrect"
-title="Test Incorrect"
-onclick={handleClickArray}>
-</lightning-button>
+       <lightning-button-group>
+           <lightning-button label="Mark Correct" title="Mark Correct" onclick={handleClickArray}>
+           </lightning-button>
 
-<lightning-button
-variant="neutral"
-label="Mark Prompted"
-title="Test Prompted"
-onclick={handleClickArray}>
-</lightning-button>
-<!--
-<lightning-button
-variant="destructive"
-label="Delete"
-title="Delete selected"
-onclick={handleClickArray}>
-</lightning-button>
+           <lightning-button variant="neutral" label="Mark Incorrect" title="Mark Incorrect" onclick={handleClickArray}>
+           </lightning-button>
 
-<lightning-button
-      variant="destructive"
-      label="DELETE ALL Current Session Objectives -- CAUTION!"
-      title="Delete SO"
-      onclick={handleClickDelete}>
-      </lightning-button>
+           <lightning-button variant="neutral" label="Mark Prompted" title="Mark Prompted" onclick={handleClickArray}>
+           </lightning-button>
 
-    -->
-</lightning-button-group>
-         <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} 
-         onrowselection={getSelectedName}
-         onsave={handleSave}
-         draft-values={draftValues}
-         onrowaction={handleRowAction}>
-         </lightning-datatable>
-  
-</lightning-card>
+       </lightning-button-group>
+       <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} onrowselection={getSelectedName} onsave={handleSave} draft-values={draftValues} onrowaction={handleRowAction}>
+       </lightning-datatable>
+
+   </lightning-card>
 </template>
