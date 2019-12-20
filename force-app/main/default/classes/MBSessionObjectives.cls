@@ -1,6 +1,6 @@
 public with sharing class MBSessionObjectives {
 
-    @AuraEnabled(cacheable = true)
+    @AuraEnabled(cacheable = false)
     public static List < Session_obj__c > getSessionObjectives(String sess) {
 
         return [SELECT Id, Name, Objective__c, Objective_Name__c, Correct__c, Incorrect__c, Prompted__c, SD__c, Program__c, Comment__c, Previous_Status__c FROM Session_Obj__c where Session__c =: sess order by Program__c, Id];

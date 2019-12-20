@@ -1,6 +1,8 @@
 <template>
-   <lightning-card title="Edit/Delete Session Objectives Inline - V1.0.2">
+   <lightning-card title="Edit/Delete Session Objectives Inline - V1.0.3">
 
+    <input size="40" type="search" placeholder="Search Program, Objective, SD or Comment" oninput={handleSearchKeyInput} />
+    <br /><br />
        <lightning-button-group>
            <lightning-button label="Mark Correct" title="Mark Correct" onclick={handleClickArray}>
            </lightning-button>
@@ -12,7 +14,7 @@
            </lightning-button>
 
        </lightning-button-group>
-       <lightning-datatable key-field="Id" data={sessionObjectives.data} columns={columns} onrowselection={getSelectedName} onsave={handleSave} draft-values={draftValues} onrowaction={handleRowAction}>
+       <lightning-datatable key-field="Id" data={sessionObjectives} columns={columns} onrowselection={getSelectedName} onsave={handleSave} draft-values={draftValues} onrowaction={handleRowAction}>
        </lightning-datatable>
 
    </lightning-card>
