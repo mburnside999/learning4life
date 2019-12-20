@@ -41,24 +41,64 @@ const selectedRows = {};
 
 export default class Lwcsessionobjective extends LightningElement {
 
-@track allObjectives ={};
-@api recordId='a3N2v000003GqRzEAK'; //this is session 23
-@wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
+
+@api recordId='a3N2v000003Gr4VEAS'; //this is session 31
+//@wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
+@track sessionObjectives;
+
+
+
+
 @track error;
 @track columns = columns;
 @track recordsProcessed=0;
 //@track sessionObjectives;
 @wire(CurrentPageReference) pageRef;
 @track draftValues = [];
+@track allObjectives ={};
+
+
 
 connectedCallback() {
     console.log('subscribing to pub sub inputChangeEvent');
-    registerListener('inputChangeEvent', this.handleChange, this);  
+    registerListener('inputChangeEvent', this.handleChange, this); 
+    this.refresh(); 
 }
+
+refresh() {
+
+    console.log('in refactored refresh()');
+    getSessionObjectives( { sess: this.recordId })
+        .then(result => {
+            console.log('RETURNED');
+            this.sessionObjectives = result;
+            this.allObjectives = result;
+            console.log(JSON.stringify(this.sessionObjectives));
+
+        })
+        .catch(error => {
+            this.error = error;
+            console.log('ERROR' + JSON.stringify(error));
+        });
+
+
+
+}
+
+
+
+
+handleSearchKeyInput(event) {
+    const searchKey = event.target.value.toLowerCase();
+    this.sessionObjectives = this.allObjectives.filter(
+        so => so.Program__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)||so.SD__c.toLowerCase().includes(searchKey)||(!(so.Comment__c==undefined) && so.Comment__c.toLowerCase().includes(searchKey))
+    )
+}
+
 
 handleChange(inpVal) {
     console.log('PLACEHOLDER lwcsessionobjective component received pub sub input event');  
-    return refreshApex(this.sessionObjectives);
+    this.refresh();
   } 
 
   handleRowAction(event) {
@@ -77,7 +117,7 @@ handleChange(inpVal) {
                       variant: 'success'
                   })
               );
-              return refreshApex(this.sessionObjectives);
+              this.refresh();
           })
           .catch(error => {
               this.dispatchEvent(
@@ -116,18 +156,13 @@ handleChange(inpVal) {
          this.draftValues = [];
 
          // Display fresh data in the datatable
-         return refreshApex(this.sessionObjectives);
+         this.refresh();
     }).catch(error => {
         // Handle error
     });
 }
 
-handleSearchKeyInput(event) {
-    const searchKey = event.target.value.toLowerCase();
-    this.sessionObjectives = this.allObjectives.filter(
-      so => so.Name.toLowerCase().includes(searchKey) 
-    );
-  }
+
 
 handleClickArray(event) {
     console.log('Received event from button '+event.target.label);
@@ -163,8 +198,7 @@ handleClickArray(event) {
         })
         .then(() => {
             console.log('Refreshing');
-            return refreshApex(this.sessionObjectives);
-        }) 
+this.refresh();        }) 
         .then (() => {
            
            this.showNotification('Success!','Marked '+this.recordsProcessed+ ' records as '+mode+'.','success');
@@ -186,7 +220,7 @@ handleClickDelete(event) {
     })
     .then(() => {
         console.log('Refreshing');
-        return refreshApex(this.sessionObjectives);
+        this.refresh()
     })
     .then(() => {
         console.log('Toasty');
