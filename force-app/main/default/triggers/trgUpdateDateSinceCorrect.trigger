@@ -7,7 +7,7 @@ for (Session_Obj__c so : Trigger.New) {
 System.debug('XXXXX in loop');
 
 
-if (so.correct__c==true && (so.previous_status__c=='Acquired')) {
+if (so.correct__c==true && (so.previous_status__c=='AC')) {
 
 System.debug('XXXXXX true condition');
 
