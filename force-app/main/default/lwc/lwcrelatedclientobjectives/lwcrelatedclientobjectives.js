@@ -41,13 +41,18 @@ const columns = [{
         type: 'text'
     },
     {
+        label: 'Frequency',
+        fieldName: 'Frequency__c',
+        type: 'text'
+    },
+    {
         label: 'Last Correct',
         fieldName: 'Last_Tested_Correct__c',
         type: 'date'
     },
     {
-        label: 'Restest',
-        fieldName: 'Last_Tested_Correct__c,Re_Test_Recommended__c',
+        label: 'Retest',
+        fieldName: 'Re_Test_Recommended__c',
         type: 'boolean'
     },
     {
