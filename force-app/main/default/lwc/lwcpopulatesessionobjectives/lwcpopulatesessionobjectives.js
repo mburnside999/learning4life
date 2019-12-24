@@ -28,7 +28,7 @@ const columns = [{
         type: 'text'
     },   
     {
-        label: 'Retest Due',
+        label: 'Retest',
         fieldName: 'Re_Test_Recommended__c',
         type: 'boolean'
     },
