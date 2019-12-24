@@ -16,7 +16,7 @@ public with sharing class MBSessionObjectives {
     @AuraEnabled(cacheable = false)
     public static List < Client_Objective__c > getClientObjectives(String searchKey) {
 
-        return [SELECT Id, Name, Client__c, Objective_Name__c, SD_Name__c, Program_Name__c, Status__c FROM Client_Objective__c where Client__c =: searchKey order by Program_Name__c, Name];
+        return [SELECT Id, Name, Client__c, Objective_Name__c, SD_Name__c, Program_Name__c, Status__c,Last_Tested_Correct__c,Re_Test_Recommended__c FROM Client_Objective__c where Client__c =: searchKey order by Program_Name__c, Name];
     }
 
     @AuraEnabled(cacheable = true)

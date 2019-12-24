@@ -37,7 +37,7 @@ const columns = [{
 
 export default class Lwcpopulatsessionobjectives extends LightningElement {
     @wire(CurrentPageReference) pageRef;
-    @api recordId = 'a3N2v000003GqRzEAK';
+    @api recordId = 'a3N2v000003Gr4VEAS';
     @track allObjectives = {};
     //@wire(getObjectives, { sess: '$recordId' }) objectives;
     @track error;
