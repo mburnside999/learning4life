@@ -26,12 +26,7 @@ const columns = [{
         label: 'Status',
         fieldName: 'Status__c',
         type: 'text'
-    },
-    {
-        label: 'Days Since Correct',
-        fieldName: 'Days_Since_Tested_Correct__c',
-        type: 'number'
-    },
+    },   
     {
         label: 'Retest Due',
         fieldName: 'Re_Test_Recommended__c',
