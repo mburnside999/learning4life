@@ -9,18 +9,17 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Objective</fullName>
+                <fullName>O</fullName>
                 <default>false</default>
-                <label>Objective</label>
+                <label>O</label>
             </value>
             <value>
-                <fullName>Acquired</fullName>
+                <fullName>AC</fullName>
                 <default>false</default>
-                <label>Acquired</label>
+                <label>AC</label>
             </value>
             <value>
                 <fullName>CIP</fullName>
