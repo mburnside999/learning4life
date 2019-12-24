@@ -8,5 +8,7 @@
     <fields>SD_Name__c</fields>
     <fields>Status__c</fields>
     <fields>Frequency__c</fields>
+    <fields>Last_Tested_Correct__c</fields>
+    <fields>Re_Test_Recommended__c</fields>
     <label>Simple CL</label>
 </CompactLayout>

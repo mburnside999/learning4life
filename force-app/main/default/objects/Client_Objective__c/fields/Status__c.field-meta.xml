@@ -8,18 +8,17 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Objective</fullName>
+                <fullName>O</fullName>
                 <default>false</default>
-                <label>Objective</label>
+                <label>O</label>
             </value>
             <value>
-                <fullName>Acquired</fullName>
+                <fullName>AC</fullName>
                 <default>false</default>
-                <label>Acquired</label>
+                <label>AC</label>
             </value>
             <value>
                 <fullName>CIP</fullName>
@@ -27,14 +26,14 @@
                 <label>CIP</label>
             </value>
             <value>
-                <fullName>Held</fullName>
+                <fullName>AB</fullName>
                 <default>false</default>
-                <label>Held</label>
+                <label>AB</label>
             </value>
             <value>
-                <fullName>Absorbed</fullName>
+                <fullName>H</fullName>
                 <default>false</default>
-                <label>Absorbed</label>
+                <label>H</label>
             </value>
         </valueSetDefinition>
     </valueSet>
