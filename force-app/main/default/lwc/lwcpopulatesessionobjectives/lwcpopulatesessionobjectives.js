@@ -8,17 +8,17 @@ import {fireEvent} from 'c/pubsub';
 import {CurrentPageReference} from 'lightning/navigation';
 
 const columns = [{
-        label: 'Program',
+        label: 'Prog',
         fieldName: 'Program_Name__c',
         type: 'text'
     },
     {
-        label: 'SD Name',
+        label: 'SD',
         fieldName: 'SD_Name__c',
         type: 'text'
     },
     {
-        label: 'Objective',
+        label: 'Obj',
         fieldName: 'Objective_Name__c',
         type: 'text'
     },
@@ -28,7 +28,7 @@ const columns = [{
         type: 'text'
     },   
     {
-        label: 'Retest',
+        label: 'Re',
         fieldName: 'Re_Test_Recommended__c',
         type: 'boolean'
     },

@@ -24,14 +24,14 @@ const actions = [
   ];
 
 const columns = [     
-    {label: 'Program', fieldName: 'Program__c', type:'text'},
-    {label: 'Objective', fieldName: 'Objective_Name__c', type:'text'}, 
+    {label: 'Prog', fieldName: 'Program__c', type:'text'},
+    {label: 'Obj', fieldName: 'Objective_Name__c', type:'text'}, 
     {label: 'SD', fieldName: 'SD__c', type:'text'},
     {label: 'C', fieldName: 'Correct__c',type:'boolean',initialWidth:60,editable:true}, 
     {label: 'I', fieldName: 'Incorrect__c',type:'boolean',initialWidth:60,editable:true}, 
     {label: 'P', fieldName: 'Prompted__c',type:'boolean',initialWidth:60,editable:true},
-    {label: 'Comment', fieldName: 'Comment__c',type:'text', editable: true},
-    {label: 'Previous', fieldName: 'Previous_Status__c',type:'text'},{
+    {label: 'Notes', fieldName: 'Comment__c',type:'text', editable: true},
+    {label: 'Prev', fieldName: 'Previous_Status__c',type:'text'},{
         type: 'action',
         typeAttributes: { rowActions: actions },
     },
@@ -91,7 +91,7 @@ refresh() {
 handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
     this.sessionObjectives = this.allObjectives.filter(
-        so => so.Program__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)||so.SD__c.toLowerCase().includes(searchKey)||(!(so.Comment__c==undefined) && so.Comment__c.toLowerCase().includes(searchKey))
+        so => so.Program__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)||so.SD__c.toLowerCase().includes(searchKey)||(!(so.Comment__c===undefined) && so.Comment__c.toLowerCase().includes(searchKey))
     )
 }
 
