@@ -30,7 +30,7 @@ const columns = [
     {label: 'C', fieldName: 'Correct__c',type:'boolean',initialWidth:60,editable:true}, 
     {label: 'I', fieldName: 'Incorrect__c',type:'boolean',initialWidth:60,editable:true}, 
     {label: 'P', fieldName: 'Prompted__c',type:'boolean',initialWidth:60,editable:true},
-    {label: 'Notes', fieldName: 'Comment__c',type:'text', editable: true},
+    {label: 'Comments', fieldName: 'Comment__c',type:'text', editable: true},
     {label: 'Prev', fieldName: 'Previous_Status__c',type:'text'},{
         type: 'action',
         typeAttributes: { rowActions: actions },
@@ -179,7 +179,7 @@ handleClickArray(event) {
           case 'Mark Prompted':
             mode='Prompted';
           break;
-          case 'Delete':
+          case 'Delete Selected Records':
             mode='Delete';
           break;
         default:
