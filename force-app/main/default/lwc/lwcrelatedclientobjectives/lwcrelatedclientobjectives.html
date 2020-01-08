@@ -5,7 +5,7 @@
             </lightning-record-form>
         </template>
       
-        <input size="30" type="search" placeholder="Search Name, Program or SD..." oninput={handleSearchKeyInput} />
+        &nbsp;&nbsp; <input size="30" type="search" placeholder="Search Name, Program or SD..." oninput={handleSearchKeyInput} />
         <lightning-button label="Refresh" title="Refresh" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
         <lightning-datatable hide-checkbox-column key-field="Id" data={clientobjectives} columns={columns} onrowaction={handleRowAction}>
         </lightning-datatable>
