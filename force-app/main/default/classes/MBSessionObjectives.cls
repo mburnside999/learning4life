@@ -25,7 +25,7 @@ public with sharing class MBSessionObjectives {
         return [SELECT Id, Name, Program__c, SD_Name__c FROM Objective__c order by Program__c, Name];
     }
 
-    @AuraEnabled(cacheable = true)
+    @AuraEnabled
     public static List < Objective__c > getUnusedObjectives(String sess) {
 
         return [SELECT Id, Name, Program__c, SD_Name__c FROM Objective__c where Id not in (select Objective__c from Client_Objective__c where Client__c =: sess) order by Program__c, Name];

@@ -69,7 +69,7 @@ getSelectedName(event) {
   handleClickArray(event) {
     if (this.selectedRows) {
         console.log('logging JSON: '+JSON.stringify(this.selectedRows)) ;
-        console.log('loging session: '+this.recordId);
+        console.log('logging session: '+this.recordId);
         console.log('Commencing imperative Call to getClientObejctivesForSession(sessionid) ');
         createClientObjectivesByArray({jsonstr: JSON.stringify(this.selectedRows), sess: this.recordId})
         .then(result => {
@@ -84,7 +84,8 @@ getSelectedName(event) {
         })
         .then(() => {
             this.showNotification('Success',this.recordsProcessed+ ' records processed.','success');
-            
+            this.objectives=[];
+            this.refresh();
 
         }) 
         .finally(() => {
