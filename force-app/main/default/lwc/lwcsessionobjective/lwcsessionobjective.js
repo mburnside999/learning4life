@@ -200,9 +200,12 @@ handleClickArray(event) {
             console.log('Refreshing');
 this.refresh();        }) 
         .then (() => {
-           
-           this.showNotification('Success!','Marked '+this.recordsProcessed+ ' records as '+mode+'.','success');
-            
+           if (mode==='Delete') {
+            this.showNotification('Success!','Deleted '+this.recordsProcessed+ ' record(s).','success');
+
+           } else {
+           this.showNotification('Success!','Marked '+this.recordsProcessed+ ' record(s) as '+mode+'.','success');
+           }
         })
         .catch(error => {
             this.error = error;

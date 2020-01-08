@@ -96,14 +96,22 @@ export default class Lwcpopulatsessionobjectives extends LightningElement {
                 })
                 .then(() => {
                     console.log('Refreshing');
+                    
+                    
 
                 })
                 .then(() => {
-                    this.showNotification('Success', this.recordsProcessed + ' records processed.', 'success');
+                   this.showNotification('Success', this.recordsProcessed + ' records processed.', 'success');
+                   this.objectives=[];
+                   this.refresh();
+                    
+
+                    
                 })
                 .finally(() => {
                     console.log('firing event to notify listeners that the sesion objectives have been saved');
                     fireEvent(this.pageRef, 'inputChangeEvent', this.recordId);
+                    
                 })
                 .catch(error => {
                     this.error = error;
