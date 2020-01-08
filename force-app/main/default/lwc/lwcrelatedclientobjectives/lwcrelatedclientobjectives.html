@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Edit/Delete Client Objectives" icon-name="custom:custom63">
+    <lightning-card title="Client Objectives" icon-name="custom:custom63">
         <template if:true={areDetailsVisible}>
             <lightning-record-form record-id={COrecordId} object-api-name={COobjectApiName} columns="2" mode="edit" onsuccess={handleSuccess} oncancel={handleCancel} layout-type="Compact">
             </lightning-record-form>
