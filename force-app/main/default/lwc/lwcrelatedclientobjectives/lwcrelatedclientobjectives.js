@@ -56,6 +56,11 @@ const columns = [{
         type: 'boolean'
     },
     {
+        label: 'Notes',
+        fieldName: 'Client_Objective_Notes__c',
+        type: 'boolean'
+    },
+    {
         type: 'action',
         typeAttributes: {
             rowActions: actions

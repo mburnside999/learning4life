@@ -28,7 +28,7 @@ const columns = [{
         type: 'text'
     },   
     {
-        label: 'Re',
+        label: 'Re-Test Due',
         fieldName: 'Re_Test_Recommended__c',
         type: 'boolean'
     },
@@ -37,7 +37,7 @@ const columns = [{
 
 export default class Lwcpopulatsessionobjectives extends LightningElement {
     @wire(CurrentPageReference) pageRef;
-    @api recordId = 'a3N2v000003Gr4VEAS';
+    @api recordId = 'a3N2v000003Gr4VEAS'; //session 31 for testing
     @track allObjectives = {};
     //@wire(getObjectives, { sess: '$recordId' }) objectives;
     @track error;

@@ -1,3 +1,4 @@
 <aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+     <ltng:require styles="{!$Resource.popupCSS}" />
     <c:lwcpopulatesessionobjectives recordId="{!v.recordId}"/>
 </aura:component>
