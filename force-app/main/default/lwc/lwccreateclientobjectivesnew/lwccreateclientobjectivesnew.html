@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Populate Session Objectives">
+       
+     &nbsp;&nbsp;<input size="30" type="search" placeholder="Search Name, Program or SD..." oninput={handleSearchKeyInput} />
+        <br /><br />
+        &nbsp;<lightning-button-group>
+ 
+            <lightning-button label="Create Session Objectives" title="Create Session Objectives" onclick={handleClickArray}>
+            </lightning-button>
+ 
+            <lightning-button label="Cancel" title="Canceld" onclick={handleClickCancel}>
+            </lightning-button>
+        </lightning-button-group>
+        <br /><br />
+        <lightning-datatable enable-infinite-loading key-field="Id" data={objectives} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
+ 
+    </lightning-card>
+ 
+ </template>
