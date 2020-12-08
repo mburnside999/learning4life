@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types>
+    <name>CustomField</name>
+    <members>MBExpenseItem__c.Amount__c</members>
+    <members>MBExpenseItem__c.Expense_Item_Date__c</members>
+    <members>MBExpenseItem__c.Expense_Item_Type__c</members>
+    <members>MBExpenseItem__c.MBExpense__c</members>
+    <members>MBExpenseItem__c.Personal_Expense__c</members>
+    <members>MBExpense__c.Comments__c</members>
+    <members>MBExpense__c.Expense_Claim_Type__c</members>
+    <members>MBExpense__c.Expense_Date__c</members>
+    <members>MBExpense__c.TotalExpenses__c</members>
+  </types>
+  <types>
+    <name>Profile</name>
+    <members>Admin</members>
+    <members>Custom: Marketing Profile</members>
+    <members>Custom: Sales Profile</members>
+    <members>Custom: Support Profile</members>
+  </types>
+  <types>
+    <name>Layout</name>
+    <members>MBExpenseItem__c-MBExpenseItem Layout</members>
+    <members>MBExpense__c-MBExpense Layout</members>
+  </types>
+  <types>
+    <name>CustomObject</name>
+    <members>MBExpenseItem__c</members>
+    <members>MBExpense__c</members>
+  </types>
+  <types>
+    <name>CustomTab</name>
+    <members>MBExpense__c</members>
+  </types>
+  <version>48.0</version>
+</Package>

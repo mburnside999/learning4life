@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>MBExpenseItem__c.Comments__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>MBExpenseItem__c-MBExpenseItem Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <members>Custom: Marketing Profile</members>
+        <members>Custom: Sales Profile</members>
+        <members>Custom: Support Profile</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>MBExpenseItem__c.Expense_Date_Checker</members>
+        <members>MBExpenseItem__c.Personal_Expenses_Justification</members>
+        <members>MBExpense__c.Expense_Header_Date_Checker</members>
+        <name>ValidationRule</name>
+    </types>
+    <version>48.0</version>
+</Package>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>AppSwitcher</members>
+        <name>AppMenu</name>
+    </types>
+    <types>
+        <members>MyExpensesApp</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>MyExpenses__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>MyExpensesApp_UtilityBar</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>MYExpensesPS</members>
+        <name>PermissionSet</name>
+    </types>
+    <version>48.0</version>
+</Package>

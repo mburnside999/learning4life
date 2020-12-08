@@ -1,6 +1,6 @@
 trigger trgUpdateDateSinceCorrect on Session_Obj__c (before update) {
 
-System.debug('XXXXXX in trgUpdateDateSinceCorrect');
+System.debug('XXXXXXX in trgUpdateDateSinceCorrect');
 
 for (Session_Obj__c so : Trigger.New) {
 

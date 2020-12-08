@@ -58,7 +58,7 @@ const columns = [{
     {
         label: 'Notes',
         fieldName: 'Client_Objective_Notes__c',
-        type: 'boolean'
+        type: 'text'
     },
     {
         type: 'action',

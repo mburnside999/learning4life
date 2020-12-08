@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<SecuritySettings>
+    <passwordPolicies>
+        <enableSetPasswordInApi>true</enableSetPasswordInApi>
+    </passwordPolicies>
+</SecuritySettings>

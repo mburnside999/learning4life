@@ -29,7 +29,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
 @track error;
 @track columns = columns;
 @track recordsProcessed=0;
-@track objectives;
+//@track objectives;
 
 connectedCallback() {
     
