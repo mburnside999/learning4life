@@ -91,7 +91,7 @@ refresh() {
 handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
     this.sessionObjectives = this.allObjectives.filter(
-        so => so.Program__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)||so.SD__c.toLowerCase().includes(searchKey)||(!(so.Comment__c===undefined) && so.Comment__c.toLowerCase().includes(searchKey))
+        so => so.Program__c.toLowerCase().includes(searchKey) || (so.Previous_Status__c != null && so.Previous_Status__c.toLowerCase().includes(searchKey) ) || so.Objective_Name__c.toLowerCase().includes(searchKey)||so.SD__c.toLowerCase().includes(searchKey)||(!(so.Comment__c===undefined) && so.Comment__c.toLowerCase().includes(searchKey))
     )
 }
 
