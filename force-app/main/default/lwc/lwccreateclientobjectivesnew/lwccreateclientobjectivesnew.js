@@ -104,8 +104,13 @@ getSelectedName(event) {
 
 handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
+    
+    console.log('SEARCHKEY=' + searchKey + '. this.allObjectives= ' + JSON.stringify(this.allObjectives));
+
+    
+    
     this.objectives = this.allObjectives.filter(
-      so => so.Name.toLowerCase().includes(searchKey) || so.Program__c.toLowerCase().includes(searchKey) ||so.SD_Name__c.toLowerCase().includes(searchKey)
+      so => so.Name.toLowerCase().includes(searchKey) || (so.Status__c != null && so.Status__c.toLowerCase().includes(searchKey) ) || so.Program__c.toLowerCase().includes(searchKey) ||so.SD_Name__c.toLowerCase().includes(searchKey)
     );
   }
 

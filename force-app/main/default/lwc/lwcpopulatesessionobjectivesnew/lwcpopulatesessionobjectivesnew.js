@@ -208,8 +208,11 @@ get buttonDisabled(){
 
     handleSearchKeyInput(event) {
         const searchKey = event.target.value.toLowerCase();
+
+        console.log('SEARCHKEY=' + searchKey + '. this.allObjectives= ' + JSON.stringify(this.allObjectives));
+
         this.objectives = this.allObjectives.filter(
-            so => so.Program_Name__c.toLowerCase().includes(searchKey) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)
+            so => so.Program_Name__c.toLowerCase().includes(searchKey) || (so.Status__c != null && so.Status__c.toLowerCase().includes(searchKey) ) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)
         );
     }
 

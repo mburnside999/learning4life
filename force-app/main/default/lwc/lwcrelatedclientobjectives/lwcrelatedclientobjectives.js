@@ -230,12 +230,12 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     handleSearchKeyInput(event) {
 
         const searchKey = event.target.value.toLowerCase();
-        console.log('SEARCHKEY=' + searchKey + '. this.allObjectives= ' + JSON.stringify(this.allObjectives));
+        console.log('THE SEARCHKEY=' + searchKey + '. this.allObjectives= ' + JSON.stringify(this.allObjectives));
 
 
         this.clientobjectives = this.allObjectives.filter(
-            so => so.Name.toLowerCase().includes(searchKey) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Program_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)
-        );
+            so => so.Name.toLowerCase().includes(searchKey) || (so.Status__c != null && so.Status__c.toLowerCase().includes(searchKey) ) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Program_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)
+            );
 
         console.log('this.clientobjectives=' + JSON.stringify(this.clientobjectives));
     }
