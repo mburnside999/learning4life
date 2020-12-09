@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import { LightningElement,api,wire,track} from 'lwc';
 import getClientObjectivesForSession from '@salesforce/apex/MBSessionObjectives.getClientObjectivesForSession';
-import createSessionObjectivesByArray from '@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArray';
+import createSessionObjectivesByArrayWithResults from '@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArrayWithResults';
 import { ShowToastEvent} from 'lightning/platformShowToastEvent';
 import {fireEvent} from 'c/pubsub';
 import {CurrentPageReference} from 'lightning/navigation';
@@ -44,6 +44,15 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
     @track columns = columns;
     @track recordsProcessed = 0;
     @track objectives;
+ 
+    @track correctCount=0;
+    @track incorrectCount=0;
+    @track promptedCount=0;
+    @track selectCount=0;
+
+    
+    isButtonDisabled=true;
+
 
     connectedCallback() {
 
@@ -75,18 +84,93 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
     }
 
     getSelectedName(event) {
+        console.log(JSON.stringify(event));
         let myselectedRows = event.detail.selectedRows;
         this.selectedRows = myselectedRows;
+        this.selectCount=this.selectedRows.length;
+        if (this.selectCount==0) this.resetCounters();
     }
+
+    
+    
+    handleIncrCorrect(event){
+        if (this.selectedRows) {
+            this.correctCount+=1;
+            isButtonDisabled=false;
+
+        }
+        console.log('correctCount '+this.correctCount);
+    }
+
+   resetCounters(event){
+        this.correctCount=0;
+        this.incorrectCount=0;
+        this.promptedCount=0;
+    }
+
+
+    handleDecrCorrect(event){
+        if (this.selectedRows) {
+            if (this.correctCount==0) {
+                this.correctCount=0;
+        } else {this.correctCount -= 1}
+        console.log('correctCount '+this.correctCount);
+    }
+}
+
+handleIncrIncorrect(event){
+    if (this.selectedRows) {
+        this.incorrectCount+=1;
+    }
+    console.log('incorrectCount '+this.incorrectCount);
+}
+
+handleDecrIncorrect(event){
+    if (this.selectedRows) {
+        if (this.incorrectCount==0) {
+            this.incorrectCount=0;
+    } else {this.incorrectCount -= 1}
+    console.log('incorrectCount '+this.incorrectCount);
+}
+}
+
+handleIncrPrompted(event){
+    if (this.selectedRows) {
+        this.promptedCount+=1;
+    }
+    console.log('promptedCount: '+this.promptedCount);
+}
+
+handleDecrPrompted(event){
+    if (this.selectedRows) {
+        if (this.promptedCount==0) {
+            this.promptedCount=0;
+    } else {this.promptedCount -= 1}
+    console.log('promptedCount: '+this.promptedCount);
+}
+}
+    
+get sumOfCounts(){
+    //parseInt Converts a string to an integer.
+        return (parseInt(this.correctCount)+parseInt(this.incorrectCount)+parseInt(this.promptedCount))*this.selectCount;
+} 
+
+get buttonDisabled(){
+     return parseInt(this.correctCount)+parseInt(this.incorrectCount)+parseInt(this.promptedCount)==0;
+} 
 
     handleClickArray(event) {
         if (this.selectedRows) {
             console.log('logging JSON: ' + JSON.stringify(this.selectedRows));
             console.log('loging session: ' + this.recordId);
-            console.log('Commencing imperative Call to createSessionObjectivesByArray(sessionid, jsonstr) ');
-            createSessionObjectivesByArray({
+            console.log('Commencing imperative Call to createSessionObjectivesByArrayWithResults(sessionid, jsonstr) ');
+            console.log('correctcount='+this.correctCount);
+            createSessionObjectivesByArrayWithResults({
                     jsonstr: JSON.stringify(this.selectedRows),
-                    sess: this.recordId
+                    sess: this.recordId,
+                    correctcount:this.correctCount,
+                    incorrectcount:this.incorrectCount,
+                    promptedcount:this.promptedCount
                 })
                 .then(result => {
                     console.log('RETURNED');
@@ -104,6 +188,8 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
                    this.showNotification('Success', this.recordsProcessed + ' records processed.', 'success');
                    this.objectives=[];
                    this.refresh();
+                   this.resetCounters(null);
+                   this.selectCount=0;
                     
 
                     
@@ -126,6 +212,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
             so => so.Program_Name__c.toLowerCase().includes(searchKey) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)
         );
     }
+
 
     showNotification(t, m, v) {
         console.log('Toast...');

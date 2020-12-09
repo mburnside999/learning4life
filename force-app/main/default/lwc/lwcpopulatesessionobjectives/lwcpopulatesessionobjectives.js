@@ -86,7 +86,8 @@ export default class Lwcpopulatsessionobjectives extends LightningElement {
             console.log('Commencing imperative Call to createSessionObjectivesByArray(sessionid, jsonstr) ');
             createSessionObjectivesByArray({
                     jsonstr: JSON.stringify(this.selectedRows),
-                    sess: this.recordId
+                    sess: this.recordId,
+
                 })
                 .then(result => {
                     console.log('RETURNED');

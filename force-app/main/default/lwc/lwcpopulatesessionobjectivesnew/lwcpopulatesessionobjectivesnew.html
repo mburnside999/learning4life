@@ -1,13 +1,29 @@
 <template>
-    <lightning-card title="Populate Session Objectives">
+    <lightning-card title="In Development! Populate Session Objectives">
        
+    <div>Hi there! This component is in development but ready to try. <br /><br />
      &nbsp;&nbsp;<input size="30" type="search" placeholder="Search Name, Program or SD..." oninput={handleSearchKeyInput} />
         <br /><br />
-        &nbsp;<lightning-button-group>
+        &nbsp;
+        </div>
  
-            <lightning-button label="Create Session Objectives" title="Create Session Objectives" onclick={handleClickArray}>
+        
+            <lightning-button-group>
+                <lightning-button label="+C" onclick={handleIncrCorrect} ></lightning-button>
+                <lightning-button label="-C" onclick={handleDecrCorrect} ></lightning-button>
+                <lightning-button label="+I" onclick={handleIncrIncorrect} ></lightning-button>
+                <lightning-button label="-I" onclick={handleDecrIncorrect} ></lightning-button>
+                <lightning-button label="+P" onclick={handleIncrPrompted} ></lightning-button>
+                <lightning-button label="-P" onclick={handleDecrPrompted} ></lightning-button>
+                <lightning-button label="Reset" onclick={resetCounters} ></lightning-button>
+
+            </lightning-button-group>
+            <br/><br/>Selected Objectives={selectCount} Correct={correctCount} Incorrect={incorrectCount} Prompted={promptedCount} Total SessionObjectives={sumOfCounts} 
+          <br/><br/>
+          <lightning-button-group>
+            <lightning-button label="Create Session Objectives" disabled={buttonDisabled} title="Create Session Objectives" onclick={handleClickArray}>
             </lightning-button>
- 
+          
             <lightning-button label="Cancel" title="Canceld" onclick={handleClickCancel}>
             </lightning-button>
         </lightning-button-group>
