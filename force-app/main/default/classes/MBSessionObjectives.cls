@@ -94,7 +94,6 @@ public with sharing class MBSessionObjectives {
 
         // loop thru the deserialised objectives
         for (Objective__c o: objDeserialized) {
-
             // prepare a sess_obj__c and add to array
             Session_Obj__c so = new Session_Obj__c();
             so.Session__c = sess;
@@ -135,6 +134,58 @@ public with sharing class MBSessionObjectives {
 
         insert soList;
         return objDeserialized.size();
+    }
+
+    @AuraEnabled
+    public static Integer createSessionObjectivesByArrayWithResults(String jsonstr, String sess, Integer correctcount,Integer incorrectcount,integer promptedcount) {
+
+        //deserialise the object array      
+        List < Client_Objective__c > objDeserialized = (List < Client_Objective__c > ) JSON.deserializeStrict(jsonstr, List < Client_Objective__c > .class);
+
+        // // prepare a list for insertion in bulk
+        List < Session_Obj__c > soList = new List < Session_Obj__c > ();
+
+        // loop thru the deserialised objectives
+        for (Client_Objective__c o: objDeserialized) {
+            System.debug('correctcount='+correctCount);
+            for (Integer i=0; i<correctcount; i++) {
+            // prepare a session_obj__c and add to array
+            Session_Obj__c so = new Session_Obj__c();
+            so.Session__c = sess;
+            so.Objective__c = o.Objective__c;
+            so.Correct__C = true;
+            so.Incorrect__c = false;
+            so.Prompted__c = false;
+            so.previous_status__c = o.status__c;
+            soList.add(so);
+        }
+        for (Integer i=0; i<incorrectcount; i++) {
+            // prepare a session_obj__c and add to array
+            Session_Obj__c so = new Session_Obj__c();
+            so.Session__c = sess;
+            so.Objective__c = o.Objective__c;
+            so.Correct__C = false;
+            so.Incorrect__c = true;
+            so.Prompted__c = false;
+            so.previous_status__c = o.status__c;
+            soList.add(so);
+        }
+        for (Integer i=0; i<promptedcount; i++) {
+            // prepare a session_obj__c and add to array
+            Session_Obj__c so = new Session_Obj__c();
+            so.Session__c = sess;
+            so.Objective__c = o.Objective__c;
+            so.Correct__C = false;
+            so.Incorrect__c = false;
+            so.Prompted__c = true;
+            so.previous_status__c = o.status__c;
+            soList.add(so);
+        }
+
+        }
+
+        insert soList;
+        return soList.size();
     }
 
     @AuraEnabled
