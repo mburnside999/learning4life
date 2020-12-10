@@ -2,8 +2,7 @@ public with sharing class MBSessionObjectives {
 
     @AuraEnabled(cacheable = false)
     public static List < Session_obj__c > getSessionObjectives(String sess) {
-
-        return [SELECT Id, Name, Objective__c, Objective_Name__c, Correct__c, Incorrect__c, Prompted__c, SD__c, Program__c, Comment__c, Previous_Status__c FROM Session_Obj__c where Session__c =: sess order by Program__c, Id];
+        return [SELECT Id, Name, Objective__c, Objective_Name__c, Correct__c, Incorrect__c, Prompted__c, SD__c, Program__c, Comment__c, Previous_Status__c FROM Session_Obj__c where Session__c =: sess order by Program__c, Name];
     }
 
     @AuraEnabled
@@ -189,6 +188,57 @@ public with sharing class MBSessionObjectives {
     }
 
     @AuraEnabled
+    public static Integer createSessionObjectivesByArrayWithOrderedResults(String jsonstr, String sess, String skillstring) {
+
+        //deserialise the object array      
+        List < Client_Objective__c > objDeserialized = (List < Client_Objective__c > ) JSON.deserializeStrict(jsonstr, List < Client_Objective__c > .class);
+
+        List<MBSessionObjectives.SessionResult> sessionresults = (List <MBSessionObjectives.SessionResult > )JSON.deserializeStrict(skillstring,List<MBSessionObjectives.SessionResult>.class);
+
+        // // prepare a list for insertion in bulk
+        List < Session_Obj__c > soList = new List < Session_Obj__c > ();
+
+        // loop thru the deserialised objectives
+        for (Client_Objective__c o: objDeserialized) {
+            
+            for (MBSessionObjectives.SessionResult mbsr : sessionresults) {
+            // prepare a session_obj__c and add to array
+            Session_Obj__c so = new Session_Obj__c();
+            so.Session__c = sess;
+            so.Objective__c = o.Objective__c;
+            switch on mbsr.skill {
+                when 'C' {		// when block 1
+                    so.Correct__c=true;
+                    so.Incorrect__c=false;
+                    so.Prompted__c=false;
+                }	
+                when 'I' {		// when block 2
+                    so.Correct__c=false;
+                    so.Incorrect__c=true;
+                    so.Prompted__c=false;
+                }
+                when 'P' {		// when block 3
+                    so.Correct__c=false;
+                    so.Incorrect__c=false;
+                    so.Prompted__c=true;
+                }
+                
+            }           
+            so.previous_status__c = o.status__c;
+            soList.add(so);
+        }
+
+
+
+        }
+
+        insert soList;
+        return soList.size();
+    }
+
+
+
+    @AuraEnabled
     public static Integer createClientObjectivesByArray(String jsonstr, String sess) {
 
         //deserailise the object array      
@@ -247,5 +297,12 @@ public with sharing class MBSessionObjectives {
       return soDeserialized.size();
 
     }
+
+    public class SessionResult {
+        public String skill {get;set;}
+      }
+
+
+
 
 }
