@@ -6,20 +6,24 @@
         <br /><br />
         &nbsp;
         </div>
- 
         
-            <lightning-button-group>
+    
+       
+        
                 <lightning-button label="+C" onclick={handleIncrCorrect} ></lightning-button>
-                <lightning-button label="-C" onclick={handleDecrCorrect} ></lightning-button>
                 <lightning-button label="+I" onclick={handleIncrIncorrect} ></lightning-button>
-                <lightning-button label="-I" onclick={handleDecrIncorrect} ></lightning-button>
                 <lightning-button label="+P" onclick={handleIncrPrompted} ></lightning-button>
-                <lightning-button label="-P" onclick={handleDecrPrompted} ></lightning-button>
                 <lightning-button label="Reset" onclick={resetCounters} ></lightning-button>
 
-            </lightning-button-group>
-            <br/><br/>Selected Objectives={selectCount} Correct={correctCount} Incorrect={incorrectCount} Prompted={promptedCount} Total SessionObjectives={sumOfCounts} 
-          <br/><br/>
+          <br/><br/> 
+          <div class="slds-text-color_success slds-text-heading-small">{thisrow}</div>
+          <div class="slds-text-color_success slds-text-heading_medium">
+          <template for:each={results} for:item="result">
+            <nobr key={result}>{result}&nbsp;</nobr>
+        </template>
+        </div>
+        
+        <br/><br/>
           <lightning-button-group>
             <lightning-button label="Create Session Objectives" disabled={buttonDisabled} title="Create Session Objectives" onclick={handleClickArray}>
             </lightning-button>
@@ -28,7 +32,7 @@
             </lightning-button>
         </lightning-button-group>
         <br /><br />
-        <lightning-datatable enable-infinite-loading key-field="Id" data={objectives} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
+        <lightning-datatable max-row-selection="1"	enable-infinite-loading key-field="Id" data={objectives} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
  
     </lightning-card>
  
