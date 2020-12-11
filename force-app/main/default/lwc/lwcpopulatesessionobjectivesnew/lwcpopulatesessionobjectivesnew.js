@@ -56,6 +56,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
 
     //test
     @track results = [];
+    @track sessionresults=[];
     @track skillstring=[];
     
     connectedCallback() {
@@ -93,7 +94,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
         let myselectedRows = event.detail.selectedRows;
         console.log("populating the this row");
         if (myselectedRows.length>0) {
-        this.thisrow=myselectedRows[0].Program_Name__c+"-->"+myselectedRows[0].SD_Name__c+"-->"+myselectedRows[0].Objective_Name__c;
+        this.thisrow=myselectedRows[0].Program_Name__c+" > "+myselectedRows[0].SD_Name__c+" > "+myselectedRows[0].Objective_Name__c;
         this.selectedRows = myselectedRows;
         this.selectCount=this.selectedRows.length;
         }
@@ -146,13 +147,14 @@ handleIncrPrompted(event){
 
 
     
-get sumOfCounts(){
-    //parseInt Converts a string to an integer.
-        return (parseInt(this.correctCount)+parseInt(this.incorrectCount)+parseInt(this.promptedCount))*this.selectCount;
-} 
+// get sumOfCounts(){
+//     //parseInt Converts a string to an integer.
+//         return (parseInt(this.correctCount)+parseInt(this.incorrectCount)+parseInt(this.promptedCount))*this.selectCount;
+// } 
 
 get buttonDisabled(){
-     return parseInt(this.correctCount)+parseInt(this.incorrectCount)+parseInt(this.promptedCount)==0;
+    return parseInt(this.correctCount)+parseInt(this.incorrectCount)+parseInt(this.promptedCount)==0;
+ 
 } 
 
 
@@ -180,11 +182,13 @@ get buttonDisabled(){
                 })
                 .then(() => {
                    this.showNotification('Success', this.recordsProcessed + ' records processed.', 'success');
+                   this.sessionresults.push(this.selectedRows[0].Program_Name__c+" > "+this.selectedRows[0].SD_Name__c+" > "+this.selectedRows[0].Objective_Name__c+' '+this.results.toString());
+                   console.log("sessionresults",this.sessionresults) ;
                    this.objectives=[];
                    this.refresh();
                    this.resetCounters();
                    this.selectCount=0;
-                    
+                   
                     
                 })
                 .finally(() => {
