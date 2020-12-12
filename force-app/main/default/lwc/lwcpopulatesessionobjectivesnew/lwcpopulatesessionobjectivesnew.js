@@ -181,7 +181,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
               this.selectedRows[0].SD_Name__c +
               " > " +
               this.selectedRows[0].Objective_Name__c +
-              " " +
+              " : " +
               this.results.toString()
           );
           console.log("sessionresults", this.sessionresults);
@@ -232,6 +232,6 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   }
 
   handleClickCancel(event) {
-    console.log("Cancelled");
+    this.dispatchEvent(new CustomEvent('close'));
   }
 }
