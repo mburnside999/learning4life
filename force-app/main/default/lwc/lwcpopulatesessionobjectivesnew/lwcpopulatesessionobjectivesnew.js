@@ -1,38 +1,38 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-import { LightningElement,api,wire,track} from 'lwc';
-import getClientObjectivesForSession from '@salesforce/apex/MBSessionObjectives.getClientObjectivesForSession';
-import createSessionObjectivesByArrayWithOrderedResults from '@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArrayWithOrderedResults';
-import { ShowToastEvent} from 'lightning/platformShowToastEvent';
-import {fireEvent} from 'c/pubsub';
-import {CurrentPageReference} from 'lightning/navigation';
+import { LightningElement, api, wire, track } from "lwc";
+import getClientObjectivesForSession from "@salesforce/apex/MBSessionObjectives.getClientObjectivesForSession";
+import createSessionObjectivesByArrayWithOrderedResults from "@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArrayWithOrderedResults";
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import { fireEvent } from "c/pubsub";
+import { CurrentPageReference } from "lightning/navigation";
 
-const columns = [{
-        label: 'Prog',
-        fieldName: 'Program_Name__c',
-        type: 'text'
-    },
-    {
-        label: 'SD',
-        fieldName: 'SD_Name__c',
-        type: 'text'
-    },
-    {
-        label: 'Obj',
-        fieldName: 'Objective_Name__c',
-        type: 'text'
-    },
-    {
-        label: 'Status',
-        fieldName: 'Status__c',
-        type: 'text'
-    },   
-    {
-        label: 'Re-Test Due',
-        fieldName: 'Re_Test_Recommended__c',
-        type: 'boolean'
-    },
-
+const columns = [
+  {
+    label: "Prog",
+    fieldName: "Program_Name__c",
+    type: "text",
+  },
+  {
+    label: "SD",
+    fieldName: "SD_Name__c",
+    type: "text",
+  },
+  {
+    label: "Obj",
+    fieldName: "Objective_Name__c",
+    type: "text",
+  },
+  {
+    label: "Status",
+    fieldName: "Status__c",
+    type: "text",
+  },
+  {
+    label: "Re-Test Due",
+    fieldName: "Re_Test_Recommended__c",
+    type: "boolean",
+  },
 ];
 
 export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
@@ -144,7 +144,12 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   // }
 
   get buttonDisabled() {
-    return (parseInt(this.correctCount) + parseInt(this.incorrectCount) +parseInt(this.promptedCount) == 0);
+    return (
+      parseInt(this.correctCount) +
+        parseInt(this.incorrectCount) +
+        parseInt(this.promptedCount) ==
+      0
+    );
   }
 
   handleClickArray(event) {
@@ -232,6 +237,6 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   }
 
   handleClickCancel(event) {
-    this.dispatchEvent(new CustomEvent('close'));
+    this.dispatchEvent(new CustomEvent("close"));
   }
 }
