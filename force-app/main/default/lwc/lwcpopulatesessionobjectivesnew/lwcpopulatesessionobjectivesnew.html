@@ -1,5 +1,5 @@
 <template>
-  <lightning-card title="Assess and Populate Session Objectives">
+  <lightning-card title="Assess/Populate Session Objectives">
      <div class="page-section page-right"></div>
      <input size="50" type="search"
         placeholder="Filter Prog, Obj, SD or Status (NEW!)" oninput={handleSearchKeyInput} /></div>
@@ -14,14 +14,16 @@
                     <lightning-button label="+I" onclick={handleIncrIncorrect}></lightning-button>
                     <lightning-button label="+P" onclick={handleIncrPrompted}></lightning-button>
                     <lightning-button label="Reset" onclick={resetCounters}></lightning-button>
-                    <br /><br />
+                    <br />
                     <div class="slds-text-color_success slds-text-heading_small">{thisrow}</div>
                     <div class="slds-text-color_success slds-text-heading_medium">
                        <template for:each={results} for:item="result">
                           <nobr key={result}>{result}&nbsp;</nobr>
                        </template>
                     </div>
+                    <br/> 
                     <lightning-button-group>
+                       
                        <lightning-button label="Record Assessment" disabled={buttonDisabled}
                           title="Create Session Objective Assessment" onclick={handleClickArray}>
                        </lightning-button>

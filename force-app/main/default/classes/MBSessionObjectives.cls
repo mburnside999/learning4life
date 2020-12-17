@@ -2,11 +2,13 @@ public with sharing class MBSessionObjectives {
 
     @AuraEnabled(cacheable = false)
     public static List < Session_obj__c > getSessionObjectives(String sess) {
+        System.debug('>>>>>> in getSessionObjectives (sess)');
         return [SELECT Id, Name, Objective__c, Objective_Name__c, Correct__c, Incorrect__c, Prompted__c, SD__c, Program__c, Comment__c, Previous_Status__c FROM Session_Obj__c where Session__c =: sess order by Program__c, Name];
     }
 
     @AuraEnabled
     public static List < Client_Objective__c > getClientObjectivesForSession(String searchKey) {
+        System.debug('>>>>>> in getClientObjectivesForSession(searchKey)');
 
         return [select Id, Name, Objective__c, Objective_Name__c, Client__c, Program_Name__c, SD_Name__c, Status__c,Re_Test_Recommended__c,Days_Since_Tested_Correct__c,Client_Objective_Notes__c from client_objective__c where Client__c in (select client__c from session__c where id =: searchKey) order by Program_Name__c];
     }
@@ -14,29 +16,34 @@ public with sharing class MBSessionObjectives {
 
     @AuraEnabled(cacheable = false)
     public static List < Client_Objective__c > getClientObjectives(String searchKey) {
+        System.debug('>>>>>> in getClientObjectives(searchKey)');
 
         return [SELECT Id, Name, Client__c, Objective_Name__c, SD_Name__c, Program_Name__c, Status__c,Frequency__c,Last_Tested_Correct__c,Re_Test_Recommended__c,Client_Objective_Notes__c FROM Client_Objective__c where Client__c =: searchKey order by Program_Name__c, Name];
     }
 
     @AuraEnabled(cacheable = true)
     public static List < Objective__c > getObjectives(String sess) {
-
+        System.debug('>>>>>> in getObjectives(sess)');
         return [SELECT Id, Name, Program__c, SD_Name__c FROM Objective__c order by Program__c, Name];
     }
 
     @AuraEnabled
     public static List < Objective__c > getUnusedObjectives(String sess) {
+        System.debug('>>>>>> in getUnusedObjectives(sess)');
 
         return [SELECT Id, Name, Program__c, SD_Name__c FROM Objective__c where Id not in (select Objective__c from Client_Objective__c where Client__c =: sess) order by Program__c, Name];
     }
 
     @AuraEnabled
     public static void deleteSessionObjectives(String sessionid) {
+        System.debug('>>>>>> in deleteSessionObjectives(sessionid)');
+
         delete[select id from Session_Obj__c where session__c =: sessionid];
     }
 
     @AuraEnabled
     public static void createSessionObjectives(String sessionid, String objective) {
+        System.debug('>>>>>> in createSessionObjectives(sessionid,objective)');
 
         Session_Obj__c so = new Session_Obj__c();
         so.session__c = sessionid;
@@ -52,6 +59,7 @@ public with sharing class MBSessionObjectives {
     }
     @AuraEnabled
     public static void setSessionObjectives(String key, String val) {
+        System.debug('>>>>>> in setSessionObjectives(key,val)');
 
         Session_Obj__c so = [select id, Correct__c, Incorrect__c, Prompted__c from Session_Obj__c where id =: key limit 1];
 
@@ -110,6 +118,7 @@ public with sharing class MBSessionObjectives {
 
     @AuraEnabled
     public static Integer createSessionObjectivesByArray(String jsonstr, String sess) {
+        System.debug('>>>>>> in createSessionObjectivesByAray(jsonstr,sess)');
 
         //deserailise the object array      
         List < Client_Objective__c > objDeserialized = (List < Client_Objective__c > ) JSON.deserializeStrict(jsonstr, List < Client_Objective__c > .class);
@@ -137,6 +146,7 @@ public with sharing class MBSessionObjectives {
 
     @AuraEnabled
     public static Integer createSessionObjectivesByArrayWithResults(String jsonstr, String sess, Integer correctcount,Integer incorrectcount,integer promptedcount) {
+        System.debug('>>>>>> in createSessionObjectivesByArrayWithResult(jsonstr,sess,correctcount,incorrectcount,promptedcount)');
 
         //deserialise the object array      
         List < Client_Objective__c > objDeserialized = (List < Client_Objective__c > ) JSON.deserializeStrict(jsonstr, List < Client_Objective__c > .class);
@@ -189,6 +199,7 @@ public with sharing class MBSessionObjectives {
 
     @AuraEnabled
     public static Integer createSessionObjectivesByArrayWithOrderedResults(String jsonstr, String sess, String skillstring) {
+        System.debug('>>>>>> in createSessionObjectivesByArrayWithOrderedResults(jsonstr,sess,skillstr)');
 
         //deserialise the object array      
         List < Client_Objective__c > objDeserialized = (List < Client_Objective__c > ) JSON.deserializeStrict(jsonstr, List < Client_Objective__c > .class);
@@ -240,6 +251,7 @@ public with sharing class MBSessionObjectives {
 
     @AuraEnabled
     public static Integer createClientObjectivesByArray(String jsonstr, String sess) {
+        System.debug('>>>>>> in createClientObjectivesByArray(jsonstr,sess)');
 
         //deserailise the object array      
         List < Objective__c > objDeserialized = (List < Objective__c > ) JSON.deserializeStrict(jsonstr, List < Objective__c > .class);
@@ -264,6 +276,7 @@ public with sharing class MBSessionObjectives {
 
     @AuraEnabled
     public static Integer setSessionObjectivesByArray(String jsonstr, String val) {
+        System.debug('>>>>>> in setSessionObjectivesByArray(jsonstr,val)');
 
         boolean del = false;
         List < Session_Obj__c > soDeserialized = (List < Session_Obj__c > ) JSON.deserializeStrict(jsonstr, List < Session_Obj__c > .class);
