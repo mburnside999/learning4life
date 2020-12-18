@@ -190,8 +190,8 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
               this.results.toString()
           );
           console.log("sessionresults", this.sessionresults);
-          this.objectives = [];
-          this.refresh();
+          //this.objectives = [];
+          //this.refresh();
           this.resetCounters();
           this.selectCount = 0;
         })
