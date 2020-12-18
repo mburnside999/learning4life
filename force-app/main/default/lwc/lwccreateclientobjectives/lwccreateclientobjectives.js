@@ -119,6 +119,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   handleClickCancel(event) {
-    console.log("Cancelled");
+    console.log('cancelling-->');
+    this.dispatchEvent(new CustomEvent("close"));
   }
 }
