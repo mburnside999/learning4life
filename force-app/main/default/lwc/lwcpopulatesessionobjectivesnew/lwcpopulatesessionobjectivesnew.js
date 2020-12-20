@@ -51,7 +51,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   @track selectCount = 0;
   @track thisrow = "";
 
-  isButtonDisabled = true;
+  //isButtonDisabled = true;
 
   //test
   @track results = [];
@@ -106,7 +106,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
       this.skillstring.push({ skill: "C" });
       console.log(JSON.stringify(this.results));
       this.correctCount += 1;
-      isButtonDisabled = false;
+      //isButtonDisabled = false;
     }
     console.log("correctCount " + this.correctCount);
   }
