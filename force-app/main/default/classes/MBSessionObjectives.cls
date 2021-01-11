@@ -17,7 +17,7 @@ public with sharing class MBSessionObjectives {
         Previous_Status__c
       FROM Session_Obj__c
       WHERE Session__c = :sess
-      ORDER BY Program__c, Name
+      ORDER BY Name
     ];
   }
 
