@@ -44,8 +44,7 @@ global with sharing class InvocableTest {
             
             String statustext='';  
             String pname=(String)ar.get('Name');
-            String status=(String)ar.get('Status__c');
-            
+            String status=(String)ar.get('Status__c');      
             switch on status{
                 when 'ACQ' {
                     statustext='Acquired';
@@ -70,8 +69,7 @@ global with sharing class InvocableTest {
             if (pname != oldpname) { // simulate a break report
                 str+='<br/><p>Program: '+pname +'</p>'; 
             }
-            str+='<p>Number '+statustext +' '+ar.get('expr0')+'</p>'; 
-            
+            str+='<p>Number '+statustext +' '+ar.get('expr0')+'</p>';           
             oldpname=pname;
         }
         
@@ -97,7 +95,5 @@ global with sharing class InvocableTest {
         
         @InvocableVariable
         global DateTime endtime;       
-    }
-    
-    
+    }   
 }
