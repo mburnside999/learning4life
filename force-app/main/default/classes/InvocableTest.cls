@@ -8,12 +8,44 @@ global with sharing class InvocableTest {
         List<String> result = new List<String>();
         
         String str='';
+
         
         DateTime starttime=requests[0].starttime;
         DateTime endtime=requests[0].endtime;
-        endtime=endtime.addDays(1); // ensure endtime is stretched to include the whole day
         Id clientId=requests[0].clientId;
       
+        System.debug('InvocableTest: received the following from flow');
+        System.debug('InvocableTest: received starttime: '+starttime);
+        System.debug('InvocableTest: received endtime: '+endtime);
+        System.debug('InvocableTest: received clientId: '+clientId);
+        System.debug('InvocableTest: here are the received dates in local format.');
+        System.debug('InvocableTest: formatted starttime: '+starttime.format());
+        System.debug('InvocableTest: formatted endtime: '+endtime.format());
+
+        TimeZone tz = UserInfo.getTimeZone();
+        System.debug('InvocableTest: the user timezone is: '+tz.toString());
+        
+        // start time processing //
+        System.debug('InvocableTest: processing starttime...');
+        Integer offset=tz.getOffset(starttime.dateGMT());
+        System.debug('InvocableTest: at the received starttime the offset to GMT is : '+offset/1000+' seconds.');
+        starttime=starttime.addSeconds(0-(offset/1000));
+        System.debug('InvocableTest: starttime after subtracting the offset to GMT : '+starttime);
+        System.debug('InvocableTest: formatted local starttime after applying the offset to GMT: '+starttime.format());
+
+        // end time processing //
+        System.debug('InvocableTest: processing endtime');
+        endtime=endtime.addDays(1); // ensure endtime is stretched to include the whole day
+        System.debug('InvocableTest: stretched the endtime to '+endtime);
+
+        offset=tz.getOffset(endtime.dateGMT());
+        System.debug('InvocableTest: at the stretched endtime the offset to GMT is: '+offset/1000+' seconds.');
+        endtime=endtime.addSeconds(0-(offset/1000));
+        System.debug('InvocableTest: stretched endtime after subtracting the offset to GMT: '+endtime);
+        System.debug('InvocableTest: formatted local stretched endtime after applying the offset to GMT: '+endtime.format());
+        System.debug('InvocableTest: BOTTOM LINE we submit a SOQL statement that says=> SELECT..cols.. WHERE lastmodifieddate>='+starttime+' AND lastmodifieddate < '+endtime);
+
+
         // execute a SOQL aggregate query
         AggregateResult[] groupedResults
             = [SELECT client__c, Objective__r.SD__r.Program__r.Name,status__c, count(id) 
@@ -21,13 +53,14 @@ global with sharing class InvocableTest {
                WHERE 
                client__c=:clientId and 
                status__c in ('ACQ','HLD','ABS','OBJ') and 
-               lastmodifieddate >= :starttime and lastmodifieddate <= :endtime  
+               lastmodifieddate >= :starttime and lastmodifieddate < :endtime  
                GROUP BY client__c,Objective__r.SD__r.Program__r.Name,status__c];
         
         System.debug(groupedResults);
         
         //hack to dedup progream names
         Set<String> programSet = new Set<String>();
+        System.debug('InvocableTest: deduping program names');
         for (AggregateResult ar : groupedResults) {   
            programSet.add((String)ar.get('Name'));       
         }
@@ -36,7 +69,6 @@ global with sharing class InvocableTest {
         
         if (programSet.size()>0){
         str+='<p>Total Number of Programs '+programSet.size()+ '</p>';
-        // iterate through the aggregate set pulling out the fields we want and build our list -- default the "expr(0)"" refers to the first aggregation column
         }
         
         String oldpname='';
@@ -76,7 +108,7 @@ global with sharing class InvocableTest {
         
         System.debug(str);
         
-        // Flow now does the insert to the NDIS_Report__c object 
+        // DEPRECATED: Flow now does the insert to the NDIS_Report__c object 
         //NDIS_Report__c ndr = new NDIS_Report__c();
         //ndr.client__c=clientId;
         //ndr.NDIS_Report__c=str;
