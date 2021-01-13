@@ -11,14 +11,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>O</fullName>
+                <fullName>OBJ</fullName>
                 <default>false</default>
-                <label>O</label>
+                <label>OBJ</label>
             </value>
             <value>
-                <fullName>AC</fullName>
+                <fullName>ACQ</fullName>
                 <default>false</default>
-                <label>AC</label>
+                <label>ACQ</label>
             </value>
             <value>
                 <fullName>CIP</fullName>
@@ -26,14 +26,24 @@
                 <label>CIP</label>
             </value>
             <value>
-                <fullName>AB</fullName>
+                <fullName>ABS</fullName>
                 <default>false</default>
-                <label>AB</label>
+                <label>ABS</label>
             </value>
             <value>
-                <fullName>H</fullName>
+                <fullName>HLD</fullName>
                 <default>false</default>
-                <label>H</label>
+                <label>HLD</label>
+            </value>
+            <value>
+                <fullName>1CP</fullName>
+                <default>false</default>
+                <label>1CP</label>
+            </value>
+            <value>
+                <fullName>1IP</fullName>
+                <default>false</default>
+                <label>1IP</label>
             </value>
         </valueSetDefinition>
     </valueSet>

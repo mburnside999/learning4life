@@ -13,7 +13,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Weekly</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Weekly</label>
             </value>
             <value>

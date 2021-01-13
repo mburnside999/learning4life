@@ -11,6 +11,7 @@ global with sharing class InvocableTest {
         
         DateTime starttime=requests[0].starttime;
         DateTime endtime=requests[0].endtime;
+        endtime=endtime.addDays(1); // ensure endtime is stretched to include the whole day
         Id clientId=requests[0].clientId;
       
         // execute a SOQL aggregate query
@@ -20,7 +21,7 @@ global with sharing class InvocableTest {
                WHERE 
                client__c=:clientId and 
                status__c in ('ACQ','HLD','ABS','OBJ') and 
-               lastmodifieddate > :starttime and lastmodifieddate <= :endtime  
+               lastmodifieddate >= :starttime and lastmodifieddate <= :endtime  
                GROUP BY client__c,Objective__r.SD__r.Program__r.Name,status__c];
         
         System.debug(groupedResults);

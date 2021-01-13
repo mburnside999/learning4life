@@ -10,10 +10,16 @@
                  <lightning-layout-item padding="around-small" size="6">
                     <div class="slds-text-heading_medium">Assessment</div>
                     <br />
-                    <lightning-button label="+C" onclick={handleIncrCorrect}></lightning-button>
-                    <lightning-button label="+I" onclick={handleIncrIncorrect}></lightning-button>
-                    <lightning-button label="+P" onclick={handleIncrPrompted}></lightning-button>
-                    <lightning-button label="Reset" onclick={resetCounters}></lightning-button>
+                  <!-- <lightning-button  label="+C" onclick={handleIncrCorrect}></lightning-button>-->
+                  <!--<lightning-button  label="+I" onclick={handleIncrIncorrect}></lightning-button>-->
+                  <!--<lightning-button  label="+P" onclick={handleIncrPrompted}></lightning-button>-->
+                  <!--<lightning-button  label="Reset" onclick={resetCounters}></lightning-button>-->
+                   <button class="slds-button slds-button_neutral slds-button_stretch" style="width:100px;height:60px" onclick={handleIncrCorrect}>+C</button>
+                   <button class="slds-button slds-button_neutral slds-button_stretch" style="width:100px;height:60px" onclick={handleIncrIncorrect}>+I</button>
+                   <button class="slds-button slds-button_neutral slds-button_stretch" style="width:100px;height:60px" onclick={handleIncrPrompted}>+P</button>
+                   <button class="slds-button slds-button_neutral slds-button_stretch" style="width:100px;height:60px" onclick={resetCounters}>Reset</button>
+
+                    
                     <br />
                     <div class="slds-text-color_success slds-text-heading_small">{thisrow}</div>
                     <div class="slds-text-color_success slds-text-heading_medium">
