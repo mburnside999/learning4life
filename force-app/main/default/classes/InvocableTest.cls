@@ -1,5 +1,5 @@
 global with sharing class InvocableTest {
-    
+    // backing method for Mike DH's Report Wizard Flow
     @InvocableMethod(label='Mike Invocable method' description='Mikes invocable Method description')
     public static List<String> getStatusCountsBetweenDates (List<Requests> requests)   {
         
@@ -54,7 +54,8 @@ global with sharing class InvocableTest {
                client__c=:clientId and 
                status__c in ('ACQ','HLD','ABS','OBJ') and 
                lastmodifieddate >= :starttime and lastmodifieddate < :endtime  
-               GROUP BY client__c,Objective__r.SD__r.Program__r.Name,status__c];
+               GROUP BY client__c,Objective__r.SD__r.Program__r.Name,status__c
+               ];
         
         System.debug(groupedResults);
         
@@ -99,10 +100,25 @@ global with sharing class InvocableTest {
                 }
             }
                        
+
+            
             if (pname != oldpname) { // simulate a break report
                 str+='<br/><p>Program: '+pname +'</p>'; 
+                str+='<p>Objectives Acquired/Absorbed (All Time): '+countAllTimeAcquired(clientId, pname) +'</p>'; 
             }
-            str+='<p>Number '+statustext +' '+ar.get('expr0')+'</p>';           
+            str+='<p>Number '+statustext +' (This Period): '+ar.get('expr0')+'</p>';  
+            
+            List<client_objective__c> colist=getObjectiveList(clientId,pname,starttime,endtime,status);
+            
+            for (Client_Objective__c co: colist ){
+
+str+='<p>&nbsp;&nbsp;&nbsp;&nbsp;> '+co.objective_name__c+'</p>';
+
+            }
+
+
+
+
             oldpname=pname;
         }
         
@@ -117,6 +133,34 @@ global with sharing class InvocableTest {
         result.add(str);
         return (result)  ; //return our list of results
     }
+
+    static Integer countAllTimeAcquired(Id clientId,String pname){
+
+        AggregateResult[] countAcquired
+        = [SELECT Objective__r.SD__r.Program__r.Name,count(id)
+        FROM Client_Objective__c 
+        WHERE client__c=:clientId and 
+          Objective__r.SD__r.Program__r.Name=:pname and
+        status__c in  ('ACQ','ABS') 
+        GROUP BY Objective__r.SD__r.Program__r.Name];
+
+Integer result= (countAcquired.size()>0?(Integer)countAcquired[0].get('expr0'):0 );
+
+        return result;
+
+
+    }
+
+    static List<Client_Objective__c> getObjectiveList(Id clientId,String pname,Datetime starttime, Datetime endtime,String status){
+
+       return [SELECT Objective_Name__c
+        FROM Client_Objective__c 
+        WHERE client__c=:clientId and 
+        status__c=:status and
+        Objective__r.SD__r.Program__r.Name=:pname and
+        lastmodifieddate >= :starttime and lastmodifieddate < :endtime];  
+    }
+
     
     global class Requests {
         

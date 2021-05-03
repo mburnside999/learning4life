@@ -1,0 +1,7 @@
+SELECT client__c, Objective__r.SD__r.Program__r.Name,status__c, count(id) 
+               FROM Client_Objective__c 
+               WHERE 
+               client__c='0012v00002fY86nAAC' and 
+               status__c in ('ACQ','HLD','ABS','OBJ') and 
+               lastmodifieddate >= 2017-01-10T14:53:55.000+0000 and lastmodifieddate < 2022-01-10T14:53:55.000+0000
+               GROUP BY client__c,Objective__r.SD__r.Program__r.Name,status__c
