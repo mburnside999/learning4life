@@ -29,43 +29,45 @@ export default class Lwccreateclientobjectives extends LightningElement {
   //@track objectives;
 
   connectedCallback() {
-    console.log(`Starting, getting objectives, recordId = ${this.recordId}`);
+    console.info(`entering connectedCallback(): Starting, getting objectives, recordId = ${this.recordId}`);
     this.refresh();
   }
 
   refresh() {
-    console.log("IN REFRESH");
+    console.info("refresh(): entering");
     getUnusedObjectives({ sess: this.recordId })
       .then((result) => {
-        console.log("REFRESH RETURNED");
+        console.info("refresh(): REFRESH RETURNED");
         this.objectives = result;
         this.allObjectives = result;
-        console.log(JSON.stringify(this.objectives));
+        console.debug(`refresh(): ${JSON.stringify(this.objectives)}`);
       })
       .catch((error) => {
         this.error = error;
-        console.log(`REFRESH ERROR: ${JSON.stringify(error)}`);
+        console.error(`refresh(): REFRESH ERROR: ${JSON.stringify(error)}`);
       });
   }
 
   getSelectedName(event) {
+    console.info('getSelectedName(): entering')
     this.selectedRows = event.detail.selectedRows;
   }
 
   handleClickArray(event) {
+    console.info('handleClickArray(): entering');
     if (this.selectedRows) {
-      console.log(`logging JSON: ${JSON.stringify(this.selectedRows)}`);
-      console.log(`logging session: ${this.recordId}`);
-      console.log("imperative Call to getClientObejctivesForSession(sessionid) "
+      console.debug(`handleClickArray(): logging JSON: ${JSON.stringify(this.selectedRows)}`);
+      console.debug(`handleClickArray(): logging session: ${this.recordId}`);
+      console.debug("handleClickArray(): imperative Call to getClientObejctivesForSession(sessionid) "
       );
       createClientObjectivesByArray({
         jsonstr: JSON.stringify(this.selectedRows),
         sess: this.recordId,
       })
         .then((result) => {
-          console.log("RETURNED");
+          console.info("handleClickArray() RESULT RETURNED");
           this.recordsProcessed = result;
-          console.log(`${this.recordsProcessed} records processed.`);
+          console.debug(`${this.recordsProcessed} records processed.`);
         })
         .then(() => {})
         .then(() => {
@@ -78,18 +80,19 @@ export default class Lwccreateclientobjectives extends LightningElement {
           this.refresh();
         })
         .finally(() => {
-          console.log("FINALLY");
-          console.log("firing input change event");
+          console.log("handleClickArray(): finally()");
+          console.debug("firing input change event");
           fireEvent(this.pageRef, "inputChangeEvent", this.recordId);
         })
         .catch((error) => {
           this.error = error;
-          console.log(`ERRORED ${JSON.stringify(error)}`);
+          console.error(`ERRORED ${JSON.stringify(error)}`);
         });
     }
   }
 
   handleSearchKeyInput(event) {
+    console.info("handleSearchKey(): entering");
     const searchKey = event.target.value.toLowerCase();
     this.objectives = this.allObjectives.filter(
       (so) =>
@@ -109,7 +112,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   handleClickCancel(event) {
-    console.log('cancelling');
+    console.info('handleClickCancel() entering');
     this.dispatchEvent(new CustomEvent("close"));
   }
 }
