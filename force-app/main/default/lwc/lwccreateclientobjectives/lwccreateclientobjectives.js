@@ -49,20 +49,14 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   getSelectedName(event) {
-    let myselectedRows = event.detail.selectedRows;
-    this.selectedRows = myselectedRows;
-    // Display that fieldName of the selected rows
-    //for (let i = 0; i < selectedRows.length; i++){
-    //alert("You selected: " + selectedRows[i].Name);
-    //}
+    this.selectedRows = event.detail.selectedRows;
   }
 
   handleClickArray(event) {
     if (this.selectedRows) {
       console.log(`logging JSON: ${JSON.stringify(this.selectedRows)}`);
       console.log(`logging session: ${this.recordId}`);
-      console.log(
-        "Commencing imperative Call to getClientObejctivesForSession(sessionid) "
+      console.log("imperative Call to getClientObejctivesForSession(sessionid) "
       );
       createClientObjectivesByArray({
         jsonstr: JSON.stringify(this.selectedRows),
@@ -85,7 +79,6 @@ export default class Lwccreateclientobjectives extends LightningElement {
         })
         .finally(() => {
           console.log("FINALLY");
-
           console.log("firing input change event");
           fireEvent(this.pageRef, "inputChangeEvent", this.recordId);
         })
@@ -107,8 +100,6 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   showNotification(t, m, v) {
-    console.log("Toast...");
-
     const evt = new ShowToastEvent({
       title: t,
       message: m,
@@ -118,7 +109,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   handleClickCancel(event) {
-    console.log('cancelling-->');
+    console.log('cancelling');
     this.dispatchEvent(new CustomEvent("close"));
   }
 }

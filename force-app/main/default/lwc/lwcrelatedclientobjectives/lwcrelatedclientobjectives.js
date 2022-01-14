@@ -84,7 +84,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     connectedCallback() {
         console.log('subscribing to pub sub inputChangeEvent');
         registerListener('inputChangeEvent', this.handleChange, this);
-        console.log(`starting, getting client objectives, recordId =  ${this.recordId}`);
+        console.log(`Starting, getting client objectives, recordId =  ${this.recordId}`);
         this.refresh();
 
     }
@@ -139,7 +139,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     }
 
     refresh() {
-        console.log('in refactored this.refresh()');
+        console.log('in refresh()');
         console.log(`starting, getting client objectives, recordId = ${this.recordId}`);
         getClientObjectives({
                 searchKey: this.recordId
@@ -237,7 +237,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
             so => so.Name.toLowerCase().includes(searchKey) || (so.Status__c != null && so.Status__c.toLowerCase().includes(searchKey) ) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Program_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)
             );
 
-        console.log('this.clientobjectives=' + JSON.stringify(this.clientobjectives));
+        console.log(`this.clientobjectives=${JSON.stringify(this.clientobjectives)}`);
     }
 
 

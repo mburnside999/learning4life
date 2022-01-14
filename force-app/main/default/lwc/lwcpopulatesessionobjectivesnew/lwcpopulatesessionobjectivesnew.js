@@ -50,10 +50,6 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   @track promptedCount = 0;
   @track selectCount = 0;
   @track thisrow = "";
-
-  //isButtonDisabled = true;
-
-  //test
   @track results = [];
   @track sessionresults = [];
   @track skillstring = [];
@@ -64,7 +60,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   }
 
   refresh() {
-    console.log("in refactored refresh()");
+    console.log("in refresh()");
     getClientObjectivesForSession({
       searchKey: this.recordId,
     })
@@ -106,7 +102,6 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
       this.skillstring.push({ skill: "C" });
       console.log(JSON.stringify(this.results));
       this.correctCount += 1;
-      //isButtonDisabled = false;
     }
     console.log(`correctCount ${this.correctCount}`);
   }
@@ -135,7 +130,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
       this.skillstring.push({ skill: "P" });
       this.promptedCount += 1;
     }
-    console.log("promptedCount: " + this.promptedCount);
+    console.log(`promptedCount: ${this.promptedCount}`);
   }
 
   // get sumOfCounts(){
@@ -190,8 +185,6 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
               this.results.toString()
           );
           console.log(`sessionresults: ${this.sessionresults}`);
-          //this.objectives = [];
-          //this.refresh();
           this.resetCounters();
           this.selectCount = 0;
         })

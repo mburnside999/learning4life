@@ -62,7 +62,6 @@ export default class Lwcsessionobjective extends LightningElement {
   @track error;
   @track columns = columns;
   @track recordsProcessed = 0;
-  //@track sessionObjectives;
   @wire(CurrentPageReference) pageRef;
   @track draftValues = [];
   @track allObjectives = {};
@@ -84,7 +83,7 @@ export default class Lwcsessionobjective extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log(`ERROR ${JSON.stringify(error)}`);
+        console.log(`ERROR: ${JSON.stringify(error)}`);
       });
   }
 
@@ -218,7 +217,7 @@ export default class Lwcsessionobjective extends LightningElement {
           if (mode === "Delete") {
             this.showNotification(
               "Success!",
-              "Deleted " + this.recordsProcessed + " record(s).",
+              `Deleted ${this.recordsProcessed} record(s).`,
               "success"
             );
           } else {
@@ -262,8 +261,7 @@ export default class Lwcsessionobjective extends LightningElement {
       });
   }
   getSelectedName(event) {
-    let myselectedRows = event.detail.selectedRows;
-    this.selectedRows = myselectedRows;
+    this.selectedRows = event.detail.selectedRows;
     // Display that fieldName of the selected rows
     //for (let i = 0; i < selectedRows.length; i++){
     //alert("You selected: " + selectedRows[i].Name);
