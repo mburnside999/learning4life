@@ -55,35 +55,36 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   @track skillstring = [];
 
   connectedCallback() {
-    console.log("in connetedCallback calling refresh()");
+    console.info("connectedCallback():  entering");
     this.refresh();
   }
 
   refresh() {
-    console.log("in refresh()");
+    console.info("refresh(): entering");
+    console.debug("refresh(): calling getClientObjectivesForSession ");
+
     getClientObjectivesForSession({
       searchKey: this.recordId,
     })
       .then((result) => {
-        console.log("RETURNED");
+        console.debug("refresh(): getClientObjectivesForSession returned result");
         this.objectives = result;
+        console.debug(`refresh(): result=${JSON.stringify(result)}`);
         this.allObjectives = result;
-        console.log(JSON.stringify(this.objectives));
+        console.debug(`refresh(): this.objectives= ${JSON.stringify(this.objectives)}`);
       })
       .catch((error) => {
         this.error = error;
-        console.log(`ERROR ${JSON.stringify(error)}`);
+        console.error(`refresh(): ERROR ${JSON.stringify(error)}`);
       });
   }
 
   getSelectedName(event) {
-    console.log(
-      "in getSelectedName ",
-      JSON.stringify(event.detail.selectedRows)
-    );
+    console.info('getSelectedName(): entering');
+    console.debug(
+      `getSelectedName(): ${JSON.stringify(event.detail.selectedRows)}`);
 
     let myselectedRows = event.detail.selectedRows;
-    console.log("populating the this row");
     if (myselectedRows.length > 0) {
       this.thisrow =
         myselectedRows[0].Program_Name__c +
@@ -97,13 +98,15 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   }
 
   handleIncrCorrect(event) {
+    console.info('handleIncrCorrect(): entering');
+
     if (this.selectedRows) {
       this.results.push("C");
       this.skillstring.push({ skill: "C" });
       console.log(JSON.stringify(this.results));
       this.correctCount += 1;
     }
-    console.log(`correctCount ${this.correctCount}`);
+    console.debug(`handleIncrCorrect(): correctCount= ${this.correctCount}`);
   }
 
   resetCounters() {
@@ -116,21 +119,25 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   }
 
   handleIncrIncorrect(event) {
+    console.info('handleIncrIncorrect(): entering');
+
     if (this.selectedRows) {
       this.results.push("I");
       this.skillstring.push({ skill: "I" });
       this.incorrectCount += 1;
     }
-    console.log(`incorrectCount ${this.incorrectCount}`);
+    console.debug(`incorrectCount= ${this.incorrectCount}`);
   }
 
   handleIncrPrompted(event) {
+    console.info('handleIncrPrompted(): entering');
+
     if (this.selectedRows) {
       this.results.push("P");
       this.skillstring.push({ skill: "P" });
       this.promptedCount += 1;
     }
-    console.log(`promptedCount: ${this.promptedCount}`);
+    console.debug(`promptedCount= ${this.promptedCount}`);
   }
 
   // get sumOfCounts(){
@@ -148,23 +155,26 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   }
 
   handleClickArray(event) {
+    console.info('handleClickArray(): entering');
+
     if (this.selectedRows) {
-      console.log(`logging JSON: ${JSON.stringify(this.selectedRows)}`);
-      console.log(`logging session: ${this.recordId}`);
-      console.log(
+      console.debug(`handleClickArray(): this.selectedRows= ${JSON.stringify(this.selectedRows)}`);
+      console.debug(`handleClickArray(): this.recordId= ${this.recordId}`);
+      
+      console.debug(`handleClickArray(): correctcount= + ${this.correctCount}`);
+      console.debug(`handleClickArray(): JSON this.skillstring= ${JSON.stringify(this.skillstring)}`);
+      console.debug(
         "Commencing imperative Call to createSessionObjectivesByArrayWithOrderedResults() "
       );
-      console.log(`correctcount= + ${this.correctCount}`);
-      console.log(`JSON results: ${JSON.stringify(this.skillstring)}`);
       createSessionObjectivesByArrayWithOrderedResults({
         jsonstr: JSON.stringify(this.selectedRows),
         sess: this.recordId,
         skillstring: JSON.stringify(this.skillstring),
       })
         .then((result) => {
-          console.log("RETURNED");
+          console.log(`handleClickArray(): Apex returned result ${result}`);
           this.recordsProcessed = result;
-          console.log(`${this.recordsProcessed} records processed.`);
+          console.debug(`handleClickArray(): ${this.recordsProcessed} records processed.`);
         })
         .then(() => {
           console.log("Refreshing");
@@ -184,19 +194,19 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
               " : " +
               this.results.toString()
           );
-          console.log(`sessionresults: ${this.sessionresults}`);
+          console.debug(`handleClickArray(): this.sessionresults= ${this.sessionresults}`);
           this.resetCounters();
           this.selectCount = 0;
         })
         .finally(() => {
-          console.log(
-            "firing event to notify listeners that the sesion objectives have been saved"
+          console.debug(
+            "handleClickArray(): firing event to notify listeners that the sesion objectives have been saved"
           );
           fireEvent(this.pageRef, "inputChangeEvent", this.recordId);
         })
         .catch((error) => {
           this.error = error;
-          console.log(`ERRORED" ${JSON.stringify(error)}`);
+          console.error(`handleClickArray(): ERROR ${JSON.stringify(error)}`);
         });
     }
   }
@@ -220,7 +230,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   }
 
   showNotification(t, m, v) {
-    console.log("Toast...");
+    console.info('showNotification(): entering');
     const evt = new ShowToastEvent({
       title: t,
       message: m,

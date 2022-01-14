@@ -25,6 +25,7 @@ export default class Lwccreateincidentdata extends LightningElement {
     }
 
     start(event) {
+        console.info('start(): entering');
         this.showStartBtn = false;
         var parentThis = this;
 
@@ -43,11 +44,13 @@ export default class Lwccreateincidentdata extends LightningElement {
     }
 
     stop(event) {
+        console.info('stop(): entering');
         this.showStartBtn = true;
         clearInterval(this.timeIntervalInstance);
     }
 
     reset(event) {
+        console.info('reset(): entering');
         this.showStartBtn = true;
         this.timeVal = '00:00:00';
         this.totalMilliseconds = 0;
