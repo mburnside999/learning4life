@@ -84,7 +84,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     connectedCallback() {
         console.log('subscribing to pub sub inputChangeEvent');
         registerListener('inputChangeEvent', this.handleChange, this);
-        console.log('starting, getting client objectives, recordId = ' + this.recordId);
+        console.log(`starting, getting client objectives, recordId =  ${this.recordId}`);
         this.refresh();
 
     }
@@ -140,7 +140,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
 
     refresh() {
         console.log('in refactored this.refresh()');
-        console.log('starting, getting client objectives, recordId = ' + this.recordId);
+        console.log(`starting, getting client objectives, recordId = ${this.recordId}`);
         getClientObjectives({
                 searchKey: this.recordId
             })
@@ -153,7 +153,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
             })
             .catch(error => {
                 this.error = error;
-                console.log('ERROR' + JSON.stringify(error));
+                console.log(`ERROR ${JSON.stringify(error)}`);
             });
 
 
@@ -223,14 +223,14 @@ export default class lwcrelatedclientobjectives extends LightningElement {
             })
             .catch(error => {
                 this.error = error;
-                console.log('ERROR' + JSON.stringify(error));
+                console.log(`ERROR ${JSON.stringify(error)}`);
             });
     }
 
     handleSearchKeyInput(event) {
 
         const searchKey = event.target.value.toLowerCase();
-        console.log('THE SEARCHKEY=' + searchKey + '. this.allObjectives= ' + JSON.stringify(this.allObjectives));
+        console.log(`THE SEARCHKEY= ${searchKey}. this.allObjectives= ${JSON.stringify(this.allObjectives)}`);
 
 
         this.clientobjectives = this.allObjectives.filter(

@@ -18,7 +18,6 @@ const columns = [
 const selectedRows = {};
 
 export default class Lwccreateclientobjectives extends LightningElement {
-  //@api recordId='a3N2v000003Gr33EAC';
   @api recordId = "0012v00002fY86nAAC"; //Andy
 
   @wire(CurrentPageReference) pageRef;
@@ -30,7 +29,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
   //@track objectives;
 
   connectedCallback() {
-    console.log("starting, getting objectives, recordId = " + this.recordId);
+    console.log(`Starting, getting objectives, recordId = ${this.recordId}`);
     this.refresh();
   }
 
@@ -45,7 +44,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log("REFRESH ERROR" + JSON.stringify(error));
+        console.log(`REFRESH ERROR: ${JSON.stringify(error)}`);
       });
   }
 
@@ -60,8 +59,8 @@ export default class Lwccreateclientobjectives extends LightningElement {
 
   handleClickArray(event) {
     if (this.selectedRows) {
-      console.log("logging JSON: " + JSON.stringify(this.selectedRows));
-      console.log("logging session: " + this.recordId);
+      console.log(`logging JSON: ${JSON.stringify(this.selectedRows)}`);
+      console.log(`logging session: ${this.recordId}`);
       console.log(
         "Commencing imperative Call to getClientObejctivesForSession(sessionid) "
       );
@@ -72,13 +71,13 @@ export default class Lwccreateclientobjectives extends LightningElement {
         .then((result) => {
           console.log("RETURNED");
           this.recordsProcessed = result;
-          console.log(this.recordsProcessed + "records processed.");
+          console.log(`${this.recordsProcessed} records processed.`);
         })
         .then(() => {})
         .then(() => {
           this.showNotification(
             "Success",
-            this.recordsProcessed + " records processed.",
+            `${this.recordsProcessed} records processed.`,
             "success"
           );
           this.objectives = [];
@@ -92,7 +91,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
         })
         .catch((error) => {
           this.error = error;
-          console.log("ERRORED" + JSON.stringify(error));
+          console.log(`ERRORED ${JSON.stringify(error)}`);
         });
     }
   }

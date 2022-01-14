@@ -76,7 +76,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log("ERROR" + JSON.stringify(error));
+        console.log(`ERROR ${JSON.stringify(error)}`);
       });
   }
 
@@ -108,7 +108,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
       this.correctCount += 1;
       //isButtonDisabled = false;
     }
-    console.log("correctCount " + this.correctCount);
+    console.log(`correctCount ${this.correctCount}`);
   }
 
   resetCounters() {
@@ -126,7 +126,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
       this.skillstring.push({ skill: "I" });
       this.incorrectCount += 1;
     }
-    console.log("incorrectCount " + this.incorrectCount);
+    console.log(`incorrectCount ${this.incorrectCount}`);
   }
 
   handleIncrPrompted(event) {
@@ -154,13 +154,13 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
 
   handleClickArray(event) {
     if (this.selectedRows) {
-      console.log("logging JSON: " + JSON.stringify(this.selectedRows));
-      console.log("loging session: " + this.recordId);
+      console.log(`logging JSON: ${JSON.stringify(this.selectedRows)}`);
+      console.log(`logging session: ${this.recordId}`);
       console.log(
         "Commencing imperative Call to createSessionObjectivesByArrayWithOrderedResults() "
       );
-      console.log("correctcount=" + this.correctCount);
-      console.log("JSON results", JSON.stringify(this.skillstring));
+      console.log(`correctcount= + ${this.correctCount}`);
+      console.log(`JSON results: ${JSON.stringify(this.skillstring)}`);
       createSessionObjectivesByArrayWithOrderedResults({
         jsonstr: JSON.stringify(this.selectedRows),
         sess: this.recordId,
@@ -169,7 +169,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
         .then((result) => {
           console.log("RETURNED");
           this.recordsProcessed = result;
-          console.log(this.recordsProcessed + "records processed.");
+          console.log(`${this.recordsProcessed} records processed.`);
         })
         .then(() => {
           console.log("Refreshing");
@@ -177,7 +177,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
         .then(() => {
           this.showNotification(
             "Success",
-            this.recordsProcessed + " records processed.",
+            `${this.recordsProcessed} records processed.`,
             "success"
           );
           this.sessionresults.push(
@@ -189,7 +189,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
               " : " +
               this.results.toString()
           );
-          console.log("sessionresults", this.sessionresults);
+          console.log(`sessionresults: ${this.sessionresults}`);
           //this.objectives = [];
           //this.refresh();
           this.resetCounters();
@@ -203,7 +203,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
         })
         .catch((error) => {
           this.error = error;
-          console.log("ERRORED" + JSON.stringify(error));
+          console.log(`ERRORED" ${JSON.stringify(error)}`);
         });
     }
   }

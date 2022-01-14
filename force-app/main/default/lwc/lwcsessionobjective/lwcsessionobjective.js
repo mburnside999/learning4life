@@ -84,7 +84,7 @@ export default class Lwcsessionobjective extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log("ERROR" + JSON.stringify(error));
+        console.log(`ERROR ${JSON.stringify(error)}`);
       });
   }
 
@@ -175,7 +175,7 @@ export default class Lwcsessionobjective extends LightningElement {
   }
 
   handleClickArray(event) {
-    console.log("Received event from button " + event.target.label);
+    console.log(`Received event from button ${event.target.label}`);
     let mode = "";
     let label = event.target.label;
 
@@ -208,7 +208,7 @@ export default class Lwcsessionobjective extends LightningElement {
         .then((result) => {
           console.log("RETURNED");
           this.recordsProcessed = result;
-          console.log(this.recordsProcessed + "records processed.");
+          console.log(`${this.recordsProcessed} records processed.`);
         })
         .then(() => {
           console.log("Refreshing");
@@ -224,14 +224,14 @@ export default class Lwcsessionobjective extends LightningElement {
           } else {
             this.showNotification(
               "Success!",
-              "Marked " + this.recordsProcessed + " record(s) as " + mode + ".",
+              `Marked ${this.recordsProcessed} record(s) as ${mode} .`,
               "success"
             );
           }
         })
         .catch((error) => {
           this.error = error;
-          console.log("ERRORED" + JSON.stringify(error));
+          console.log(`ERRORED ${JSON.stringify(error)}`);
         });
     }
   }
@@ -258,7 +258,7 @@ export default class Lwcsessionobjective extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log("ERRORED" + JSON.stringify(error));
+        console.log(`ERRORED ${JSON.stringify(error)}`);
       });
   }
   getSelectedName(event) {
