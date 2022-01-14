@@ -52,14 +52,14 @@ export default class Lwccreateclientobjectives extends LightningElement {
 
   getSelectedName(event) {
     console.info('getSelectedName(): entering');
-    console.debug(event.detail.selectedRows);
+    console.debug(`getSelectedName(): ${event.detail.selectedRows}`);
     this.selectedRows = event.detail.selectedRows;
   }
 
   handleClickArray(event) {
     console.info('handleClickArray(): entering');
     if (this.selectedRows) {
-      console.debug('selectedRows==true');
+      console.debug('handleClickArray(): selectedRows==true');
       console.debug(`handleClickArray(): logging JSON: ${JSON.stringify(this.selectedRows)}`);
       console.debug(`handleClickArray(): logging session: ${this.recordId}`);
       console.debug("handleClickArray(): imperative Call to getClientObejctivesForSession(sessionid) "
