@@ -73,7 +73,7 @@ export default class Lwcsessionobjective extends LightningElement {
   }
 
   refresh() {
-    console.log("in refactored refresh()");
+    console.log("in refresh()");
     getSessionObjectives({ sess: this.recordId })
       .then((result) => {
         console.log("RETURNED");
