@@ -29,7 +29,7 @@ export default class Lwccreateincidentdata extends LightningElement {
         var parentThis = this;
 
         // Run timer code in every 100 milliseconds
-        this.timeIntervalInstance = setInterval(function() {
+        this.timeIntervalInstance = setInterval(() => {
 
             // Time calculations for hours, minutes, seconds and milliseconds
             var hours = Math.floor((parentThis.totalMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
