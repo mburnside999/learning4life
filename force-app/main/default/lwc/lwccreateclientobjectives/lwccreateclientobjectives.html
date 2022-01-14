@@ -1,0 +1,19 @@
+<template>
+   <lightning-card title="Available Objectives">
+    &nbsp;&nbsp; <input size="30" type="search" placeholder="Search Name, Program or SD..." oninput={handleSearchKeyInput} />
+       <br /><br />
+       &nbsp;<lightning-button-group>
+
+           <lightning-button label="Create Client Objectives" title="Create Client Objectives" onclick={handleClickArray}>
+           </lightning-button>
+
+
+           <lightning-button label="Close" title="Close" onclick={handleClickCancel}>
+           </lightning-button>
+       </lightning-button-group>
+       <br /><br />
+       <lightning-datatable key-field="Id" data={objectives} columns={columns} onrowselection={getSelectedName}></lightning-datatable>
+
+   </lightning-card>
+
+</template>

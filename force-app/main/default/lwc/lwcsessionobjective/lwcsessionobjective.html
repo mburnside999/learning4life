@@ -1,0 +1,64 @@
+<template>
+  <lightning-card title="Session Objectives">
+    &nbsp;&nbsp;<input
+      size="60"
+      type="search"
+      placeholder="Filter Program, Objective, SD, Comment or Previous_Status (NEW!)"
+      oninput={handleSearchKeyInput}
+    />
+    <br /><br />
+    <div class="c-container">
+      <lightning-layout multiple-rows="true">
+        <lightning-layout-item padding="around-small" size="12">
+          &nbsp;
+          <lightning-button-group>
+            <lightning-button
+              label="Mark Correct"
+              title="Mark Correct"
+              onclick={handleClickArray}
+            >
+            </lightning-button>
+
+            <lightning-button
+              variant="neutral"
+              label="Mark Incorrect"
+              title="Mark Incorrect"
+              onclick={handleClickArray}
+            >
+            </lightning-button>
+
+            <lightning-button
+              variant="neutral"
+              label="Mark Prompted"
+              title="Mark Prompted"
+              onclick={handleClickArray}
+            >
+            </lightning-button>
+
+            <lightning-button
+              variant="neutral"
+              label="Delete Selected Records"
+              title="Delete Selected Records"
+              onclick={handleClickArray}
+            >
+            </lightning-button>
+          </lightning-button-group>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12">
+          <br /><br />
+          <lightning-datatable
+            enable-infinite-loading
+            key-field="Id"
+            data={sessionObjectives}
+            columns={columns}
+            onrowselection={getSelectedName}
+            onsave={handleSave}
+            draft-values={draftValues}
+            onrowaction={handleRowAction}
+          >
+          </lightning-datatable>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
+</template>
