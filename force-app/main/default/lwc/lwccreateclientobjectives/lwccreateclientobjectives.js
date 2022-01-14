@@ -35,9 +35,11 @@ export default class Lwccreateclientobjectives extends LightningElement {
 
   refresh() {
     console.info("refresh(): entering");
+    console.debug("refresh(): calling Apex getUnusedObjectives");
+
     getUnusedObjectives({ sess: this.recordId })
       .then((result) => {
-        console.info("refresh(): REFRESH RETURNED");
+        console.debug("refresh(): getUnusedObjectives returned");
         this.objectives = result;
         this.allObjectives = result;
         console.debug(`refresh(): ${JSON.stringify(this.objectives)}`);
@@ -49,23 +51,26 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   getSelectedName(event) {
-    console.info('getSelectedName(): entering')
+    console.info('getSelectedName(): entering');
+    console.debug(event.detail.selectedRows);
     this.selectedRows = event.detail.selectedRows;
   }
 
   handleClickArray(event) {
     console.info('handleClickArray(): entering');
     if (this.selectedRows) {
+      console.debug('selectedRows==true');
       console.debug(`handleClickArray(): logging JSON: ${JSON.stringify(this.selectedRows)}`);
       console.debug(`handleClickArray(): logging session: ${this.recordId}`);
       console.debug("handleClickArray(): imperative Call to getClientObejctivesForSession(sessionid) "
       );
+
       createClientObjectivesByArray({
         jsonstr: JSON.stringify(this.selectedRows),
         sess: this.recordId,
       })
         .then((result) => {
-          console.info("handleClickArray() RESULT RETURNED");
+          console.debug("handleClickArray() RESULT RETURNED");
           this.recordsProcessed = result;
           console.debug(`${this.recordsProcessed} records processed.`);
         })
@@ -86,7 +91,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
         })
         .catch((error) => {
           this.error = error;
-          console.error(`ERRORED ${JSON.stringify(error)}`);
+          console.error(`handleClickArray(): ERRORED ${JSON.stringify(error)}`);
         });
     }
   }
@@ -94,6 +99,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
   handleSearchKeyInput(event) {
     console.info("handleSearchKey(): entering");
     const searchKey = event.target.value.toLowerCase();
+    console.debug(`handleSearchKeyInput(): searchKey=${searchKey}`);
     this.objectives = this.allObjectives.filter(
       (so) =>
         so.Name.toLowerCase().includes(searchKey) ||
