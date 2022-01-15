@@ -9,7 +9,7 @@ import { updateRecord} from 'lightning/uiRecordApi';
 import {deleteRecord} from 'lightning/uiRecordApi';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
-
+const COLOUR="color:magenta";
 const actions = [{
         label: 'Edit details',
         name: 'edit_details'
@@ -82,17 +82,18 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     //@wire(getClientObjectives, { searchKey: '$recordId' }) clientobjectives;
 
     connectedCallback() {
-        console.log('subscribing to pub sub inputChangeEvent');
+        console.log(`%cconnectedCallback(): subscribing to pub sub inputChangeEvent`,COLOUR);
         registerListener('inputChangeEvent', this.handleChange, this);
-        console.log(`Starting, getting client objectives, recordId =  ${this.recordId}`);
+        console.debug(`%cconnectedCallback(): calling this.refresh() to get client objectives, recordId =  ${this.recordId}`,COLOUR);
         this.refresh();
 
     }
 
     handleRowAction(event) {
+        console.info(`%chandleRowAction(): entering`,COLOUR);
         const actionName = event.detail.action.name;
         const row = event.detail.row;
-        console.log(JSON.stringify(row));
+        console.debug(`%chandleRowAction(): row=${JSON.stringify(row)}`,COLOUR);
         switch (actionName) {
             case 'delete':
                 console.log('DELETING');
@@ -119,8 +120,8 @@ export default class lwcrelatedclientobjectives extends LightningElement {
                 break;
             case 'edit_details':
                 this.COrecordId = row.Id;
-                console.log('EDIT DETAILS');
-                console.log(this.COrecordId);
+                console.info(`%ccase edit_details`,COLOUR);
+                console.debug(`%cthis.COrecordId= ${this.COrecordId}`,COLOUR);
                 this.areDetailsVisible = true;
                 break;
             default:
@@ -139,21 +140,21 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     }
 
     refresh() {
-        console.log('in refresh()');
-        console.log(`starting, getting client objectives, recordId = ${this.recordId}`);
+        console.info(`%crefresh(): entering`,COLOUR);
+        console.debug(`%crefresh(): calling getClientObjectives, recordId = ${this.recordId}`,COLOUR);
         getClientObjectives({
                 searchKey: this.recordId
             })
             .then(result => {
-                console.log('RETURNED');
+                console.debug(`%crefresh(): getClientObjectives returned ${JSON.stringify(result)}`,COLOUR);
                 this.clientobjectives = result;
                 this.allObjectives = result;
-                console.log(JSON.stringify(this.clientobjectives));
+                console.debug(`%crefresh(): this.clientObjectives= ${JSON.stringify(this.clientobjectives)}`,COLOUR);
 
             })
             .catch(error => {
                 this.error = error;
-                console.log(`ERROR ${JSON.stringify(error)}`);
+                console.log(`%cERROR ${JSON.stringify(error)}`,COLOUR);
             });
 
 
@@ -166,7 +167,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
 
     }
     handleSave(event) {
-        console.log(JSON.stringify(event.detail.draftValues));
+        console.debug(`handleSave(): ${JSON.stringify(event.detail.draftValues)}`,COLOUR);
         const recordInputs = event.detail.draftValues.slice().map(draft => {
             const fields = Object.assign({}, draft);
             return {
@@ -187,7 +188,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
             this.draftValues = [];
 
             // Display fresh data in the datatable
-            console.log('REFRESH is turned ON');
+            console.log(`%cREFRESH is turned ON`,COLOUR);
             this.refresh();
         }).catch(error => {
             // Handle error

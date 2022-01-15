@@ -1,6 +1,7 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
+const COLOUR="color:purple";
 
 
 
@@ -25,7 +26,7 @@ export default class Lwccreateincidentdata extends LightningElement {
     }
 
     start(event) {
-        console.info('start(): entering');
+        console.info(`%cstart(): entering`,COLOUR);
         this.showStartBtn = false;
         var parentThis = this;
 
@@ -44,13 +45,13 @@ export default class Lwccreateincidentdata extends LightningElement {
     }
 
     stop(event) {
-        console.info('stop(): entering');
+        console.info(`%cstop(): entering`,COLOUR);
         this.showStartBtn = true;
         clearInterval(this.timeIntervalInstance);
     }
 
     reset(event) {
-        console.info('reset(): entering');
+        console.info(`%creset(): entering`,COLOUR);
         this.showStartBtn = true;
         this.timeVal = '00:00:00';
         this.totalMilliseconds = 0;
@@ -73,6 +74,7 @@ export default class Lwccreateincidentdata extends LightningElement {
             message: "Incidental Data recorded",
             variant: "success"
         });
+        console.debug(`%chandleSuccess(): dispatching evt`,COLOUR);
         this.dispatchEvent(evt);
 
     }
