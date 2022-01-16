@@ -9,7 +9,7 @@ import { updateRecord} from 'lightning/uiRecordApi';
 import {deleteRecord} from 'lightning/uiRecordApi';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
-const COLOUR="color:magenta";
+const COLOR="color:magenta";
 const actions = [{
         label: 'Edit details',
         name: 'edit_details'
@@ -75,28 +75,32 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     @track COobjectApiName = 'Client_Objective__c';
     @track columns = columns;
     @track clientobjectives;
-    allObjectives = {};
+    filterableObjectives = {};
     @wire(CurrentPageReference) pageRef;
     @track draftValues = [];
     @track areDetailsVisible = false;
     //@wire(getClientObjectives, { clientId: '$recordId' }) clientobjectives;
 
     connectedCallback() {
-        console.log(`%cconnectedCallback(): subscribing to pub sub inputChangeEvent`,COLOUR);
+        console.info(`%cconnectedCallback(): entering`,COLOR);
+        console.debug(`%cconnectedCallback(): subscribing to pub sub inputChangeEvent`,COLOR);
+        console.debug(`%cconnectedCallback(): registering listener inputChangeEvent`,COLOR);
         registerListener('inputChangeEvent', this.handleChange, this);
-        console.debug(`%cconnectedCallback(): calling this.refresh() to get client objectives, recordId =  ${this.recordId}`,COLOUR);
+        console.debug(`%cconnectedCallback(): calling this.refresh() to get client objectives, recordId =  ${this.recordId}`,COLOR);
         this.refresh();
 
     }
 
     handleRowAction(event) {
-        console.info(`%chandleRowAction(): entering`,COLOUR);
+        console.info(`%chandleRowAction(): entering`,COLOR);
         const actionName = event.detail.action.name;
         const row = event.detail.row;
-        console.debug(`%chandleRowAction(): row=${JSON.stringify(row)}`,COLOUR);
+        console.debug(`%chandleRowAction(): row=${JSON.stringify(row)}`,COLOR);
         switch (actionName) {
             case 'delete':
-                console.log('DELETING');
+                console.debug(`%chandleRowAction: case delete`,COLOR);
+                console.debug(`%chandleRowAction: calling deleteRecord row.Id=${row.Id}`,COLOR);
+
                 deleteRecord(row.Id)
                     .then(() => {
                         this.dispatchEvent(
@@ -109,6 +113,8 @@ export default class lwcrelatedclientobjectives extends LightningElement {
                         this.refresh();
                     })
                     .catch(error => {
+                        console.error(`%chandleRowAction: error in deleteRecord row.Id=${row.Id}`,COLOR);
+
                         this.dispatchEvent(
                             new ShowToastEvent({
                                 title: 'Error deleting record',
@@ -119,9 +125,9 @@ export default class lwcrelatedclientobjectives extends LightningElement {
                     });
                 break;
             case 'edit_details':
+                console.debug(`%chandleRowAction: case edit_details`,COLOR);
+                console.debug(`%chandleRowAction: setting this.COrecordId=${row.Id}`,COLOR);
                 this.COrecordId = row.Id;
-                console.info(`%ccase edit_details`,COLOUR);
-                console.debug(`%cthis.COrecordId= ${this.COrecordId}`,COLOUR);
                 this.areDetailsVisible = true;
                 break;
             default:
@@ -140,21 +146,21 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     }
 
     refresh() {
-        console.info(`%crefresh(): entering`,COLOUR);
-        console.debug(`%crefresh(): calling getClientObjectives, recordId = ${this.recordId}`,COLOUR);
+        console.info(`%crefresh(): entering`,COLOR);
+        console.debug(`%crefresh(): calling getClientObjectives, recordId = ${this.recordId}`,COLOR);
         getClientObjectives({
                 clientId: this.recordId
             })
             .then(result => {
-                console.debug(`%crefresh(): getClientObjectives returned ${JSON.stringify(result)}`,COLOUR);
+                console.debug(`%crefresh(): getClientObjectives returned ${JSON.stringify(result)}`,COLOR);
                 this.clientobjectives = result;
-                this.allObjectives = result;
-                console.debug(`%crefresh(): this.clientObjectives= ${JSON.stringify(this.clientobjectives)}`,COLOUR);
+                this.filterableObjectives = result;
+                console.debug(`%crefresh(): this.clientObjectives= ${JSON.stringify(this.clientobjectives)}`,COLOR);
 
             })
             .catch(error => {
                 this.error = error;
-                console.log(`%cERROR ${JSON.stringify(error)}`,COLOUR);
+                console.log(`%cERROR ${JSON.stringify(error)}`,COLOR);
             });
 
 
@@ -167,16 +173,17 @@ export default class lwcrelatedclientobjectives extends LightningElement {
 
     }
     handleSave(event) {
-        console.debug(`handleSave(): ${JSON.stringify(event.detail.draftValues)}`,COLOUR);
+        console.debug(`%chandleSave(): ${JSON.stringify(event.detail.draftValues)}`,COLOR);
         const recordInputs = event.detail.draftValues.slice().map(draft => {
             const fields = Object.assign({}, draft);
             return {
                 fields
             };
         });
-
+        console.debug(`%chandleSave(): calling Promise.all to updateRecord`,COLOR);
         const promises = recordInputs.map(recordInput => updateRecord(recordInput));
         Promise.all(promises).then(contacts => {
+            console.debug(`%chandleSave(): Promise.all resolved`,COLOR);
             this.dispatchEvent(
                 new ShowToastEvent({
                     title: 'Success',
@@ -186,12 +193,11 @@ export default class lwcrelatedclientobjectives extends LightningElement {
             );
             // Clear all draft values
             this.draftValues = [];
-
             // Display fresh data in the datatable
-            console.log(`%cREFRESH is turned ON`,COLOUR);
+            console.debug(`%chandleSave(): calling refresh()`,COLOR);
             this.refresh();
         }).catch(error => {
-            // Handle error
+            console.error(`%chandleSave(): Promise.all rejected`,COLOR);
         });
     }
 
@@ -211,18 +217,18 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     }
 
     handleChange(inpVal) {
-        console.info(`%chandleChange(): entering`,COLOUR);
+        console.info(`%chandleChange(): entering, received inpVal=${inpVal}`,COLOR);
         console.log('received pub sub input event');
-        console.debug(`%chandleChange(): calling getClientObjectives, clientId=${this.recordId}`,COLOUR);
+        console.debug(`%chandleChange(): calling getClientObjectives, clientId=${this.recordId}`,COLOR);
 
         getClientObjectives({
                 clientId: this.recordId
             })
             .then(result => {
-                console.debug(`%chandleChange(): returned result=${JSON.stringify(result)}`,COLOUR);
+                console.debug(`%chandleChange(): returned result=${JSON.stringify(result)}`,COLOR);
                 this.clientobjectives = result;
-                this.allObjectives = result;
-                console.debug(`%chandleChange(): this.allObjectives=${JSON.stringify(this.allObjectives)}`,COLOR);
+                this.filterableObjectives = result;
+                console.debug(`%chandleChange(): this.filterableObjectives=${JSON.stringify(this.filterableObjectives)}`,COLOR);
 
             })
             .catch(error => {
@@ -234,8 +240,8 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     handleSearchKeyInput(event) {
 
         const searchKey = event.target.value.toLowerCase();
-        console.debug(`%chandleSearchKeyInput(): searchKey= ${searchKey}. this.allObjectives= ${JSON.stringify(this.allObjectives)}`,COLOUR);
-        this.clientobjectives = this.allObjectives.filter(
+        console.debug(`%chandleSearchKeyInput(): searchKey= ${searchKey}. this.filterableObjectives= ${JSON.stringify(this.filterableObjectives)}`,COLOR);
+        this.clientobjectives = this.filterableObjectives.filter(
             so => so.Name.toLowerCase().includes(searchKey) || (so.Status__c != null && so.Status__c.toLowerCase().includes(searchKey) ) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Program_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)
             );
 
