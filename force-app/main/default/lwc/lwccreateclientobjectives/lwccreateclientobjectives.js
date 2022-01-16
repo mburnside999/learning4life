@@ -5,10 +5,14 @@ import { LightningElement, api, wire, track } from "lwc";
 import getUnusedObjectives from "@salesforce/apex/MBSessionObjectives.getUnusedObjectives";
 import createClientObjectivesByArray from "@salesforce/apex/MBSessionObjectives.createClientObjectivesByArray";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import { fireEvent } from "c/pubsub";
+//import { fireEvent } from "c/pubsub";
 import { CurrentPageReference } from "lightning/navigation";
 import { refreshApex } from "@salesforce/apex";
-const COLOUR="color:green";
+// Lightning Message Service
+import { publish, MessageContext } from 'lightning/messageService';
+import L4LMC from '@salesforce/messageChannel/L4LMessageChannel__c';
+
+const COLOR="color:green";
 
 const columns = [
   { label: "Name", fieldName: "Name", type: "text" },
@@ -19,6 +23,7 @@ const columns = [
 const selectedRows = {};
 
 export default class Lwccreateclientobjectives extends LightningElement {
+  @wire(MessageContext) messageContext;
   @api recordId = "0012v00002fY86nAAC"; //Andy
 
   @wire(CurrentPageReference) pageRef;
@@ -30,41 +35,41 @@ export default class Lwccreateclientobjectives extends LightningElement {
   //@track objectives;
 
   connectedCallback() {
-    console.info(`%cconnectedCallback(): Starting, getting objectives, recordId = ${this.recordId}`,COLOUR);
-    console.info(`%cconnectedCallback(): calling refresh()`,COLOUR);
+    console.info(`%cconnectedCallback(): Starting, getting objectives, recordId = ${this.recordId}`,COLOR);
+    console.info(`%cconnectedCallback(): calling refresh()`,COLOR);
     this.refresh();
   }
 
   refresh() {
-    console.info(`%crefresh(): entering`,COLOUR);
-    console.debug(`%crefresh(): calling Apex getUnusedObjectives`,COLOUR);
-    console.debug(`%crefresh(): parameter clientId=${this.recordId}`,COLOUR);
+    console.info(`%crefresh(): entering`,COLOR);
+    console.debug(`%crefresh(): calling Apex getUnusedObjectives`,COLOR);
+    console.debug(`%crefresh(): parameter clientId=${this.recordId}`,COLOR);
     getUnusedObjectives({ clientId: this.recordId })
       .then((result) => {
-        console.debug(`%crefresh(): getUnusedObjectives returned`,COLOUR);
+        console.debug(`%crefresh(): getUnusedObjectives returned`,COLOR);
         this.objectives = result;
         this.allObjectives = result;
-        console.debug(`%crefresh(): ${JSON.stringify(this.objectives)}`,COLOUR);
+        console.debug(`%crefresh(): ${JSON.stringify(this.objectives)}`,COLOR);
       })
       .catch((error) => {
         this.error = error;
-        console.error(`%crefresh(): REFRESH ERROR: ${JSON.stringify(error)}`,COLOUR);
+        console.error(`%crefresh(): REFRESH ERROR: ${JSON.stringify(error)}`,COLOR);
       });
   }
 
   getSelectedName(event) {
-    console.info(`%cgetSelectedName(): entering`,COLOUR);                                                          
-    console.debug(`%cgetSelectedName(): ${event.detail.selectedRows}`,COLOUR);
+    console.info(`%cgetSelectedName(): entering`,COLOR);                                                          
+    console.debug(`%cgetSelectedName(): ${event.detail.selectedRows}`,COLOR);
     this.selectedRows = event.detail.selectedRows;
   }
 
   handleClickArray(event) {
-    console.info(`%chandleClickArray(): entering`,COLOUR);
+    console.info(`%chandleClickArray(): entering`,COLOR);
     if (this.selectedRows) {
-      console.debug(`%chandleClickArray(): selectedRows==true`,COLOUR);
-      console.debug(`%chandleClickArray(): logging JSON: ${JSON.stringify(this.selectedRows)}`,COLOUR);
-      console.debug(`%chandleClickArray(): logging session: ${this.recordId}`,COLOUR);
-      console.debug(`%chandleClickArray(): imperative Call to getClientObejctivesForSession(sessionid)`,COLOUR
+      console.debug(`%chandleClickArray(): selectedRows==true`,COLOR);
+      console.debug(`%chandleClickArray(): logging JSON: ${JSON.stringify(this.selectedRows)}`,COLOR);
+      console.debug(`%chandleClickArray(): logging session: ${this.recordId}`,COLOR);
+      console.debug(`%chandleClickArray(): imperative Call to createClientObjectivesByArray`,COLOR
       );
 
       createClientObjectivesByArray({
@@ -72,11 +77,11 @@ export default class Lwccreateclientobjectives extends LightningElement {
         sess: this.recordId,
       })
         .then((result) => {
-          console.debug(`%chandleClickArray() createClientObjectivesByArray result`,COLOUR);
+          console.debug(`%chandleClickArray() createClientObjectivesByArray returned result`,COLOR);
           this.recordsProcessed = result;
-          console.debug(`%c${this.recordsProcessed} records processed.`,COLOUR);
+          console.debug(`%c${this.recordsProcessed} records processed.`,COLOR);
         })
-        .then(() => {console.debug(`????????? what does this .then do ???`,COLOUR)})
+        .then(() => {console.debug(`????????? what does this .then do ???`,COLOR)})
         .then(() => {
           this.showNotification(
             "Success",
@@ -87,21 +92,29 @@ export default class Lwccreateclientobjectives extends LightningElement {
           this.refresh();
         })
         .finally(() => {
-          console.log(`%chandleClickArray(): reached finally()`,COLOUR);
-          console.debug(`%cfiring input change event`,COLOUR);
-          fireEvent(this.pageRef, "inputChangeEvent", this.recordId);
+          console.log(`%chandleClickArray(): reached finally()`,COLOR);
+          console.debug(`%cpublishing LMS event`,COLOR);
+          //fireEvent(this.pageRef, "inputChangeEvent", this.recordId);
+          const message = {
+            recordId: '',
+            message : "message from lwccreateclienbtobjectives",
+            source: "LWC",
+            recordData: {}
+        };
+        console.debug(`%cSending message via L4LMC, message=${message}`,COLOR);
+        publish(this.messageContext, L4LMC, message);
         })
         .catch((error) => {
           this.error = error;
-          console.error(`%chandleClickArray(): ERRORED ${JSON.stringify(error)}`,COLOUR);
+          console.error(`%chandleClickArray(): ERRORED ${JSON.stringify(error)}`,COLOR);
         });
     }
   }
 
   handleSearchKeyInput(event) {
-    console.info(`%chandleSearchKeyInput(): entering`,COLOUR);
+    console.info(`%chandleSearchKeyInput(): entering`,COLOR);
     const searchKey = event.target.value.toLowerCase();
-    console.debug(`%chandleSearchKeyInput(): searchKey=${searchKey}`,COLOUR);
+    console.debug(`%chandleSearchKeyInput(): searchKey=${searchKey}`,COLOR);
     this.objectives = this.allObjectives.filter(
       (so) =>
         so.Name.toLowerCase().includes(searchKey) ||
@@ -111,7 +124,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   showNotification(t, m, v) {
-    console.info(`%cshowNotification() entering`,COLOUR);
+    console.info(`%cshowNotification() entering`,COLOR);
     const evt = new ShowToastEvent({
       title: t,
       message: m,
@@ -121,7 +134,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   handleClickCancel(event) {
-    console.info(`%chandleClickCancel() entering`,COLOUR);
+    console.info(`%chandleClickCancel() entering`,COLOR);
     this.dispatchEvent(new CustomEvent("close"));
   }
 }

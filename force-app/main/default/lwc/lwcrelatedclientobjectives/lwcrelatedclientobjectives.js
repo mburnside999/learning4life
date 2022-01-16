@@ -4,11 +4,20 @@
 import { LightningElement,track,wire,api} from 'lwc';
 import getClientObjectives from '@salesforce/apex/MBSessionObjectives.getClientObjectives';
 import { CurrentPageReference} from 'lightning/navigation';
-import {registerListener,unregisterAllListeners,fireEvent} from 'c/pubsub';
+//import {registerListener,unregisterAllListeners,fireEvent} from 'c/pubsub';
 import { updateRecord} from 'lightning/uiRecordApi';
 import {deleteRecord} from 'lightning/uiRecordApi';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
-
+// Lightning Message ervice
+import {
+    subscribe,
+    unsubscribe,
+    APPLICATION_SCOPE,
+    MessageContext
+  } from "lightning/messageService";
+  
+  import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
+  
 const COLOR="color:magenta";
 const actions = [{
         label: 'Edit details',
@@ -80,12 +89,21 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     @track draftValues = [];
     @track areDetailsVisible = false;
     //@wire(getClientObjectives, { clientId: '$recordId' }) clientobjectives;
-
+    subscription = null;
+    @wire(MessageContext) messageContext;
     connectedCallback() {
         console.info(`%cconnectedCallback(): entering`,COLOR);
-        console.debug(`%cconnectedCallback(): subscribing to pub sub inputChangeEvent`,COLOR);
-        console.debug(`%cconnectedCallback(): registering listener inputChangeEvent`,COLOR);
-        registerListener('inputChangeEvent', this.handleChange, this);
+        console.info(`%cconnectedCallback(): subscribing LMS`,COLOR);
+        //console.debug(`%cconnectedCallback(): registering listener inputChangeEvent`,COLOR);
+        //registerListener('inputChangeEvent', this.handleChange, this);
+        this.subscription = subscribe(
+            this.messageContext,
+            L4LMC,
+            message => {
+              this.handleLMS(message);
+            },
+            { scope: APPLICATION_SCOPE }
+          );
         console.debug(`%cconnectedCallback(): calling this.refresh() to get client objectives, recordId =  ${this.recordId}`,COLOR);
         this.refresh();
 
@@ -135,6 +153,8 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     }
 
     handleSuccess(event) {
+        console.info(`%chandleSuccess(): entering`,COLOR);
+
         const evt = new ShowToastEvent({
             title: "Success",
             message: "Client objective updated",
@@ -168,11 +188,12 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     }
 
     handleCancel(event) {
-        console.log('Cancelling');
+        console.info(`%chandleCancel(): entering`,COLOR);
         this.areDetailsVisible = false;
 
     }
     handleSave(event) {
+        console.info(`%chandleSave(): entering`,COLOR);
         console.debug(`%chandleSave(): ${JSON.stringify(event.detail.draftValues)}`,COLOR);
         const recordInputs = event.detail.draftValues.slice().map(draft => {
             const fields = Object.assign({}, draft);
@@ -205,40 +226,20 @@ export default class lwcrelatedclientobjectives extends LightningElement {
 
 
     handleClick(event) {
-        //this.clientobjectives={};
+        console.info(`%chandleCc=lick(): entering`,COLOR);
+        console.info(`%chandleCc=lick(): calling refresh()`,COLOR);
         this.refresh();
 
 
     }
 
-    disconnectedCallback() {
-        // unsubscribe from inputChangeEvent event
-        unregisterAllListeners(this);
-    }
-
-    handleChange(inpVal) {
-        console.info(`%chandleChange(): entering, received inpVal=${inpVal}`,COLOR);
-        console.log('received pub sub input event');
-        console.debug(`%chandleChange(): calling getClientObjectives, clientId=${this.recordId}`,COLOR);
-
-        getClientObjectives({
-                clientId: this.recordId
-            })
-            .then(result => {
-                console.debug(`%chandleChange(): returned result=${JSON.stringify(result)}`,COLOR);
-                this.clientobjectives = result;
-                this.filterableObjectives = result;
-                console.debug(`%chandleChange(): this.filterableObjectives=${JSON.stringify(this.filterableObjectives)}`,COLOR);
-
-            })
-            .catch(error => {
-                this.error = error;
-                console.log(`%c%chandleChange(): ERROR ${JSON.stringify(error)}`,COLOR);
-            });
-    }
-
+    // disconnectedCallback() {
+    //     // unsubscribe from inputChangeEvent event
+    //     unregisterAllListeners(this);
+    // }
+  
     handleSearchKeyInput(event) {
-
+        console.info(`%chandleSearchKyInput(): entering`,COLOR);
         const searchKey = event.target.value.toLowerCase();
         console.debug(`%chandleSearchKeyInput(): searchKey= ${searchKey}. this.filterableObjectives= ${JSON.stringify(this.filterableObjectives)}`,COLOR);
         this.clientobjectives = this.filterableObjectives.filter(
@@ -248,6 +249,34 @@ export default class lwcrelatedclientobjectives extends LightningElement {
         console.debug(`%chandleSearchKeyInput(): this.clientobjectives=${JSON.stringify(this.clientobjectives)}`,COLOR);
     }
 
+    handleLMS(message) {
+        console.info(`%chandleLMS(): entering`,COLOR);
+        console.info(`%chandleLMS(): received message`,COLOR);
 
+        this.receivedMessage = message
+          ? JSON.stringify(message, null, "\t")
+          : "no message payload";
+          console.debug(`%c message=${JSON.stringify(message)}`,COLOR);
+          console.info(`%chandleLMS(): calling getClientObjectives`,COLOR);
+          console.debug(`%chandleLMS(): calling getClientObjectives, clientId=${this.recordId}`,COLOR);
+          getClientObjectives({
+                  clientId: this.recordId
+              })
+              .then(result => {
+                  console.debug(`%chandleLMS(): returned result=${JSON.stringify(result)}`,COLOR);
+                  this.clientobjectives = result;
+                  this.filterableObjectives = result;
+                  console.debug(`%chandleLMS(): this.filterableObjectives=${JSON.stringify(this.filterableObjectives)}`,COLOR);
+  
+              })
+              .catch(error => {
+                  this.error = error;
+                  console.log(`%c%chandleLMS(): ERROR ${JSON.stringify(error)}`,COLOR);
+              });
+
+
+
+
+      }
 
 }
