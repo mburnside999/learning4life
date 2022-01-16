@@ -1,6 +1,7 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
+const COLOUR="color:purple";
 
 
 
@@ -25,33 +26,32 @@ export default class Lwccreateincidentdata extends LightningElement {
     }
 
     start(event) {
+        console.info(`%cstart(): entering`,COLOUR);
         this.showStartBtn = false;
         var parentThis = this;
 
         // Run timer code in every 100 milliseconds
-        this.timeIntervalInstance = setInterval(function() {
+        this.timeIntervalInstance = setInterval(() => {
 
             // Time calculations for hours, minutes, seconds and milliseconds
             var hours = Math.floor((parentThis.totalMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((parentThis.totalMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((parentThis.totalMilliseconds % (1000 * 60)) / 1000);
-            //var milliseconds = Math.floor((parentThis.totalMilliseconds % (1000)));
             
             // Output the result in the timeVal variable
             parentThis.timeVal = parentThis.pad(hours) + ":" + parentThis.pad(minutes) + ":" + parentThis.pad(seconds);
-               
-            //parentThis.timeVal = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;   
-
             parentThis.totalMilliseconds += 1000;
         }, 1000);
     }
 
     stop(event) {
+        console.info(`%cstop(): entering`,COLOUR);
         this.showStartBtn = true;
         clearInterval(this.timeIntervalInstance);
     }
 
     reset(event) {
+        console.info(`%creset(): entering`,COLOUR);
         this.showStartBtn = true;
         this.timeVal = '00:00:00';
         this.totalMilliseconds = 0;
@@ -59,7 +59,6 @@ export default class Lwccreateincidentdata extends LightningElement {
     }
 
     pad(val) {
-        console.log('xxx');
         var valString = val + "";
         if (valString.length < 2) {
           return "0" + valString;
@@ -75,6 +74,7 @@ export default class Lwccreateincidentdata extends LightningElement {
             message: "Incidental Data recorded",
             variant: "success"
         });
+        console.debug(`%chandleSuccess(): dispatching evt`,COLOUR);
         this.dispatchEvent(evt);
 
     }

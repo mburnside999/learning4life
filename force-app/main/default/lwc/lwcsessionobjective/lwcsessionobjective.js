@@ -18,6 +18,8 @@ import ID_FIELD from "@salesforce/schema/Session_Obj__c.Id";
 import { refreshApex } from "@salesforce/apex";
 import { deleteRecord } from "lightning/uiRecordApi";
 
+const COLOUR="color:blue";
+
 const actions = [{ label: "Delete", name: "delete" }];
 
 const columns = [
@@ -62,33 +64,37 @@ export default class Lwcsessionobjective extends LightningElement {
   @track error;
   @track columns = columns;
   @track recordsProcessed = 0;
-  //@track sessionObjectives;
   @wire(CurrentPageReference) pageRef;
   @track draftValues = [];
   @track allObjectives = {};
 
   connectedCallback() {
-    console.log("subscribing to pub sub inputChangeEvent");
+    console.debug(`%cconnectedCallback(): subscribing to pub sub inputChangeEvent`,COLOUR);
     registerListener("inputChangeEvent", this.handleChange, this);
+    console.log(`%cconnectedCallback(): calling refresh()`,COLOUR);
     this.refresh();
   }
 
   refresh() {
-    console.log("in refactored refresh()");
+    console.info(`%crefresh(): entering`,COLOUR);
+    console.debug(`%crefresh(): calling getSessionObjectives`,COLOUR);
+
     getSessionObjectives({ sess: this.recordId })
       .then((result) => {
-        console.log("RETURNED");
+        console.debug(`%crefresh() getSessionObjectives returned result=${JSON.stringify(result)}`,COLOUR);
         this.sessionObjectives = result;
         this.allObjectives = result;
-        console.log(JSON.stringify(this.sessionObjectives));
+        console.debug(`%crefresh(): sessionObjectives= ${JSON.stringify(this.sessionObjectives)}`,COLOUR);
       })
       .catch((error) => {
         this.error = error;
-        console.log("ERROR" + JSON.stringify(error));
+        console.error(`%crefresh(): ERROR: ${JSON.stringify(error)}`,COLOUR);
       });
   }
 
   handleSearchKeyInput(event) {
+    console.info(`%chandleSearchKeyInput(): entering`,COLOUR);
+
     const searchKey = event.target.value.toLowerCase();
     this.sessionObjectives = this.allObjectives.filter(
       (so) =>
@@ -103,19 +109,25 @@ export default class Lwcsessionobjective extends LightningElement {
   }
 
   handleChange(inpVal) {
-    console.log(
-      "PLACEHOLDER lwcsessionobjective component received pub sub input event"
+    console.info(`%chhandleChange(): entering`,COLOUR);
+
+    console.debug(
+      `%chandleChange(): PLACEHOLDER lwcsessionobjective component received pub sub input event`,COLOUR
     );
+   console.debug( `%chandleChange(): calling refresh()`,COLOUR);
+
     this.refresh();
   }
 
   handleRowAction(event) {
+    console.info(`%chhandleRowAction(): entering`,COLOUR);
+
     const actionName = event.detail.action.name;
     const row = event.detail.row;
-    console.log(JSON.stringify(row));
+    console.debug(`%chhandleRowAction(): row= ${JSON.stringify(row)}`,COLOUR);
     switch (actionName) {
       case "delete":
-        console.log("DELETING");
+        console.debug(`handleRowAction(): DELETING`,COLOUR);
         deleteRecord(row.Id)
           .then(() => {
             this.dispatchEvent(
@@ -138,14 +150,15 @@ export default class Lwcsessionobjective extends LightningElement {
           });
         break;
       case "edit_details":
-        console.log("EDIT DETAILS");
+        console.debug("EDIT DETAILS");
         break;
       default:
     }
   }
 
   handleSave(event) {
-    console.log(JSON.stringify(event.detail.draftValues));
+    console.info(`%chandleSAve(): entering`,COLOUR)
+    console.debug(`%chandleSAve(): draftValues= ${JSON.stringify(event.detail.draftValues)}`,COLOUR);
     const recordInputs = event.detail.draftValues.slice().map((draft) => {
       const fields = Object.assign({}, draft);
       return { fields };
@@ -175,7 +188,8 @@ export default class Lwcsessionobjective extends LightningElement {
   }
 
   handleClickArray(event) {
-    console.log("Received event from button " + event.target.label);
+    console.info(`%chandleClickArray(): entering`,COLOUR);
+    console.debug(`%chandleClickArray(): Received event from button ${event.target.label}`,COLOUR);
     let mode = "";
     let label = event.target.label;
 
@@ -197,52 +211,53 @@ export default class Lwcsessionobjective extends LightningElement {
     }
 
     if (this.selectedRows) {
-      console.log(
-        "Commencing imperative Call to setSessionObjectivesCorrectByArray(key) "
+      console.debug(
+        `%chandleClickArray(): Commencing imperative Call to setSessionObjectivesCorrectByArray(key)`,COLOUR
       );
-      console.log("mode=" + mode);
+      console.debug(`%chandleClickArray(): mode= ${mode}`,COLOUR);
       setSessionObjectivesByArray({
         jsonstr: JSON.stringify(this.selectedRows),
         val: mode,
       })
         .then((result) => {
-          console.log("RETURNED");
+          console.debug(`%chandleClickArray(): returned result ${result}`,COLOUR);
           this.recordsProcessed = result;
-          console.log(this.recordsProcessed + "records processed.");
+          console.debug(`%chandleClickArray(): ${this.recordsProcessed} records processed.`,COLOUR);
         })
         .then(() => {
-          console.log("Refreshing");
+          console.debug(`%chandleClickArray(): calling refresh()`,COLOUR);
           this.refresh();
         })
         .then(() => {
           if (mode === "Delete") {
             this.showNotification(
               "Success!",
-              "Deleted " + this.recordsProcessed + " record(s).",
+              `Deleted ${this.recordsProcessed} record(s).`,
               "success"
             );
           } else {
             this.showNotification(
               "Success!",
-              "Marked " + this.recordsProcessed + " record(s) as " + mode + ".",
+              `Marked ${this.recordsProcessed} record(s) as ${mode} .`,
               "success"
             );
           }
         })
         .catch((error) => {
           this.error = error;
-          console.log("ERRORED" + JSON.stringify(error));
+          console.error(`%cERRORED ${JSON.stringify(error)}`,COLOUR);
         });
     }
   }
 
   handleClickDelete(event) {
-    console.log(
-      "Commencing imperative Call to deleteSessionObjectives(session) "
+    console.info(`%chandleClickDelete(): entering`,COLOUR);
+    console.debug(
+      `%chandleClickDelete(): Commencing imperative Call to deleteSessionObjectives(session)`,COLOUR
     );
     deleteSessionObjectives({ sessionid: this.recordId })
       .then((result) => {
-        console.log("RETURNED");
+        console.log(`%chandleClickDelete(): returned ${result}`,COLOUR);
       })
       .then(() => {
         console.log("Refreshing");
@@ -258,12 +273,13 @@ export default class Lwcsessionobjective extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log("ERRORED" + JSON.stringify(error));
+        console.log(`ERRORED ${JSON.stringify(error)}`);
       });
   }
   getSelectedName(event) {
-    let myselectedRows = event.detail.selectedRows;
-    this.selectedRows = myselectedRows;
+    console.info(`%cgetSelectedName(): entering`,COLOUR);
+
+    this.selectedRows = event.detail.selectedRows;
     // Display that fieldName of the selected rows
     //for (let i = 0; i < selectedRows.length; i++){
     //alert("You selected: " + selectedRows[i].Name);
