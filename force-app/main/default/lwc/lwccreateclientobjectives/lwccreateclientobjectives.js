@@ -53,13 +53,13 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   getSelectedName(event) {
-    console.info(`getSelectedName(): entering`,COLOUR);                                                          
+    console.info(`%cgetSelectedName(): entering`,COLOUR);                                                          
     console.debug(`%cgetSelectedName(): ${event.detail.selectedRows}`,COLOUR);
     this.selectedRows = event.detail.selectedRows;
   }
 
   handleClickArray(event) {
-    console.info(`handleClickArray(): entering`,COLOUR);
+    console.info(`%chandleClickArray(): entering`,COLOUR);
     if (this.selectedRows) {
       console.debug(`%chandleClickArray(): selectedRows==true`,COLOUR);
       console.debug(`%chandleClickArray(): logging JSON: ${JSON.stringify(this.selectedRows)}`,COLOUR);
@@ -99,7 +99,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
   }
 
   handleSearchKeyInput(event) {
-    console.info(`handleSearchKeyInput(): entering`,COLOUR);
+    console.info(`%chandleSearchKeyInput(): entering`,COLOUR);
     const searchKey = event.target.value.toLowerCase();
     console.debug(`%chandleSearchKeyInput(): searchKey=${searchKey}`,COLOUR);
     this.objectives = this.allObjectives.filter(
