@@ -69,7 +69,7 @@ const columns = [{
 ];
 
 export default class lwcrelatedclientobjectives extends LightningElement {
-    @track searchKey = '';
+    @track clientId = '';
     @api recordId = '0012v00002fY86nAAC';
     @track COrecordId = '';
     @track COobjectApiName = 'Client_Objective__c';
@@ -79,7 +79,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     @wire(CurrentPageReference) pageRef;
     @track draftValues = [];
     @track areDetailsVisible = false;
-    //@wire(getClientObjectives, { searchKey: '$recordId' }) clientobjectives;
+    //@wire(getClientObjectives, { clientId: '$recordId' }) clientobjectives;
 
     connectedCallback() {
         console.log(`%cconnectedCallback(): subscribing to pub sub inputChangeEvent`,COLOUR);
@@ -143,7 +143,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
         console.info(`%crefresh(): entering`,COLOUR);
         console.debug(`%crefresh(): calling getClientObjectives, recordId = ${this.recordId}`,COLOUR);
         getClientObjectives({
-                searchKey: this.recordId
+                clientId: this.recordId
             })
             .then(result => {
                 console.debug(`%crefresh(): getClientObjectives returned ${JSON.stringify(result)}`,COLOUR);
@@ -211,34 +211,35 @@ export default class lwcrelatedclientobjectives extends LightningElement {
     }
 
     handleChange(inpVal) {
+        console.info(`%chandleChange(): entering`,COLOUR);
         console.log('received pub sub input event');
+        console.debug(`%chandleChange(): calling getClientObjectives, clientId=${this.recordId}`,COLOUR);
+
         getClientObjectives({
-                searchKey: this.recordId
+                clientId: this.recordId
             })
             .then(result => {
-                console.log('RETURNED in handle change()');
+                console.debug(`%chandleChange(): returned result=${JSON.stringify(result)}`,COLOUR);
                 this.clientobjectives = result;
                 this.allObjectives = result;
-                console.log(JSON.stringify(this.clientobjectives));
+                console.debug(`%chandleChange(): this.allObjectives=${JSON.stringify(this.allObjectives)}`,COLOR);
 
             })
             .catch(error => {
                 this.error = error;
-                console.log(`ERROR ${JSON.stringify(error)}`);
+                console.log(`%c%chandleChange(): ERROR ${JSON.stringify(error)}`,COLOR);
             });
     }
 
     handleSearchKeyInput(event) {
 
         const searchKey = event.target.value.toLowerCase();
-        console.log(`THE SEARCHKEY= ${searchKey}. this.allObjectives= ${JSON.stringify(this.allObjectives)}`);
-
-
+        console.debug(`%chandleSearchKeyInput(): searchKey= ${searchKey}. this.allObjectives= ${JSON.stringify(this.allObjectives)}`,COLOUR);
         this.clientobjectives = this.allObjectives.filter(
             so => so.Name.toLowerCase().includes(searchKey) || (so.Status__c != null && so.Status__c.toLowerCase().includes(searchKey) ) || so.SD_Name__c.toLowerCase().includes(searchKey) || so.Program_Name__c.toLowerCase().includes(searchKey) || so.Objective_Name__c.toLowerCase().includes(searchKey)
             );
 
-        console.log(`this.clientobjectives=${JSON.stringify(this.clientobjectives)}`);
+        console.debug(`%chandleSearchKeyInput(): this.clientobjectives=${JSON.stringify(this.clientobjectives)}`,COLOR);
     }
 
 

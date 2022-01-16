@@ -25,7 +25,9 @@ public with sharing class MBSessionObjectives {
   public static List<Client_Objective__c> getClientObjectivesForSession(
     String searchKey
   ) {
-    System.debug('>>>>>> in getClientObjectivesForSession(searchKey)');
+    System.debug('>>>>>> getClientObjectivesForSession(searchKey)');
+    System.debug('>>>>>> searchKey='+searchKey);
+
     return [
       SELECT
         Id,
@@ -48,9 +50,13 @@ public with sharing class MBSessionObjectives {
 
   @AuraEnabled(cacheable=false)
   public static List<Client_Objective__c> getClientObjectives(
-    String searchKey
+    String clientId
   ) {
-    System.debug('>>>>>> in getClientObjectives(searchKey)');
+    System.debug('>>>>>> in getClientObjectives(clientId)');
+    System.debug('>>>>>> clientId='+clientId);
+    System.debug('>>>>>> cacheable=false');
+
+
     return [
       SELECT
         Id,
@@ -65,7 +71,7 @@ public with sharing class MBSessionObjectives {
         Re_Test_Recommended__c,
         Client_Objective_Notes__c
       FROM Client_Objective__c
-      WHERE Client__c = :searchKey
+      WHERE Client__c = :clientId
       ORDER BY Program_Name__c, Name
     ];
   }
@@ -81,8 +87,10 @@ public with sharing class MBSessionObjectives {
   }
 
   @AuraEnabled
-  public static List<Objective__c> getUnusedObjectives(String sess) {
-    System.debug('>>>>>> in getUnusedObjectives(sess)');
+  public static List<Objective__c> getUnusedObjectives(String clientId) {
+    System.debug('>>>>>> in getUnusedObjectives(clientId)');
+    System.debug('>>>>>> clientId='+clientId);
+
     return [
       SELECT Id, Name, Program__c, SD_Name__c
       FROM Objective__c
@@ -90,7 +98,7 @@ public with sharing class MBSessionObjectives {
         Id NOT IN (
           SELECT Objective__c
           FROM Client_Objective__c
-          WHERE Client__c = :sess
+          WHERE Client__c = :clientId
         )
       ORDER BY Program__c, Name
     ];
