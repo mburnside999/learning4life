@@ -1,4 +1,8 @@
 public with sharing class MBSessionObjectives {
+  // IMPORTANT
+  // this class was deprecated January 2022
+  // please refer to class "L4LController"
+
   @AuraEnabled(cacheable=false)
   public static List<Session_obj__c> getSessionObjectives(String sess) {
     System.debug('>>>>>> in getSessionObjectives (sess)');
