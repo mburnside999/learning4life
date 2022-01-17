@@ -1,7 +1,7 @@
 // publisherComponent.js
 import { LightningElement, wire } from 'lwc';
 import { publish, MessageContext } from 'lightning/messageService';
-import SAMPLEMC from '@salesforce/messageChannel/L4LMessageChannel__c';
+import SAMPLEMC from '@salesforce/messageChannel/L4LSessionMessageChannel__c';
 
 export default class Lwcpublisher extends LightningElement {
     @wire(MessageContext)
@@ -14,6 +14,7 @@ export default class Lwcpublisher extends LightningElement {
             source: "LWC",
             recordData: {}
         };
+        console.log(`pubishing message ${message}`);
         publish(this.messageContext, SAMPLEMC, message);
     }
 }
