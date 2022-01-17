@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { LightningElement, api, wire, track } from "lwc";
-import getSessionObjectives from "@salesforce/apex/MBSessionObjectives.getSessionObjectives";
-import setSessionObjectivesByArray from "@salesforce/apex/MBSessionObjectives.setSessionObjectivesByArray";
+import getSessionObjectives from "@salesforce/apex/L4LController.getSessionObjectives";
+import setSessionObjectivesByArray from "@salesforce/apex/L4LController.setSessionObjectivesByArray";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import deleteSessionObjectives from "@salesforce/apex/MBSessionObjectives.deleteSessionObjectives";
+import deleteSessionObjectives from "@salesforce/apex/L4LController.deleteSessionObjectives";
 import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord } from "lightning/uiRecordApi";
 

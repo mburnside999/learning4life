@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { LightningElement,track,wire,api} from 'lwc';
-import getClientObjectives from '@salesforce/apex/MBSessionObjectives.getClientObjectives';
+import getClientObjectives from '@salesforce/apex/L4LController.getClientObjectives';
 import { CurrentPageReference} from 'lightning/navigation';
 //import {registerListener,unregisterAllListeners,fireEvent} from 'c/pubsub';
 import { updateRecord} from 'lightning/uiRecordApi';

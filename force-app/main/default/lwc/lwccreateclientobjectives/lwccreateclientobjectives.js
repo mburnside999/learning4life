@@ -2,8 +2,8 @@
 /* eslint-disable no-console */
 
 import { LightningElement, api, wire, track } from "lwc";
-import getUnusedObjectives from "@salesforce/apex/MBSessionObjectives.getUnusedObjectives";
-import createClientObjectivesByArray from "@salesforce/apex/MBSessionObjectives.createClientObjectivesByArray";
+import getUnusedObjectives from "@salesforce/apex/L4LController.getUnusedObjectives";
+import createClientObjectivesByArray from "@salesforce/apex/L4LController.createClientObjectivesByArray";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 //import { fireEvent } from "c/pubsub";
 import { CurrentPageReference } from "lightning/navigation";

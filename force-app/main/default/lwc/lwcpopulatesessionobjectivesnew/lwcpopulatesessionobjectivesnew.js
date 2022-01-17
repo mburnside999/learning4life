@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { LightningElement, api, wire, track } from "lwc";
-import getClientObjectivesForSession from "@salesforce/apex/MBSessionObjectives.getClientObjectivesForSession";
-import createSessionObjectivesByArrayWithOrderedResults from "@salesforce/apex/MBSessionObjectives.createSessionObjectivesByArrayWithOrderedResults";
+import getClientObjectivesForSession from "@salesforce/apex/L4LController.getClientObjectivesForSession";
+import createSessionObjectivesByArrayWithOrderedResults from "@salesforce/apex/L4LController.createSessionObjectivesByArrayWithOrderedResults";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { CurrentPageReference } from "lightning/navigation";
 
