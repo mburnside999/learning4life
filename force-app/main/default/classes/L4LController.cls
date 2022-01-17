@@ -1,5 +1,8 @@
 public with sharing class L4LController {
-    @AuraEnabled(cacheable=false)
+   
+  // As of January 17, 2022 this is the controller for all L4L lwcs
+  
+  @AuraEnabled(cacheable=false)
     public static List<Session_obj__c> getSessionObjectives(String sess) {
       System.debug('>>>>>> in getSessionObjectives (sess)');
       return [
