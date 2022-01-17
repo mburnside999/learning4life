@@ -1,5 +1,5 @@
 <template>
-  <lightning-card title="Assess/Populate Session Objectives">
+  <lightning-card title="Collect DTD">
      <div class="page-section page-right"></div>
      <input size="50" type="search"
         placeholder="Filter Prog, Obj, SD or Status (NEW!)" oninput={handleSearchKeyInput} /></div>
@@ -38,7 +38,7 @@
                  </lightning-layout-item>
                  <lightning-layout-item padding="around-small" size="6">
                     <div class="page-section page-right">
-                       <div class="slds-text-heading_medium">Session history</div>
+                       <div class="slds-text-heading_medium">Recorded</div>
                        <br />
                        <div class="slds-text-heading_small">
                           <template for:each={sessionresults} for:item="sessionresult">
