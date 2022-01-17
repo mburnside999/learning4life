@@ -1,4 +1,4 @@
-# LFL Project: 
+# Learning4Life (LFL) Project 
 
-Pro-bono LFL Project by Mike Burnside in collaboration with Mike De Hennin.
+Pro-bono project by Mike Burnside in collaboration with Mike De Hennin.
 
