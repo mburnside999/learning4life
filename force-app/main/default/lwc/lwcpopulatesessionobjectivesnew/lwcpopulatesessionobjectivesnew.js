@@ -44,7 +44,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   @wire(CurrentPageReference) pageRef;
   @wire(MessageContext) messageContext;
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing
-  @track allObjectives = {};
+  @track filterableObjectives = {};
   //@wire(getObjectives, { sess: '$recordId' }) objectives;
   @track error;
   @track columns = columns;
@@ -55,6 +55,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   @track incorrectCount = 0;
   @track promptedCount = 0;
   @track selectCount = 0;
+
   @track thisrow = "";
   @track results = [];
   @track sessionresults = [];
@@ -76,7 +77,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
         console.debug(`%crefresh(): getClientObjectivesForSession returned result=${JSON.stringify(result)}`,COLOR);
         this.objectives = result;
         //console.debug(`refresh(): result=${JSON.stringify(result)}`);
-        this.allObjectives = result;
+        this.filterableObjectives = result;
         console.debug(`%crefresh(): this.objectives= ${JSON.stringify(this.objectives)}`,COLOR);
       })
       .catch((error) => {
@@ -98,7 +99,9 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
         myselectedRows[0].SD_Name__c +
         " > " +
         myselectedRows[0].Objective_Name__c;
+      console.debug(`%cgetSelectedName(): this.thisrow=${JSON.stringify(this.thisrow)}`,COLOR)
       this.selectedRows = myselectedRows;
+      console.debug(`%cgetSelectedName(): this.selectedRows=${JSON.stringify(this.selectedRows)}`,COLOR)
       this.selectCount = this.selectedRows.length;
     }
   }
@@ -109,7 +112,9 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
     if (this.selectedRows) {
       this.results.push("C");
       this.skillstring.push({ skill: "C" });
-      console.log(JSON.stringify(this.results));
+      console.debug(`%chandleIncrCorrect(): this.results=${JSON.stringify(this.results)}`,COLOR);
+      console.debug(`%chandleIncrCorrect(): this.skillstring=${JSON.stringify(this.skillstring)}`,COLOR);
+
       this.correctCount += 1;
     }
     console.debug(`%chandleIncrCorrect(): correctCount= ${this.correctCount}`,COLOR);
@@ -130,6 +135,9 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
     if (this.selectedRows) {
       this.results.push("I");
       this.skillstring.push({ skill: "I" });
+      console.debug(`%chandleIncrIncorrect(): this.results=${JSON.stringify(this.results)}`,COLOR);
+      console.debug(`%chandleIncrIncorrect(): this.skillstring=${JSON.stringify(this.skillstring)}`,COLOR);
+
       this.incorrectCount += 1;
     }
     console.debug(`%cincorrectCount= ${this.incorrectCount}`,COLOR);
@@ -141,6 +149,9 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
     if (this.selectedRows) {
       this.results.push("P");
       this.skillstring.push({ skill: "P" });
+      console.debug(`%chandleIncrPrompted(): this.results=${JSON.stringify(this.results)}`,COLOR);
+      console.debug(`%chandleIncrPrompted(): this.skillstring=${JSON.stringify(this.skillstring)}`,COLOR);
+
       this.promptedCount += 1;
     }
     console.debug(`%cpromptedCount= ${this.promptedCount}`,COLOR);
@@ -205,7 +216,6 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
           this.selectCount = 0;
         })
         .finally(() => {
-          //fireEvent(this.pageRef, "inputChangeEvent", this.recordId);
           const message = {
             recordId: '',
             message : "message from lwcpopulatesessionobjectives",
@@ -227,7 +237,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
 
     const searchKey = event.target.value.toLowerCase();
     console.info(`%chandleSearchKeyInput(): searchKey={searchKey}`,COLOR)
-    this.objectives = this.allObjectives.filter(
+    this.objectives = this.filterableObjectives.filter(
       (so) =>
         so.Program_Name__c.toLowerCase().includes(searchKey) ||
         (so.Status__c != null &&
