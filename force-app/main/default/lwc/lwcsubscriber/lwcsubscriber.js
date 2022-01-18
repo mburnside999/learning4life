@@ -25,7 +25,7 @@ export default class Lwcsubscriber extends LightningElement {
     this.subscription = subscribe(
       this.messageContext,
       SAMPLEMC,
-      message => {
+      (message) => {
         this.handleMessage(message);
       },
       { scope: APPLICATION_SCOPE }

@@ -30,7 +30,7 @@ public with sharing class MBSessionObjectives {
     String searchKey
   ) {
     System.debug('>>>>>> getClientObjectivesForSession(searchKey)');
-    System.debug('>>>>>> searchKey='+searchKey);
+    System.debug('>>>>>> searchKey=' + searchKey);
 
     return [
       SELECT
@@ -53,13 +53,10 @@ public with sharing class MBSessionObjectives {
   }
 
   @AuraEnabled(cacheable=false)
-  public static List<Client_Objective__c> getClientObjectives(
-    String clientId
-  ) {
+  public static List<Client_Objective__c> getClientObjectives(String clientId) {
     System.debug('>>>>>> in getClientObjectives(clientId)');
-    System.debug('>>>>>> clientId='+clientId);
+    System.debug('>>>>>> clientId=' + clientId);
     System.debug('>>>>>> cacheable=false');
-
 
     return [
       SELECT
@@ -93,7 +90,7 @@ public with sharing class MBSessionObjectives {
   @AuraEnabled
   public static List<Objective__c> getUnusedObjectives(String clientId) {
     System.debug('>>>>>> in getUnusedObjectives(clientId)');
-    System.debug('>>>>>> clientId='+clientId);
+    System.debug('>>>>>> clientId=' + clientId);
 
     return [
       SELECT Id, Name, Program__c, SD_Name__c

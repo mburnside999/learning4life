@@ -1,33 +1,52 @@
 <template>
-    <lightning-card  title="Incidental Data">
-        <template if:true={showStartBtn}>
-            <lightning-button label="Start Timer" onclick={start} style="margin-left: 145px;"></lightning-button>
-        </template>
-        <template if:false={showStartBtn}>
-            <lightning-button label="Stop Timer" onclick={stop} style="margin-left: 145px;"></lightning-button>
-        </template>
-         
-        <lightning-button label="Reset Timer" onclick={reset} style="margin-left: 10px;"></lightning-button>
-        <div style="font-size: 18px;text-align:center;">{timeVal}</div>
+  <lightning-card title="Incidental Data">
+    <template if:true={showStartBtn}>
+      <lightning-button
+        label="Start Timer"
+        onclick={start}
+        style="margin-left: 145px"
+      ></lightning-button>
+    </template>
+    <template if:false={showStartBtn}>
+      <lightning-button
+        label="Stop Timer"
+        onclick={stop}
+        style="margin-left: 145px"
+      ></lightning-button>
+    </template>
 
-        <lightning-record-edit-form object-api-name="Incidental_Data__c" onsuccess={handleSuccess}>
-        <lightning-messages>
-        </lightning-messages>
-        <lightning-input-field field-name="Session__c" value={recordId}> </lightning-input-field>
-        <lightning-input-field field-name="Incident_Type__c"> </lightning-input-field>
-        <lightning-input-field field-name="Intensity__c"> </lightning-input-field>
-        <lightning-input-field field-name="Duration_Hrs__c" value={hrs}> </lightning-input-field>
-        <lightning-input-field field-name="Duration_Mins__c" value={mins}> </lightning-input-field>
-        <lightning-input-field field-name="Duration_Secs__c" value={secs}> </lightning-input-field>
-        <lightning-input-field field-name="Comments__c"> </lightning-input-field>
-            <lightning-button
-                class="slds-m-top_small"
-                type="submit"
-                label="Create">
-            </lightning-button>
-            <lightning-button label="Close" title="Canceld" onclick={handleClickCancel}> </lightning-button>
+    <lightning-button
+      label="Reset Timer"
+      onclick={reset}
+      style="margin-left: 10px"
+    ></lightning-button>
+    <div style="font-size: 18px; text-align: center">{timeVal}</div>
+
+    <lightning-record-edit-form
+      object-api-name="Incidental_Data__c"
+      onsuccess={handleSuccess}
+    >
+      <lightning-messages> </lightning-messages>
+      <lightning-input-field field-name="Session__c" value={recordId}>
+      </lightning-input-field>
+      <lightning-input-field field-name="Incident_Type__c">
+      </lightning-input-field>
+      <lightning-input-field field-name="Intensity__c"> </lightning-input-field>
+      <lightning-input-field field-name="Duration_Hrs__c" value={hrs}>
+      </lightning-input-field>
+      <lightning-input-field field-name="Duration_Mins__c" value={mins}>
+      </lightning-input-field>
+      <lightning-input-field field-name="Duration_Secs__c" value={secs}>
+      </lightning-input-field>
+      <lightning-input-field field-name="Comments__c"> </lightning-input-field>
+      <lightning-button class="slds-m-top_small" type="submit" label="Create">
+      </lightning-button>
+      <lightning-button
+        label="Close"
+        title="Canceld"
+        onclick={handleClickCancel}
+      >
+      </lightning-button>
     </lightning-record-edit-form>
-    </lightning-card>
-
-   
+  </lightning-card>
 </template>

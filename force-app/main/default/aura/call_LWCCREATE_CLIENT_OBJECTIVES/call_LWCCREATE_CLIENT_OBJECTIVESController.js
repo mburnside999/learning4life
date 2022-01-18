@@ -1,5 +1,5 @@
 ({
-	closeMethodInAuraController : function(component, event, helper) {
-	$A.get("e.force:closeQuickAction").fire();
-	}
-	})
+  closeMethodInAuraController: function (component, event, helper) {
+    $A.get("e.force:closeQuickAction").fire();
+  }
+});
