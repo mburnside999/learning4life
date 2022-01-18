@@ -56,7 +56,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
   @track promptedCount = 0;
   @track selectCount = 0;
 
-  @track thisrow = "";
+  @track breadcrumb = "";
   @track results = [];
   @track sessionresults = [];
   @track skillstring = [];
@@ -92,14 +92,16 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
       `%cgetSelectedName(): ${JSON.stringify(event.detail.selectedRows)}`,COLOR);
 
     let myselectedRows = event.detail.selectedRows;
+    console.debug(`getSelectedName():myselectedRows.length=${myselectedRows.length}`,COLOR)
     if (myselectedRows.length > 0) {
-      this.thisrow =
+      console.debug('%cgetSelectedName() setting this.breadcrumb');
+      this.breadcrumb =
         myselectedRows[0].Program_Name__c +
         " > " +
         myselectedRows[0].SD_Name__c +
         " > " +
         myselectedRows[0].Objective_Name__c;
-      console.debug(`%cgetSelectedName(): this.thisrow=${JSON.stringify(this.thisrow)}`,COLOR)
+      console.debug(`%cgetSelectedName(): this.breadcrumb=${JSON.stringify(this.breadcrumb)}`,COLOR)
       this.selectedRows = myselectedRows;
       console.debug(`%cgetSelectedName(): this.selectedRows=${JSON.stringify(this.selectedRows)}`,COLOR)
       this.selectCount = this.selectedRows.length;
@@ -126,7 +128,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
     this.promptedCount = 0;
     this.results = [];
     this.skillstring = [];
-    this.thisrow = "";
+    this.breadcrumb = "";
   }
 
   handleIncrIncorrect(event) {
@@ -203,11 +205,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
             "success"
           );
           this.sessionresults.push(
-            this.selectedRows[0].Program_Name__c +
-              " > " +
-              this.selectedRows[0].SD_Name__c +
-              " > " +
-              this.selectedRows[0].Objective_Name__c +
+            this.breadcrumb+
               " : " +
               this.results.toString()
           );
