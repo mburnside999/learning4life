@@ -21,11 +21,14 @@
 
                     
                     <br />
-                    <div class="slds-text-color_success slds-text-heading_small">{thisrow}</div>
+                    <div class="slds-text-color_success slds-text-heading_small">{breadcrumb}</div>
                     <div class="slds-text-color_success slds-text-heading_medium">
-                       <template for:each={results} for:item="result">
-                          <nobr key={result}>{result}&nbsp;</nobr>
+                     
+                     <template for:each={results} for:item="result">
+                          <p style="display:inline; color:blue" key={result}>{result}&nbsp;</p>
                        </template>
+                       
+                       
                     </div>
                     <br/> 
                     <lightning-button-group>
@@ -42,7 +45,7 @@
                        <br />
                        <div class="slds-text-heading_small">
                           <template for:each={sessionresults} for:item="sessionresult">
-                             <p key={sessionresult}>{sessionresult}&nbsp;</p>
+                             <p style="color:blue" key={sessionresult}>{sessionresult}&nbsp;</p>
                           </template>
                        </div>
                     </div>

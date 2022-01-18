@@ -26,41 +26,51 @@ import {
 
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
-const COLOR="color:blue";
+const COLOR = "color:blue";
 
 const actions = [{ label: "Delete", name: "delete" }];
 
 const columns = [
-  { label: "Prog", fieldName: "Program__c", type: "text",initialWidth: 200},
-  { label: "Obj", fieldName: "Objective_Name__c", type: "text",initialWidth: 200 },
-  { label: "SD", fieldName: "SD__c", type: "text",initialWidth: 200 },
+  { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 200 },
+  {
+    label: "Obj",
+    fieldName: "Objective_Name__c",
+    type: "text",
+    initialWidth: 200
+  },
+  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 200 },
   {
     label: "C",
     fieldName: "Correct__c",
     type: "boolean",
     initialWidth: 60,
-    editable: true,
+    editable: true
   },
   {
     label: "I",
     fieldName: "Incorrect__c",
     type: "boolean",
     initialWidth: 60,
-    editable: true,
+    editable: true
   },
   {
     label: "P",
     fieldName: "Prompted__c",
     type: "boolean",
     initialWidth: 60,
-    editable: true,
+    editable: true
   },
-  { label: "Prev", fieldName: "Previous_Status__c", type: "text",initialWidth: 80 },
+  {
+    label: "Prev",
+    fieldName: "Previous_Status__c",
+    type: "text",
+    initialWidth: 80
+  },
   { label: "Comments", fieldName: "Comment__c", type: "text", editable: true },
   {
     type: "action",
-    typeAttributes: { rowActions: actions },
-  },
+    typeAttributes: { rowActions: actions }
+  }
 ];
 const selectedRows = {};
 
@@ -79,38 +89,51 @@ export default class Lwcsessionobjective extends LightningElement {
   subscription = null;
 
   connectedCallback() {
-    console.debug(`%cconnectedCallback(): subscribing to LMS L4LSessionMessageChannel__c`,COLOR);
+    console.debug(
+      `%cconnectedCallback(): subscribing to LMS L4LSessionMessageChannel__c`,
+      COLOR
+    );
     this.subscription = subscribe(
       this.messageContext,
       L4LMC,
-      message => {
+      (message) => {
         this.handleLMS(message);
       },
       { scope: APPLICATION_SCOPE }
     );
-    console.log(`%cconnectedCallback(): calling refresh()`,COLOR);
+    console.log(`%cconnectedCallback(): calling refresh()`, COLOR);
     this.refresh();
   }
 
   refresh() {
-    console.info(`%crefresh(): entering`,COLOR);
-    console.debug(`%crefresh(): calling getSessionObjectives`,COLOR);
+    console.info(`%crefresh(): entering`, COLOR);
+    console.debug(`%crefresh(): calling getSessionObjectives`, COLOR);
 
     getSessionObjectives({ sess: this.recordId })
       .then((result) => {
-        console.debug(`%crefresh() getSessionObjectives returned result=${JSON.stringify(result)}`,COLOR);
+        console.debug(
+          `%crefresh() getSessionObjectives returned result=${JSON.stringify(
+            result
+          )}`,
+          COLOR
+        );
         this.sessionObjectives = result;
         this.allObjectives = result;
-        console.debug(`%crefresh(): sessionObjectives= ${JSON.stringify(this.sessionObjectives)}`,COLOR);
+        console.debug(
+          `%crefresh(): sessionObjectives= ${JSON.stringify(
+            this.sessionObjectives
+          )}`,
+          COLOR
+        );
       })
       .catch((error) => {
         this.error = error;
-        console.error(`%crefresh(): ERROR: ${JSON.stringify(error)}`,COLOR);
+        console.error(`%crefresh(): ERROR: ${JSON.stringify(error)}`, COLOR);
       });
   }
 
   handleSearchKeyInput(event) {
-    console.info(`%chandleSearchKeyInput(): entering`,COLOR);
+    console.info(`%chandleSearchKeyInput(): entering`, COLOR);
 
     const searchKey = event.target.value.toLowerCase();
     this.sessionObjectives = this.allObjectives.filter(
@@ -126,34 +149,35 @@ export default class Lwcsessionobjective extends LightningElement {
   }
 
   handleLMS(message) {
-    console.info(`%chandleLMS(): entering`,COLOR);
-    console.info(`%chandleLMS(): received message on LMS L4LSessionMessageChannel__c`,COLOR);
+    console.info(`%chandleLMS(): entering`, COLOR);
+    console.info(
+      `%chandleLMS(): received message on LMS L4LSessionMessageChannel__c`,
+      COLOR
+    );
     this.receivedMessage = message
-    ? JSON.stringify(message, null, "\t")
-    : "no message payload";
-    console.debug(`%c message=${JSON.stringify(message)}`,COLOR);
-    
+      ? JSON.stringify(message, null, "\t")
+      : "no message payload";
+    console.debug(`%c message=${JSON.stringify(message)}`, COLOR);
+
     this.refresh();
   }
 
-
-
   handleRowAction(event) {
-    console.info(`%chhandleRowAction(): entering`,COLOR);
+    console.info(`%chhandleRowAction(): entering`, COLOR);
 
     const actionName = event.detail.action.name;
     const row = event.detail.row;
-    console.debug(`%chhandleRowAction(): row= ${JSON.stringify(row)}`,COLOR);
+    console.debug(`%chhandleRowAction(): row= ${JSON.stringify(row)}`, COLOR);
     switch (actionName) {
       case "delete":
-        console.debug(`handleRowAction(): DELETING`,COLOR);
+        console.debug(`handleRowAction(): DELETING`, COLOR);
         deleteRecord(row.Id)
           .then(() => {
             this.dispatchEvent(
               new ShowToastEvent({
                 title: "Success",
                 message: "Session Objective deleted",
-                variant: "success",
+                variant: "success"
               })
             );
             this.refresh();
@@ -163,7 +187,7 @@ export default class Lwcsessionobjective extends LightningElement {
               new ShowToastEvent({
                 title: "Error deleting record",
                 message: "Error",
-                variant: "error",
+                variant: "error"
               })
             );
           });
@@ -176,8 +200,13 @@ export default class Lwcsessionobjective extends LightningElement {
   }
 
   handleSave(event) {
-    console.info(`%chandleSAve(): entering`,COLOR)
-    console.debug(`%chandleSAve(): draftValues= ${JSON.stringify(event.detail.draftValues)}`,COLOR);
+    console.info(`%chandleSAve(): entering`, COLOR);
+    console.debug(
+      `%chandleSAve(): draftValues= ${JSON.stringify(
+        event.detail.draftValues
+      )}`,
+      COLOR
+    );
     const recordInputs = event.detail.draftValues.slice().map((draft) => {
       const fields = Object.assign({}, draft);
       return { fields };
@@ -192,7 +221,7 @@ export default class Lwcsessionobjective extends LightningElement {
           new ShowToastEvent({
             title: "Success",
             message: "Session objectives updated",
-            variant: "success",
+            variant: "success"
           })
         );
         // Clear all draft values
@@ -207,8 +236,11 @@ export default class Lwcsessionobjective extends LightningElement {
   }
 
   handleClickArray(event) {
-    console.info(`%chandleClickArray(): entering`,COLOR);
-    console.debug(`%chandleClickArray(): Received event from button ${event.target.label}`,COLOR);
+    console.info(`%chandleClickArray(): entering`, COLOR);
+    console.debug(
+      `%chandleClickArray(): Received event from button ${event.target.label}`,
+      COLOR
+    );
     let mode = "";
     let label = event.target.label;
 
@@ -231,20 +263,27 @@ export default class Lwcsessionobjective extends LightningElement {
 
     if (this.selectedRows) {
       console.debug(
-        `%chandleClickArray(): Commencing imperative Call to setSessionObjectivesCorrectByArray(key)`,COLOR
+        `%chandleClickArray(): Commencing imperative Call to setSessionObjectivesCorrectByArray(key)`,
+        COLOR
       );
-      console.debug(`%chandleClickArray(): mode= ${mode}`,COLOR);
+      console.debug(`%chandleClickArray(): mode= ${mode}`, COLOR);
       setSessionObjectivesByArray({
         jsonstr: JSON.stringify(this.selectedRows),
-        val: mode,
+        val: mode
       })
         .then((result) => {
-          console.debug(`%chandleClickArray(): returned result ${result}`,COLOR);
+          console.debug(
+            `%chandleClickArray(): returned result ${result}`,
+            COLOR
+          );
           this.recordsProcessed = result;
-          console.debug(`%chandleClickArray(): ${this.recordsProcessed} records processed.`,COLOR);
+          console.debug(
+            `%chandleClickArray(): ${this.recordsProcessed} records processed.`,
+            COLOR
+          );
         })
         .then(() => {
-          console.debug(`%chandleClickArray(): calling refresh()`,COLOR);
+          console.debug(`%chandleClickArray(): calling refresh()`, COLOR);
           this.refresh();
         })
         .then(() => {
@@ -264,19 +303,20 @@ export default class Lwcsessionobjective extends LightningElement {
         })
         .catch((error) => {
           this.error = error;
-          console.error(`%cERRORED ${JSON.stringify(error)}`,COLOR);
+          console.error(`%cERRORED ${JSON.stringify(error)}`, COLOR);
         });
     }
   }
 
   handleClickDelete(event) {
-    console.info(`%chandleClickDelete(): entering`,COLOR);
+    console.info(`%chandleClickDelete(): entering`, COLOR);
     console.debug(
-      `%chandleClickDelete(): Commencing imperative Call to deleteSessionObjectives(session)`,COLOR
+      `%chandleClickDelete(): Commencing imperative Call to deleteSessionObjectives(session)`,
+      COLOR
     );
     deleteSessionObjectives({ sessionid: this.recordId })
       .then((result) => {
-        console.log(`%chandleClickDelete(): returned ${result}`,COLOR);
+        console.log(`%chandleClickDelete(): returned ${result}`, COLOR);
       })
       .then(() => {
         console.log("Refreshing");
@@ -296,7 +336,7 @@ export default class Lwcsessionobjective extends LightningElement {
       });
   }
   getSelectedName(event) {
-    console.info(`%cgetSelectedName(): entering`,COLOR);
+    console.info(`%cgetSelectedName(): entering`, COLOR);
 
     this.selectedRows = event.detail.selectedRows;
     // Display that fieldName of the selected rows
@@ -310,7 +350,7 @@ export default class Lwcsessionobjective extends LightningElement {
     const evt = new ShowToastEvent({
       title: t,
       message: m,
-      variant: v,
+      variant: v
     });
     this.dispatchEvent(evt);
   }

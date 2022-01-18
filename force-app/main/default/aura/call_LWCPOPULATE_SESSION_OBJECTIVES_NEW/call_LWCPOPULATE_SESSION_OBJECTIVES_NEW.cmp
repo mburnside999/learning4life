@@ -1,4 +1,9 @@
-<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" >
-     <ltng:require styles="{!$Resource.popupCSS}" />
-    <c:lwcpopulatesessionobjectivesnew recordId="{!v.recordId}" onclose="{!c.closeMethodInAuraController}"/>
+<aura:component
+  implements="force:lightningQuickActionWithoutHeader,force:hasRecordId"
+>
+  <ltng:require styles="{!$Resource.popupCSS}" />
+  <c:lwcpopulatesessionobjectivesnew
+    recordId="{!v.recordId}"
+    onclose="{!c.closeMethodInAuraController}"
+  />
 </aura:component>
