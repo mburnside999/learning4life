@@ -16,15 +16,17 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
-    "@lwc/eslint-plugin-lwc": "^1.0.1",
+    "@babel/core": "^7.16.7",
+    "@babel/eslint-parser": "^7.16.5",
+    "@lwc/eslint-plugin-lwc": "^1.1.1",
     "@prettier/plugin-xml": "^0.13.1",
     "@salesforce/eslint-config-lwc": "^2.2.0",
     "@salesforce/eslint-plugin-aura": "^2.0.0",
-    "@salesforce/eslint-plugin-lightning": "^0.1.1",
+    "@salesforce/eslint-plugin-lightning": "^1.0.0",
     "@salesforce/sfdx-lwc-jest": "^0.13.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jest": "^25.7.0",
     "husky": "^7.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.3.2",
@@ -37,5 +39,8 @@
     "**/{aura,lwc}/**": [
       "eslint"
     ]
+  },
+  "dependencies": {
+    "jest": "^27.4.7"
   }
 }

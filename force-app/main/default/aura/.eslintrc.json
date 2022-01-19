@@ -3,6 +3,8 @@
   "extends": ["plugin:@salesforce/eslint-plugin-aura/recommended"],
   "rules": {
     "vars-on-top": "off",
-    "no-unused-expressions": "off"
+    "no-unused-expressions": "off",
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
+
   }
 }

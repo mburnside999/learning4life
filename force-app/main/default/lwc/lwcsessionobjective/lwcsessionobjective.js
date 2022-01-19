@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { LightningElement, api, wire, track } from "lwc";
 import getSessionObjectives from "@salesforce/apex/L4LController.getSessionObjectives";
@@ -8,18 +7,17 @@ import deleteSessionObjectives from "@salesforce/apex/L4LController.deleteSessio
 import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord } from "lightning/uiRecordApi";
 
-import COMMENT_FIELD from "@salesforce/schema/Session_Obj__c.Comment__c";
-import CORRECT_FIELD from "@salesforce/schema/Session_Obj__c.Correct__c";
-import INCORRECT_FIELD from "@salesforce/schema/Session_Obj__c.Incorrect__c";
-import PROMPTED_FIELD from "@salesforce/schema/Session_Obj__c.Prompted__c";
-import ID_FIELD from "@salesforce/schema/Session_Obj__c.Id";
+// import COMMENT_FIELD from "@salesforce/schema/Session_Obj__c.Comment__c";
+// import CORRECT_FIELD from "@salesforce/schema/Session_Obj__c.Correct__c";
+// import INCORRECT_FIELD from "@salesforce/schema/Session_Obj__c.Incorrect__c";
+// import PROMPTED_FIELD from "@salesforce/schema/Session_Obj__c.Prompted__c";
+// import ID_FIELD from "@salesforce/schema/Session_Obj__c.Id";
 
-import { refreshApex } from "@salesforce/apex";
+// import { refreshApex } from "@salesforce/apex";
 import { deleteRecord } from "lightning/uiRecordApi";
 // Lightning Message service
 import {
   subscribe,
-  unsubscribe,
   APPLICATION_SCOPE,
   MessageContext
 } from "lightning/messageService";
@@ -72,8 +70,8 @@ const columns = [
     typeAttributes: { rowActions: actions }
   }
 ];
-const selectedRows = {};
-
+//const selectedRows = {};
+//var fred;
 export default class Lwcsessionobjective extends LightningElement {
   @api recordId = "a3N2v000003Gr4VEAS"; //this is session 31
   //@wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
@@ -101,7 +99,7 @@ export default class Lwcsessionobjective extends LightningElement {
       },
       { scope: APPLICATION_SCOPE }
     );
-    console.log(`%cconnectedCallback(): calling refresh()`, COLOR);
+    console.debug(`%cconnectedCallback(): calling refresh()`, COLOR);
     this.refresh();
   }
 
@@ -316,14 +314,14 @@ export default class Lwcsessionobjective extends LightningElement {
     );
     deleteSessionObjectives({ sessionid: this.recordId })
       .then((result) => {
-        console.log(`%chandleClickDelete(): returned ${result}`, COLOR);
+        console.debug(`%chandleClickDelete(): returned ${result}`, COLOR);
       })
       .then(() => {
-        console.log("Refreshing");
+        console.info(`Refreshing`, COLOR);
         this.refresh();
       })
       .then(() => {
-        console.log("Toasty");
+        console.info(`%chandleClickDelete(): call showNotifiction`, COLOR);
         this.showNotification(
           "Success!",
           "Deleted all Session Objective records for this session.",
@@ -332,7 +330,10 @@ export default class Lwcsessionobjective extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log(`ERRORED ${JSON.stringify(error)}`);
+        console.error(
+          `%chandleClickDelete(): ERRORED ${JSON.stringify(error)}`,
+          COLOR
+        );
       });
   }
   getSelectedName(event) {
@@ -346,7 +347,7 @@ export default class Lwcsessionobjective extends LightningElement {
   }
 
   showNotification(t, m, v) {
-    console.log("Toast...");
+    console.info(`showNotification(): entering`, COLOR);
     const evt = new ShowToastEvent({
       title: t,
       message: m,

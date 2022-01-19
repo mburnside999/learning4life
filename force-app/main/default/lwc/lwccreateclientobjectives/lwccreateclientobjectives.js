@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
 import { LightningElement, api, wire, track } from "lwc";
@@ -7,20 +6,19 @@ import createClientObjectivesByArray from "@salesforce/apex/L4LController.create
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 //import { fireEvent } from "c/pubsub";
 import { CurrentPageReference } from "lightning/navigation";
-import { refreshApex } from "@salesforce/apex";
+//import { refreshApex } from "@salesforce/apex";
 // Lightning Message Service
 import { publish, MessageContext } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
 
 const COLOR = "color:green";
-
 const columns = [
   { label: "Name", fieldName: "Name", type: "text" },
   { label: "Program", fieldName: "Program__c", type: "text" },
   { label: "SD_Name__c", fieldName: "SD_Name__c", type: "text" }
 ];
 
-const selectedRows = {};
+//const selectedRows = {};
 
 export default class Lwccreateclientobjectives extends LightningElement {
   @wire(MessageContext) messageContext;
@@ -113,7 +111,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
           this.refresh();
         })
         .finally(() => {
-          console.log(`%chandleClickArray(): reached finally()`, COLOR);
+          console.debug(`%chandleClickArray(): reached finally()`, COLOR);
           console.debug(`%cpublishing LMS event`, COLOR);
           //fireEvent(this.pageRef, "inputChangeEvent", this.recordId);
           const message = {

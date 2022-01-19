@@ -14,7 +14,7 @@ export default class Lwcpublisher extends LightningElement {
       source: "LWC",
       recordData: {}
     };
-    console.log(`pubishing message ${message}`);
+    console.debug(`handleClick(): pubishing message ${message}`);
     publish(this.messageContext, SAMPLEMC, message);
   }
 }

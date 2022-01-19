@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { LightningElement, track, wire, api } from "lwc";
@@ -11,7 +10,6 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 // Lightning Message ervice
 import {
   subscribe,
-  unsubscribe,
   APPLICATION_SCOPE,
   MessageContext
 } from "lightning/messageService";
@@ -203,7 +201,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log(`%cERROR ${JSON.stringify(error)}`, COLOR);
+        console.error(`%crefresh():ERROR ${JSON.stringify(error)}`, COLOR);
       });
   }
 
@@ -318,7 +316,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log(`%c%chandleLMS(): ERROR ${JSON.stringify(error)}`, COLOR);
+        console.error(`%c%chandleLMS(): ERROR ${JSON.stringify(error)}`, COLOR);
       });
   }
 }

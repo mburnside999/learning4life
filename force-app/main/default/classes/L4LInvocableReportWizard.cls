@@ -1,13 +1,9 @@
-global with sharing class InvocableTest {
-  // backing method for Mike DH's Report Wizard Flow
-
-  // IMPORTANT
-  // this class was deprecated January 2022
-  // please refer to class "L4LInvocableReportWizard"
+global with sharing class L4LInvocableReportWizard {
+  // As of January 19, 2022 this is the controller for MDH's Report Wizard flow
 
   @InvocableMethod(
-    label='Mike Invocable method'
-    description='Mikes invocable Method description'
+    label='L4L Invocable Report Wizard'
+    description='L4L Invocable Report Wizard'
   )
   public static List<String> getStatusCountsBetweenDates(
     List<Requests> requests
@@ -21,57 +17,67 @@ global with sharing class InvocableTest {
     DateTime endtime = requests[0].endtime;
     Id clientId = requests[0].clientId;
 
-    System.debug('InvocableTest: received the following from flow');
-    System.debug('InvocableTest: received starttime: ' + starttime);
-    System.debug('InvocableTest: received endtime: ' + endtime);
-    System.debug('InvocableTest: received clientId: ' + clientId);
-    System.debug('InvocableTest: here are the received dates in local format.');
-    System.debug('InvocableTest: formatted starttime: ' + starttime.format());
-    System.debug('InvocableTest: formatted endtime: ' + endtime.format());
+    System.debug('L4LInvocableReportWizard: received the following from flow');
+    System.debug('L4LInvocableReportWizard: received starttime: ' + starttime);
+    System.debug('L4LInvocableReportWizard: received endtime: ' + endtime);
+    System.debug('L4LInvocableReportWizard: received clientId: ' + clientId);
+    System.debug(
+      'L4LInvocableReportWizard: here are the received dates in local format.'
+    );
+    System.debug(
+      'L4LInvocableReportWizard: formatted starttime: ' + starttime.format()
+    );
+    System.debug(
+      'L4LInvocableReportWizard: formatted endtime: ' + endtime.format()
+    );
 
     TimeZone tz = UserInfo.getTimeZone();
-    System.debug('InvocableTest: the user timezone is: ' + tz.toString());
+    System.debug(
+      'L4LInvocableReportWizard: the user timezone is: ' + tz.toString()
+    );
 
     // start time processing //
-    System.debug('InvocableTest: processing starttime...');
+    System.debug('L4LInvocableReportWizard: processing starttime...');
     Integer offset = tz.getOffset(starttime.dateGMT());
     System.debug(
-      'InvocableTest: at the received starttime the offset to GMT is : ' +
+      'L4LInvocableReportWizard: at the received starttime the offset to GMT is : ' +
       offset / 1000 +
       ' seconds.'
     );
     starttime = starttime.addSeconds(0 - (offset / 1000));
     System.debug(
-      'InvocableTest: starttime after subtracting the offset to GMT : ' +
+      'L4LInvocableReportWizard: starttime after subtracting the offset to GMT : ' +
       starttime
     );
     System.debug(
-      'InvocableTest: formatted local starttime after applying the offset to GMT: ' +
+      'L4LInvocableReportWizard: formatted local starttime after applying the offset to GMT: ' +
       starttime.format()
     );
 
     // end time processing //
-    System.debug('InvocableTest: processing endtime');
+    System.debug('L4LInvocableReportWizard: processing endtime');
     endtime = endtime.addDays(1); // ensure endtime is stretched to include the whole day
-    System.debug('InvocableTest: stretched the endtime to ' + endtime);
+    System.debug(
+      'L4LInvocableReportWizard: stretched the endtime to ' + endtime
+    );
 
     offset = tz.getOffset(endtime.dateGMT());
     System.debug(
-      'InvocableTest: at the stretched endtime the offset to GMT is: ' +
+      'L4LInvocableReportWizard: at the stretched endtime the offset to GMT is: ' +
       offset / 1000 +
       ' seconds.'
     );
     endtime = endtime.addSeconds(0 - (offset / 1000));
     System.debug(
-      'InvocableTest: stretched endtime after subtracting the offset to GMT: ' +
+      'L4LInvocableReportWizard: stretched endtime after subtracting the offset to GMT: ' +
       endtime
     );
     System.debug(
-      'InvocableTest: formatted local stretched endtime after applying the offset to GMT: ' +
+      'L4LInvocableReportWizard: formatted local stretched endtime after applying the offset to GMT: ' +
       endtime.format()
     );
     System.debug(
-      'InvocableTest: BOTTOM LINE we submit a SOQL statement that says=> SELECT..cols.. WHERE lastmodifieddate>=' +
+      'L4LInvocableReportWizard: BOTTOM LINE we submit a SOQL statement that says=> SELECT..cols.. WHERE lastmodifieddate>=' +
       starttime +
       ' AND lastmodifieddate < ' +
       endtime
@@ -93,7 +99,7 @@ global with sharing class InvocableTest {
 
     //hack to dedup progream names
     Set<String> programSet = new Set<String>();
-    System.debug('InvocableTest: deduping program names');
+    System.debug('L4LInvocableReportWizard: deduping program names');
     for (AggregateResult ar : groupedResults) {
       programSet.add((String) ar.get('Name'));
     }

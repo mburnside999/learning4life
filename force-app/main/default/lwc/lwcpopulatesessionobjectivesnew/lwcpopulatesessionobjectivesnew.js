@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import { LightningElement, api, wire, track } from "lwc";
 import getClientObjectivesForSession from "@salesforce/apex/L4LController.getClientObjectivesForSession";
@@ -107,7 +106,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
       COLOR
     );
     if (myselectedRows.length > 0) {
-      console.debug("%cgetSelectedName() setting this.breadcrumb");
+      console.debug(`%cgetSelectedName() setting this.breadcrumb`, COLOR);
       this.breadcrumb =
         myselectedRows[0].Program_Name__c +
         " > " +
@@ -258,7 +257,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
         skillstring: JSON.stringify(this.skillstring)
       })
         .then((result) => {
-          console.log(
+          console.debug(
             `%chandleClickArray(): Apex returned result ${result}`,
             COLOR
           );
@@ -269,7 +268,10 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
           );
         })
         .then(() => {
-          console.log("Refreshing");
+          console.debug(
+            `%chandleClickArray(): this is an empty then ?????`,
+            COLOR
+          );
         })
         .then(() => {
           this.showNotification(
