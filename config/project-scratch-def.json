@@ -1,7 +1,7 @@
 {
-  "orgName": "mburnside company",
+  "orgName": "L4L Package Development",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "features": ["PersonAccounts","EnableSetPasswordInApi"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true

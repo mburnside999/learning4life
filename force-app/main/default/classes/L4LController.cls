@@ -4,6 +4,7 @@ public with sharing class L4LController {
   @AuraEnabled(cacheable=false)
   public static List<Session_obj__c> getSessionObjectives(String sess) {
     System.debug('>>>>>> in getSessionObjectives (sess)');
+    //test written
     return [
       SELECT
         Id,
@@ -27,6 +28,7 @@ public with sharing class L4LController {
   public static List<Client_Objective__c> getClientObjectivesForSession(
     String searchKey
   ) {
+    //test written
     System.debug('>>>>>> getClientObjectivesForSession(searchKey)');
     System.debug('>>>>>> searchKey=' + searchKey);
 
@@ -52,6 +54,7 @@ public with sharing class L4LController {
 
   @AuraEnabled(cacheable=false)
   public static List<Client_Objective__c> getClientObjectives(String clientId) {
+    //test written
     System.debug('>>>>>> in getClientObjectives(clientId)');
     System.debug('>>>>>> clientId=' + clientId);
     System.debug('>>>>>> cacheable=false');
@@ -75,21 +78,11 @@ public with sharing class L4LController {
     ];
   }
 
-  // @AuraEnabled(cacheable=true)
-  // public static List<Objective__c> getObjectives(String sess) {
-  //   System.debug('>>>>>> in getObjectives(sess)');
-  //   return [
-  //     SELECT Id, Name, Program__c, SD_Name__c
-  //     FROM Objective__c
-  //     ORDER BY Program__c, Name
-  //   ];
-  // }
-
   @AuraEnabled
   public static List<Objective__c> getUnusedObjectives(String clientId) {
     System.debug('>>>>>> in getUnusedObjectives(clientId)');
     System.debug('>>>>>> clientId=' + clientId);
-
+    //test written
     return [
       SELECT Id, Name, Program__c, SD_Name__c
       FROM Objective__c
@@ -105,181 +98,10 @@ public with sharing class L4LController {
 
   @AuraEnabled
   public static void deleteSessionObjectives(String sessionid) {
+    //test written
     System.debug('>>>>>> in deleteSessionObjectives(sessionid)');
     delete [SELECT id FROM Session_Obj__c WHERE session__c = :sessionid];
   }
-
-  // @AuraEnabled
-  // public static void createSessionObjectives(
-  //   String sessionid,
-  //   String objective
-  // ) {
-  //   System.debug('>>>>>> in createSessionObjectives(sessionid,objective)');
-  //   Session_Obj__c so = new Session_Obj__c();
-  //   so.session__c = sessionid;
-  //   so.objective__c = objective;
-  //   so.Correct__C = false;
-  //   so.Incorrect__c = false;
-  //   so.Prompted__c = false;
-
-  //   insert so;
-  // }
-  // @AuraEnabled
-  // public static void setSessionObjectives(String key, String val) {
-  //   System.debug('>>>>>> in setSessionObjectives(key,val)');
-  //   Session_Obj__c so = [
-  //     SELECT id, Correct__c, Incorrect__c, Prompted__c
-  //     FROM Session_Obj__c
-  //     WHERE id = :key
-  //     LIMIT 1
-  //   ];
-  //   switch on val {
-  //     when 'Correct' {
-  //       so.Correct__c = true;
-  //       so.Incorrect__c = false;
-  //       so.Prompted__c = false;
-  //     }
-  //     when 'Incorrect' {
-  //       so.Correct__c = false;
-  //       so.Incorrect__c = true;
-  //       so.Prompted__c = false;
-  //     }
-  //     when 'Prompted' {
-  //       so.Correct__c = false;
-  //       so.Incorrect__c = false;
-  //       so.Prompted__c = true;
-  //     }
-  //     when else {
-  //       System.debug('default');
-  //     }
-  //   }
-
-  //   update so;
-  // }
-
-  // @AuraEnabled
-  // public static Integer createSessionObjectivesByArrayOld(
-  //   String jsonstr,
-  //   String sess
-  // ) {
-  //   //deserailise the object array
-  //   List<Objective__c> objDeserialized = (List<Objective__c>) JSON.deserializeStrict(
-  //     jsonstr,
-  //     List<Objective__c>.class
-  //   );
-
-  //   // // prepare a list for insertion in bulk
-  //   List<Session_Obj__c> soList = new List<Session_Obj__c>();
-
-  //   // loop thru the deserialised objectives
-  //   for (Objective__c o : objDeserialized) {
-  //     // prepare a sess_obj__c and add to array
-  //     Session_Obj__c so = new Session_Obj__c();
-  //     so.Session__c = sess;
-  //     so.Objective__c = o.Id;
-  //     so.Correct__C = false;
-  //     so.Incorrect__c = false;
-  //     so.Prompted__c = false;
-  //     soList.add(so);
-  //   }
-
-  //   insert soList;
-  //   return objDeserialized.size();
-  // }
-
-  // @AuraEnabled
-  // public static Integer createSessionObjectivesByArray(
-  //   String jsonstr,
-  //   String sess
-  // ) {
-  //   System.debug('>>>>>> in createSessionObjectivesByAray(jsonstr,sess)');
-  //   //deserailise the object array
-  //   List<Client_Objective__c> objDeserialized = (List<Client_Objective__c>) JSON.deserializeStrict(
-  //     jsonstr,
-  //     List<Client_Objective__c>.class
-  //   );
-
-  //   // // prepare a list for insertion in bulk
-  //   List<Session_Obj__c> soList = new List<Session_Obj__c>();
-
-  //   // loop thru the deserialised objectives
-  //   for (Client_Objective__c o : objDeserialized) {
-  //     // prepare a session_obj__c and add to array
-  //     Session_Obj__c so = new Session_Obj__c();
-  //     so.Session__c = sess;
-  //     so.Objective__c = o.Objective__c;
-  //     so.Correct__C = false;
-  //     so.Incorrect__c = false;
-  //     so.Prompted__c = false;
-  //     so.previous_status__c = o.status__c;
-  //     soList.add(so);
-  //   }
-
-  //   insert soList;
-  //   return objDeserialized.size();
-  // }
-
-  // @AuraEnabled
-  // public static Integer createSessionObjectivesByArrayWithResults(
-  //   String jsonstr,
-  //   String sess,
-  //   Integer correctcount,
-  //   Integer incorrectcount,
-  //   integer promptedcount
-  // ) {
-  //   System.debug(
-  //     '>>>>>> in createSessionObjectivesByArrayWithResult(jsonstr,sess,correctcount,incorrectcount,promptedcount)'
-  //   );
-  //   //deserialise the object array
-  //   List<Client_Objective__c> objDeserialized = (List<Client_Objective__c>) JSON.deserializeStrict(
-  //     jsonstr,
-  //     List<Client_Objective__c>.class
-  //   );
-
-  //   // // prepare a list for insertion in bulk
-  //   List<Session_Obj__c> soList = new List<Session_Obj__c>();
-
-  //   // loop thru the deserialised objectives
-  //   for (Client_Objective__c o : objDeserialized) {
-  //     System.debug('correctcount=' + correctCount);
-  //     for (Integer i = 0; i < correctcount; i++) {
-  //       // prepare a session_obj__c and add to array
-  //       Session_Obj__c so = new Session_Obj__c();
-  //       so.Session__c = sess;
-  //       so.Objective__c = o.Objective__c;
-  //       so.Correct__C = true;
-  //       so.Incorrect__c = false;
-  //       so.Prompted__c = false;
-  //       so.previous_status__c = o.status__c;
-  //       soList.add(so);
-  //     }
-  //     for (Integer i = 0; i < incorrectcount; i++) {
-  //       // prepare a session_obj__c and add to array
-  //       Session_Obj__c so = new Session_Obj__c();
-  //       so.Session__c = sess;
-  //       so.Objective__c = o.Objective__c;
-  //       so.Correct__C = false;
-  //       so.Incorrect__c = true;
-  //       so.Prompted__c = false;
-  //       so.previous_status__c = o.status__c;
-  //       soList.add(so);
-  //     }
-  //     for (Integer i = 0; i < promptedcount; i++) {
-  //       // prepare a session_obj__c and add to array
-  //       Session_Obj__c so = new Session_Obj__c();
-  //       so.Session__c = sess;
-  //       so.Objective__c = o.Objective__c;
-  //       so.Correct__C = false;
-  //       so.Incorrect__c = false;
-  //       so.Prompted__c = true;
-  //       so.previous_status__c = o.status__c;
-  //       soList.add(so);
-  //     }
-  //   }
-
-  //   insert soList;
-  //   return soList.size();
-  // }
 
   @AuraEnabled
   public static Integer createSessionObjectivesByArrayWithOrderedResults(
@@ -290,6 +112,11 @@ public with sharing class L4LController {
     System.debug(
       '>>>>>> in createSessionObjectivesByArrayWithOrderedResults(jsonstr,sess,skillstr)'
     );
+    //test written
+    System.debug('jsonstr:' + jsonstr);
+    System.debug('sess:' + sess);
+    System.debug('skillstring:' + skillstring);
+
     //deserialise the object array
     List<Client_Objective__c> objDeserialized = (List<Client_Objective__c>) JSON.deserializeStrict(
       jsonstr,
@@ -345,7 +172,10 @@ public with sharing class L4LController {
     String jsonstr,
     String sess
   ) {
+    //test written
     System.debug('>>>>>> in createClientObjectivesByArray(jsonstr,sess)');
+    System.debug('jsonstr:' + jsonstr);
+    System.debug('sess:' + sess);
     //deserailise the object array
     List<Objective__c> objDeserialized = (List<Objective__c>) JSON.deserializeStrict(
       jsonstr,
@@ -374,7 +204,10 @@ public with sharing class L4LController {
     String jsonstr,
     String val
   ) {
+    //test written
     System.debug('>>>>>> in setSessionObjectivesByArray(jsonstr,val)');
+    System.debug('jsonstr:' + jsonstr);
+    System.debug('val:' + val);
     boolean del = false;
     List<Session_Obj__c> soDeserialized = (List<Session_Obj__c>) JSON.deserializeStrict(
       jsonstr,
