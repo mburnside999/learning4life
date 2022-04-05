@@ -3,6 +3,7 @@
     <fullName>Person_Account_CL</fullName>
     <fields>Name</fields>
     <fields>PersonBirthdate</fields>
+    <fields>Current_Age__pc</fields>
     <fields>RecordTypeId</fields>
     <fields>CreatedById</fields>
     <label>Person Account CL</label>

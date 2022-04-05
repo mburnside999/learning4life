@@ -149,6 +149,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-1231dec2-9c38-4604-9bfe-e3966d470edf</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-f2573359-7028-4c30-86b2-8cf0dbffaadf</value>
@@ -231,6 +241,20 @@
                 <identifier>flexipage_tab5</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-1231dec2-9c38-4604-9bfe-e3966d470edf</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Chat Room</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-787e2b91-0624-4b35-a470-5b8a05bcd5c8</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -248,7 +272,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>MB Client Page</masterLabel>
+    <masterLabel>LFL Client Page</masterLabel>
     <sobjectType>Account</sobjectType>
     <template>
         <name>flexipage:recordHomeSimpleViewTemplate</name>

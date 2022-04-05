@@ -6,23 +6,47 @@
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
+            <fullName>Advertisement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Partner Referral</fullName>
+            <fullName>Partner</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Phone Inquiry</fullName>
+            <fullName>Public Relations</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Purchased List</fullName>
+            <fullName>Seminar - Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seminar - Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trade Show</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Word of mouth</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -194,19 +218,23 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Channel Partner %2F Reseller</fullName>
+            <fullName>Analyst</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer - Channel</fullName>
+            <fullName>Competitor</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer - Direct</fullName>
+            <fullName>Customer</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Installation Partner</fullName>
+            <fullName>Integrator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Investor</fullName>
             <default>false</default>
         </values>
         <values>
@@ -214,11 +242,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Press</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prospect</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Technology Partner</fullName>
+            <fullName>Reseller</fullName>
             <default>false</default>
         </values>
     </picklistValues>

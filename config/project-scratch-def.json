@@ -1,6 +1,6 @@
 {
   "orgName": "L4L Package Development",
-  "edition": "Developer",
+  "edition": "Enterprise",
   "features": ["PersonAccounts","EnableSetPasswordInApi"],
   "settings": {
     "lightningExperienceSettings": {

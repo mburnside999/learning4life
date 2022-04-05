@@ -5,7 +5,7 @@
             "default": true,
             "package": "Learning4LifePackage",
             "versionName": "Amethyst",
-            "versionNumber": "1.0.2.NEXT"
+            "versionNumber": "1.0.3.NEXT"
         }
     ],
     "name": "L4L",
@@ -19,6 +19,8 @@
         "Learning4LifePackage@0.1.0-4": "04t8W000000PR1BQAW",
         "Learning4LifePackage@1.0.1-1": "04t8W000000PR1GQAW",
         "Learning4LifePackage@1.0.1-2": "04t8W000000PR1LQAW",
-        "Learning4LifePackage@1.0.2-1": "04t8W000000PR1QQAW"
+        "Learning4LifePackage@1.0.2-1": "04t8W000000PR1QQAW",
+        "Learning4LifePackage@1.0.3-1": "04t8W000000PR1pQAG",
+        "Learning4LifePackage@1.0.3-2": "04t8W000000PR1uQAG"
     }
 }
