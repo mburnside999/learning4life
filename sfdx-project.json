@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "Learning4LifePackage",
-            "versionName": "Amethyst",
-            "versionNumber": "1.0.4.NEXT"
+            "versionName": "Coral",
+            "versionNumber": "1.0.6.NEXT"
         }
     ],
     "name": "L4L",
@@ -20,6 +20,9 @@
         "Learning4LifePackage@1.0.1-1": "04t8W000000PR1GQAW",
         "Learning4LifePackage@1.0.1-2": "04t8W000000PR1LQAW",
         "Learning4LifePackage@1.0.2-1": "04t8W000000PR1QQAW",
-        "Learning4LifePackage@1.0.3-1": "04t8W000000PR1pQAG"
+        "Learning4LifePackage@1.0.3-1": "04t8W000000PR1pQAG",
+        "Learning4LifePackage@1.0.4-1": "04t8W000000PR4AQAW",
+        "Learning4LifePackage@1.0.5-1": "04t8W000000PR53QAG",
+        "Learning4LifePackage@1.0.6-2": "04t8W000000PR5IQAW"
     }
 }

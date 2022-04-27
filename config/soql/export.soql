@@ -1,0 +1,11 @@
+select name,(select name,description__c,response__c from Sds__r) from Program__c
+
+select name,(select name from objectives__r) from sd__c
+
+sfdx force:data:tree:export -u L4LSandbox --query \
+      "select name,(select name,description__c,response__c from Sds__r) from Program__c" \
+     --prefix export-demo --outputdir sfdx-out --plan
+
+ sfdx force:data:tree:export -u L4LSandbox --query \
+      "select name,(select name from objectives__r) from SD__c" \
+     --prefix export-demo --outputdir sfdx-out --plan
