@@ -4,8 +4,13 @@
             "path": "force-app",
             "default": true,
             "package": "Learning4LifePackage",
-            "versionName": "Coral",
-            "versionNumber": "1.0.6.NEXT"
+            "versionName": "Emerald",
+            "versionNumber": "1.0.10.NEXT",
+            "dependencies": [
+                {
+                    "package": "nebula@4.7.1"
+                }
+            ]
         }
     ],
     "name": "L4L",
@@ -14,6 +19,7 @@
     "sourceApiVersion": "53.0",
     "packageAliases": {
         "Learning4LifePackage": "0Ho8W000000k9dOSAQ",
+        "nebula@4.7.1": "04t5Y0000015lgBQAQ",
         "Learning4LifePackage@0.1.0-1": "04t8W000000PR0wQAG",
         "Learning4LifePackage@0.1.0-3": "04t8W000000PR16QAG",
         "Learning4LifePackage@0.1.0-4": "04t8W000000PR1BQAW",
@@ -23,6 +29,10 @@
         "Learning4LifePackage@1.0.3-1": "04t8W000000PR1pQAG",
         "Learning4LifePackage@1.0.4-1": "04t8W000000PR4AQAW",
         "Learning4LifePackage@1.0.5-1": "04t8W000000PR53QAG",
-        "Learning4LifePackage@1.0.6-2": "04t8W000000PR5IQAW"
+        "Learning4LifePackage@1.0.6-2": "04t8W000000PR5IQAW",
+        "Learning4LifePackage@1.0.7-1": "04t8W000000PR5NQAW",
+        "Learning4LifePackage@1.0.7-2": "04t8W000000PR5SQAW",
+        "Learning4LifePackage@1.0.8-2": "04t8W000000PR5cQAG",
+        "Learning4LifePackage@1.0.9-1": "04t8W000000PR5hQAG"
     }
 }
