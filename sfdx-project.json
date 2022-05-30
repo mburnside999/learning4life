@@ -5,7 +5,7 @@
             "default": true,
             "package": "Learning4LifePackage",
             "versionName": "Emerald",
-            "versionNumber": "1.0.10.NEXT",
+            "versionNumber": "1.0.11.NEXT",
             "dependencies": [
                 {
                     "package": "nebula@4.7.1"
