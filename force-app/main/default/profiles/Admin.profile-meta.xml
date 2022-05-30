@@ -282,6 +282,9 @@
         <layout>NDIS_Report__c-Report Wizard Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Objective__c-Objective Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>PersonAccount-Person Account Layout</layout>
         <recordType>PersonAccount.LFL_Client</recordType>
     </layoutAssignments>

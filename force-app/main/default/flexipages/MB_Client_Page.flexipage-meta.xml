@@ -49,8 +49,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>lwcrelatedclientobjectives</componentName>
-                <identifier>c_lwcrelatedclientobjectives1</identifier>
+                <componentName>l4lRelatedClientObjectives</componentName>
+                <identifier>c_lflRelatedClientObjectives1</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-80e85a97-dbdf-4229-ba5d-ad593a417bd5</name>

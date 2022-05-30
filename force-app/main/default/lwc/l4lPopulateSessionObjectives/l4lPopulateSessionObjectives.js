@@ -9,7 +9,7 @@ import { CurrentPageReference } from "lightning/navigation";
 import { publish, MessageContext } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
-const COMPONENT = "lwccpopulatesessionobjectivesnew";
+const COMPONENT = "l4lPopulatecSessionObjectives";
 const COLOR = "color:olive"; //for console log formatting
 const DEBUG = "debug";
 const INFO = "info";
@@ -43,7 +43,7 @@ const columns = [
   }
 ];
 
-export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
+export default class L4lPopulateSessionObjectives extends LightningElement {
   @wire(CurrentPageReference) pageRef;
   @wire(MessageContext) messageContext;
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing
@@ -374,7 +374,7 @@ export default class Lwcpopulatsessionobjectivesnew extends LightningElement {
         .finally(() => {
           const message = {
             recordId: "",
-            message: "message from lwcpopulatesessionobjectives",
+            message: "message from l4lPopulateSessionObjectives",
             source: "LWC",
             recordData: {}
           };

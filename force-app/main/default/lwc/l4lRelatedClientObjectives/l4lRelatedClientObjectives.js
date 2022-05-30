@@ -17,7 +17,7 @@ import {
 import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
 
 //debugging
-const COMPONENT = "lwcrelatedclientobjectives";
+const COMPONENT = "l4lRelatedClientObjectives";
 const COLOR = "color:magenta";
 const DEBUG = "debug";
 const INFO = "info";
@@ -83,7 +83,7 @@ const columns = [
   }
 ];
 
-export default class lwcrelatedclientobjectives extends LightningElement {
+export default class L4lRelatedClientObjectives extends LightningElement {
   @track clientId = "";
   @api recordId = "0012v00002fY86nAAC";
   @track COrecordId = "";
@@ -145,7 +145,7 @@ export default class lwcrelatedclientobjectives extends LightningElement {
   logit(level, message, tag, context = null) {
     console.log(`in logger level=${level} tag=${tag} context=${context}`);
     let logger = this.template.querySelector("c-logger");
-    logger.setScenario("c/lwcrelatedclientobjectives");
+    logger.setScenario("c/l4lRelatedClientObjectives");
     switch (level) {
       case INFO:
         logger.info(message).setRecordId(context).addTag("logit()").addTag(tag);

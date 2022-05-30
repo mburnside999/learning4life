@@ -10,7 +10,7 @@ import { publish, MessageContext } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
 
 //debugging
-const COMPONENT = "lwccreateclientobjectives";
+const COMPONENT = "l4lCreateClientObjectives";
 const COLOR = "color:green"; //for console log formatting
 const DEBUG = "debug";
 const INFO = "info";
@@ -24,7 +24,7 @@ const columns = [
 
 //const selectedRows = {};
 
-export default class Lwccreateclientobjectives extends LightningElement {
+export default class L4lCreateClientObjectives extends LightningElement {
   @wire(MessageContext) messageContext;
   @api recordId = "0012v00002fY86nAAC"; //Andy
 
@@ -222,7 +222,7 @@ export default class Lwccreateclientobjectives extends LightningElement {
           );
           const message = {
             recordId: "",
-            message: "message from lwccreateclienbtobjectives",
+            message: "message from l4lCreateClientObjectives",
             source: "LWC",
             recordData: {}
           };

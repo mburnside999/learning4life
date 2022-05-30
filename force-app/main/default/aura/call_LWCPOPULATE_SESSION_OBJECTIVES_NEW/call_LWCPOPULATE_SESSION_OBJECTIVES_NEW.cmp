@@ -2,7 +2,7 @@
   implements="force:lightningQuickActionWithoutHeader,force:hasRecordId"
 >
   <ltng:require styles="{!$Resource.popupCSS}" />
-  <c:lwcpopulatesessionobjectivesnew
+  <c:l4lPopulateSessionObjectives
     recordId="{!v.recordId}"
     onclose="{!c.closeMethodInAuraController}"
   />

@@ -25,7 +25,7 @@ import {
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
 //debugging
-const COMPONENT = "lwcsessionobjective";
+const COMPONENT = "l4lGetSetSessionObjectives";
 const COLOR = "color:blue"; //for console log formatting
 const DEBUG = "debug";
 const INFO = "info";
@@ -77,7 +77,7 @@ const columns = [
 ];
 //const selectedRows = {};
 //var fred;
-export default class Lwcsessionobjective extends LightningElement {
+export default class L4lGetSetSessionObjectives extends LightningElement {
   @api recordId = "a3N2v000003Gr4VEAS"; //this is session 31
   //@wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
   @track sessionObjectives;
@@ -309,7 +309,7 @@ export default class Lwcsessionobjective extends LightningElement {
     this.logit(
       DEBUG,
       `handleSave(): in handleSave()`,
-      "lwcsessionobjective.handleSave()",
+      "l4lGetSetSessionObjectives.handleSave()",
       this.recordId
     );
 

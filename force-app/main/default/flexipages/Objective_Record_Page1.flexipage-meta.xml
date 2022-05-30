@@ -156,8 +156,8 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
-                <componentName>lwcsessionobjective</componentName>
-                <identifier>lwcsessionobjective</identifier>
+                <componentName>l4lGetSetSessionObjectives</componentName>
+                <identifier>l4lGetSetSessionObjectives</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

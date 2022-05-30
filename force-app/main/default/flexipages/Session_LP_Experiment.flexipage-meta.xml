@@ -29,8 +29,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>lwcsessionobjective</componentName>
-                <identifier>lwcsessionobjective</identifier>
+                <componentName>l4lGetSetSessionObjectives</componentName>
+                <identifier>c_l4lGetSetSessionObjectives1</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-3e723d98-0796-4c58-8a33-2d6047a5498f</name>

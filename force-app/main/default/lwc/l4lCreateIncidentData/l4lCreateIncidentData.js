@@ -2,13 +2,13 @@ import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 //debugging
-const COMPONENT = "lwccreateincidentdata";
+const COMPONENT = "l4lCreateIncidentData";
 const COLOR = "color:purple"; //for console log formatting
 const DEBUG = "debug";
 const INFO = "info";
 const ERROR = "error";
 
-export default class Lwccreateincidentdata extends LightningElement {
+export default class L4lCreateIncidentData extends LightningElement {
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing
   @track showStartBtn = true;
   @track timeVal = "00:00:00";

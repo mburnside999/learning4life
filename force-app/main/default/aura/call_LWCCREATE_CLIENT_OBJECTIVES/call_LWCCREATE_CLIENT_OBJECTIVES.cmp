@@ -2,7 +2,7 @@
   implements="force:lightningQuickActionWithoutHeader,force:hasRecordId"
 >
   <ltng:require styles="{!$Resource.popupCSS}" />
-  <c:lwccreateclientobjectives
+  <c:l4lCreateClientObjectives
     recordId="{!v.recordId}"
     onclose="{!c.closeMethodInAuraController}"
   />
