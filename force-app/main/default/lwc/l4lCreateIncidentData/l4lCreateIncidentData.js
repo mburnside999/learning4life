@@ -81,7 +81,7 @@ export default class L4lCreateIncidentData extends LightningElement {
   start(event) {
     this.logit(
       INFO,
-      `start(): in start()`,
+      `${COMPONENT}.start(): in start()`,
       `${COMPONENT}.start()`,
       this.recordId
     );
@@ -114,7 +114,12 @@ export default class L4lCreateIncidentData extends LightningElement {
   }
 
   stop(event) {
-    this.logit(INFO, `stop(): in stop()`, `${COMPONENT}.stop()`, this.recordId);
+    this.logit(
+      INFO,
+      `${COMPONENT}.stop(): in stop()`,
+      `${COMPONENT}.stop()`,
+      this.recordId
+    );
     this.showStartBtn = true;
     clearInterval(this.timeIntervalInstance);
   }
@@ -139,7 +144,7 @@ export default class L4lCreateIncidentData extends LightningElement {
   handleSuccess(event) {
     this.logit(
       INFO,
-      `handleSuccess(): in handleSuccess()`,
+      `${COMPONENT}.handleSuccess(): in handleSuccess()`,
       `${COMPONENT}.handleSuccess()`,
       this.recordId
     );

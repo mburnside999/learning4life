@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Date__c</fullName>
     <defaultValue>Today ()</defaultValue>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Date</label>
     <required>false</required>

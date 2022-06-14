@@ -22,7 +22,7 @@ public with sharing class LFLPopulateTestData {
     Account newAccount = new Account(
       RecordTypeID = RecTypeId,
       FirstName = 'Test FName',
-      LastName = 'Test LName',
+      LastName = 'Peterson',
       PersonHomePhone = '1234567',
       PersonMobilePhone = '12345678'
     );
@@ -31,7 +31,7 @@ public with sharing class LFLPopulateTestData {
     Session__c session = new Session__c();
     session.Client__c = newAccount.Id;
     session.date__c = Date.today();
-    session.session_length__c = 60;
+    session.session_length__c = 1;
     insert session;
 
     Program__c p = new Program__c(Name = '2D Matching');

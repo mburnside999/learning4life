@@ -7,7 +7,7 @@ import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord } from "lightning/uiRecordApi";
 import { deleteRecord } from "lightning/uiRecordApi";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-// Lightning Message ervice
+// Lightning Message service
 import {
   subscribe,
   APPLICATION_SCOPE,
@@ -173,7 +173,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   handleRowAction(event) {
     this.logit(
       DEBUG,
-      `handleRowAction(): entering method`,
+      `${COMPONENT}.handleRowAction(): entering method`,
       `${COMPONENT}.handleRowAction()`,
       this.recordId
     );
@@ -181,7 +181,9 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     const row = event.detail.row;
     this.logit(
       DEBUG,
-      `handleRowAction(): row=${JSON.stringify(row)}, actionName=${actionName}`,
+      `${COMPONENT}.handleRowAction(): row=${JSON.stringify(
+        row
+      )}, actionName=${actionName}`,
       `${COMPONENT}.handleRowAction()`,
       this.recordId
     );
@@ -201,7 +203,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           .catch((error) => {
             this.logit(
               ERROR,
-              `handleRowAction(): error=${JSON.stringify(error)}`,
+              `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
               `${COMPONENT}.handleRowAction()`,
               this.recordId
             );
@@ -219,7 +221,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         this.COrecordId = row.Id;
         this.logit(
           DEBUG,
-          `handleRowAction(): in edit_details`,
+          `${COMPONENT}.handleRowAction(): in edit_details`,
           `${COMPONENT}.handleRowAction()`,
           row.Id
         );
@@ -237,7 +239,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     });
     this.logit(
       DEBUG,
-      `handleSuccess(): dispatching event`,
+      `${COMPONENT}.handleSuccess(): dispatching event`,
       `${COMPONENT}.handleSuccess()`
     );
     this.dispatchEvent(evt);
@@ -259,13 +261,15 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         this.filterableObjectives = result;
         this.logit(
           INFO,
-          `refresh(): getClientObjectives ${result.length} records returned`,
+          `${COMPONENT}.refresh(): getClientObjectives ${result.length} records returned`,
           `${COMPONENT}.refresh()`,
           this.recordId
         );
         this.logit(
           DEBUG,
-          `refresh(): getClientObjectives result=${JSON.stringify(result)}`,
+          `${COMPONENT}.refresh(): getClientObjectives result=${JSON.stringify(
+            result
+          )}`,
           `${COMPONENT}.refresh()`,
           this.recordId
         );
@@ -274,7 +278,9 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         this.error = error;
         this.logit(
           ERROR,
-          `refresh(): getClientObjectives error ${JSON.stringify(error)}`,
+          `${COMPONENT}.refresh(): getClientObjectives error ${JSON.stringify(
+            error
+          )}`,
           `${COMPONENT}.refresh()`,
           this.recordId
         );
@@ -288,13 +294,15 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   handleSave(event) {
     this.logit(
       INFO,
-      "handleSave(): in handleSave()",
+      "${COMPONENT}.handleSave(): in handleSave()",
       `${COMPONENT}.handleSave()`,
       this.recordId
     );
     this.logit(
       DEBUG,
-      `handleSave(): draftValues=${JSON.stringify(event.detail.draftValues)}`,
+      `${COMPONENT}.handleSave(): draftValues=${JSON.stringify(
+        event.detail.draftValues
+      )}`,
       `${COMPONENT}.handleSave()`,
       this.recordId
     );
@@ -325,7 +333,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       .catch((error) => {
         this.logit(
           ERROR,
-          `handleSave(): Promise.all error`,
+          `${COMPONENT}.handleSave(): Promise.all error`,
           `${COMPONENT}.handleSave()`,
           this.recordId
         );
@@ -335,7 +343,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   handleClick(event) {
     this.logit(
       INFO,
-      `handleClick(): entering method`,
+      `${COMPONENT}.handleClick(): entering method`,
       `${COMPONENT}.handleClick()`,
       this.recordId
     );
@@ -350,13 +358,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   handleSearchKeyInput(event) {
     this.logit(
       INFO,
-      `handleSearchKeyInput(): entering method`,
+      `${COMPONENT}.handleSearchKeyInput(): entering method`,
       `${COMPONENT}.handleSearchKeyInput()`
     );
     const searchKey = event.target.value.toLowerCase();
     this.logit(
       DEBUG,
-      `handleSearchKeyInput(): searchKey=${searchKey}`,
+      `${COMPONENT}.handleSearchKeyInput(): searchKey=${searchKey}`,
       `${COMPONENT}.handleSearchKeyInput()`
     );
     this.clientobjectives = this.filterableObjectives.filter(
@@ -370,7 +378,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     );
     this.logit(
       DEBUG,
-      `handleSearchKey(): this.clientobjectives=${JSON.stringify(
+      `${COMPONENT}.handleSearchKey(): this.clientobjectives=${JSON.stringify(
         this.clientobjectives
       )}`,
       `${COMPONENT}.handleSearchKey()`
@@ -380,7 +388,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   handleLMS(message) {
     this.logit(
       DEBUG,
-      `handleLMS(): message received ${JSON.stringify(message)}`,
+      `${COMPONENT}.handleLMS(): message received ${JSON.stringify(message)}`,
       `${COMPONENT}.handleLMS()`,
       this.recordId
     );
@@ -390,7 +398,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
     this.logit(
       INFO,
-      `handleLMS(): calling Apex getClientObjectives`,
+      `${COMPONENT}.handleLMS(): calling Apex getClientObjectives`,
       `${COMPONENT}.handleLMS()`,
       this.recordId
     );
@@ -403,13 +411,15 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         this.filterableObjectives = result;
         this.logit(
           INFO,
-          `handleLMS(): getClientObjectives returned ${result.length} records`,
+          `${COMPONENT}.handleLMS(): getClientObjectives returned ${result.length} records`,
           `${COMPONENT}.handleLMS()`,
           this.recordId
         );
         this.logit(
           DEBUG,
-          `handleLMS(): getClientObjectives result= ${JSON.stringify(result)}`,
+          `${COMPONENT}.handleLMS(): getClientObjectives result= ${JSON.stringify(
+            result
+          )}`,
           `${COMPONENT}.handleLMS()`,
           this.recordId
         );
@@ -418,7 +428,9 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         this.error = error;
         this.logit(
           ERROR,
-          `handleLMS(): getClientObjectives error ${JSON.stringify(error)}`,
+          `${COMPONENT}.handleLMS(): getClientObjectives error ${JSON.stringify(
+            error
+          )}`,
           `${COMPONENT}.handleLMS()`,
           this.recordId
         );

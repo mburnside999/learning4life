@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Session_Duration_Less_Than_Or_Equal_To_8</fullName>
+    <active>true</active>
+    <errorConditionFormula>Session_Length__c &gt; 8</errorConditionFormula>
+    <errorDisplayField>Session_Length__c</errorDisplayField>
+    <errorMessage>Session length cannot be greater than 8 hours</errorMessage>
+</ValidationRule>

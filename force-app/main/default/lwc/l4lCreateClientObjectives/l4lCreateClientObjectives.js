@@ -48,27 +48,27 @@ export default class L4lCreateClientObjectives extends LightningElement {
   }
 
   renderedCallback() {
-    if (!this.rendered) {
-      this.logit(
-        INFO,
-        "renderedCallback(): ignore  - confirming logging",
-        `${COMPONENT}.renderedCallback()`,
-        this.recordId
-      );
-      this.logit(
-        DEBUG,
-        "renderedCallback():  ignore - confirming logging",
-        `${COMPONENT}.renderedCallback()`,
-        this.recordId
-      );
-      this.logit(
-        ERROR,
-        "renderedCallback(): ignore  - confirming logging",
-        `${COMPONENT}.renderedCallback()`,
-        this.recordId
-      );
-      this.rendered = true;
-    }
+    // if (!this.rendered) {
+    //   this.logit(
+    //     INFO,
+    //     "renderedCallback(): ignore  - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.logit(
+    //     DEBUG,
+    //     "renderedCallback():  ignore - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.logit(
+    //     ERROR,
+    //     "renderedCallback(): ignore  - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.rendered = true;
+    // }
   }
 
   logit(level, message, tag, context = null) {
@@ -109,13 +109,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.allObjectives = result;
         this.logit(
           INFO,
-          `refresh(): getUnusedObjectives ${result.length} records returned`,
+          `${COMPONENT}.refresh(): getUnusedObjectives ${result.length} records returned`,
           `${COMPONENT}.refresh()`,
           this.recordId
         );
         this.logit(
           DEBUG,
-          `refresh(): getUnusedObjectives result=${JSON.stringify(
+          `${COMPONENT}.refresh(): getUnusedObjectives result=${JSON.stringify(
             result
           )}, this.objectives=${JSON.stringify(this.objectives)}`,
           `${COMPONENT}.refresh()`,
@@ -126,7 +126,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.error = error;
         this.logit(
           ERROR,
-          `refresh(): getUnusedObjectives errored: ${JSON.stringify(
+          `${COMPONENT}.refresh(): getUnusedObjectives errored: ${JSON.stringify(
             error
           )} results`,
           `${COMPONENT}.refresh()`,
@@ -138,14 +138,14 @@ export default class L4lCreateClientObjectives extends LightningElement {
   getSelectedName(event) {
     this.logit(
       INFO,
-      `getSelectedName(): entering method`,
+      `${COMPONENT}.getSelectedName(): entering method`,
       `${COMPONENT}.getSelectedName()`,
       this.recordId
     );
     this.selectedRows = event.detail.selectedRows;
     this.logit(
       DEBUG,
-      `getSelectedName(): this.selectedRows=${JSON.stringify(
+      `${COMPONENT}.getSelectedName(): this.selectedRows=${JSON.stringify(
         this.selectedRows
       )} `,
       `${COMPONENT}.getSelectedName()`,
@@ -156,20 +156,20 @@ export default class L4lCreateClientObjectives extends LightningElement {
   handleClickArray(event) {
     this.logit(
       INFO,
-      `handleClickArray(): entering method`,
+      `${COMPONENT}.handleClickArray(): entering method`,
       `${COMPONENT}.handleClickArray()`,
       this.recordId
     );
     if (this.selectedRows) {
       this.logit(
         INFO,
-        `handleClickArray(): selectedRows==true`,
+        `${COMPONENT}.handleClickArray(): selectedRows==true`,
         `${COMPONENT}.handleClickArray()`,
         this.recordId
       );
       this.logit(
         DEBUG,
-        `handleClickArray(): jsonstr=selectedRows=${JSON.stringify(
+        `${COMPONENT}.handleClickArray(): jsonstr=selectedRows=${JSON.stringify(
           this.selectedRows
         )}, sess=${this.recordId}`,
         `${COMPONENT}.handleClickArray()`,
@@ -177,7 +177,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
       );
       this.logit(
         INFO,
-        `handleClickArray(): imperative Call to createClientObjectivesByArray`,
+        `${COMPONENT}.handleClickArray(): imperative Call to createClientObjectivesByArray`,
         `${COMPONENT}.handleClickArray()`,
         this.recordId
       );
@@ -190,7 +190,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           this.recordsProcessed = result;
           this.logit(
             INFO,
-            `handleClickArray(): Apex createClientObjectivesByArray result=${result}`,
+            `${COMPONENT}.handleClickArray(): Apex createClientObjectivesByArray result=${result}`,
             `${COMPONENT}.handleClickArray()`,
             this.recordId
           );
@@ -206,7 +206,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           );
           this.logit(
             DEBUG,
-            `handleClickArray():setting this.objectives=null, calling refresh() `,
+            `${COMPONENT}.handleClickArray():setting this.objectives=null, calling refresh() `,
             `${COMPONENT}.handleClickArray()`,
             this.recordId
           );
@@ -216,7 +216,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         .finally(() => {
           this.logit(
             INFO,
-            `handleClickArray():publishing LMS event`,
+            `${COMPONENT}.handleClickArray():publishing LMS event`,
             `${COMPONENT}.handleClickArray()`,
             this.recordId
           );
@@ -228,7 +228,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           };
           this.logit(
             DEBUG,
-            `handleClickArray(): Sending message via L4LMC, message=${JSON.stringify(
+            `${COMPONENT}.handleClickArray(): Sending message via L4LMC, message=${JSON.stringify(
               message
             )}`,
             `${COMPONENT}.handleClickArray()`,
@@ -237,7 +237,9 @@ export default class L4lCreateClientObjectives extends LightningElement {
           publish(this.messageContext, L4LMC, message);
           this.logit(
             INFO,
-            `handleClickArray(): published ${JSON.stringify(message)} to L4LMC`,
+            `${COMPONENT}.handleClickArray(): published ${JSON.stringify(
+              message
+            )} to L4LMC`,
             `${COMPONENT}.handleClickArray()`
           );
         })
@@ -245,7 +247,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           this.error = error;
           this.logit(
             ERROR,
-            `handleClickArray(): Error ${JSON.stringify(error)}`,
+            `${COMPONENT}.handleClickArray(): Error ${JSON.stringify(error)}`,
             `${COMPONENT}.handleClickArray()`,
             this.recordId
           );
@@ -256,13 +258,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
   handleSearchKeyInput(event) {
     this.logit(
       INFO,
-      `handleSearchKey(): entering method`,
+      `${COMPONENT}.handleSearchKey(): entering method`,
       `${COMPONENT}.handleSearchKey()`
     );
     const searchKey = event.target.value.toLowerCase();
     this.logit(
       DEBUG,
-      `handleSearchKey(): searchKey=${searchKey}`,
+      `${COMPONENT}.handleSearchKey(): searchKey=${searchKey}`,
       `${COMPONENT}.handleSearchKey()`
     );
 
@@ -274,7 +276,9 @@ export default class L4lCreateClientObjectives extends LightningElement {
     );
     this.logit(
       DEBUG,
-      `handleSearchKey(): this.objectives=${JSON.stringify(this.objectives)}`,
+      `${COMPONENT}.handleSearchKey(): this.objectives=${JSON.stringify(
+        this.objectives
+      )}`,
       `${COMPONENT}.handleSearchKey()`
     );
   }
@@ -282,7 +286,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
   showNotification(t, m, v) {
     this.logit(
       DEBUG,
-      `showNotification(): entering method, t=${t}, m=${m}, v=${v}`,
+      `${COMPONENT}.showNotification(): entering method, t=${t}, m=${m}, v=${v}`,
       `${COMPONENT}.showNotification()`
     );
     const evt = new ShowToastEvent({
@@ -296,7 +300,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
   handleClickCancel(event) {
     this.logit(
       DEBUG,
-      `dispatching CustomEvent(close)`,
+      `${COMPONENT}.handleClickCancel(): dispatching CustomEvent(close)`,
       `${COMPONENT}.handleClickCancel()`
     );
     this.dispatchEvent(new CustomEvent("close"));
