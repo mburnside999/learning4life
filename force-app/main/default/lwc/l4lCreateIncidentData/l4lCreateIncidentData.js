@@ -17,27 +17,27 @@ export default class L4lCreateIncidentData extends LightningElement {
   rendered = false;
 
   renderedCallback() {
-    if (!this.rendered) {
-      this.logit(
-        INFO,
-        "renderedCallback(): ignore  - confirming logging",
-        `${COMPONENT}.renderedCallback()`,
-        this.recordId
-      );
-      this.logit(
-        DEBUG,
-        "renderedCallback():  ignore - confirming logging",
-        `${COMPONENT}.renderedCallback()`,
-        this.recordId
-      );
-      this.logit(
-        ERROR,
-        "renderedCallback(): ignore  - confirming logging",
-        `${COMPONENT}.renderedCallback()`,
-        this.recordId
-      );
-      this.rendered = true;
-    }
+    // if (!this.rendered) {
+    //   this.logit(
+    //     INFO,
+    //     "renderedCallback(): ignore  - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.logit(
+    //     DEBUG,
+    //     "renderedCallback():  ignore - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.logit(
+    //     ERROR,
+    //     "renderedCallback(): ignore  - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.rendered = true;
+    // }
   }
 
   logit(level, message, tag, context = null) {

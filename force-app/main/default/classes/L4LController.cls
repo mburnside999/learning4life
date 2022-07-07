@@ -2,6 +2,34 @@ public with sharing class L4LController {
   // As of January 17, 2022 this is the controller for all L4L lwcs
 
   @AuraEnabled(cacheable=false)
+  public static String getSessionStatus(String recordId) {
+    Logger.setScenario('L4LController');
+    Logger.debug('Apex:getSessionStatus() recordId=' + recordId)
+      .setRecordId(recordId)
+      .addTag('L4LController.getSessionStatus()')
+      .addTag('logit()');
+
+    String sessionStatus = [
+      SELECT status__c
+      FROM session__c
+      WHERE Id = :recordId
+      LIMIT 1
+    ]
+    .status__c;
+
+    Logger.debug(
+        'L4LController.getSessionStatus() sessionStatus= ' + sessionStatus
+      )
+      .setRecordId(recordId)
+      .addTag('L4LController.getSessionStatus()')
+      .addTag('logit()');
+
+    Logger.saveLog();
+
+    return sessionStatus;
+  }
+
+  @AuraEnabled(cacheable=false)
   public static List<Session_obj__c> getSessionObjectives(String sess) {
     Logger.setScenario('L4LController');
     Logger.debug('Apex:getSessionObjectives() sess=' + sess)
@@ -19,25 +47,41 @@ public with sharing class L4LController {
       .addTag('L4LController.getSessionObjectives()')
       .addTag('logit()');
 
+    List<Session_obj__c> retlist = new List<Session_obj__c>(
+      [
+        SELECT
+          Id,
+          Name,
+          Objective__c,
+          Objective_Name__c,
+          Correct__c,
+          Incorrect__c,
+          Prompted__c,
+          SD__c,
+          Program__c,
+          Comment__c,
+          Previous_Status__c
+        FROM Session_Obj__c
+        WHERE Session__c = :sess
+        ORDER BY Name
+      ]
+    );
+
+    Logger.debug(
+        'Apex:getSessionObjectives() retlist.size()= ' + retlist.size()
+      )
+      .setRecordId(sess)
+      .addTag('L4LController.getSessionObjectives()')
+      .addTag('logit()');
+
+    Logger.debug('Apex:getSessionObjectives() retlist= ' + retlist)
+      .setRecordId(sess)
+      .addTag('L4LController.getSessionObjectives()')
+      .addTag('logit()');
+
     Logger.saveLog();
 
-    return [
-      SELECT
-        Id,
-        Name,
-        Objective__c,
-        Objective_Name__c,
-        Correct__c,
-        Incorrect__c,
-        Prompted__c,
-        SD__c,
-        Program__c,
-        Comment__c,
-        Previous_Status__c
-      FROM Session_Obj__c
-      WHERE Session__c = :sess
-      ORDER BY Name
-    ];
+    return retlist;
   }
 
   @AuraEnabled
@@ -61,26 +105,42 @@ public with sharing class L4LController {
       .addTag('L4LController.getClientObjectivesForSession()')
       .addTag('logit()');
 
+    List<Client_Objective__c> retlist = new List<Client_Objective__c>(
+      [
+        SELECT
+          Id,
+          Name,
+          Objective__c,
+          Objective_Name__c,
+          Client__c,
+          Program_Name__c,
+          SD_Name__c,
+          Status__c,
+          Re_Test_Recommended__c,
+          Days_Since_Tested_Correct__c,
+          Client_Objective_Notes__c
+        FROM client_objective__c
+        WHERE
+          Client__c IN (SELECT client__c FROM session__c WHERE id = :searchKey)
+        ORDER BY Program_Name__c
+      ]
+    );
+
+    Logger.debug(
+        'Apex:getClientObjectivesForSession() retlist.size=' + retlist.size()
+      )
+      .setRecordId(searchKey)
+      .addTag('L4LController.getClientObjectivesForSession()')
+      .addTag('logit()');
+
+    Logger.debug('Apex:getClientObjectivesForSession() retlist=' + retlist)
+      .setRecordId(searchKey)
+      .addTag('L4LController.getClientObjectivesForSession()')
+      .addTag('logit()');
+
     Logger.saveLog();
 
-    return [
-      SELECT
-        Id,
-        Name,
-        Objective__c,
-        Objective_Name__c,
-        Client__c,
-        Program_Name__c,
-        SD_Name__c,
-        Status__c,
-        Re_Test_Recommended__c,
-        Days_Since_Tested_Correct__c,
-        Client_Objective_Notes__c
-      FROM client_objective__c
-      WHERE
-        Client__c IN (SELECT client__c FROM session__c WHERE id = :searchKey)
-      ORDER BY Program_Name__c
-    ];
+    return retlist;
   }
 
   @AuraEnabled(cacheable=false)
@@ -101,25 +161,39 @@ public with sharing class L4LController {
       .addTag('L4LController.getClientObjectives()')
       .addTag('logit()');
 
+    List<Client_Objective__c> retlist = new List<Client_Objective__c>(
+      [
+        SELECT
+          Id,
+          Name,
+          Client__c,
+          Objective_Name__c,
+          SD_Name__c,
+          Program_Name__c,
+          Status__c,
+          Frequency__c,
+          Last_Tested_Correct__c,
+          Re_Test_Recommended__c,
+          Client_Objective_Notes__c
+        FROM Client_Objective__c
+        WHERE Client__c = :clientId
+        ORDER BY Program_Name__c, Name
+      ]
+    );
+
+    Logger.debug('Apex:getClientObjectives() retlist.size()=' + retlist.size())
+      .setRecordId(clientId)
+      .addTag('L4LController.getClientObjectives()')
+      .addTag('logit()');
+
+    Logger.debug('Apex:getClientObjectives() retlist=' + retlist)
+      .setRecordId(clientId)
+      .addTag('L4LController.getClientObjectives()')
+      .addTag('logit()');
+
     Logger.saveLog();
 
-    return [
-      SELECT
-        Id,
-        Name,
-        Client__c,
-        Objective_Name__c,
-        SD_Name__c,
-        Program_Name__c,
-        Status__c,
-        Frequency__c,
-        Last_Tested_Correct__c,
-        Re_Test_Recommended__c,
-        Client_Objective_Notes__c
-      FROM Client_Objective__c
-      WHERE Client__c = :clientId
-      ORDER BY Program_Name__c, Name
-    ];
+    return retlist;
   }
 
   @AuraEnabled
@@ -143,22 +217,36 @@ public with sharing class L4LController {
       .addTag('L4LController.getUnusedObjective()')
       .addTag('logit()');
 
-    Logger.saveLog();
-
     System.debug('>>>>>> in getUnusedObjectives(clientId)');
     System.debug('>>>>>> clientId=' + clientId);
     //test written
-    return [
-      SELECT Id, Name, Program__c, SD_Name__c
-      FROM Objective__c
-      WHERE
-        Id NOT IN (
-          SELECT Objective__c
-          FROM Client_Objective__c
-          WHERE Client__c = :clientId
-        )
-      ORDER BY Program__c, Name
-    ];
+    List<Objective__c> retlist = new List<Objective__c>(
+      [
+        SELECT Id, Name, Program__c, SD_Name__c
+        FROM Objective__c
+        WHERE
+          Id NOT IN (
+            SELECT Objective__c
+            FROM Client_Objective__c
+            WHERE Client__c = :clientId
+          )
+        ORDER BY Program__c, Name
+      ]
+    );
+
+    Logger.debug('Apex:getUnusedObjectives() retlist.size()=' + retlist.size())
+      .setRecordId(clientId)
+      .addTag('L4LController.getUnusedObjective()')
+      .addTag('logit()');
+
+    Logger.debug('Apex:getUnusedObjectives() retlist=' + retlist)
+      .setRecordId(clientId)
+      .addTag('L4LController.getUnusedObjective()')
+      .addTag('logit()');
+
+    Logger.saveLog();
+
+    return retlist;
   }
 
   @AuraEnabled

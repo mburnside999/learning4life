@@ -16,7 +16,7 @@ public with sharing class LFLPopulateTestData {
     String RecTypeId = [
       SELECT Id
       FROM RecordType
-      WHERE Name = 'Person Account' AND SobjectType = 'Account'
+      WHERE Name = 'LFL Client' AND SobjectType = 'Account'
     ]
     .Id;
     Account newAccount = new Account(
@@ -32,6 +32,7 @@ public with sharing class LFLPopulateTestData {
     session.Client__c = newAccount.Id;
     session.date__c = Date.today();
     session.session_length__c = 1;
+    session.session_location__c = 'Other';
     insert session;
 
     Program__c p = new Program__c(Name = '2D Matching');
@@ -69,6 +70,24 @@ public with sharing class LFLPopulateTestData {
     so.Session__c = session.Id;
     so.Objective__c = o.Id;
     so.correct__c = true;
+    so.previous_status__c = 'ACQ';
+
+    insert so;
+
+    so = new Session_Obj__c();
+    so.Session__c = session.Id;
+    so.Objective__c = o.Id;
+    so.incorrect__c = true;
+    so.previous_status__c = 'OBJ';
+
+    insert so;
+
+    so = new Session_Obj__c();
+    so.Session__c = session.Id;
+    so.Objective__c = o.Id;
+    so.prompted__c = true;
+    so.previous_status__c = 'ACQ';
+
     insert so;
 
     SD__c sd2 = new SD__c(name = 'Non-identical');
@@ -105,6 +124,7 @@ public with sharing class LFLPopulateTestData {
     so.Session__c = session.Id;
     so.Objective__c = o.Id;
     so.correct__c = true;
+    so.previous_status__c = 'OBJ';
     insert so;
 
     //unassigned

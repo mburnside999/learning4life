@@ -1,13 +1,23 @@
 <template>
   <c-logger></c-logger>
-  <lightning-card title="L4L Objectives for This Session">
+  <lightning-card title="Test Results For This Session">
+    <div class="slds-m-vertical_small" style="display: none">
+      Session Status: {status}
+    </div>
+    <template if:true={isLocked}>
+      <div style="color: red; font-weight: bold" class="slds-text-align_center">
+        Read Only
+      </div>
+    </template>
+
     &nbsp;&nbsp;<input
+      class="slds-input"
       size="60"
       type="search"
-      placeholder="Filter Program, Objective, SD, Comment or Previous_Status (NEW!)"
+      placeholder="Filter Program, Objective, SD, Comment or Previous_Status"
       oninput={handleSearchKeyInput}
     />
-    <br /><br />
+    <br />
     <div class="c-container">
       <lightning-layout multiple-rows="true">
         <lightning-layout-item padding="around-small" size="12">
@@ -17,6 +27,7 @@
               label="Mark Correct"
               title="Mark Correct"
               onclick={handleClickArray}
+              disabled={isLocked}
             >
             </lightning-button>
 
@@ -25,6 +36,7 @@
               label="Mark Incorrect"
               title="Mark Incorrect"
               onclick={handleClickArray}
+              disabled={isLocked}
             >
             </lightning-button>
 
@@ -33,6 +45,7 @@
               label="Mark Prompted"
               title="Mark Prompted"
               onclick={handleClickArray}
+              disabled={isLocked}
             >
             </lightning-button>
 
@@ -41,12 +54,12 @@
               label="Delete Selected Records"
               title="Delete Selected Records"
               onclick={handleClickArray}
+              disabled={isLocked}
             >
             </lightning-button>
           </lightning-button-group>
         </lightning-layout-item>
         <lightning-layout-item padding="around-small" size="12">
-          <br /><br />
           <lightning-datatable
             enable-infinite-loading
             key-field="Id"
@@ -56,6 +69,7 @@
             onsave={handleSave}
             draft-values={draftValues}
             onrowaction={handleRowAction}
+            hide-checkbox-column={isLocked}
           >
           </lightning-datatable>
         </lightning-layout-item>

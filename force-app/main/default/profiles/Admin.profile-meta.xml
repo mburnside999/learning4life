@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
-    <applicationVisibilities>
-        <application>Learning_For_Life</application>
-        <default>false</default>
-        <visible>true</visible>
-    </applicationVisibilities>
+
     <classAccesses>
         <apexClass>L4LController</apexClass>
         <enabled>true</enabled>
@@ -250,11 +246,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Session__c.Next_Notes__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Session__c.Session_Location__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -782,10 +773,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ManageHubConnections</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ManageInteraction</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

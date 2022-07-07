@@ -1,0 +1,33 @@
+Integer correct=0;
+Integer incorrect=0;
+Integer prompted=0;
+Map<Id, Integer> correctMap = new Map<Id, Integer>();
+Map<Id, Integer> incorrectMap = new Map<Id, Integer>();
+Map<Id, Integer> promptedMap = new Map<Id, Integer>();
+Set<id> s = new Set<Id>();
+
+String session='a0C9n00000PmpwIEAR';
+for (Session_Obj__c so  : [select Objective__c,Objective_Name__c,Correct__c,Incorrect__c,Prompted__c,session__c
+                                 from session_obj__c where session__C=:session and Previous_Status__c='ACQ']) 
+    
+{
+   s.add(so.objective__c);
+    System.debug(so);
+                                     Integer tempcorrect=(correctMap.get(so.objective__c)==null?0:correctMap.get(so.objective__c));
+                                     if (so.correct__c==true) correctMap.put(so.objective__c,tempcorrect+1); 
+    
+    Integer tempincorrect=(incorrectMap.get(so.objective__c)==null?0:incorrectMap.get(so.objective__c));
+                                    if (so.incorrect__c==true) incorrectMap.put(so.objective__c,tempincorrect+1); 
+    
+    Integer tempprompted=(promptedMap.get(so.objective__c)==null?0:promptedMap.get(so.objective__c));
+                                     if (so.prompted__c==true) promptedMap.put(so.objective__c,tempprompted+1); 
+                                 }
+for (Id i : s) {
+Session_Statistics__c sessionStat = new Session_Statistics__c();
+    Session_Statistics__c sess = new Session_Statistics__c();
+    sessionStat.session__c=session;
+    sessionStat.objective__c=i;
+    sessionStat.totalacquiredcorrect__c=(correctMap.get(i)==null)?0:correctMap.get(i);
+    sessionStat.totalacquiredincorrect__c=(incorrectMap.get(i)==null)?0:incorrectMap.get(i);
+    sessionStat.totalacquiredprompted__c=(promptedMap.get(i)==null)?0:promptedMap.get(i);
+insert sessionStat;

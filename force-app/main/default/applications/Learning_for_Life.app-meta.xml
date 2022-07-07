@@ -8,11 +8,12 @@
     </brand>
     <description>This is the L4L Application. 
 
-(c) Mike De Hennin &amp; Mike Burnside.</description>
+(c) 2022 Mike De Hennin &amp; Mike Burnside.</description>
     <formFactors>Small</formFactors>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Learning For Life</label>
     <navType>Console</navType>
     <tabs>standard-Account</tabs>

@@ -5,10 +5,10 @@
             "default": true,
             "package": "Learning4LifePackage",
             "versionName": "Garnet",
-            "versionNumber": "1.0.20.NEXT",
+            "versionNumber": "1.0.26.NEXT",
             "dependencies": [
                 {
-                    "package": "nebula@4.7.1"
+                    "package": "nebula@4.7.8"
                 }
             ]
         }
@@ -19,7 +19,7 @@
     "sourceApiVersion": "54.0",
     "packageAliases": {
         "Learning4LifePackage": "0Ho8W000000k9dOSAQ",
-        "nebula@4.7.1": "04t5Y0000015lgBQAQ",
+        "nebula@4.7.8": "04t5Y0000015lmOQAQ",
         "Learning4LifePackage@0.1.0-1": "04t8W000000PR0wQAG",
         "Learning4LifePackage@0.1.0-3": "04t8W000000PR16QAG",
         "Learning4LifePackage@0.1.0-4": "04t8W000000PR1BQAW",
@@ -42,6 +42,12 @@
         "Learning4LifePackage@1.0.16-1": "04t8W000000PRAmQAO",
         "Learning4LifePackage@1.0.17-1": "04t8W000000PRArQAO",
         "Learning4LifePackage@1.0.18-1": "04t8W000000PRAwQAO",
-        "Learning4LifePackage@1.0.19-1": "04t8W000000PRB1QAO"
+        "Learning4LifePackage@1.0.19-1": "04t8W000000PRB1QAO",
+        "Learning4LifePackage@1.0.20-1": "04t8W000000PRBQQA4",
+        "Learning4LifePackage@1.0.22-1": "04t8W000000PRBfQAO",
+        "Learning4LifePackage@1.0.23-2": "04t8W000000PRBuQAO",
+        "Learning4LifePackage@1.0.24-1": "04t8W000000PRC4QAO",
+        "Learning4LifePackage@1.0.25-1": "04t8W000000PRC9QAO",
+        "Learning4LifePackage@1.0.26-1": "04t8W000000PREZQA4"
     }
 }

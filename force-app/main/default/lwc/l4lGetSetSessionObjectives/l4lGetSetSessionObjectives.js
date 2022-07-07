@@ -2,10 +2,11 @@
 import { LightningElement, api, wire, track } from "lwc";
 import getSessionObjectives from "@salesforce/apex/L4LController.getSessionObjectives";
 import setSessionObjectivesByArray from "@salesforce/apex/L4LController.setSessionObjectivesByArray";
+
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import deleteSessionObjectives from "@salesforce/apex/L4LController.deleteSessionObjectives";
 import { CurrentPageReference } from "lightning/navigation";
-import { updateRecord } from "lightning/uiRecordApi";
+import { updateRecord, getRecord, getFieldValue } from "lightning/uiRecordApi";
 
 // import COMMENT_FIELD from "@salesforce/schema/Session_Obj__c.Comment__c";
 // import CORRECT_FIELD from "@salesforce/schema/Session_Obj__c.Correct__c";
@@ -32,6 +33,10 @@ const INFO = "info";
 const ERROR = "error";
 
 const actions = [{ label: "Delete", name: "delete" }];
+const lockedactions = [];
+
+import STATUS_FIELD from "@salesforce/schema/Session__c.Status__c";
+const FIELDS = [STATUS_FIELD];
 
 const columns = [
   { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 150 },
@@ -72,19 +77,79 @@ const columns = [
     type: "text",
     initialWidth: 80
   },
-  { label: "Comments", fieldName: "Comment__c", type: "text", editable: true },
+  {
+    label: "Comments",
+    fieldName: "Comment__c",
+    type: "text",
+    editable: true
+  },
   {
     type: "action",
     typeAttributes: { rowActions: actions }
   }
 ];
+
+const lockedcolumns = [
+  { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 150 },
+  {
+    label: "Obj",
+    fieldName: "Objective_Name__c",
+    type: "text",
+    initialWidth: 150
+  },
+  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 150 },
+  {
+    label: "Corr.",
+    fieldName: "Correct__c",
+    type: "boolean",
+    initialWidth: 90,
+    cellAttributes: { alignment: "right" },
+    editable: false
+  },
+  {
+    label: "Incr.",
+    fieldName: "Incorrect__c",
+    type: "boolean",
+    initialWidth: 90,
+    cellAttributes: { alignment: "right" },
+    editable: false
+  },
+  {
+    label: "Prmpt.",
+    fieldName: "Prompted__c",
+    type: "boolean",
+    initialWidth: 90,
+    cellAttributes: { alignment: "right" },
+    editable: false
+  },
+  {
+    label: "Prev",
+    fieldName: "Previous_Status__c",
+    type: "text",
+    initialWidth: 80
+  },
+  {
+    label: "Comments",
+    fieldName: "Comment__c",
+    type: "text",
+    editable: false
+  },
+  {
+    type: "action",
+    typeAttributes: { rowActions: lockedactions }
+  }
+];
+
 //const selectedRows = {};
 //var fred;
 export default class L4lGetSetSessionObjectives extends LightningElement {
+  @track editflag = true;
+  @api testSessionStatus;
+  @api sessionStatus;
   @api recordId = "a3N2v000003Gr4VEAS"; //this is session 31
   //@wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
   @track sessionObjectives;
-
+  @track isLocked = false;
   @track error;
   @track columns = columns;
   @track recordsProcessed = 0;
@@ -92,9 +157,42 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   @track draftValues = [];
   @track allObjectives = {};
   @wire(MessageContext) messageContext;
+  @wire(getRecord, { recordId: "$recordId", fields: FIELDS }) session;
+
   subscription = null;
   rendered = false;
 
+  renderedCallback() {
+    console.log("ZZZZZZZZZZZZ rendered");
+    if (getFieldValue(this.session.data, STATUS_FIELD) == "Closed") {
+      this.isLocked = true;
+    } else {
+      this.isLocked = false;
+    }
+    this.columns = this.isLocked ? lockedcolumns : columns;
+
+    // if (!this.rendered) {
+    //   this.logit(
+    //     INFO,
+    //     "renderedCallback(): ignore  - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.logit(
+    //     DEBUG,
+    //     "renderedCallback():  ignore - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.logit(
+    //     ERROR,
+    //     "renderedCallback(): ignore  - confirming logging",
+    //     `${COMPONENT}.renderedCallback()`,
+    //     this.recordId
+    //   );
+    //   this.rendered = true;
+    // }
+  }
   connectedCallback() {
     console.debug(
       `%cconnectedCallback(): subscribing to LMS L4LSessionMessageChannel__c`,
@@ -109,31 +207,25 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       { scope: APPLICATION_SCOPE }
     );
     console.debug(`%cconnectedCallback(): calling refresh()`, COLOR);
+    console.log(
+      `%cconnectedCallback() Status = ${JSON.stringify(this.session.data)}`
+    );
+    console.log(`id =  ${this.recordId}`);
+    console.log(`this.session = ${JSON.stringify(this.session)}`);
+    //this.getTheSessionStatus();
+
     this.refresh();
   }
 
-  renderedCallback() {
-    // if (!this.rendered) {
-    //   this.logit(
-    //     DEBUG,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    // this.logit(
-    //   DEBUG,
-    //   "renderedCallback():  ignore - confirming logging",
-    //   `${COMPONENT}.renderedCallback()`,
-    //   this.recordId
-    // );
-    // this.logit(
-    //   ERROR,
-    //   "renderedCallback(): ignore  - confirming logging",
-    //   `${COMPONENT}.renderedCallback()`,
-    //   this.recordId
-    // );
-    //this.rendered = true;
-    //}
+  get status() {
+    // if (getFieldValue(this.session.data, STATUS_FIELD) == "Closed") {
+    //   this.isLocked = true;
+    // } else {
+    //   this.isLocked = false;
+    // }
+    // this.columns = this.isLocked ? lockedcolumns : columns;
+
+    return getFieldValue(this.session.data, STATUS_FIELD);
   }
 
   logit(level, message, tag, context = null) {
