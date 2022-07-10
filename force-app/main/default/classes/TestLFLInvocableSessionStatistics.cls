@@ -16,9 +16,9 @@ private class TestLFLInvocableSessionStatistics {
     List<id> reqList = new List<Id>();
     reqList.add(req);
 
-    List<string> result = LFLInvocableSessionStatistics.computeSessionStats(
+    List<LFLInvocableSessionStatistics.Response> result = LFLInvocableSessionStatistics.computeSessionStats(
       reqlist
     );
-    System.assertEquals('Completed', result[0]);
+    System.assert(result[0].outputString.contains('Success'));
   }
 }

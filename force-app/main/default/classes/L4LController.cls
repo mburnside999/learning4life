@@ -1,5 +1,5 @@
 public with sharing class L4LController {
-  // As of January 17, 2022 this is the controller for all L4L lwcs
+  // Please Note: As of January 17, 2022 this is the controller for all L4L lwcs
 
   @AuraEnabled(cacheable=false)
   public static String getSessionStatus(String recordId) {

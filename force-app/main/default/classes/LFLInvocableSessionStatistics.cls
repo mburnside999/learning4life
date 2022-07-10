@@ -1,6 +1,6 @@
 public with sharing class LFLInvocableSessionStatistics {
   @InvocableMethod
-  public static List<String> computeSessionStats(List<Id> sessions) {
+  public static List<Response> computeSessionStats(List<Id> sessions) {
     Logger.setScenario('LFLInvocableSessionStatistics');
     Logger.debug('Apex:computeSessionStats() - invocable called from Flow')
       .setRecordId(sessions[0])
@@ -8,10 +8,13 @@ public with sharing class LFLInvocableSessionStatistics {
       .addTag('logit()');
 
     Id session = sessions[0];
-    List<String> responseList = new List<String>();
-    String response;
+    List<Response> responseList = new List<Response>();
+    Response response = new Response();
     String PREVDEFAULT = 'BLANK';
     String previousStr;
+    Integer totalCorrect = 0;
+    Integer totalIncorrect = 0;
+    Integer totalPrompted = 0;
 
     Map<Id, Map<String, Integer>> correctMap = new Map<Id, Map<String, Integer>>();
     Map<Id, Map<String, Integer>> incorrectMap = new Map<Id, Map<String, Integer>>();
@@ -155,13 +158,14 @@ public with sharing class LFLInvocableSessionStatistics {
             sessionStat.totalacquiredcorrect__c = count;
           } else
             sessionStat.totalacquiredcorrect__c = 0;
-
+          totalCorrect += (Integer) sessionStat.totalacquiredcorrect__c;
           temp = incorrectMap.get(i);
           if (temp != null) {
             count = (temp.get(s) != null) ? (Integer) temp.get(s) : 0;
             sessionStat.totalacquiredincorrect__c = count;
           } else
             sessionStat.totalacquiredincorrect__c = 0;
+          totalIncorrect += (Integer) sessionStat.totalacquiredincorrect__c;
 
           temp = promptedMap.get(i);
           if (temp != null) {
@@ -169,6 +173,7 @@ public with sharing class LFLInvocableSessionStatistics {
             sessionStat.totalacquiredprompted__c = count;
           } else
             sessionStat.totalacquiredprompted__c = 0;
+          totalPrompted += (Integer) sessionStat.totalacquiredprompted__c;
 
           Logger.debug(
               'Apex:computeSessionStats() inserting session_statistics__c sessStat=' +
@@ -192,8 +197,44 @@ public with sharing class LFLInvocableSessionStatistics {
         }
       }
     }
-    response = 'Completed';
+    String current = System.now().format();
+    Integer noOfObjectives = objectiveSet.size();
+    Decimal percentage = ((totalCorrect + totalIncorrect + totalPrompted) > 0)
+      ? (Decimal) (totalCorrect *
+        100 /
+        (totalCorrect +
+        totalIncorrect +
+        totalPrompted))
+      : 0;
+
+    response.outputString =
+      '\n---------------------------------------------------------------' +
+      '\nSuccessfully generated session statistics at ' +
+      current +
+      '\n---------------------------------------------------------------' +
+      '\nDistinct Objectives: ' +
+      noOfObjectives +
+      '\nCorrect: ' +
+      totalCorrect +
+      '\nIncorrect: ' +
+      totalIncorrect +
+      '\nPrompted: ' +
+      totalPrompted +
+      '\n----------------------' +
+      '\nPercent Correct: ' +
+      percentage +
+      '%' +
+      '\n----------------------\n';
     responseList.add(response);
     return responseList;
+  }
+
+  public class Response {
+    @InvocableVariable(
+      label='Output'
+      description='Calculate Statistics Result'
+      required=true
+    )
+    public String outputString;
   }
 }

@@ -7,6 +7,9 @@
         <locationY>335</locationY>
         <actionName>LFLInvocableSessionStatistics</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Stats_Summary</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>sessions</name>
@@ -38,6 +41,19 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Stats_Summary</name>
+        <label>Update Stats Summary</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <inputAssignments>
+            <field>Statistics_Summary__c</field>
+            <value>
+                <elementReference>Compute_Session_Stats.outputString</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>

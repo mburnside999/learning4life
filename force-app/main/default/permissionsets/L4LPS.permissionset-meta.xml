@@ -281,6 +281,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Session__c.ClientID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Session__c.Client__c</field>
         <readable>true</readable>
@@ -293,6 +298,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Session__c.Next_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Session__c.Statistics_Summary__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

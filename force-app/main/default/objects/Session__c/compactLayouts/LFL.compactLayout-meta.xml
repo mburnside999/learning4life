@@ -6,5 +6,6 @@
     <fields>Client__c</fields>
     <fields>Therapist__c</fields>
     <fields>Session_Location__c</fields>
+    <fields>Status__c</fields>
     <label>LFL</label>
 </CompactLayout>
