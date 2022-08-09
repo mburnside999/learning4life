@@ -9,6 +9,59 @@
         Read Only
       </div>
     </template>
+    <template if:true={areDetailsVisible}>
+      <section
+        role="dialog"
+        tabindex="-1"
+        aria-modal="true"
+        aria-labelledby="modal-heading-01"
+        class="slds-modal slds-fade-in-open"
+      >
+        <div class="slds-modal__container">
+          <button
+            class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+          >
+            <svg
+              class="slds-button__icon slds-button__icon_large"
+              aria-hidden="true"
+            >
+              <use
+                xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"
+              ></use>
+            </svg>
+            <span class="slds-assistive-text">Cancel and close</span>
+          </button>
+          <div class="slds-modal__header">
+            <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+              Session Objective Details
+            </h1>
+          </div>
+          <div
+            class="slds-modal__content slds-p-around_medium"
+            id="modal-content-id-1"
+          >
+            <lightning-record-form
+              record-id={sessionObjectiveId}
+              object-api-name="Session_Obj__c"
+              columns="2"
+              mode="readonly"
+              layout-type="Full"
+            >
+            </lightning-record-form>
+          </div>
+          <div class="slds-modal__footer">
+            <button
+              class="slds-button slds-button_neutral"
+              aria-label="Close"
+              onclick={handleClose}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
 
     &nbsp;&nbsp;<input
       class="slds-input"

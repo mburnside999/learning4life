@@ -1,0 +1,20 @@
+<!-- D 3 Horizontal Lollipop Chart -->
+<template>
+  <lightning-card>
+    <lightning-button
+      label="Max"
+      title="Looks like a link"
+      onclick={handleClickMax}
+      class="slds-m-left_x-small"
+    ></lightning-button>
+
+    <lightning-button
+      label="Avg"
+      title="Looks like a link"
+      onclick={handleClickAvg}
+      class="slds-m-left_x-small"
+    ></lightning-button>
+
+    <svg class="horizontal-lollipop-chart" lwc:dom="manual"></svg>
+  </lightning-card>
+</template>

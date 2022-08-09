@@ -19,6 +19,22 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Mastery_Update</name>
+        <label>Mastery Update</label>
+        <locationX>176</locationX>
+        <locationY>575</locationY>
+        <actionName>LFLInvocableMasteryStatistics</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>sessions</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>55.0</apiVersion>
     <interviewLabel>Compute Session Statistics {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Compute Session Statistics</label>
@@ -46,6 +62,9 @@
         <label>Update Stats Summary</label>
         <locationX>176</locationX>
         <locationY>455</locationY>
+        <connector>
+            <targetReference>Mastery_Update</targetReference>
+        </connector>
         <inputAssignments>
             <field>Statistics_Summary__c</field>
             <value>

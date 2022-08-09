@@ -1,0 +1,43 @@
+<template>
+  <c-chart
+    type="bar"
+    responsive="true"
+    stylecss="position: relative; margin: auto;"
+    events='["click"]'
+  >
+     <c-dataset
+      labels='["Blue", "Orange", "Yellow", "Green", "Light Blue", "Purple"]'
+    >
+        <c-data
+        label="# of Votes"
+        detail="[12, 19, 7, 9, 5, 15]"
+        backgroundcolor='[
+       "rgba(82, 183, 216, 0.2)",
+       "rgba(225, 96, 50, 0.2)",
+       "rgba(255, 176, 59, 0.2)",
+       "rgba(84, 167, 123, 0.2)",
+       "rgba(79, 210, 210, 0.2)",
+       "rgba(226, 135, 178, 0.2)"
+       ]'
+        bordercolor='[
+        "rgba(82, 183, 216, 1)",
+        "rgba(225, 96, 50, 1)",
+        "rgba(255, 176, 59, 1)",
+        "rgba(84, 167, 123, 1)",
+        "rgba(79, 210, 210, 1)",
+        "rgba(226, 135, 178, 1)"
+       ]'
+        borderwidth="1"
+      ></c-data>
+       </c-dataset
+    >
+     <c-title text="Bar Chart"></c-title>  <c-legend
+      position="right"
+    ></c-legend>
+     <c-animation duration="2000" easing="easeInBounce"> </c-animation>
+     <c-cartesian-category-axis
+      axis="x"
+      position="top"
+    ></c-cartesian-category-axis>
+  </c-chart>
+</template>

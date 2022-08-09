@@ -1,0 +1,40 @@
+<template>
+  <lightning-card
+    title="L4L Program Mastery Analysis"
+    icon-name="custom:custom19"
+  >
+    <lightning-button-stateful
+      label-when-off="Showing All Objectives"
+      label-when-on="Showing ACQ Objectives"
+      label-when-hover="All"
+      icon-name-when-off="utility:add"
+      icon-name-when-on="utility:check"
+      icon-name-when-hover="utility:close"
+      selected={isSelected}
+      onclick={handleClick}
+    >
+    </lightning-button-stateful>
+
+    <!-- <lightning-radio-group
+      label="Programs"
+      options={options}
+      value={optionval}
+      variant="label-stacked"
+      onchange={handleChange}
+      type="button"
+      required
+    > 
+    </lightning-radio-group>-->
+
+    <lightning-combobox
+      name="progress"
+      label="Programs"
+      value={optionval}
+      placeholder="Select Program"
+      options={options}
+      onchange={handleChange}
+    ></lightning-combobox>
+
+    <div class="scatterplot" lwc:dom="manual"></div>
+  </lightning-card>
+</template>

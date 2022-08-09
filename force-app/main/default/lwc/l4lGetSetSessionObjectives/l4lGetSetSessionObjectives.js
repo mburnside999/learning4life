@@ -1,28 +1,21 @@
 /* eslint-disable no-console */
 import { LightningElement, api, wire, track } from "lwc";
-import getSessionObjectives from "@salesforce/apex/L4LController.getSessionObjectives";
-import setSessionObjectivesByArray from "@salesforce/apex/L4LController.setSessionObjectivesByArray";
-
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import deleteSessionObjectives from "@salesforce/apex/L4LController.deleteSessionObjectives";
 import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord, getRecord, getFieldValue } from "lightning/uiRecordApi";
-
-// import COMMENT_FIELD from "@salesforce/schema/Session_Obj__c.Comment__c";
-// import CORRECT_FIELD from "@salesforce/schema/Session_Obj__c.Correct__c";
-// import INCORRECT_FIELD from "@salesforce/schema/Session_Obj__c.Incorrect__c";
-// import PROMPTED_FIELD from "@salesforce/schema/Session_Obj__c.Prompted__c";
-// import ID_FIELD from "@salesforce/schema/Session_Obj__c.Id";
-
-// import { refreshApex } from "@salesforce/apex";
 import { deleteRecord } from "lightning/uiRecordApi";
-// Lightning Message service
+
+//custom Apex methods
+import getSessionObjectives from "@salesforce/apex/L4LController.getSessionObjectives";
+import setSessionObjectivesByArray from "@salesforce/apex/L4LController.setSessionObjectivesByArray";
+import deleteSessionObjectives from "@salesforce/apex/L4LController.deleteSessionObjectives";
+
+// The Lightning Message service
 import {
   subscribe,
   APPLICATION_SCOPE,
   MessageContext
 } from "lightning/messageService";
-
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
 //debugging
@@ -32,12 +25,14 @@ const DEBUG = "debug";
 const INFO = "info";
 const ERROR = "error";
 
-const actions = [{ label: "Delete", name: "delete" }];
-const lockedactions = [];
-
-import STATUS_FIELD from "@salesforce/schema/Session__c.Status__c";
-const FIELDS = [STATUS_FIELD];
-
+//fields for display
+const actions = [
+  { label: "Delete", name: "delete" },
+  { label: "Details", name: "detail" }
+];
+import SESSION_STATUS_FIELD from "@salesforce/schema/Session__c.Status__c";
+const SESSIONFIELDS = [SESSION_STATUS_FIELD];
+//columns when the session is open
 const columns = [
   { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 150 },
   {
@@ -84,11 +79,16 @@ const columns = [
     editable: true
   },
   {
-    type: "action",
-    typeAttributes: { rowActions: actions }
+    type: "button-icon",
+    initialWidth: 40,
+    typeAttributes: {
+      iconName: "utility:screen",
+      name: "detail",
+      value: "detail"
+    }
   }
 ];
-
+//columns when the session is locked
 const lockedcolumns = [
   { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 150 },
   {
@@ -135,19 +135,26 @@ const lockedcolumns = [
     editable: false
   },
   {
-    type: "action",
-    typeAttributes: { rowActions: lockedactions }
+    type: "button-icon",
+    initialWidth: 40,
+    typeAttributes: {
+      iconName: "utility:screen",
+      name: "detail",
+      value: "detail"
+    }
   }
 ];
 
-//const selectedRows = {};
-//var fred;
 export default class L4lGetSetSessionObjectives extends LightningElement {
-  @track editflag = true;
-  @api testSessionStatus;
-  @api sessionStatus;
+  // session_obj__c for modal
+  SOobjectApiName = "Session_Obj__c";
+  //get the session (status)
+  @wire(getRecord, { recordId: "$recordId", fields: SESSIONFIELDS }) session;
+  //track the session objective for the modal
+  @track sessionObjectiveId;
+  @track areDetailsVisible = false;
+
   @api recordId = "a3N2v000003Gr4VEAS"; //this is session 31
-  //@wire(getSessionObjectives, { sess: '$recordId' }) sessionObjectives;
   @track sessionObjectives;
   @track isLocked = false;
   @track error;
@@ -156,43 +163,24 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   @wire(CurrentPageReference) pageRef;
   @track draftValues = [];
   @track allObjectives = {};
-  @wire(MessageContext) messageContext;
-  @wire(getRecord, { recordId: "$recordId", fields: FIELDS }) session;
 
+  @api testSessionStatus;
+  @api sessionStatus;
+
+  // messaging
+  @wire(MessageContext) messageContext;
   subscription = null;
-  rendered = false;
 
   renderedCallback() {
-    console.log("ZZZZZZZZZZZZ rendered");
-    if (getFieldValue(this.session.data, STATUS_FIELD) == "Closed") {
+    if (getFieldValue(this.session.data, SESSION_STATUS_FIELD) == "Closed") {
       this.isLocked = true;
     } else {
       this.isLocked = false;
     }
+    console.log("this.isLocked=" + this.isLocked);
     this.columns = this.isLocked ? lockedcolumns : columns;
-
-    // if (!this.rendered) {
-    //   this.logit(
-    //     INFO,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.logit(
-    //     DEBUG,
-    //     "renderedCallback():  ignore - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.logit(
-    //     ERROR,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.rendered = true;
-    // }
   }
+
   connectedCallback() {
     console.debug(
       `%cconnectedCallback(): subscribing to LMS L4LSessionMessageChannel__c`,
@@ -212,20 +200,17 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     );
     console.log(`id =  ${this.recordId}`);
     console.log(`this.session = ${JSON.stringify(this.session)}`);
-    //this.getTheSessionStatus();
-
     this.refresh();
   }
 
   get status() {
-    // if (getFieldValue(this.session.data, STATUS_FIELD) == "Closed") {
-    //   this.isLocked = true;
-    // } else {
-    //   this.isLocked = false;
-    // }
-    // this.columns = this.isLocked ? lockedcolumns : columns;
-
-    return getFieldValue(this.session.data, STATUS_FIELD);
+    console.log(
+      `get status(): session__c.status__c = ${getFieldValue(
+        this.session.data,
+        SESSION_STATUS_FIELD
+      )}`
+    );
+    return getFieldValue(this.session.data, SESSION_STATUS_FIELD);
   }
 
   logit(level, message, tag, context = null) {
@@ -264,7 +249,6 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       .then((result) => {
         this.sessionObjectives = result;
         this.allObjectives = result;
-
         this.logit(
           INFO,
           `${COMPONENT}.refresh(): getSessionObjectives ${result.length} records returned`,
@@ -394,6 +378,10 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
               })
             );
           });
+        break;
+      case "detail":
+        this.areDetailsVisible = true;
+        this.sessionObjectiveId = row.Id;
         break;
       case "edit_details":
         console.debug("EDIT DETAILS");
@@ -628,5 +616,14 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       variant: v
     });
     this.dispatchEvent(evt);
+  }
+
+  handleCancel(event) {
+    console.info(`%chandleCancel(): entering`, COLOR);
+    console.log(JSON.stringify(this.columns));
+    this.areDetailsVisible = false;
+  }
+  handleClose(event) {
+    this.areDetailsVisible = false;
   }
 }

@@ -12,6 +12,7 @@ public with sharing class LFLPopulateTestData {
     delete [SELECT id FROM session_obj__c];
     delete [SELECT id FROM session__c];
     delete [SELECT id FROM NDIS_Report__c];
+    delete [SELECT id FROM Session_Statistics__c];
 
     String RecTypeId = [
       SELECT Id
@@ -44,21 +45,35 @@ public with sharing class LFLPopulateTestData {
     Objective__c o = new Objective__c(Name = 'Car');
     o.SD__c = sd1.id;
     insert o;
+
     Client_Objective__c co = new Client_Objective__c(
       Client__c = newAccount.Id,
       Objective__c = o.Id,
       Client_Objective_Notes__c = 'client objective notes'
     );
     insert co;
+
     Session_Obj__c so = new Session_Obj__c();
     so.Session__c = session.Id;
     so.Objective__c = o.Id;
     so.correct__c = true;
     insert so;
 
+    Session_Statistics__c sessStat = new Session_Statistics__c();
+    sessStat.objective__c = o.Id;
+    sessStat.session__c = session.Id;
+    sessStat.previous_status__c = 'ACQ';
+    sessStat.TotalAcquiredCorrect__c = 1;
+    sessStat.TotalAcquiredIncorrect__c = 1;
+    sessStat.TotalAcquiredPrompted__c = 1;
+    sessStat.Program_Name__c = 'Color';
+
+    insert sessStat;
+
     o = new Objective__c(Name = 'Dog');
     o.SD__c = sd1.id;
     insert o;
+
     co = new Client_Objective__c(
       Client__c = newAccount.Id,
       Objective__c = o.Id,

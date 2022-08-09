@@ -3,8 +3,9 @@
     <fullName>Statistics_Summary__c</fullName>
     <externalId>false</externalId>
     <label>Statistics Summary</label>
-    <required>false</required>
+    <length>2048</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>LongTextArea</type>
+    <visibleLines>12</visibleLines>
 </CustomField>
