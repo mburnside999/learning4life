@@ -1,7 +1,7 @@
 <aura:component
   implements="force:lightningQuickActionWithoutHeader,force:hasRecordId"
 >
-  <ltng:require styles="{!$Resource.popup2CSS}" />
+  <ltng:require styles="{!$Resource.popupCSS}" />
   <c:l4lCreateIncidentData
     recordId="{!v.recordId}"
     onclose="{!c.closeMethodInAuraController}"

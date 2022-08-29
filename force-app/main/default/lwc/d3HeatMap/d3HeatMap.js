@@ -4,6 +4,7 @@ import { loadScript, loadStyle } from "lightning/platformResourceLoader";
 import getD3Stats from "@salesforce/apex/L4LSessionStatsController.getD3Stats";
 import getD3StatsByProgram from "@salesforce/apex/L4LSessionStatsController.getD3StatsByProgram";
 import D3 from "@salesforce/resourceUrl/d3";
+import getD3StatsByProgramAndSD from "@salesforce/apex/L4LSessionStatsController.getD3StatsByProgramAndSD";
 
 export default class D3HeatMap extends LightningElement {
   /* the programs radio group */
@@ -13,7 +14,27 @@ export default class D3HeatMap extends LightningElement {
     // { label: "Color", value: "Color" },
     // { label: "Bring Me", value: "Bring Me" }
   ];
+
+  sdoptions = [
+    { label: "All", value: "All", isChecked: true }
+    // { label: "2D Matching", value: "2D Matching" },
+    // { label: "Color", value: "Color" },
+    // { label: "Bring Me", value: "Bring Me" }
+  ];
+
+  periodoptions = [
+    { label: "All", value: "All", isChecked: true },
+    { label: "1 Day", value: "1" },
+    { label: "7 Days", value: "7" },
+    { label: "30 Days", value: "30" },
+    { label: "90 Days", value: "90" },
+    { label: "180 Days", value: "180" },
+    { label: "365 Days", value: "365" }
+  ];
+
   optionval = "All"; //default
+  sdoptionval = "All";
+  periodval = "All";
 
   //the clientId from UI
   @api recordId;
@@ -29,7 +50,8 @@ export default class D3HeatMap extends LightningElement {
   //helper Sets for chart dimensions and radio group buttons
   sessionsSet = new Set([]);
   objsSet = new Set([]);
-  progs = new Set([]);
+  progsSet = new Set([]);
+  sdSet = new Set([]);
 
   @track result; //raw returned records from Apex query
   @track gridData = []; //the data that D3 iterates across
@@ -53,8 +75,11 @@ export default class D3HeatMap extends LightningElement {
     //load D3
     Promise.all([loadScript(this, D3 + "/d3.v5.min.js")])
       .then(async () => {
-        let result = (this.result = await getD3Stats({
+        let result = (this.result = await getD3StatsByProgramAndSD({
           clientId: this.recordId,
+          programStr: "All",
+          sdStr: "All",
+          periodStr: "All",
           showAcquired: this.isSelected
         })); //this shenanigans was to get D3 to wait for the Apex to finish
       })
@@ -80,6 +105,7 @@ export default class D3HeatMap extends LightningElement {
     this.sessionsSet = new Set([]);
     this.objsSet = new Set([]);
     this.progsSet = new Set([]);
+    this.sdSet = new Set([]);
 
     //local variables to convert the __r field names received from Apex
     let session;
@@ -88,6 +114,8 @@ export default class D3HeatMap extends LightningElement {
     let previous_status;
     let sessiondate;
     let programName;
+    let SDObjStr;
+    let SDname;
 
     this.sessionXAxisArray = [];
     this.progYAxisArray = [];
@@ -96,14 +124,19 @@ export default class D3HeatMap extends LightningElement {
     this.gridData = this.result.map((row) => {
       console.log("=======" + row.Session__r.Name);
       this.sessionsSet.add(row.Session__r.Name);
-      this.objsSet.add(row.Objective__r.Name);
+      //this.objsSet.add(row.Objective__r.Name);
+      this.objsSet.add(row.SD_And_Objective_Str__c);
+
       this.progsSet.add(row.Program_Name__c);
+      this.sdSet.add(row.SD_Name__c);
       session = row.Session__r.Name;
+      SDObjStr = row.SD_And_Objective_Str__c;
       objective = row.Objective__r.Name;
       programName = row.Program_Name__c;
       previous_status = row.Previous_Status__c;
       sessiondate = row.Session__r.Date__c;
       value = row.Percent_Correct__c;
+      SDname = row.SD_Name__c;
 
       return {
         session,
@@ -111,7 +144,9 @@ export default class D3HeatMap extends LightningElement {
         value,
         previous_status,
         sessiondate,
-        programName
+        programName,
+        SDname,
+        SDObjStr
       };
     });
 
@@ -125,7 +160,12 @@ export default class D3HeatMap extends LightningElement {
       s.push(entry);
     }
 
-    let objSetIterator = this.objsSet.values();
+    //sort the objectives
+    const sortedStrings = Array.from(this.objsSet).sort();
+    let objsSetSorted = new Set(sortedStrings);
+
+    //iterate through the sorted objectives set
+    let objSetIterator = objsSetSorted.values();
     for (const entry of objSetIterator) {
       console.log("Objective = " + entry);
       let s = this.progYAxisArray;
@@ -135,13 +175,26 @@ export default class D3HeatMap extends LightningElement {
     // for the LWC radio group we produce the program buttons once upon rendering
     if (!this.programsrendered) {
       this.options = [{ label: "All", value: "All", isChecked: true }];
+      this.sdoptions = [{ label: "All", value: "All", isChecked: true }];
 
-      let progSetIterator = this.progsSet.values();
+      let _sortedProgsArray = Array.from(this.progsSet).sort();
+      let _sortedProgsSet = new Set(_sortedProgsArray);
+      let progSetIterator = _sortedProgsSet.values();
       // List all Values
       for (const entry of progSetIterator) {
         console.log("Program = " + entry);
         this.options.push({ label: entry, value: entry });
       }
+
+      let _sortedSdArray = Array.from(this.sdSet).sort();
+      let _sortedSdSet = new Set(_sortedSdArray);
+      let sdSetIterator = _sortedSdSet.values();
+      // List all Values
+      for (const entry of sdSetIterator) {
+        console.log("SD = " + entry);
+        this.sdoptions.push({ label: entry, value: entry });
+      }
+
       this.programsrendered = true;
     }
 
@@ -162,6 +215,7 @@ export default class D3HeatMap extends LightningElement {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     let d3sessionXAxis = this.sessionXAxisArray;
+
     let d3progYAxisArray = this.progYAxisArray;
 
     // Build X scales and axis:
@@ -204,7 +258,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>Score=${d.value}</span>`
+          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>${d.previous_status}<br/>Score=${d.value}</span>`
         )
         .style("left", d3.pointer(e)[0] + 30 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
@@ -222,7 +276,7 @@ export default class D3HeatMap extends LightningElement {
       .append("g")
       .selectAll()
       .data(this.gridData, function (d) {
-        return d.session + ":" + d.objective;
+        return d.session + ":" + d.SDObjStr;
       })
       .enter()
       .append("rect")
@@ -230,7 +284,7 @@ export default class D3HeatMap extends LightningElement {
         return x(d.session);
       })
       .attr("y", function (d) {
-        return y(d.objective);
+        return y(d.SDObjStr);
       })
       .attr("width", x.bandwidth())
       .attr("height", y.bandwidth())
@@ -258,7 +312,7 @@ export default class D3HeatMap extends LightningElement {
       .style("font-size", "16px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("Objective Mastery per Session - now with tooltips!");
+      .text("Objective Mastery V2.3  - NEW! sorted Progs and SD filters");
   }
 
   // the ACQ/ALL handler
@@ -277,44 +331,70 @@ export default class D3HeatMap extends LightningElement {
     this.composeOptions();
   }
 
+  //the Program change handler
+  handleSDChange(event) {
+    console.log("in handleSDChange " + event.detail.value);
+    const selectedOption = event.detail.value;
+    this.sdoptions = this.sdoptions.map((row) => {
+      return { ...row, isChecked: row.label === selectedOption };
+    });
+    console.log("in handleSDChange " + JSON.stringify(this.sdoptions));
+
+    this.composeOptions();
+  }
+
+  //the Program change handler
+  handlePeriodChange(event) {
+    console.log("in handlePeriodChange " + event.detail.value);
+
+    const selectedOption = event.detail.value;
+    this.periodoptions = this.periodoptions.map((row) => {
+      return { ...row, isChecked: row.value === selectedOption };
+    });
+    console.log("in handlePeriodChange " + JSON.stringify(this.periodoptions));
+    this.composeOptions();
+  }
+
   /* assemble and execute the calls to Apex based on selections */
   composeOptions() {
+    console.log("in composeOptions");
+
     //find the curent Program
     let optionJson = this.options.find((item) => {
       return item.isChecked == true;
     });
-    let calcSelectedOption = optionJson.label;
+    let programStr = optionJson.label;
 
-    //call the Apex
-    switch (calcSelectedOption) {
-      case "All":
-        getD3Stats({
-          clientId: this.recordId,
-          showAcquired: this.isSelected
-        })
-          .then((result) => {
-            this.result = result;
-            this.initializeD3();
-          })
-          .catch((error) => {
-            this.error = error;
-          });
-        break;
-      default:
-        getD3StatsByProgram({
-          clientId: this.recordId,
-          programStr: calcSelectedOption,
-          showAcquired: this.isSelected
-        })
-          .then((result) => {
-            this.result = result;
-            console.log("filtered result=" + JSON.stringify(result));
-            this.initializeD3();
-          })
-          .catch((error) => {
-            this.error = error;
-          });
-    }
+    //find the curent SD
+    let sdoptionJson = this.sdoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let sdStr = sdoptionJson.label;
+    console.log("programStr=" + programStr + " sdStr=" + sdStr);
+
+    console.log("period options=" + JSON.stringify(this.periodoptions));
+    //find the curent Period
+    let periodoptionJson = this.periodoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let periodStr = periodoptionJson.value;
+    console.log("periodStr=" + periodStr + " sdStr=" + sdStr);
+
+    getD3StatsByProgramAndSD({
+      clientId: this.recordId,
+      programStr: programStr,
+      sdStr: sdStr,
+      periodStr: periodStr,
+      showAcquired: this.isSelected
+    })
+      .then((result) => {
+        this.result = result;
+        console.log("filtered result=" + JSON.stringify(result));
+        this.initializeD3();
+      })
+      .catch((error) => {
+        this.error = error;
+      });
   }
 
   /* deprecated method */

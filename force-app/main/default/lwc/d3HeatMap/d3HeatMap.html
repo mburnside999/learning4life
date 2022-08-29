@@ -35,6 +35,25 @@
       onchange={handleChange}
     ></lightning-combobox>
 
+    <lightning-combobox
+      name="sd"
+      label="SD"
+      value={sdoptionval}
+      placeholder="Select SD"
+      options={sdoptions}
+      onchange={handleSDChange}
+    ></lightning-combobox>
+
+    <lightning-combobox
+      name="period"
+      label="Period"
+      value={periodval}
+      placeholder="Select Period"
+      options={periodoptions}
+      onchange={handlePeriodChange}
+    ></lightning-combobox>
+  </lightning-card>
+  <lightning-card>
     <div class="scatterplot" lwc:dom="manual"></div>
   </lightning-card>
 </template>

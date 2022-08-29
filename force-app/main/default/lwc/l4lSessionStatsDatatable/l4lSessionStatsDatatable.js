@@ -6,6 +6,8 @@ const COLS = [
   // { label: "Name", fieldName: "Name" },
   // { label: "Session", fieldName: "Session" },
   { label: "Program", fieldName: "Program_Name__c" },
+  { label: "SD", fieldName: "SD_Name__c" },
+
   { label: "Objective", fieldName: "Objective" },
   { label: "Previous", fieldName: "Previous_Status__c" },
   {
