@@ -1,6 +1,9 @@
 import { LightningElement, api, wire, track } from "lwc";
 import getUnusedObjectives from "@salesforce/apex/L4LController.getUnusedObjectives";
+import getUnusedObjectivesBySearch from "@salesforce/apex/L4LController.getUnusedObjectivesBySearch";
+
 import createClientObjectivesByArray from "@salesforce/apex/L4LController.createClientObjectivesByArray";
+
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 //import { fireEvent } from "c/pubsub";
 import { CurrentPageReference } from "lightning/navigation";
@@ -13,13 +16,14 @@ import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
 const COMPONENT = "l4lCreateClientObjectives";
 const COLOR = "color:green"; //for console log formatting
 const DEBUG = "debug";
+const FINE = "fine";
 const INFO = "info";
 const ERROR = "error";
 
 const columns = [
-  { label: "Name", fieldName: "Name", type: "text" },
   { label: "Program", fieldName: "Program__c", type: "text" },
-  { label: "SD_Name__c", fieldName: "SD_Name__c", type: "text" }
+  { label: "SD", fieldName: "SD_Name__c", type: "text" },
+  { label: "Objective", fieldName: "Name", type: "text" }
 ];
 
 //const selectedRows = {};
@@ -35,63 +39,52 @@ export default class L4lCreateClientObjectives extends LightningElement {
   @track columns = columns;
   @track recordsProcessed = 0;
   rendered = false;
+  isLoading = false;
   //@track objectives;
+  connectedCallback() {}
 
-  connectedCallback() {
-    console.info(
-      `%cconnectedCallback(): Starting, getting objectives, recordId = ${this.recordId}`,
-      COLOR
-    );
-    console.info(`%cconnectedCallback(): calling refresh()`, COLOR);
-
-    this.refresh();
+  get resultmessage() {
+    return this.objectives.length > 0
+      ? `${this.objectives.length} records returned.`
+      : "";
   }
-
-  renderedCallback() {
-    // if (!this.rendered) {
-    //   this.logit(
-    //     INFO,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.logit(
-    //     DEBUG,
-    //     "renderedCallback():  ignore - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.logit(
-    //     ERROR,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.rendered = true;
-    // }
-  }
-
   logit(level, message, tag, context = null) {
-    console.log("in logger");
+    let _level = `${level}`;
+    let _message = `${COMPONENT}.${message}`;
+    let _tag = `${COMPONENT}.${tag}`;
+    let _context = `${context}`;
+
+    console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
     let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`${COMPONENT}`);
+    logger.setScenario(`c/${COMPONENT}`);
     switch (level) {
       case INFO:
-        logger.info(message).setRecordId(context).addTag("logit()").addTag(tag);
+        logger
+          .info(_message)
+          .setRecordId(_context)
+          .addTag("logit()")
+          .addTag(_tag);
         break;
       case DEBUG:
         logger
-          .debug(message)
-          .setRecordId(context)
+          .debug(_message)
+          .setRecordId(_context)
           .addTag("logit()")
-          .addTag(tag);
+          .addTag(_tag);
+        break;
+      case FINE:
+        logger
+          .fine(_message)
+          .setRecordId(_context)
+          .addTag("logit()")
+          .addTag(_tag);
         break;
       case ERROR:
         logger
-          .error(message)
-          .setRecordId(context)
+          .error(_message)
+          .setRecordId(_context)
           .addTag("logit()")
-          .addTag(tag);
+          .addTag(_tag);
         break;
       default:
     }
@@ -100,25 +93,37 @@ export default class L4lCreateClientObjectives extends LightningElement {
   }
 
   refresh() {
+    this.isLoading = true;
     console.info(`%crefresh(): entering`, COLOR);
-    console.debug(`%crefresh(): calling Apex getUnusedObjectives`, COLOR);
+    console.debug(
+      `%crefresh(): calling Apex getUnusedObjectivesBySearch`,
+      COLOR
+    );
     console.debug(`%crefresh(): parameter clientId=${this.recordId}`, COLOR);
-    getUnusedObjectives({ clientId: this.recordId })
+    console.debug(
+      `%crefresh(): parameter searchValue=${this.searchValue}`,
+      COLOR
+    );
+
+    getUnusedObjectivesBySearch({
+      clientId: this.recordId,
+      searchstring: this.searchValue
+    })
       .then((result) => {
         this.objectives = result;
         this.allObjectives = result;
         this.logit(
-          INFO,
-          `${COMPONENT}.refresh(): getUnusedObjectives ${result.length} records returned`,
-          `${COMPONENT}.refresh()`,
+          DEBUG,
+          `refresh(): getUnusedObjectivesBySearch ${result.length} records returned`,
+          `refresh()`,
           this.recordId
         );
         this.logit(
-          DEBUG,
-          `${COMPONENT}.refresh(): getUnusedObjectives result=${JSON.stringify(
+          FINE,
+          `refresh(): getUnusedObjectivesBySearch result=${JSON.stringify(
             result
           )}, this.objectives=${JSON.stringify(this.objectives)}`,
-          `${COMPONENT}.refresh()`,
+          `refresh()`,
           this.recordId
         );
       })
@@ -126,59 +131,60 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.error = error;
         this.logit(
           ERROR,
-          `${COMPONENT}.refresh(): getUnusedObjectives errored: ${JSON.stringify(
+          `refresh(): getUnusedObjectivesBySearch errored: ${JSON.stringify(
             error
           )} results`,
-          `${COMPONENT}.refresh()`,
+          `refresh()`,
           this.recordId
         );
       });
+    this.isLoading = false;
   }
 
   getSelectedName(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.getSelectedName(): entering method`,
-      `${COMPONENT}.getSelectedName()`,
+      DEBUG,
+      `getSelectedName(): entering method`,
+      `getSelectedName()`,
       this.recordId
     );
     this.selectedRows = event.detail.selectedRows;
     this.logit(
-      DEBUG,
-      `${COMPONENT}.getSelectedName(): this.selectedRows=${JSON.stringify(
+      FINE,
+      `getSelectedName(): this.selectedRows=${JSON.stringify(
         this.selectedRows
       )} `,
-      `${COMPONENT}.getSelectedName()`,
+      `getSelectedName()`,
       this.recordId
     );
   }
 
   handleClickArray(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.handleClickArray(): entering method`,
-      `${COMPONENT}.handleClickArray()`,
+      DEBUG,
+      `handleClickArray(): entering method`,
+      `handleClickArray()`,
       this.recordId
     );
     if (this.selectedRows) {
       this.logit(
-        INFO,
-        `${COMPONENT}.handleClickArray(): selectedRows==true`,
-        `${COMPONENT}.handleClickArray()`,
+        DEBUG,
+        `handleClickArray(): selectedRows==true`,
+        `handleClickArray()`,
+        this.recordId
+      );
+      this.logit(
+        FINE,
+        `handleClickArray(): jsonstr=selectedRows=${JSON.stringify(
+          this.selectedRows
+        )}, sess=${this.recordId}`,
+        `handleClickArray()`,
         this.recordId
       );
       this.logit(
         DEBUG,
-        `${COMPONENT}.handleClickArray(): jsonstr=selectedRows=${JSON.stringify(
-          this.selectedRows
-        )}, sess=${this.recordId}`,
-        `${COMPONENT}.handleClickArray()`,
-        this.recordId
-      );
-      this.logit(
-        INFO,
-        `${COMPONENT}.handleClickArray(): imperative Call to createClientObjectivesByArray`,
-        `${COMPONENT}.handleClickArray()`,
+        `handleClickArray(): imperative Call to createClientObjectivesByArray`,
+        `handleClickArray()`,
         this.recordId
       );
 
@@ -188,10 +194,11 @@ export default class L4lCreateClientObjectives extends LightningElement {
       })
         .then((result) => {
           this.recordsProcessed = result;
+
           this.logit(
-            INFO,
-            `${COMPONENT}.handleClickArray(): Apex createClientObjectivesByArray result=${result}`,
-            `${COMPONENT}.handleClickArray()`,
+            DEBUG,
+            `handleClickArray(): Apex createClientObjectivesByArray result=${result}`,
+            `handleClickArray()`,
             this.recordId
           );
         })
@@ -205,19 +212,20 @@ export default class L4lCreateClientObjectives extends LightningElement {
             "success"
           );
           this.logit(
-            DEBUG,
-            `${COMPONENT}.handleClickArray():setting this.objectives=null, calling refresh() `,
-            `${COMPONENT}.handleClickArray()`,
+            FINE,
+            `handleClickArray():setting this.objectives=null, calling refresh() `,
+            `handleClickArray()`,
             this.recordId
           );
-          this.objectives = [];
+          let inp = this.template.querySelector("input");
+          inp.value = "";
           this.refresh();
         })
         .finally(() => {
           this.logit(
-            INFO,
-            `${COMPONENT}.handleClickArray():publishing LMS event`,
-            `${COMPONENT}.handleClickArray()`,
+            DEBUG,
+            `handleClickArray():publishing LMS event`,
+            `handleClickArray()`,
             this.recordId
           );
           const message = {
@@ -227,67 +235,63 @@ export default class L4lCreateClientObjectives extends LightningElement {
             recordData: {}
           };
           this.logit(
-            DEBUG,
-            `${COMPONENT}.handleClickArray(): Sending message via L4LMC, message=${JSON.stringify(
+            FINE,
+            `handleClickArray(): Sending message via L4LMC, message=${JSON.stringify(
               message
             )}`,
-            `${COMPONENT}.handleClickArray()`,
+            `handleClickArray()`,
             this.recordId
           );
           publish(this.messageContext, L4LMC, message);
           this.logit(
-            INFO,
-            `${COMPONENT}.handleClickArray(): published ${JSON.stringify(
-              message
-            )} to L4LMC`,
-            `${COMPONENT}.handleClickArray()`
+            DEBUG,
+            `handleClickArray(): published ${JSON.stringify(message)} to L4LMC`,
+            `handleClickArray()`
           );
         })
         .catch((error) => {
           this.error = error;
           this.logit(
             ERROR,
-            `${COMPONENT}.handleClickArray(): Error ${JSON.stringify(error)}`,
-            `${COMPONENT}.handleClickArray()`,
+            `handleClickArray(): Error ${JSON.stringify(error)}`,
+            `handleClickArray()`,
             this.recordId
           );
         });
     }
   }
 
-  handleSearchKeyInput(event) {
-    this.logit(
-      INFO,
-      `${COMPONENT}.handleSearchKey(): entering method`,
-      `${COMPONENT}.handleSearchKey()`
-    );
-    const searchKey = event.target.value.toLowerCase();
+  handleFilterKeyInput(event) {
     this.logit(
       DEBUG,
-      `${COMPONENT}.handleSearchKey(): searchKey=${searchKey}`,
-      `${COMPONENT}.handleSearchKey()`
+      `handleFilteKeyInput(): entering method`,
+      `handleFilteKeyInput()`
+    );
+    const filterKey = event.target.value.toLowerCase();
+    this.logit(
+      FINE,
+      `handleFilteKeyInput(): filterKey=${filterKey}`,
+      `handleFilteKeyInput()`
     );
 
     this.objectives = this.allObjectives.filter(
       (so) =>
-        so.Name.toLowerCase().includes(searchKey) ||
-        so.Program__c.toLowerCase().includes(searchKey) ||
-        so.SD_Name__c.toLowerCase().includes(searchKey)
+        so.Name.toLowerCase().includes(filterKey) ||
+        so.Program__c.toLowerCase().includes(filterKey) ||
+        so.SD_Name__c.toLowerCase().includes(filterKey)
     );
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleSearchKey(): this.objectives=${JSON.stringify(
-        this.objectives
-      )}`,
-      `${COMPONENT}.handleSearchKey()`
+      FINE,
+      `handleFilterKey(): this.objectives=${JSON.stringify(this.objectives)}`,
+      `handleFilterKey()`
     );
   }
 
   showNotification(t, m, v) {
     this.logit(
-      DEBUG,
-      `${COMPONENT}.showNotification(): entering method, t=${t}, m=${m}, v=${v}`,
-      `${COMPONENT}.showNotification()`
+      FINE,
+      `showNotification(): entering method, t=${t}, m=${m}, v=${v}`,
+      `showNotification()`
     );
     const evt = new ShowToastEvent({
       title: t,
@@ -299,10 +303,61 @@ export default class L4lCreateClientObjectives extends LightningElement {
 
   handleClickCancel(event) {
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleClickCancel(): dispatching CustomEvent(close)`,
-      `${COMPONENT}.handleClickCancel()`
+      FINE,
+      `handleClickCancel(): dispatching CustomEvent(close)`,
+      `handleClickCancel()`
     );
     this.dispatchEvent(new CustomEvent("close"));
+  }
+
+  searchKeyword(event) {
+    this.searchValue = event.target.value;
+  }
+
+  handleSearchKeyword() {
+    this.isLoading = true;
+    this.logit(
+      DEBUG,
+      `handleSearchKeyword(): entering, searchValue=${this.searchValue}`,
+      `handleSearchKeyword()`
+    );
+    if (this.searchValue !== "") {
+      this.logit(
+        DEBUG,
+        `handleSearchKeyword(): calling getUnusedbjectivesBySearch`,
+        `handleSearchKeyword()`
+      );
+      getUnusedObjectivesBySearch({
+        clientId: this.recordId,
+        searchstring: this.searchValue
+      })
+        .then((result) => {
+          // set @track contacts variable with return contact list from server
+          this.logit(
+            FINE,
+            `handleSearchKeyword(): result=${JSON.stringify(result)}`,
+            `handleSearchKeyword()`
+          );
+          this.objectives = result;
+          this.allObjectives = result;
+        })
+        .catch((error) => {
+          const event = new ShowToastEvent({
+            title: "Error",
+            variant: "error",
+            message: error.body.message
+          });
+          this.dispatchEvent(event);
+          // reset contacts var with null
+        });
+    } else {
+      // fire toast event if input field is blank
+      const event = new ShowToastEvent({
+        variant: "error",
+        message: "Search text missing.."
+      });
+      this.dispatchEvent(event);
+    }
+    this.isLoading = false;
   }
 }

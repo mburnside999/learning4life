@@ -1,13 +1,33 @@
 <template>
   <c-logger></c-logger>
+
   <lightning-card title="Available L4L Objectives">
     &nbsp;&nbsp;
+    <div class="slds-m-bottom_medium">
+      <lightning-input
+        type="text"
+        placeholder="Search across Programs, SDs and Objectives"
+        value={searchValue}
+        onchange={searchKeyword}
+      ></lightning-input>
+    </div>
+    <lightning-button
+      label="Search"
+      onclick={handleSearchKeyword}
+      variant="brand"
+    ></lightning-button>
+    <br />
+    <br />
+    <br />
+
     <input
-      size="30"
-      type="search"
-      placeholder="Search Name, Program or SD..."
-      oninput={handleSearchKeyInput}
+      class="slds-input"
+      size="40"
+      type="text"
+      placeholder="You can filter the search results here..."
+      oninput={handleFilterKeyInput}
     />
+
     <br /><br />
     &nbsp;<lightning-button-group>
       <lightning-button
@@ -20,9 +40,23 @@
       <lightning-button label="Close" title="Close" onclick={handleClickCancel}>
       </lightning-button>
     </lightning-button-group>
-    <br /><br />
+    <div class="spinner">
+      <template if:true={isLoading}>
+        <lightning-spinner
+          alternative-text="Loading"
+          variant="brand"
+          size="large"
+        >
+        </lightning-spinner>
+      </template>
+    </div>
+
+    <br />
+    {resultmessage}
+    <br />
     <lightning-datatable
       key-field="Id"
+      is-loading
       data={objectives}
       columns={columns}
       onrowselection={getSelectedName}

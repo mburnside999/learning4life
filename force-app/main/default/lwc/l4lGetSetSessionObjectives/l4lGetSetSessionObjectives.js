@@ -22,6 +22,7 @@ import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 const COMPONENT = "l4lGetSetSessionObjectives";
 const COLOR = "color:blue"; //for console log formatting
 const DEBUG = "debug";
+const FINE = "fine";
 const INFO = "info";
 const ERROR = "error";
 
@@ -35,13 +36,13 @@ const SESSIONFIELDS = [SESSION_STATUS_FIELD];
 //columns when the session is open
 const columns = [
   { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 150 },
+  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 150 },
   {
     label: "Obj",
     fieldName: "Objective_Name__c",
     type: "text",
     initialWidth: 150
   },
-  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 150 },
   {
     label: "Corr.",
     fieldName: "Correct__c",
@@ -53,6 +54,14 @@ const columns = [
   {
     label: "Incr.",
     fieldName: "Incorrect__c",
+    type: "boolean",
+    initialWidth: 90,
+    cellAttributes: { alignment: "right" },
+    editable: true
+  },
+  {
+    label: "Non Rsp.",
+    fieldName: "NonResponsive__c",
     type: "boolean",
     initialWidth: 90,
     cellAttributes: { alignment: "right" },
@@ -91,13 +100,13 @@ const columns = [
 //columns when the session is locked
 const lockedcolumns = [
   { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 150 },
+  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 150 },
   {
     label: "Obj",
     fieldName: "Objective_Name__c",
     type: "text",
     initialWidth: 150
   },
-  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 150 },
   {
     label: "Corr.",
     fieldName: "Correct__c",
@@ -109,6 +118,14 @@ const lockedcolumns = [
   {
     label: "Incr.",
     fieldName: "Incorrect__c",
+    type: "boolean",
+    initialWidth: 90,
+    cellAttributes: { alignment: "right" },
+    editable: false
+  },
+  {
+    label: "Non Rsp.",
+    fieldName: "NonResponsive__c",
     type: "boolean",
     initialWidth: 90,
     cellAttributes: { alignment: "right" },
@@ -214,26 +231,42 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   }
 
   logit(level, message, tag, context = null) {
-    console.log("in logger");
+    let _level = `${level}`;
+    let _message = `${COMPONENT}.${message}`;
+    let _tag = `${COMPONENT}.${tag}`;
+    let _context = `${context}`;
+
+    console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
     let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`${COMPONENT}`);
+    logger.setScenario(`c/${COMPONENT}`);
     switch (level) {
       case INFO:
-        logger.info(message).setRecordId(context).addTag("logit()").addTag(tag);
+        logger
+          .info(_message)
+          .setRecordId(_context)
+          .addTag("logit()")
+          .addTag(_tag);
         break;
       case DEBUG:
         logger
-          .debug(message)
-          .setRecordId(context)
+          .debug(_message)
+          .setRecordId(_context)
           .addTag("logit()")
-          .addTag(tag);
+          .addTag(_tag);
+        break;
+      case FINE:
+        logger
+          .fine(_message)
+          .setRecordId(_context)
+          .addTag("logit()")
+          .addTag(_tag);
         break;
       case ERROR:
         logger
-          .error(message)
-          .setRecordId(context)
+          .error(_message)
+          .setRecordId(_context)
           .addTag("logit()")
-          .addTag(tag);
+          .addTag(_tag);
         break;
       default:
     }
@@ -250,17 +283,17 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         this.sessionObjectives = result;
         this.allObjectives = result;
         this.logit(
-          INFO,
-          `${COMPONENT}.refresh(): getSessionObjectives ${result.length} records returned`,
-          `${COMPONENT}.refresh()`,
+          DEBUG,
+          `refresh(): getSessionObjectives ${result.length} records returned`,
+          `refresh()`,
           this.recordId
         );
         this.logit(
-          DEBUG,
-          `${COMPONENT}.refresh(): getSessionObjectives result=${JSON.stringify(
+          FINE,
+          `refresh(): getSessionObjectives result=${JSON.stringify(
             result
           )}, this.objectives=${JSON.stringify(this.objectives)}`,
-          `${COMPONENT}.refresh()`,
+          `refresh()`,
           this.recordId
         );
       })
@@ -268,10 +301,10 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         this.error = error;
         this.logit(
           ERROR,
-          `${COMPONENT}.refresh(): getSessionObjectives errored: ${JSON.stringify(
+          `refresh(): getSessionObjectives errored: ${JSON.stringify(
             error
           )} results`,
-          `${COMPONENT}.refresh()`,
+          `refresh()`,
           this.recordId
         );
       });
@@ -279,16 +312,16 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
   handleSearchKeyInput(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.handleSearchKey(): entering method`,
-      `${COMPONENT}.handleSearchKey()`
+      DEBUG,
+      `handleSearchKey(): entering method`,
+      `handleSearchKey()`
     );
     const searchKey = event.target.value.toLowerCase();
 
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleSearchKey(): searchKey=${searchKey}`,
-      `${COMPONENT}.handleSearchKey()`
+      FINE,
+      `handleSearchKey(): searchKey=${searchKey}`,
+      `handleSearchKey()`
     );
     this.sessionObjectives = this.allObjectives.filter(
       (so) =>
@@ -301,19 +334,19 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           so.Comment__c.toLowerCase().includes(searchKey))
     );
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleSearchKey(): this.sessionObjectives=${JSON.stringify(
+      FINE,
+      `handleSearchKey(): this.sessionObjectives=${JSON.stringify(
         this.sessionObjectives
       )}`,
-      `${COMPONENT}.handleSearchKey()`
+      `handleSearchKey()`
     );
   }
 
   handleLMS(message) {
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleLMS(): message received ${JSON.stringify(message)}`,
-      `${COMPONENT}.handleLMS()`,
+      FINE,
+      `handleLMS(): message received ${JSON.stringify(message)}`,
+      `handleLMS()`,
       this.recordId
     );
 
@@ -321,32 +354,25 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       ? JSON.stringify(message, null, "\t")
       : "no message payload";
 
-    this.logit(
-      INFO,
-      `${COMPONENT}.handleLMS(): refreshing`,
-      `${COMPONENT}.handleLMS()`,
-      this.recordId
-    );
+    this.logit(DEBUG, `handleLMS(): refreshing`, `handleLMS()`, this.recordId);
 
     this.refresh();
   }
 
   handleRowAction(event) {
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleRowAction(): entering method`,
-      `${COMPONENT}.handleRowAction()`,
+      FINE,
+      `handleRowAction(): entering method`,
+      `handleRowAction()`,
       this.recordId
     );
 
     const actionName = event.detail.action.name;
     const row = event.detail.row;
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleRowAction(): row=${JSON.stringify(
-        row
-      )}, actionName=${actionName}`,
-      `${COMPONENT}.handleRowAction()`,
+      FINE,
+      `handleRowAction(): row=${JSON.stringify(row)}, actionName=${actionName}`,
+      `handleRowAction()`,
       this.recordId
     );
     switch (actionName) {
@@ -365,8 +391,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           .catch((error) => {
             this.logit(
               ERROR,
-              `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
-              `${COMPONENT}.handleRowAction()`,
+              `handleRowAction(): error=${JSON.stringify(error)}`,
+              `handleRowAction()`,
               this.recordId
             );
 
@@ -392,9 +418,9 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
   handleSave(event) {
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleSave(): in handleSave()`,
-      `${COMPONENT}.handleSave()`,
+      FINE,
+      `handleSave(): in handleSave()`,
+      `handleSave()`,
       this.recordId
     );
 
@@ -426,7 +452,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         this.logit(
           ERROR,
           `handleSave(): ${JSON.stringify(error)}`,
-          `${COMPONENT}.handleSave()`,
+          `handleSave()`,
           this.recordId
         );
       });
@@ -434,18 +460,18 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
   handleClickArray(event) {
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleClickArray(): in handleClickArray`,
-      `${COMPONENT}.handleClickArray()`,
+      FINE,
+      `handleClickArray(): in handleClickArray`,
+      `handleClickArray()`,
       this.recordId
     );
 
     let mode = "";
     let label = event.target.label;
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleClickArray(): label=${label}`,
-      `${COMPONENT}.handleClickArray()`,
+      FINE,
+      `handleClickArray(): label=${label}`,
+      `handleClickArray()`,
       this.recordId
     );
     switch (label) {
@@ -454,6 +480,9 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         break;
       case "Mark Incorrect":
         mode = "Incorrect";
+        break;
+      case "Mark Non-Responsive":
+        mode = "NonResponsive";
         break;
       case "Mark Prompted":
         mode = "Prompted";
@@ -467,18 +496,18 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
     if (this.selectedRows) {
       this.logit(
-        INFO,
-        `${COMPONENT}.handleClickArray(): calling setSessionObjectivesByArray `,
-        `${COMPONENT}.handleClickArray()`,
+        DEBUG,
+        `handleClickArray(): calling setSessionObjectivesByArray `,
+        `handleClickArray()`,
         this.recordId
       );
 
       this.logit(
-        DEBUG,
-        `${COMPONENT}.handleClickArray(): jsonstr=${JSON.stringify(
+        FINE,
+        `handleClickArray(): jsonstr=${JSON.stringify(
           this.selectedRows
         )} val=${mode}`,
-        `${COMPONENT}.handleClickArray()`,
+        `handleClickArray()`,
         this.recordId
       );
 
@@ -490,19 +519,17 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           this.recordsProcessed = result;
 
           this.logit(
-            DEBUG,
-            `${COMPONENT}.handleClickArray(): result=${JSON.stringify(
-              result
-            )} val=${mode}`,
-            `${COMPONENT}.handleClickArray()`,
+            FINE,
+            `handleClickArray(): result=${JSON.stringify(result)} val=${mode}`,
+            `handleClickArray()`,
             this.recordId
           );
         })
         .then(() => {
           this.logit(
-            INFO,
-            `${COMPONENT}.handleClickArray(): refreshing`,
-            `${COMPONENT}.handleClickArray()`,
+            DEBUG,
+            `handleClickArray(): refreshing`,
+            `handleClickArray()`,
             this.recordId
           );
           this.refresh();
@@ -517,7 +544,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           } else {
             this.showNotification(
               "Success!",
-              `Marked ${this.recordsProcessed} record(s) as ${mode} .`,
+              `Marked ${this.recordsProcessed} record(s) as ${mode}.`,
               "success"
             );
           }
@@ -526,8 +553,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           this.error = error;
           this.logit(
             ERROR,
-            `${COMPONENT}.handleClickArray(): error ${JSON.stringify(error)}`,
-            `${COMPONENT}.handleClickArray()`,
+            `handleClickArray(): error ${JSON.stringify(error)}`,
+            `handleClickArray()`,
             this.recordId
           );
         });
@@ -536,32 +563,32 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
   handleClickDelete(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.handleClickDelete(): in handleClickDelete`,
-      `${COMPONENT}.handleClickDelete()`,
+      DEBUG,
+      `handleClickDelete(): in handleClickDelete`,
+      `handleClickDelete()`,
       this.recordId
     );
 
     this.logit(
-      INFO,
-      `${COMPONENT}.handleClickDelete(): calling deleteSessionObjectives`,
-      `${COMPONENT}.handleClickDelete()`,
+      DEBUG,
+      `handleClickDelete(): calling deleteSessionObjectives`,
+      `handleClickDelete()`,
       this.recordId
     );
     deleteSessionObjectives({ sessionid: this.recordId })
       .then((result) => {
         this.logit(
-          DEBUG,
-          `${COMPONENT}.handleClickDelete(): Apex:deleteSessionObjectives returned ${result}`,
-          `${COMPONENT}.handleClickDelete()`,
+          FINE,
+          `handleClickDelete(): Apex:deleteSessionObjectives returned ${result}`,
+          `handleClickDelete()`,
           this.recordId
         );
       })
       .then(() => {
         this.logit(
-          INFO,
-          `${COMPONENT}.handleClickDelete(): refreshing`,
-          `${COMPONENT}.handleClickDelete()`,
+          DEBUG,
+          `handleClickDelete(): refreshing`,
+          `handleClickDelete()`,
           this.recordId
         );
         this.refresh();
@@ -579,27 +606,27 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         this.logit(
           ERROR,
           `handleClickDelete(): error ${JSON.stringify(error)}`,
-          `${COMPONENT}.handleClickDelete()`,
+          `handleClickDelete()`,
           this.recordId
         );
       });
   }
   getSelectedName(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.getSelectedName(): in getSelectedName`,
-      `${COMPONENT}.getSelectedName()`,
+      DEBUG,
+      `getSelectedName(): in getSelectedName`,
+      `getSelectedName()`,
       this.recordId
     );
 
     this.selectedRows = event.detail.selectedRows;
 
     this.logit(
-      DEBUG,
-      `${COMPONENT}.getSelectedName(): this.selectedRows=${JSON.stringify(
+      FINE,
+      `getSelectedName(): this.selectedRows=${JSON.stringify(
         this.selectedRows
       )}`,
-      `${COMPONENT}.getSelectedName()`,
+      `getSelectedName()`,
       this.recordId
     );
     // Display that fieldName of the selected rows

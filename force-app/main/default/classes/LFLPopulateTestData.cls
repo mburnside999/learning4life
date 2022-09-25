@@ -36,13 +36,13 @@ public with sharing class LFLPopulateTestData {
     session.session_location__c = 'Other';
     insert session;
 
-    Program__c p = new Program__c(Name = '2D Matching');
+    Program__c p = new Program__c(Name = '2D Matching', Status__c = 'Active');
     insert p;
 
-    SD__c sd1 = new SD__c(name = 'Identical');
+    SD__c sd1 = new SD__c(name = 'Identical', Status__c = 'Active');
     sd1.Program__c = p.id;
     insert sd1;
-    Objective__c o = new Objective__c(Name = 'Car');
+    Objective__c o = new Objective__c(Name = 'Car', Status__c = 'Active');
     o.SD__c = sd1.id;
     insert o;
 
@@ -66,6 +66,8 @@ public with sharing class LFLPopulateTestData {
     sessStat.TotalAcquiredCorrect__c = 1;
     sessStat.TotalAcquiredIncorrect__c = 1;
     sessStat.TotalAcquiredPrompted__c = 1;
+    sessStat.TotalAcquiredNonResponsive__c = 1;
+
     sessStat.Program_Name__c = 'Color';
 
     insert sessStat;
@@ -102,6 +104,14 @@ public with sharing class LFLPopulateTestData {
     so.Objective__c = o.Id;
     so.prompted__c = true;
     so.previous_status__c = 'ACQ';
+
+    insert so;
+
+    so = new Session_Obj__c();
+    so.Session__c = session.Id;
+    so.Objective__c = o.Id;
+    so.nonresponsive__c = true;
+    so.previous_status__c = 'OBJ';
 
     insert so;
 

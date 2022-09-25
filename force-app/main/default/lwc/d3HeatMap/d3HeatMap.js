@@ -23,10 +23,10 @@ export default class D3HeatMap extends LightningElement {
   ];
 
   periodoptions = [
-    { label: "All", value: "All", isChecked: true },
+    { label: "*30 Days", value: "30", isChecked: true },
+    { label: "All", value: "All" },
     { label: "1 Day", value: "1" },
     { label: "7 Days", value: "7" },
-    { label: "30 Days", value: "30" },
     { label: "90 Days", value: "90" },
     { label: "180 Days", value: "180" },
     { label: "365 Days", value: "365" }
@@ -34,14 +34,14 @@ export default class D3HeatMap extends LightningElement {
 
   optionval = "All"; //default
   sdoptionval = "All";
-  periodval = "All";
+  periodval = "30";
 
   //the clientId from UI
   @api recordId;
 
   //chart dimensions
-  svgWidth = 1000;
-  svgHeight = 600;
+  svgWidth = 1200;
+  svgHeight = 900;
 
   // the X and Y axes Arrays
   @track sessionXAxisArray = [];
@@ -79,7 +79,7 @@ export default class D3HeatMap extends LightningElement {
           clientId: this.recordId,
           programStr: "All",
           sdStr: "All",
-          periodStr: "All",
+          periodStr: "30",
           showAcquired: this.isSelected
         })); //this shenanigans was to get D3 to wait for the Apex to finish
       })
@@ -202,9 +202,18 @@ export default class D3HeatMap extends LightningElement {
     let svg = d3.select(this.template.querySelector(".scatterplot"));
     svg.selectAll("*").remove();
 
-    var margin = { top: 50, right: 30, bottom: 30, left: 200 },
-      width = 1000 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+    var margin = { top: 50, right: 30, bottom: 60, left: 300 },
+      width = 1200 - margin.left - margin.right,
+      height = 900 - margin.top - margin.bottom;
+
+    let make_x_gridlines = () => {
+      return d3.axisBottom(x).ticks(5);
+    };
+
+    // gridlines in y axis function
+    let make_y_gridlines = () => {
+      return d3.axisLeft(y).ticks(5);
+    };
 
     svg = d3
       .select(this.template.querySelector(".scatterplot"))
@@ -227,7 +236,12 @@ export default class D3HeatMap extends LightningElement {
     svg
       .append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-45)");
 
     // Build Y scales and axis:
     let y = d3
@@ -236,6 +250,17 @@ export default class D3HeatMap extends LightningElement {
       .domain(d3progYAxisArray)
       .padding(0.01);
     svg.append("g").call(d3.axisLeft(y));
+
+    svg
+      .append("g")
+      .attr("class", "grid")
+      .attr("transform", "translate(0," + height + ")")
+      .call(make_x_gridlines().tickSize(-height).tickFormat(""));
+
+    svg
+      .append("g")
+      .attr("class", "grid")
+      .call(make_y_gridlines().tickSize(-width).tickFormat(""));
 
     // Build color scale
     let myColor = d3.scaleLinear().range(["white", "#69b3a2"]).domain([1, 100]);
@@ -258,7 +283,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>${d.previous_status}<br/>Score=${d.value}</span>`
+          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>Score=${d.value}</span>`
         )
         .style("left", d3.pointer(e)[0] + 30 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
@@ -312,7 +337,9 @@ export default class D3HeatMap extends LightningElement {
       .style("font-size", "16px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("Objective Mastery V2.3  - NEW! sorted Progs and SD filters");
+      .text(
+        "Objective Mastery V2.4  - NEW! expanded Y-axis labels, gridlines and rotated X-axis labels"
+      );
   }
 
   // the ACQ/ALL handler

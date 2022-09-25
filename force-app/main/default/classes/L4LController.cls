@@ -30,6 +30,50 @@ public with sharing class L4LController {
   }
 
   @AuraEnabled(cacheable=false)
+  public static List<Objective__c> getPopularObjectives(String clientId) {
+    List<objective__c> objList = new List<Objective__c>();
+
+    Logger.setScenario('L4LController');
+    Logger.debug('Apex:getPopularObjectives() recordId=' + clientId)
+      .setRecordId(clientId)
+      .addTag('L4LController.getPopularObjectives()')
+      .addTag('logit()');
+
+    Logger.saveLog();
+
+    AggregateResult[] popularObjectives = [
+      SELECT objective__c, count(id) idcount
+      FROM client_objective__c
+      WHERE client__c != :clientId
+      GROUP BY objective__C
+      ORDER BY count(id) DESC
+      LIMIT 50
+    ];
+    System.debug(popularObjectives);
+    List<id> objids = new List<id>();
+
+    for (AggregateResult ar : popularObjectives) {
+      objids.add((Id) ar.get('Objective__c'));
+    }
+    objList = [
+      SELECT Id, Name, Program__c, SD_Name__c
+      FROM objective__c
+      WHERE
+        id IN :objids
+        AND Id NOT IN (
+          SELECT Objective__c
+          FROM Client_Objective__c
+          WHERE Client__c = :clientId
+        )
+        AND status__c = 'Active'
+    ];
+
+    System.debug(objList);
+
+    return objList;
+  }
+
+  @AuraEnabled(cacheable=false)
   public static List<Session_obj__c> getSessionObjectives(String sess) {
     Logger.setScenario('L4LController');
     Logger.debug('Apex:getSessionObjectives() sess=' + sess)
@@ -38,11 +82,11 @@ public with sharing class L4LController {
       .addTag('logit()');
 
     String debugsoql =
-      'SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,' +
+      'SELECT Id,Name,Objective__c,Objective_Name__c,Correct__c,NonResponsive__c,' +
       'Incorrect__c,Prompted__c,SD__c,Program__c,Comment__c,Previous_Status__c' +
       ' FROM Session_Obj__c WHERE Session__c = :sess ORDER BY Name';
 
-    Logger.debug('Apex:getSessionObjectives() soql= ' + debugsoql)
+    Logger.fine('Apex:getSessionObjectives() soql= ' + debugsoql)
       .setRecordId(sess)
       .addTag('L4LController.getSessionObjectives()')
       .addTag('logit()');
@@ -55,6 +99,7 @@ public with sharing class L4LController {
           Objective__c,
           Objective_Name__c,
           Correct__c,
+          NonResponsive__c,
           Incorrect__c,
           Prompted__c,
           SD__c,
@@ -74,7 +119,7 @@ public with sharing class L4LController {
       .addTag('L4LController.getSessionObjectives()')
       .addTag('logit()');
 
-    Logger.debug('Apex:getSessionObjectives() retlist= ' + retlist)
+    Logger.fine('Apex:getSessionObjectives() retlist= ' + retlist)
       .setRecordId(sess)
       .addTag('L4LController.getSessionObjectives()')
       .addTag('logit()');
@@ -100,7 +145,7 @@ public with sharing class L4LController {
       ' FROM client_objective__c WHERE Client__c IN (SELECT client__c FROM session__c WHERE id = :searchKey)' +
       ' ORDER BY Program_Name__c';
 
-    Logger.debug('Apex:getClientObjectivesForSession() soql=' + debugsoql)
+    Logger.fine('Apex:getClientObjectivesForSession() soql=' + debugsoql)
       .setRecordId(searchKey)
       .addTag('L4LController.getClientObjectivesForSession()')
       .addTag('logit()');
@@ -133,7 +178,7 @@ public with sharing class L4LController {
       .addTag('L4LController.getClientObjectivesForSession()')
       .addTag('logit()');
 
-    Logger.debug('Apex:getClientObjectivesForSession() retlist=' + retlist)
+    Logger.fine('Apex:getClientObjectivesForSession() retlist=' + retlist)
       .setRecordId(searchKey)
       .addTag('L4LController.getClientObjectivesForSession()')
       .addTag('logit()');
@@ -156,7 +201,7 @@ public with sharing class L4LController {
       'Status__c,Frequency__c,Last_Tested_Correct__c,Re_Test_Recommended__c,Client_Objective_Notes__c' +
       ' FROM Client_Objective__c WHERE Client__c = :clientId ORDER BY Program_Name__c, Name';
 
-    Logger.debug('Apex:getClientObjectives() soql=' + debugsoql)
+    Logger.fine('Apex:getClientObjectives() soql=' + debugsoql)
       .setRecordId(clientId)
       .addTag('L4LController.getClientObjectives()')
       .addTag('logit()');
@@ -186,7 +231,7 @@ public with sharing class L4LController {
       .addTag('L4LController.getClientObjectives()')
       .addTag('logit()');
 
-    Logger.debug('Apex:getClientObjectives() retlist=' + retlist)
+    Logger.fine('Apex:getClientObjectives() retlist=' + retlist)
       .setRecordId(clientId)
       .addTag('L4LController.getClientObjectives()')
       .addTag('logit()');
@@ -205,13 +250,14 @@ public with sharing class L4LController {
       .addTag('L4LController.getUnusedObjective()')
       .addTag('logit()');
 
-    Logger.debug(
+    Logger.fine(
         'Apex:getUnusedObjectives(): SELECT Id, Name, Program__c, SD_Name__c ' +
         ' FROM Objective__c ' +
         ' WHERE Id NOT IN ( ' +
         ' SELECT Objective__c ' +
         ' FROM Client_Objective__c ' +
-        ' WHERE Client__c = :clientId ORDER BY Program__c, Name )'
+        ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
+        ' AND status__c="Active"'
       )
       .setRecordId(clientId)
       .addTag('L4LController.getUnusedObjective()')
@@ -230,6 +276,7 @@ public with sharing class L4LController {
             FROM Client_Objective__c
             WHERE Client__c = :clientId
           )
+          AND status__c = 'Active'
         ORDER BY Program__c, Name
       ]
     );
@@ -239,9 +286,81 @@ public with sharing class L4LController {
       .addTag('L4LController.getUnusedObjective()')
       .addTag('logit()');
 
-    Logger.debug('Apex:getUnusedObjectives() retlist=' + retlist)
+    Logger.fine('Apex:getUnusedObjectives() retlist=' + retlist)
       .setRecordId(clientId)
       .addTag('L4LController.getUnusedObjective()')
+      .addTag('logit()');
+
+    Logger.saveLog();
+
+    return retlist;
+  }
+
+  @AuraEnabled
+  public static List<Objective__c> getUnusedObjectivesBySearch(
+    String clientId,
+    String searchstring
+  ) {
+    Logger.setScenario('L4LController');
+
+    Logger.debug(
+        'Apex:getUnusedObjectivesBySearch() clientId=' +
+        clientId +
+        ' searchstring=' +
+        searchstring
+      )
+      .setRecordId(clientId)
+      .addTag('L4LController.getUnusedObjectiveBySearch()')
+      .addTag('logit()');
+
+    Logger.fine(
+        'Apex:getUnusedObjectives(): SELECT Id, Name, Program__c, SD_Name__c ' +
+        ' FROM Objective__c ' +
+        ' WHERE Id NOT IN ( ' +
+        ' SELECT Objective__c ' +
+        ' FROM Client_Objective__c ' +
+        ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
+        ' AND status__c="Active" and Name like...'
+      )
+      .setRecordId(clientId)
+      .addTag('L4LController.getUnusedObjectiveBySearch()')
+      .addTag('logit()');
+
+    System.debug(
+      '>>>>>> in getUnusedObjectivesBySearch(clientId,searchstring)'
+    );
+    System.debug('>>>>>> clientId=' + clientId);
+
+    searchstring = '%' + searchstring + '%';
+
+    List<Objective__c> retlist = new List<Objective__c>(
+      [
+        SELECT Id, Name, Program__c, SD_Name__c
+        FROM Objective__c
+        WHERE
+          Id NOT IN (
+            SELECT Objective__c
+            FROM Client_Objective__c
+            WHERE Client__c = :clientId
+          )
+          AND status__c = 'Active'
+          AND (SD__r.Program__r.Name LIKE :searchstring
+          OR sd__r.name LIKE :searchstring
+          OR name LIKE :searchstring)
+        ORDER BY Program__c, Name
+      ]
+    );
+
+    Logger.debug(
+        'Apex:getUnusedObjectivesBySearch() retlist.size()=' + retlist.size()
+      )
+      .setRecordId(clientId)
+      .addTag('L4LController.getUnusedObjectivesBySearch()')
+      .addTag('logit()');
+
+    Logger.fine('Apex:getUnusedObjectivesBySearch() retlist=' + retlist)
+      .setRecordId(clientId)
+      .addTag('L4LController.getUnusedObjectivesBySearch()')
       .addTag('logit()');
 
     Logger.saveLog();
@@ -256,7 +375,7 @@ public with sharing class L4LController {
       .addTag('L4LController.deleteSessionObjectives()')
       .addTag('logit()');
     //test written
-    Logger.debug(
+    Logger.fine(
         'Apex:deleteSessionObjectives() soql= delete [SELECT id FROM Session_Obj__c WHERE session__c = :sessionid]'
       )
       .setRecordId(sessionId)
@@ -275,7 +394,16 @@ public with sharing class L4LController {
     String skillstring
   ) {
     Logger.setScenario('L4LController');
+
     Logger.debug(
+        'Apex:createSessionObjectivesByArrayWithOrderedResults() entering...'
+      )
+      .addTag(
+        'L4LController.createSessionObjectivesByArrayWithOrderedResults()'
+      )
+      .addTag('logit()');
+
+    Logger.fine(
         'Apex:createSessionObjectivesByArrayWithOrderedResults() jsonstr=' +
         jsonstr +
         'sess=' +
@@ -300,7 +428,7 @@ public with sharing class L4LController {
       List<Client_Objective__c>.class
     );
 
-    Logger.debug(
+    Logger.fine(
         'Apex:createSessionObjectivesByArrayWithOrderedResults() objDeserialized=' +
         objDeserialized
       )
@@ -314,7 +442,7 @@ public with sharing class L4LController {
       List<L4LController.SessionResult>.class
     );
 
-    Logger.debug(
+    Logger.fine(
         'Apex:createSessionObjectivesByArrayWithOrderedResults() sessionresults=' +
         sessionresults
       )
@@ -339,18 +467,28 @@ public with sharing class L4LController {
             so.Correct__c = true;
             so.Incorrect__c = false;
             so.Prompted__c = false;
+            so.NonResponsive__c = false;
+          }
+          when 'N' {
+            // when block 1
+            so.Correct__c = false;
+            so.Incorrect__c = false;
+            so.Prompted__c = false;
+            so.NonResponsive__c = true;
           }
           when 'I' {
             // when block 2
             so.Correct__c = false;
             so.Incorrect__c = true;
             so.Prompted__c = false;
+            so.NonResponsive__c = false;
           }
           when 'P' {
             // when block 3
             so.Correct__c = false;
             so.Incorrect__c = false;
             so.Prompted__c = true;
+            so.NonResponsive__c = false;
           }
         }
         so.previous_status__c = o.status__c;
@@ -358,7 +496,7 @@ public with sharing class L4LController {
       }
     }
 
-    Logger.debug(
+    Logger.fine(
         'Apex:createSessionObjectivesByArrayWithOrderedResults() DML insert soList=' +
         soList
       )
@@ -379,7 +517,13 @@ public with sharing class L4LController {
     String sess
   ) {
     Logger.setScenario('L4LController');
-    Logger.debug('Apex:createClientObjectivesByArray() jsonstr=' + jsonstr)
+
+    Logger.debug('Apex:createClientObjectivesByArray() ...entering')
+      .setRecordId(sess)
+      .addTag('L4LController.createClientObjectivesByArray()')
+      .addTag('logit()');
+
+    Logger.fine('Apex:createClientObjectivesByArray() jsonstr=' + jsonstr)
       .setRecordId(sess)
       .addTag('L4LController.createClientObjectivesByArray()')
       .addTag('logit()');
@@ -390,7 +534,7 @@ public with sharing class L4LController {
       List<Objective__c>.class
     );
 
-    Logger.debug(
+    Logger.fine(
         'Apex:createClientObjectivesByArray() strict objDeserialized=' +
         objDeserialized
       )
@@ -410,7 +554,7 @@ public with sharing class L4LController {
       //co.Status__c='CIP';
       coList.add(co);
     }
-    Logger.debug(
+    Logger.fine(
         'Apex:createClientObjectivesByArray() DML insert coList=' + coList
       )
       .setRecordId(sess)
@@ -437,7 +581,7 @@ public with sharing class L4LController {
     String jsonstr,
     String val
   ) {
-    Logger.debug(
+    Logger.fine(
         'Apex:getSessionObjectivesByArray() jsonstr=' +
         jsonstr +
         'val=' +
@@ -458,18 +602,31 @@ public with sharing class L4LController {
           so.Correct__c = true;
           so.Incorrect__c = false;
           so.Prompted__c = false;
+          so.NonResponsive__c = false;
+          update so;
+        }
+        when 'NonResponsive' {
+          so.Correct__c = false;
+          so.Incorrect__c = false;
+          so.Prompted__c = false;
+          so.NonResponsive__c = true;
+
           update so;
         }
         when 'Incorrect' {
           so.Correct__c = false;
           so.Incorrect__c = true;
           so.Prompted__c = false;
+          so.NonResponsive__c = false;
+
           update so;
         }
         when 'Prompted' {
           so.Correct__c = false;
           so.Incorrect__c = false;
           so.Prompted__c = true;
+          so.NonResponsive__c = false;
+
           update so;
         }
         when 'Delete' {
@@ -477,7 +634,7 @@ public with sharing class L4LController {
         }
       }
     }
-    Logger.debug(
+    Logger.fine(
         'Apex:getSessionObjectivesByArray() soDeserialized=' + soDeserialized
       )
       .addTag('L4LController.getSessionObjectivesByArray()')

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Frequency__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Frequency</label>
     <required>false</required>
@@ -25,6 +26,11 @@
                 <fullName>Monthly</fullName>
                 <default>false</default>
                 <label>Monthly</label>
+            </value>
+            <value>
+                <fullName>Twice-Weekly</fullName>
+                <default>false</default>
+                <label>Twice-Weekly</label>
             </value>
         </valueSetDefinition>
     </valueSet>

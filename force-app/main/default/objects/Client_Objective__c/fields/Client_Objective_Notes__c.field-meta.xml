@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Client_Objective_Notes__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Client_Objective_Notes</label>
     <length>100</length>

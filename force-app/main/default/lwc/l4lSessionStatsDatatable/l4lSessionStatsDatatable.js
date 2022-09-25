@@ -24,6 +24,11 @@ const COLS = [
     initialWidth: 120
   },
   {
+    label: "NonResponsive",
+    fieldName: "TotalAcquiredNonResponsive__c",
+    initialWidth: 120
+  },
+  {
     label: "Prompted",
     fieldName: "TotalAcquiredPrompted__c",
     initialWidth: 120

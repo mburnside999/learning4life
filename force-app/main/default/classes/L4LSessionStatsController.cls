@@ -20,6 +20,7 @@ public with sharing class L4LSessionStatsController {
           totalacquiredcorrect__c,
           totalacquiredincorrect__c,
           totalacquiredprompted__c,
+          totalacquirednonresponsive__c,
           Percent_Correct__c,
           Program_Name__c,
           SD_Name__c,
@@ -230,7 +231,7 @@ public with sharing class L4LSessionStatsController {
 
     querySessionStatsString += ' ORDER BY session__r.name, objective__r.name ';
 
-    Logger.debug(
+    Logger.fine(
         'Apex:getD3Stats() getD3StatsByProgramAndSD() qry=' +
         querySessionStatsString
       )
@@ -242,7 +243,7 @@ public with sharing class L4LSessionStatsController {
     List<Session_Statistics__c> results = new List<Session_Statistics__c>();
     results = Database.query(querySessionStatsString);
 
-    Logger.debug(
+    Logger.fine(
         'Apex:getD3Stats() getD3StatsByProgramAndSD() results=' + results
       )
       .setRecordId(clientId)
@@ -265,6 +266,7 @@ public with sharing class L4LSessionStatsController {
         Name,
         (SELECT id, name, program__r.name, description__c FROM sds__r)
       FROM Program__c
+      WHERE id IN (SELECT program__c FROM sd__c) AND status__c = 'Active' //have to make sure there is an SD
     ];
   }
 
@@ -287,6 +289,7 @@ public with sharing class L4LSessionStatsController {
       FROM client_objective__c
       WHERE client__c = :clientId
       GROUP BY objective__r.sd__r.program__R.name, objective__r.sd__r.name
+      ORDER BY count(id)
     ];
   }
 }

@@ -10,8 +10,8 @@ export default class D3Nest extends LightningElement {
   @api recordId;
 
   //chart dimensions
-  svgWidth = 1000;
-  svgHeight = 800;
+  svgWidth = 1300;
+  svgHeight = 1000;
 
   @track result; //raw returned records from Apex query
   @track gridDataTree = []; //the data that D3 iterates across
@@ -47,7 +47,6 @@ export default class D3Nest extends LightningElement {
             object.sdcount
           );
         });
-        console.log("SD MAP=" + this.sdcountmap);
         //let d3test = { children: result };
         //console.log("NEST D3Test=>" + JSON.stringify(d3test));
       })
@@ -69,10 +68,11 @@ export default class D3Nest extends LightningElement {
   initializeD3() {
     console.log("NEST in initializeD3()");
 
-    var margin = { top: 10, right: 10, bottom: 20, left: 10 },
+    var margin = { top: 10, right: 5, bottom: 20, left: 10 },
       width = 1300 - margin.left - margin.right,
       height = 1000 - margin.top - margin.bottom;
 
+    console.log("clean up svg");
     //clean up any previous svg.d3 descendents
     let svg = d3.select(this.template.querySelector(".nest"));
     svg.selectAll("*").remove();
@@ -85,7 +85,13 @@ export default class D3Nest extends LightningElement {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    console.log(
+      `entering grid processing, this.result=${JSON.stringify(this.result)}`
+    );
+
     let _gridData = this.result.map((row) => {
+      console.log(`row = ${JSON.stringify(row)}`);
+      let _counter = 0;
       let _sdData = row.SDs__r.map((sd) => {
         let key = row.Name + "-" + sd.Name;
         let _value = this.sdcountmap.has(key)
@@ -95,8 +101,9 @@ export default class D3Nest extends LightningElement {
           sd.Description__c == undefined
             ? "No description recorded for this SD"
             : sd.Description__c;
+        _counter += _value - 1;
         return {
-          name: this.truncate(sd.Name, 15),
+          name: this.truncate(sd.Name, 50),
           value: _value,
           progname: row.Name,
           description: _desc,
@@ -104,9 +111,17 @@ export default class D3Nest extends LightningElement {
           fullname: sd.Name
         };
       });
-
-      return { name: this.truncate(row.Name, 15), children: _sdData };
+      _sdData.sort((a, b) => parseFloat(b.allocated) - parseFloat(a.allocated));
+      return {
+        name: this.truncate(row.Name, 15),
+        counter: _counter,
+        children: _sdData
+      };
     });
+
+    _gridData.sort((a, b) => parseFloat(b.counter) - parseFloat(a.counter));
+
+    console.log(`_gridData=${JSON.stringify(_gridData)}`);
 
     this.gridDataTree = { children: _gridData };
 
@@ -170,7 +185,7 @@ export default class D3Nest extends LightningElement {
       })
       .style("stroke", "black")
       .style("fill", function (d) {
-        return d.data.value == 1 ? "#838996" : "green";
+        return d.data.value == 1 ? "#EBF5F2" : "#72B9A8";
         //return d.data.value == 1 ? "#838996	" : "#6AB3A3";
         //return d.data.value == 1 ? "#E7F0F7" : "#91BE5A";
       })
@@ -184,36 +199,46 @@ export default class D3Nest extends LightningElement {
       .data(root.leaves())
       .enter()
       .append("text")
-      .attr("x", function (d) {
-        return d.x0 + 5;
-      }) // +10 to adjust position (more right)
-      .attr("y", function (d) {
-        return d.y0 + 20;
-      }) // +20 to adjust position (lower)
-      .text(function (d) {
-        return d.data.name.replace("mister_", "");
+      .selectAll("tspan")
+      .data((d) => {
+        let val = d.data.value - 1;
+        d.data.name = "[" + val + "]  " + d.data.name;
+        return d.data.name
+          .split(" ") //
+          .map((v) => {
+            return {
+              text: v,
+              x0: d.x0, // keep x0 reference
+              y0: d.y0 // keep y0 reference
+            };
+          });
       })
-      .attr("font-size", "11px")
-      .attr("fill", "white")
-      .style("font-weight", "bold");
+      .enter()
+      .append("tspan")
+      .attr("x", (d) => d.x0 + 5)
+      .attr("y", (d, i) => d.y0 + 15 + i * 10) // offset by index
+      .text((d) => d.text)
+      .attr("font-size", "10px")
+      .attr("fill", "black");
+    //.style("font-weight", "bold");
 
     // and to add the text labels
-    svg
-      .selectAll("vals")
-      .data(root.leaves())
-      .enter()
-      .append("text")
-      .attr("x", function (d) {
-        return d.x0 + 5;
-      }) // +10 to adjust position (more right)
-      .attr("y", function (d) {
-        return d.y0 + 35;
-      }) // +20 to adjust position (lower)
-      .text(function (d) {
-        return d.data.value - 1;
-      })
-      .attr("font-size", "11px")
-      .attr("fill", "white");
+    // svg
+    //   .selectAll("vals")
+    //   .data(root.leaves())
+    //   .enter()
+    //   .append("text")
+    //   .attr("x", function (d) {
+    //     return d.x0 + 5;
+    //   }) // +10 to adjust position (more right)
+    //   .attr("y", function (d) {
+    //     return d.y0 + 50;
+    //   }) // +20 to adjust position (lower)
+    //   .text(function (d) {
+    //     return d.data.value - 1;
+    //   })
+    //   .attr("font-size", "10px")
+    //   .attr("fill", "white");
     svg
       .selectAll("titles")
       .data(

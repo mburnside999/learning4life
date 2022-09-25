@@ -5,6 +5,9 @@
     <columns>Percent_Correct__c</columns>
     <columns>Objective__c</columns>
     <columns>icon__c</columns>
+    <columns>SD_And_Objective_Str__c</columns>
+    <columns>SD_Name__c</columns>
+    <columns>Objective_Name__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

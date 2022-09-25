@@ -15,8 +15,10 @@ public with sharing class LFLInvocableSessionStatistics {
     Integer totalCorrect = 0;
     Integer totalIncorrect = 0;
     Integer totalPrompted = 0;
+    Integer totalNonResponsive = 0;
 
     Map<Id, Map<String, Integer>> correctMap = new Map<Id, Map<String, Integer>>();
+    Map<Id, Map<String, Integer>> nonResponsiveMap = new Map<Id, Map<String, Integer>>();
     Map<Id, Map<String, Integer>> incorrectMap = new Map<Id, Map<String, Integer>>();
     Map<Id, Map<String, Integer>> promptedMap = new Map<Id, Map<String, Integer>>();
 
@@ -30,6 +32,7 @@ public with sharing class LFLInvocableSessionStatistics {
         Objective__c,
         Objective_Name__c,
         Correct__c,
+        NonResponsive__c,
         Incorrect__c,
         Prompted__c,
         previous_status__c,
@@ -60,6 +63,25 @@ public with sharing class LFLInvocableSessionStatistics {
           corrStatus = new Map<String, Integer>();
           corrStatus.put(previousStr, 1);
           correctMap.put(so.objective__c, corrStatus);
+        }
+      }
+      if (so.nonresponsive__c == true) {
+        Map<String, Integer> nonResponsiveStatus = new Map<String, Integer>();
+        nonResponsiveStatus = nonResponsiveMap.get(so.objective__c);
+
+        if (nonResponsiveStatus != null) {
+          if (nonResponsiveStatus.get(previousStr) != null) {
+            nonResponsiveStatus.put(
+              previousStr,
+              (Integer) nonResponsiveStatus.get(previousStr) + 1
+            );
+          } else {
+            nonResponsiveStatus.put(previousStr, 1);
+          }
+        } else {
+          nonResponsiveStatus = new Map<String, Integer>();
+          nonResponsiveStatus.put(previousStr, 1);
+          nonResponsiveMap.put(so.objective__c, nonResponsiveStatus);
         }
       }
       if (so.incorrect__c == true) {
@@ -103,12 +125,15 @@ public with sharing class LFLInvocableSessionStatistics {
     }
     System.debug(correctMap);
     System.debug('correct ' + correctMap);
+    System.debug('nonresponsive ' + nonResponsiveMap);
     System.debug('incorrect ' + incorrectMap);
     System.debug('prompted ' + promptedMap);
 
     Logger.debug(
         'Apex:computeSessionStats() correctMap=' +
         correctMap +
+        ' nonResponsiveMap=' +
+        nonResponsiveMap +
         ' incorrectMap=' +
         incorrectMap +
         ' promptedMap=' +
@@ -128,6 +153,11 @@ public with sharing class LFLInvocableSessionStatistics {
         Boolean skip = true; // assume skip - this status wasn't present in this objective
 
         temp = correctMap.get(i);
+        if (temp != null) {
+          if (temp.keySet().contains(s))
+            skip = false;
+        }
+        temp = nonResponsiveMap.get(i);
         if (temp != null) {
           if (temp.keySet().contains(s))
             skip = false;
@@ -159,6 +189,15 @@ public with sharing class LFLInvocableSessionStatistics {
           } else
             sessionStat.totalacquiredcorrect__c = 0;
           totalCorrect += (Integer) sessionStat.totalacquiredcorrect__c;
+
+          temp = nonResponsiveMap.get(i);
+          if (temp != null) {
+            count = (temp.get(s) != null) ? (Integer) temp.get(s) : 0;
+            sessionStat.totalacquirednonresponsive__c = count;
+          } else
+            sessionStat.totalacquirednonresponsive__c = 0;
+          totalNonResponsive += (Integer) sessionStat.totalacquirednonresponsive__c;
+
           temp = incorrectMap.get(i);
           if (temp != null) {
             count = (temp.get(s) != null) ? (Integer) temp.get(s) : 0;
@@ -199,10 +238,14 @@ public with sharing class LFLInvocableSessionStatistics {
     }
     String current = System.now().format();
     Integer noOfObjectives = objectiveSet.size();
-    Decimal percentage = ((totalCorrect + totalIncorrect + totalPrompted) > 0)
+    Decimal percentage = ((totalCorrect +
+      totalIncorrect +
+      totalPrompted +
+      totalNonResponsive) > 0)
       ? (Decimal) (totalCorrect *
         100 /
         (totalCorrect +
+        totalNonResponsive +
         totalIncorrect +
         totalPrompted))
       : 0;
@@ -216,6 +259,8 @@ public with sharing class LFLInvocableSessionStatistics {
       noOfObjectives +
       '\nCorrect: ' +
       totalCorrect +
+      '\nNonResponsive: ' +
+      totalNonResponsive +
       '\nIncorrect: ' +
       totalIncorrect +
       '\nPrompted: ' +

@@ -13,6 +13,8 @@ const COMPONENT = "l4lPopulateSessionObjectives";
 const COLOR = "color:olive"; //for console log formatting
 const DEBUG = "debug";
 const INFO = "info";
+const FINE = "fine";
+
 const ERROR = "error";
 
 const columns = [
@@ -55,6 +57,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   @track objectives;
 
   @track correctCount = 0;
+  @track nonResponsiveCount = 0;
   @track incorrectCount = 0;
   @track promptedCount = 0;
   @track selectCount = 0;
@@ -72,21 +75,21 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   renderedCallback() {
     // if (!this.rendered) {
     //   this.logit(
-    //     INFO,
+    //     DEBUG,
     //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
+    //     `renderedCallback()`,
     //     this.recordId
     //   );
     //   this.logit(
-    //     DEBUG,
+    //     FINE,
     //     "renderedCallback():  ignore - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
+    //     `renderedCallback()`,
     //     this.recordId
     //   );
     //   this.logit(
     //     ERROR,
     //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
+    //     `renderedCallback()`,
     //     this.recordId
     //   );
     //   this.rendered = true;
@@ -94,26 +97,42 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   }
 
   logit(level, message, tag, context = null) {
-    console.log("in logger");
+    let _level = `${level}`;
+    let _message = `${COMPONENT}.${message}`;
+    let _tag = `${COMPONENT}.${tag}`;
+    let _context = `${context}`;
+
+    console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
     let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`${COMPONENT}`);
+    logger.setScenario(`c/${COMPONENT}`);
     switch (level) {
       case INFO:
-        logger.info(message).setRecordId(context).addTag("logit()").addTag(tag);
+        logger
+          .info(_message)
+          .setRecordId(_context)
+          .addTag("logit()")
+          .addTag(_tag);
         break;
       case DEBUG:
         logger
-          .debug(message)
-          .setRecordId(context)
+          .debug(_message)
+          .setRecordId(_context)
           .addTag("logit()")
-          .addTag(tag);
+          .addTag(_tag);
+        break;
+      case FINE:
+        logger
+          .fine(_message)
+          .setRecordId(_context)
+          .addTag("logit()")
+          .addTag(_tag);
         break;
       case ERROR:
         logger
-          .error(message)
-          .setRecordId(context)
+          .error(_message)
+          .setRecordId(_context)
           .addTag("logit()")
-          .addTag(tag);
+          .addTag(_tag);
         break;
       default:
     }
@@ -131,17 +150,17 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       .then((result) => {
         this.objectives = result;
         this.logit(
-          INFO,
-          `${COMPONENT}.refresh(): getClientObjectivesForSession returned ${this.objectives.length} results`,
-          `${COMPONENT}.refresh()`,
+          DEBUG,
+          `refresh(): getClientObjectivesForSession returned ${this.objectives.length} results`,
+          `refresh()`,
           this.recordId
         );
         this.logit(
-          DEBUG,
-          `${COMPONENT}.refresh(): getClientObjectivesForSession result= ${JSON.stringify(
+          FINE,
+          `refresh(): getClientObjectivesForSession result= ${JSON.stringify(
             result
           )}`,
-          `${COMPONENT}.refresh()`,
+          `refresh()`,
           this.recordId
         );
         //console.debug(`refresh(): result=${JSON.stringify(result)}`);
@@ -151,10 +170,10 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         this.error = error;
         this.logit(
           ERROR,
-          `${COMPONENT}.refresh(): getClientObjectivesForSession errored: ${JSON.stringify(
+          `refresh(): getClientObjectivesForSession errored: ${JSON.stringify(
             error
           )} results`,
-          `${COMPONENT}.refresh()`,
+          `refresh()`,
           this.recordId
         );
       });
@@ -162,20 +181,18 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   getSelectedName(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.getSelectedName(): entering method`,
-      `${COMPONENT}.getSelectedName()`,
+      DEBUG,
+      `getSelectedName(): entering method`,
+      `getSelectedName()`,
       this.recordId
     );
 
     let myselectedRows = event.detail.selectedRows;
 
     this.logit(
-      DEBUG,
-      `${COMPONENT}.getSelectedName(): myselectedRows=${JSON.stringify(
-        myselectedRows
-      )} `,
-      `${COMPONENT}.getSelectedName()`,
+      FINE,
+      `getSelectedName(): myselectedRows=${JSON.stringify(myselectedRows)} `,
+      `getSelectedName()`,
       this.recordId
     );
     if (myselectedRows.length > 0) {
@@ -186,22 +203,22 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         " > " +
         myselectedRows[0].Objective_Name__c;
       this.logit(
-        DEBUG,
-        `${COMPONENT}.getSelectedName(): this.breadcrumb=${this.breadcrumb}
+        FINE,
+        `getSelectedName(): this.breadcrumb=${this.breadcrumb}
           )} `,
-        `${COMPONENT}.getSelectedName()`,
+        `getSelectedName()`,
         this.recordId
       );
 
       this.selectedRows = myselectedRows;
 
       this.logit(
-        DEBUG,
-        `${COMPONENT}.getSelectedName(): this.selectedRows=myselectedrows=${JSON.stringify(
+        FINE,
+        `getSelectedName(): this.selectedRows=myselectedrows=${JSON.stringify(
           this.selectedRows
         )}
         )} `,
-        `${COMPONENT}.getSelectedName()`,
+        `getSelectedName()`,
         this.recordId
       );
 
@@ -211,9 +228,9 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   handleIncrCorrect(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.handleIncrCorrect(): entering handleIncrCorrect() `,
-      `${COMPONENT}.handleIncrCorrect()`,
+      DEBUG,
+      `handleIncrCorrect(): entering handleIncrCorrect() `,
+      `handleIncrCorrect()`,
       this.recordId
     );
 
@@ -222,11 +239,11 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       this.skillstring.push({ skill: "C" });
 
       this.logit(
-        DEBUG,
-        `${COMPONENT}.handleIncrCorrect(): this.skillstring=${JSON.stringify(
+        FINE,
+        `handleIncrCorrect(): this.skillstring=${JSON.stringify(
           this.skillstring
         )} this.results=${JSON.stringify(this.results)}`,
-        `${COMPONENT}.handleIncrCorrect()`,
+        `handleIncrCorrect()`,
         this.recordId
       );
       this.correctCount += 1;
@@ -244,9 +261,9 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   handleIncrIncorrect(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.handleIncrCorrect(): entering handleIncrIncorrect() `,
-      `${COMPONENT}.handleIncrIncorrect()`,
+      DEBUG,
+      `handleIncrCorrect(): entering handleIncrIncorrect() `,
+      `handleIncrIncorrect()`,
       this.recordId
     );
 
@@ -255,11 +272,11 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       this.skillstring.push({ skill: "I" });
 
       this.logit(
-        DEBUG,
-        `${COMPONENT}.handleIncrIncorrect(): this.skillstring=${JSON.stringify(
+        FINE,
+        `handleIncrIncorrect(): this.skillstring=${JSON.stringify(
           this.skillstring
         )} this.results=${JSON.stringify(this.results)}`,
-        `${COMPONENT}.handleIncrIncorrect()`,
+        `handleIncrIncorrect()`,
         this.recordId
       );
 
@@ -267,11 +284,36 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     }
   }
 
+  handleIncrNonResponsive(event) {
+    this.logit(
+      DEBUG,
+      `handleIncrNonResponsive(): entering handleIncrNonResponsive() `,
+      `handleIncrNonResponsive()`,
+      this.recordId
+    );
+
+    if (this.selectedRows) {
+      this.results.push("N");
+      this.skillstring.push({ skill: "N" });
+
+      this.logit(
+        FINE,
+        `handleIncrNonResponsive(): this.skillstring=${JSON.stringify(
+          this.skillstring
+        )} this.results=${JSON.stringify(this.results)}`,
+        `handleIncrNonResponsive()`,
+        this.recordId
+      );
+
+      this.nonResponsiveCount += 1;
+    }
+  }
+
   handleIncrPrompted(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.handleIncrPrompted(): entering handleIncrPrompted() `,
-      `${COMPONENT}.handleIncrPromnpted()`,
+      DEBUG,
+      `handleIncrPrompted(): entering handleIncrPrompted() `,
+      `handleIncrPromnpted()`,
       this.recordId
     );
 
@@ -280,11 +322,11 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       this.skillstring.push({ skill: "P" });
 
       this.logit(
-        DEBUG,
-        `${COMPONENT}.handleIncrPrompted(): this.skillstring=${JSON.stringify(
+        FINE,
+        `handleIncrPrompted(): this.skillstring=${JSON.stringify(
           this.skillstring
         )} this.results=${JSON.stringify(this.results)}`,
-        `${COMPONENT}.handleIncrPrompted()`,
+        `handleIncrPrompted()`,
         this.recordId
       );
       this.promptedCount += 1;
@@ -299,6 +341,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   get buttonDisabled() {
     return (
       parseInt(this.correctCount) +
+        parseInt(this.nonResponsiveCount) +
         parseInt(this.incorrectCount) +
         parseInt(this.promptedCount) ==
       0
@@ -307,31 +350,31 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   handleClickArray(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.handleClickArray(): entering method`,
-      `${COMPONENT}.handleClickArray()`,
+      DEBUG,
+      `handleClickArray(): entering method`,
+      `handleClickArray()`,
       this.recordId
     );
 
     if (this.selectedRows) {
       this.logit(
-        INFO,
-        `${COMPONENT}.handleClickArray(): selectedRows==true`,
-        `${COMPONENT}.handleClickArray()`,
+        DEBUG,
+        `handleClickArray(): selectedRows==true`,
+        `handleClickArray()`,
+        this.recordId
+      );
+      this.logit(
+        FINE,
+        `handleClickArray(): jsonstr=selectedRows=${JSON.stringify(
+          this.selectedRows
+        )}, sess=${this.recordId}`,
+        `handleClickArray()`,
         this.recordId
       );
       this.logit(
         DEBUG,
-        `${COMPONENT}.handleClickArray(): jsonstr=selectedRows=${JSON.stringify(
-          this.selectedRows
-        )}, sess=${this.recordId}`,
-        `${COMPONENT}.handleClickArray()`,
-        this.recordId
-      );
-      this.logit(
-        INFO,
-        `${COMPONENT}.handleClickArray(): imperative Call to createSessionObjectivesByArrayWithOrderedResults()`,
-        `${COMPONENT}.handleClickArray()`,
+        `handleClickArray(): imperative Call to createSessionObjectivesByArrayWithOrderedResults()`,
+        `handleClickArray()`,
         this.recordId
       );
 
@@ -343,9 +386,9 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         .then((result) => {
           this.recordsProcessed = result;
           this.logit(
-            INFO,
-            `${COMPONENT}.handleClickArray(): Apex createClientObjectivesByArray result=${result}`,
-            `${COMPONENT}.handleClickArray()`,
+            DEBUG,
+            `handleClickArray(): Apex createClientObjectivesByArray result=${result}`,
+            `handleClickArray()`,
             this.recordId
           );
         })
@@ -365,9 +408,9 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
             this.breadcrumb + " : " + this.results.toString()
           );
           this.logit(
-            DEBUG,
-            `${COMPONENT}.handleClickArray():reset counters, set this.selectCount=0 `,
-            `${COMPONENT}.handleClickArray()`,
+            FINE,
+            `handleClickArray():reset counters, set this.selectCount=0 `,
+            `handleClickArray()`,
             this.recordId
           );
           this.resetCounters();
@@ -381,34 +424,32 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
             recordData: {}
           };
           this.logit(
-            INFO,
-            `${COMPONENT}.handleClickArray():publishing LMS event`,
-            `${COMPONENT}.handleClickArray()`,
+            DEBUG,
+            `handleClickArray():publishing LMS event`,
+            `handleClickArray()`,
             this.recordId
           );
           this.logit(
-            DEBUG,
-            `${COMPONENT}.handleClickArray(): Sending message via L4LMC, message=${JSON.stringify(
+            FINE,
+            `handleClickArray(): Sending message via L4LMC, message=${JSON.stringify(
               message
             )}`,
-            `${COMPONENT}.handleClickArray()`,
+            `handleClickArray()`,
             this.recordId
           );
           publish(this.messageContext, L4LMC, message);
           this.logit(
-            DEBUG,
-            `${COMPONENT}.handleClickArray(): published ${JSON.stringify(
-              message
-            )} to L4LMC`,
-            `${COMPONENT}.handleClickArray()`
+            FINE,
+            `handleClickArray(): published ${JSON.stringify(message)} to L4LMC`,
+            `handleClickArray()`
           );
         })
         .catch((error) => {
           this.error = error;
           this.logit(
             ERROR,
-            `${COMPONENT}.handleClickArray(): Error ${JSON.stringify(error)}`,
-            `${COMPONENT}.handleClickArray()`,
+            `handleClickArray(): Error ${JSON.stringify(error)}`,
+            `handleClickArray()`,
             this.recordId
           );
         });
@@ -417,16 +458,16 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   handleSearchKeyInput(event) {
     this.logit(
-      INFO,
-      `${COMPONENT}.handleSearchKey(): entering method`,
-      `${COMPONENT}.handleSearchKey()`
+      DEBUG,
+      `handleSearchKey(): entering method`,
+      `handleSearchKey()`
     );
     const searchKey = event.target.value.toLowerCase();
 
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleSearchKey(): searchKey=${searchKey}`,
-      `${COMPONENT}.handleSearchKey()`
+      FINE,
+      `handleSearchKey(): searchKey=${searchKey}`,
+      `handleSearchKey()`
     );
 
     this.objectives = this.filterableObjectives.filter(
@@ -439,19 +480,17 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     );
 
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleSearchKey(): this.objectives=${JSON.stringify(
-        this.objectives
-      )}`,
-      `${COMPONENT}.handleSearchKey()`
+      FINE,
+      `handleSearchKey(): this.objectives=${JSON.stringify(this.objectives)}`,
+      `handleSearchKey()`
     );
   }
 
   showNotification(t, m, v) {
     this.logit(
-      DEBUG,
-      `${COMPONENT}.showNotification(): entering method, t=${t}, m=${m}, v=${v}`,
-      `${COMPONENT}.showNotification()`
+      FINE,
+      `showNotification(): entering method, t=${t}, m=${m}, v=${v}`,
+      `showNotification()`
     );
     const evt = new ShowToastEvent({
       title: t,
@@ -463,9 +502,9 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   handleClickCancel(event) {
     this.logit(
-      DEBUG,
-      `${COMPONENT}.handleClickCancel(): dispatching CustomEvent(close)`,
-      `${COMPONENT}.handleClickCancel()`
+      FINE,
+      `handleClickCancel(): dispatching CustomEvent(close)`,
+      `handleClickCancel()`
     );
     this.dispatchEvent(new CustomEvent("close"));
   }

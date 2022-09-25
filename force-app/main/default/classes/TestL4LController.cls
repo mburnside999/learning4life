@@ -53,7 +53,19 @@ private class TestL4LController {
     List<Objective__c> o = L4LController.getUnusedObjectives(clientId);
     System.assert(o.size() != 0, 'Expected non zero unused records.');
   }
+  @isTest
+  static void testGetUnusedObjectivesBySearch() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
 
+    List<Objective__c> o = L4LController.getUnusedObjectivesBySearch(
+      clientId,
+      '%'
+    );
+    System.assert(o.size() != 0, 'Expected non zero unused records.');
+  }
   @isTest
   static void testDeleteSessionObjectives() {
     Test.startTest();
@@ -158,7 +170,8 @@ private class TestL4LController {
         objective__c,
         correct__c,
         incorrect__c,
-        prompted__c
+        prompted__c,
+        nonresponsive__c
       FROM session_obj__c
       LIMIT 1
     ];

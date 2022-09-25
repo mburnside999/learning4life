@@ -16,9 +16,12 @@ public with sharing class LFLInvocableMasteryStatistics {
     Integer totalCorrect = 0;
     Integer totalIncorrect = 0;
     Integer totalPrompted = 0;
+    Integer totalNonResponsive = 0;
+
     Id clientId;
 
     Map<Id, Integer> correctMap = new Map<Id, Integer>();
+    Map<Id, Integer> nonResponsiveMap = new Map<Id, Integer>();
     Map<Id, Integer> incorrectMap = new Map<Id, Integer>();
     Map<Id, Integer> promptedMap = new Map<Id, Integer>();
 
@@ -33,6 +36,7 @@ public with sharing class LFLInvocableMasteryStatistics {
         session__r.Client__c,
         Objective_Name__c,
         Correct__c,
+        NonResponsive__c,
         Incorrect__c,
         Prompted__c,
         previous_status__c,
@@ -53,6 +57,15 @@ public with sharing class LFLInvocableMasteryStatistics {
           correctMap.put(programId, 1);
         }
       }
+      if (so.nonresponsive__c == true) {
+        Integer i = (Integer) nonResponsiveMap.get(programId);
+        if (i != null) {
+          nonResponsiveMap.put(programId, i + 1);
+        } else {
+          nonResponsiveMap.put(programId, 1);
+        }
+      }
+
       if (so.incorrect__c == true) {
         Integer i = (Integer) incorrectMap.get(programId);
         if (i != null) {
@@ -72,12 +85,15 @@ public with sharing class LFLInvocableMasteryStatistics {
     }
     System.debug(correctMap);
     System.debug('correct ' + correctMap);
+    System.debug('nonresponsive ' + nonResponsiveMap);
     System.debug('incorrect ' + incorrectMap);
     System.debug('prompted ' + promptedMap);
 
     Logger.debug(
         'Apex:computeMasteryStats() correctMap=' +
         correctMap +
+        ' nonResponsiveMap=' +
+        nonResponsiveMap +
         ' incorrectMap=' +
         incorrectMap +
         ' promptedMap=' +
@@ -111,6 +127,15 @@ public with sharing class LFLInvocableMasteryStatistics {
       totalCorrect += (Integer) masteryStat.totalacquiredcorrect__c;
       System.debug(totalCorrect);
 
+      temp = nonResponsiveMap.get(pId);
+      if (temp != null) {
+        masteryStat.totalacquirednonresponsive__c = temp;
+      } else {
+        masteryStat.totalacquirednonresponsive__c = 0;
+      }
+      totalNonResponsive += (Integer) masteryStat.totalacquirednonresponsive__c;
+      System.debug(totalNonResponsive);
+
       temp = incorrectMap.get(pId);
       if (temp != null) {
         masteryStat.totalacquiredincorrect__c = temp;
@@ -132,10 +157,14 @@ public with sharing class LFLInvocableMasteryStatistics {
     }
     String current = System.now().format();
     //Integer noOfObjectives = programSet.size();
-    Decimal percentage = ((totalCorrect + totalIncorrect + totalPrompted) > 0)
+    Decimal percentage = ((totalCorrect +
+      totalIncorrect +
+      totalNonResponsive +
+      totalPrompted) > 0)
       ? (Decimal) (totalCorrect *
         100 /
         (totalCorrect +
+        totalNonResponsive +
         totalIncorrect +
         totalPrompted))
       : 0;
@@ -147,6 +176,8 @@ public with sharing class LFLInvocableMasteryStatistics {
       '\n---------------------------------------------------------------' +
       '\nCorrect: ' +
       totalCorrect +
+      '\nNonResponsive: ' +
+      totalNonResponsive +
       '\nIncorrect: ' +
       totalIncorrect +
       '\nPrompted: ' +

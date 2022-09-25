@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
+    <columns>Program__c</columns>
     <columns>NAME</columns>
     <columns>Description__c</columns>
-    <columns>Program__c</columns>
+    <columns>Status__c</columns>
+    <columns>Objective_Active_Count__c</columns>
+    <columns>Objective_Count__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
