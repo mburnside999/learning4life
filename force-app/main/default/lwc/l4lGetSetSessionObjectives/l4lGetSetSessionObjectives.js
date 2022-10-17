@@ -4,6 +4,7 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord, getRecord, getFieldValue } from "lightning/uiRecordApi";
 import { deleteRecord } from "lightning/uiRecordApi";
+import LightningConfirm from "lightning/confirm";
 
 //custom Apex methods
 import getSessionObjectives from "@salesforce/apex/L4LController.getSessionObjectives";
@@ -458,7 +459,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       });
   }
 
-  test() {}
+  confirmation(event) {}
 
   handleClickArray(event) {
     this.logit(
