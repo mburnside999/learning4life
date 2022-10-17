@@ -458,6 +458,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       });
   }
 
+  test() {}
+
   handleClickArray(event) {
     this.logit(
       FINE,
