@@ -459,9 +459,22 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       });
   }
 
-  confirmation(event) {}
+  async confirmation(event) {
+    let _label = event.target.label;
+    if (this.selectedRows.length > 0) {
+      await LightningConfirm.open({
+        message: `This operation will update or delete ${this.selectedRows.length} record(s). Are you sure?`,
+        variant: "headerless",
+        label: "this is the aria-label value"
+        // setting theme would have no effect
+      }).then((result) => {
+        console.log(`result={result}`);
+        if (result) this.handleClickArray(_label);
+      });
+    }
+  }
 
-  handleClickArray(event) {
+  handleClickArray(label) {
     this.logit(
       FINE,
       `handleClickArray(): in handleClickArray`,
@@ -470,7 +483,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     );
 
     let mode = "";
-    let label = event.target.label;
+
     this.logit(
       FINE,
       `handleClickArray(): label=${label}`,
