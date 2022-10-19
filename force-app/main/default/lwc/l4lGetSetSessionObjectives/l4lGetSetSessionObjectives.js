@@ -45,6 +45,12 @@ const columns = [
     initialWidth: 150
   },
   {
+    label: "Prev",
+    fieldName: "Previous_Status__c",
+    type: "text",
+    initialWidth: 80
+  },
+  {
     label: "Corr.",
     fieldName: "Correct__c",
     type: "boolean",
@@ -75,12 +81,6 @@ const columns = [
     initialWidth: 90,
     cellAttributes: { alignment: "right" },
     editable: true
-  },
-  {
-    label: "Prev",
-    fieldName: "Previous_Status__c",
-    type: "text",
-    initialWidth: 80
   },
   {
     label: "Comments",
@@ -109,6 +109,12 @@ const lockedcolumns = [
     initialWidth: 150
   },
   {
+    label: "Prev",
+    fieldName: "Previous_Status__c",
+    type: "text",
+    initialWidth: 80
+  },
+  {
     label: "Corr.",
     fieldName: "Correct__c",
     type: "boolean",
@@ -140,12 +146,7 @@ const lockedcolumns = [
     cellAttributes: { alignment: "right" },
     editable: false
   },
-  {
-    label: "Prev",
-    fieldName: "Previous_Status__c",
-    type: "text",
-    initialWidth: 80
-  },
+
   {
     label: "Comments",
     fieldName: "Comment__c",
