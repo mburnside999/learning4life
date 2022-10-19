@@ -15,6 +15,7 @@ import {
 } from "lightning/messageService";
 
 import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
+import LightningConfirm from "lightning/confirm";
 
 //debugging
 const COMPONENT = "l4lRelatedClientObjectives";
@@ -187,15 +188,61 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logger.saveLog();
   }
 
-  handleRowAction(event) {
+  async confirmation(event) {
+    this.logit(
+      DEBUG,
+      `confirmation(): in confirmation()`,
+      `confirmation()`,
+      this.recordId
+    );
+    let _actionName = event.detail.action.name;
+    let _row = event.detail.row;
+    this.logit(
+      FINE,
+      `confirmation(): in confirmation(), calling LightningConfirm.open _actionName=${_actionName}, row=${JSON.stringify(
+        _row
+      )}`,
+      `confirmation()`,
+      this.recordId
+    );
+    if (_actionName == "delete") {
+      await LightningConfirm.open({
+        message: `Deleting client objective record: "${_row.Program_Name__c} > ${_row.SD_Name__c} > ${_row.Objective_Name__c}".  Are you sure?`,
+        variant: "headerless",
+        label: "this is the aria-label value"
+        // setting theme would have no effect
+      }).then((result) => {
+        console.log(`result={result}`);
+        this.logit(
+          DEBUG,
+          `confirmation(): result=${result}`,
+          `confirmation()`,
+          this.recordId
+        );
+
+        if (result) {
+          this.logit(
+            DEBUG,
+            `confirmation(): calling handleRowAction`,
+            `confirmation()`,
+            this.recordId
+          );
+          this.handleRowAction(_actionName, _row);
+        }
+      });
+    } else this.handleRowAction(_actionName, _row);
+  }
+
+  handleRowAction(actionName, row) {
     this.logit(
       FINE,
       `handleRowAction(): entering method`,
       `handleRowAction()`,
       this.recordId
     );
-    const actionName = event.detail.action.name;
-    const row = event.detail.row;
+    //const actionName = event.detail.action.name;
+    //const row = event.detail.row;
+
     this.logit(
       FINE,
       `handleRowAction(): row=${JSON.stringify(row)}, actionName=${actionName}`,

@@ -24,7 +24,7 @@
           <input
             size="45"
             type="search"
-            placeholder="Filter By Program, SD, Objective or Status (NEW!)"
+            placeholder="Filter By Program, SD, Objective or Status"
             oninput={handleSearchKeyInput}
           />
           <lightning-button
@@ -39,7 +39,7 @@
             key-field="Id"
             data={clientobjectives}
             columns={columns}
-            onrowaction={handleRowAction}
+            onrowaction={confirmation}
           >
           </lightning-datatable>
         </lightning-layout-item>

@@ -460,6 +460,13 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   }
 
   async confirmation(event) {
+    this.logit(
+      DEBUG,
+      `confirmation(): in confirmation(), calling LightningConfirm.open`,
+      `confirmation()`,
+      this.recordId
+    );
+
     let _label = event.target.label;
     if (this.selectedRows.length > 0) {
       await LightningConfirm.open({
@@ -469,7 +476,22 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         // setting theme would have no effect
       }).then((result) => {
         console.log(`result={result}`);
-        if (result) this.handleClickArray(_label);
+        this.logit(
+          DEBUG,
+          `confirmation(): result=${result}`,
+          `confirmation()`,
+          this.recordId
+        );
+
+        if (result) {
+          this.logit(
+            DEBUG,
+            `confirmation(): calling handleClickArray with label=${_label}`,
+            `confirmation()`,
+            this.recordId
+          );
+          this.handleClickArray(_label);
+        }
       });
     }
   }
