@@ -388,7 +388,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     this.isLoading = true;
     this.searchValue = "";
     this.popular = true;
-    console.info(`%crefresh(): entering`, COLOR);
+    console.info(`%cgetPopularObjs(): entering`, COLOR);
     console.debug(
       `%cgetPopularObjs(): calling Apex getPopularObjectives`,
       COLOR
@@ -402,7 +402,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.allObjectives = result;
         this.logit(
           DEBUG,
-          `getPopularObjs(): getPopularObjectives ${result.length} records returned`,
+          `getPopularObjs(): Apex getPopularObjectives ${result.length} records returned`,
           `getPopularObjs()`,
           this.recordId
         );
