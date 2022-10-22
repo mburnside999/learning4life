@@ -6,15 +6,15 @@
     <div class="slds-m-bottom_medium">
       <lightning-input
         type="text"
-        placeholder="Search across Programs, SDs and Objectives"
+        placeholder="Search across our library of 6000+ Programs, SDs and Objectives, or browse Popular objectives below"
         value={searchValue}
         onchange={searchKeyword}
       ></lightning-input>
     </div>
+
     <lightning-button
       label="Search"
       onclick={handleSearchKeyword}
-      variant="brand"
     ></lightning-button>
     <br />
     <br />
@@ -24,7 +24,7 @@
       class="slds-input"
       size="40"
       type="text"
-      placeholder="You can filter the search results here..."
+      placeholder="You can filter the search or popular results here..."
       oninput={handleFilterKeyInput}
     />
 
@@ -33,7 +33,13 @@
       <lightning-button
         label="Create Client Objectives"
         title="Create Client Objectives"
+        variant="brand"
         onclick={handleClickArray}
+      ></lightning-button>
+      <lightning-button
+        label="Refresh Popular"
+        title="Refresh Popular"
+        onclick={handleRefreshPopular}
       >
       </lightning-button>
 
@@ -53,6 +59,7 @@
 
     <br />
     {resultmessage}
+    <br />
     <br />
     <lightning-datatable
       key-field="Id"

@@ -3,6 +3,7 @@ import getUnusedObjectives from "@salesforce/apex/L4LController.getUnusedObjecti
 import getUnusedObjectivesBySearch from "@salesforce/apex/L4LController.getUnusedObjectivesBySearch";
 
 import createClientObjectivesByArray from "@salesforce/apex/L4LController.createClientObjectivesByArray";
+import getPopularObjectives from "@salesforce/apex/L4LController.getPopularObjectives";
 
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 //import { fireEvent } from "c/pubsub";
@@ -11,6 +12,7 @@ import { CurrentPageReference } from "lightning/navigation";
 // Lightning Message Service
 import { publish, MessageContext } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
+import EmailPreferencesStayInTouchReminder from "@salesforce/schema/User.EmailPreferencesStayInTouchReminder";
 
 //debugging
 const COMPONENT = "l4lCreateClientObjectives";
@@ -40,15 +42,26 @@ export default class L4lCreateClientObjectives extends LightningElement {
   @track recordsProcessed = 0;
   rendered = false;
   isLoading = false;
+  popular = true;
   //@track objectives;
-  connectedCallback() {}
+  connectedCallback() {
+    this.popular = true;
+    this.getPopularObjs();
+  }
 
   get resultmessage() {
-    return this.objectives.length > 0
-      ? `${this.objectives.length} records returned.`
-      : "";
+    if (this.popular) {
+      return this.objectives.length > 0
+        ? `Showing Popular Records: ${this.objectives.length} records returned.`
+        : "";
+    } else {
+      return this.objectives.length > 0
+        ? `Search returned ${this.objectives.length} records.`
+        : "";
+    }
   }
   logit(level, message, tag, context = null) {
+    this.isLoading = true;
     let _level = `${level}`;
     let _message = `${COMPONENT}.${message}`;
     let _tag = `${COMPONENT}.${tag}`;
@@ -90,6 +103,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     }
 
     logger.saveLog();
+    this.isLoading = false;
   }
 
   refresh() {
@@ -139,6 +153,10 @@ export default class L4lCreateClientObjectives extends LightningElement {
         );
       });
     this.isLoading = false;
+  }
+
+  handleRefreshPopular(event) {
+    this.getPopularObjs();
   }
 
   getSelectedName(event) {
@@ -219,7 +237,11 @@ export default class L4lCreateClientObjectives extends LightningElement {
           );
           let inp = this.template.querySelector("input");
           inp.value = "";
-          this.refresh();
+          if (this.popular) {
+            this.getPopularObjs();
+          } else {
+            this.refresh();
+          }
         })
         .finally(() => {
           this.logit(
@@ -327,6 +349,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         `handleSearchKeyword(): calling getUnusedbjectivesBySearch`,
         `handleSearchKeyword()`
       );
+      this.popular = false;
       getUnusedObjectivesBySearch({
         clientId: this.recordId,
         searchstring: this.searchValue
@@ -358,6 +381,43 @@ export default class L4lCreateClientObjectives extends LightningElement {
       });
       this.dispatchEvent(event);
     }
+    this.isLoading = false;
+  }
+
+  getPopularObjs() {
+    this.isLoading = true;
+    this.searchValue = "";
+    this.popular = true;
+    console.info(`%crefresh(): entering`, COLOR);
+    console.debug(
+      `%cgetPopularObjs(): calling Apex getPopularObjectives`,
+      COLOR
+    );
+
+    getPopularObjectives({
+      clientId: this.recordId
+    })
+      .then((result) => {
+        this.objectives = result;
+        this.allObjectives = result;
+        this.logit(
+          DEBUG,
+          `getPopularObjs(): getPopularObjectives ${result.length} records returned`,
+          `getPopularObjs()`,
+          this.recordId
+        );
+      })
+      .catch((error) => {
+        this.error = error;
+        this.logit(
+          ERROR,
+          `getPopularObjs(): getPopularObjectives errored: ${JSON.stringify(
+            error
+          )} results`,
+          `refresh()`,
+          this.recordId
+        );
+      });
     this.isLoading = false;
   }
 }
