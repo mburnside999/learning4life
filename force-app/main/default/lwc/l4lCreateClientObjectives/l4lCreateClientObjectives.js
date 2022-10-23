@@ -44,6 +44,12 @@ export default class L4lCreateClientObjectives extends LightningElement {
 
   //tailored result message on UI, depending on whether we are showing popular records or search results
   get resultmessage() {
+    this.logit(
+      DEBUG,
+      `resultmessage(): entering getter method, this.objectives.length=${this.objectives.length}`,
+      `resultmessage`,
+      this.recordId
+    );
     if (this.showPopular) {
       return this.objectives.length > 0
         ? `Showing a selection of POPULAR client objectives: ${this.objectives.length} records returned.`
@@ -64,7 +70,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
 
     console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
     let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`c/${COMPONENT}`);
+    logger.setScenario(`${COMPONENT}`);
     switch (level) {
       case INFO:
         logger
@@ -129,7 +135,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         );
         this.logit(
           FINE,
-          `refresh(): Apex getUnusedObjectivesBySearch result=${JSON.stringify(
+          `refresh(): Apex getUnusedObjectivesBySearch JSON result=${JSON.stringify(
             result
           )}, this.objectives=${JSON.stringify(this.objectives)}`,
           `refresh()`,
@@ -202,7 +208,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
       );
       this.logit(
         DEBUG,
-        `handleClickArray(): imperative Call to createClientObjectivesByArray`,
+        `handleClickArray(): imperative Call to Apex createClientObjectivesByArray`,
         `handleClickArray()`,
         this.recordId
       );
@@ -216,7 +222,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
 
           this.logit(
             DEBUG,
-            `handleClickArray(): Apex createClientObjectivesByArray result=${result}`,
+            `handleClickArray(): Apex createClientObjectivesByArray this.recordsProcessed=${result}`,
             `handleClickArray()`,
             this.recordId
           );

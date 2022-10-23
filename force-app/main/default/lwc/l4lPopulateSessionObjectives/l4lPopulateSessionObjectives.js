@@ -104,7 +104,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
     console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
     let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`c/${COMPONENT}`);
+    logger.setScenario(`${COMPONENT}`);
     switch (level) {
       case INFO:
         logger

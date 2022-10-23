@@ -240,7 +240,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
     console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
     let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`c/${COMPONENT}`);
+    logger.setScenario(`${COMPONENT}`);
     switch (level) {
       case INFO:
         logger
@@ -278,7 +278,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
   refresh() {
     console.info(`%crefresh(): entering`, COLOR);
-    console.debug(`%crefresh(): calling getSessionObjectives`, COLOR);
+    console.debug(`%crefresh(): calling APEX getSessionObjectives`, COLOR);
 
     getSessionObjectives({ sess: this.recordId })
       .then((result) => {
@@ -286,13 +286,13 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         this.allObjectives = result;
         this.logit(
           DEBUG,
-          `refresh(): getSessionObjectives ${result.length} records returned`,
+          `refresh(): APEX getSessionObjectives returned ${result.length} records`,
           `refresh()`,
           this.recordId
         );
         this.logit(
           FINE,
-          `refresh(): getSessionObjectives result=${JSON.stringify(
+          `refresh(): getSessionObjectives JSON result=${JSON.stringify(
             result
           )}, this.objectives=${JSON.stringify(this.objectives)}`,
           `refresh()`,
@@ -315,7 +315,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   handleSearchKeyInput(event) {
     this.logit(
       DEBUG,
-      `handleSearchKey(): entering method`,
+      `handleSearchKey(): entering method, bound to input.oninput`,
       `handleSearchKey()`
     );
     const searchKey = event.target.value.toLowerCase();
@@ -364,7 +364,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   handleRowAction(event) {
     this.logit(
       FINE,
-      `handleRowAction(): entering method`,
+      `handleRowAction(): entering method, bound to lightning-datatable.onrowaction`,
       `handleRowAction()`,
       this.recordId
     );
@@ -420,8 +420,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
   handleSave(event) {
     this.logit(
-      FINE,
-      `handleSave(): in handleSave()`,
+      DEBUG,
+      `handleSave(): entering handleSave(), bound to lightning-datable.onSave`,
       `handleSave()`,
       this.recordId
     );
