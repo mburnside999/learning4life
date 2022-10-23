@@ -1,18 +1,16 @@
 import { LightningElement, api, wire, track } from "lwc";
+
 import getUnusedObjectives from "@salesforce/apex/L4LController.getUnusedObjectives";
 import getUnusedObjectivesBySearch from "@salesforce/apex/L4LController.getUnusedObjectivesBySearch";
-
 import createClientObjectivesByArray from "@salesforce/apex/L4LController.createClientObjectivesByArray";
 import getPopularObjectives from "@salesforce/apex/L4LController.getPopularObjectives";
 
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-//import { fireEvent } from "c/pubsub";
 import { CurrentPageReference } from "lightning/navigation";
-//import { refreshApex } from "@salesforce/apex";
+
 // Lightning Message Service
 import { publish, MessageContext } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
-import EmailPreferencesStayInTouchReminder from "@salesforce/schema/User.EmailPreferencesStayInTouchReminder";
 
 //debugging
 const COMPONENT = "l4lCreateClientObjectives";
@@ -28,38 +26,35 @@ const columns = [
   { label: "Objective", fieldName: "Name", type: "text" }
 ];
 
-//const selectedRows = {};
-
 export default class L4lCreateClientObjectives extends LightningElement {
   @wire(MessageContext) messageContext;
   @api recordId = "0012v00002fY86nAAC"; //Andy
-
   @wire(CurrentPageReference) pageRef;
   @track allObjectives = {};
   @wire(getUnusedObjectives, { clientId: "$recordId" }) objectives;
   @track error;
   @track columns = columns;
   @track recordsProcessed = 0;
-  rendered = false;
   isLoading = false;
-  popular = true;
-  //@track objectives;
+  showPopular = true;
+
   connectedCallback() {
-    this.popular = true;
-    this.getPopularObjs();
+    this.getPopularClientObjectives();
   }
 
+  //tailored result message on UI, depending on whether we are showing popular records or search results
   get resultmessage() {
-    if (this.popular) {
+    if (this.showPopular) {
       return this.objectives.length > 0
-        ? `Showing Popular Records: ${this.objectives.length} records returned.`
+        ? `Showing a selection of POPULAR client objectives: ${this.objectives.length} records returned.`
         : "";
     } else {
       return this.objectives.length > 0
-        ? `Search returned ${this.objectives.length} records.`
+        ? `Search returned ${this.objectives.length} client objectives.`
         : "";
     }
   }
+  //Nebula logging helper
   logit(level, message, tag, context = null) {
     this.isLoading = true;
     let _level = `${level}`;
@@ -128,13 +123,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.allObjectives = result;
         this.logit(
           DEBUG,
-          `refresh(): getUnusedObjectivesBySearch ${result.length} records returned`,
+          `refresh(): Apex getUnusedObjectivesBySearch returned ${result.length} records.`,
           `refresh()`,
           this.recordId
         );
         this.logit(
           FINE,
-          `refresh(): getUnusedObjectivesBySearch result=${JSON.stringify(
+          `refresh(): Apex getUnusedObjectivesBySearch result=${JSON.stringify(
             result
           )}, this.objectives=${JSON.stringify(this.objectives)}`,
           `refresh()`,
@@ -145,7 +140,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.error = error;
         this.logit(
           ERROR,
-          `refresh(): getUnusedObjectivesBySearch errored: ${JSON.stringify(
+          `refresh(): Apex getUnusedObjectivesBySearch errored: ${JSON.stringify(
             error
           )} results`,
           `refresh()`,
@@ -156,13 +151,19 @@ export default class L4lCreateClientObjectives extends LightningElement {
   }
 
   handleRefreshPopular(event) {
-    this.getPopularObjs();
+    this.logit(
+      DEBUG,
+      `handleRefreshPopular(): entering method, the Refresh Popular button was pressed`,
+      `handleRefreshPopular`,
+      this.recordId
+    );
+    this.getPopularClientObjectives();
   }
 
   getSelectedName(event) {
     this.logit(
       DEBUG,
-      `getSelectedName(): entering method`,
+      `getSelectedName(): entering method, bound to lightning-datatable onrowselection `,
       `getSelectedName()`,
       this.recordId
     );
@@ -180,7 +181,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
   handleClickArray(event) {
     this.logit(
       DEBUG,
-      `handleClickArray(): entering method`,
+      `handleClickArray(): entering method, bound to lightning-button Create Client Objectives`,
       `handleClickArray()`,
       this.recordId
     );
@@ -237,9 +238,34 @@ export default class L4lCreateClientObjectives extends LightningElement {
           );
           let inp = this.template.querySelector("input");
           inp.value = "";
-          if (this.popular) {
-            this.getPopularObjs();
+          this.logit(
+            DEBUG,
+            `handleClickArray(): after adding client objective records, will now determine whether to show popular records or not`,
+            `handleClickArray()`,
+            this.recordId
+          );
+          this.logit(
+            DEBUG,
+            `handleClickArray(): this.showPopular=${this.showPopular}`,
+            `handleClickArray()`,
+            this.recordId
+          );
+
+          if (this.showPopular) {
+            this.logit(
+              DEBUG,
+              `handleClickArray(): Yes, will show popular, calling this.getPopularClientObjectives() `,
+              `handleClickArray()`,
+              this.recordId
+            );
+            this.getPopularClientObjectives();
           } else {
+            this.logit(
+              DEBUG,
+              `handleClickArray(): No, will not show popular, just calling this.refresh()`,
+              `handleClickArray()`,
+              this.recordId
+            );
             this.refresh();
           }
         })
@@ -340,7 +366,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     this.isLoading = true;
     this.logit(
       DEBUG,
-      `handleSearchKeyword(): entering, searchValue=${this.searchValue}`,
+      `handleSearchKeyword(): entering, bound to Search lightning-button.onclick - searchValue=${this.searchValue}`,
       `handleSearchKeyword()`
     );
     if (this.searchValue !== "") {
@@ -349,7 +375,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         `handleSearchKeyword(): calling getUnusedbjectivesBySearch`,
         `handleSearchKeyword()`
       );
-      this.popular = false;
+      this.showPopular = false;
       getUnusedObjectivesBySearch({
         clientId: this.recordId,
         searchstring: this.searchValue
@@ -384,13 +410,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
     this.isLoading = false;
   }
 
-  getPopularObjs() {
+  getPopularClientObjectives() {
     this.isLoading = true;
     this.searchValue = "";
-    this.popular = true;
-    console.info(`%cgetPopularObjs(): entering`, COLOR);
+    this.showPopular = true;
+    console.info(`%cgetPopularClientObjectives(): entering`, COLOR);
     console.debug(
-      `%cgetPopularObjs(): calling Apex getPopularObjectives`,
+      `%cgetPopularClientObjectives(): calling Apex getPopularObjectives`,
       COLOR
     );
 
@@ -402,8 +428,8 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.allObjectives = result;
         this.logit(
           DEBUG,
-          `getPopularObjs(): Apex getPopularObjectives ${result.length} records returned`,
-          `getPopularObjs()`,
+          `getPopularClientObjectives(): Apex getPopularObjectives ${result.length} records returned`,
+          `getPopularClientObjectives()`,
           this.recordId
         );
       })
@@ -411,7 +437,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.error = error;
         this.logit(
           ERROR,
-          `getPopularObjs(): getPopularObjectives errored: ${JSON.stringify(
+          `getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
             error
           )} results`,
           `refresh()`,
