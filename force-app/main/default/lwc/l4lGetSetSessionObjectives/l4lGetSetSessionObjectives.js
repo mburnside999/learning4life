@@ -92,7 +92,7 @@ const columns = [
     type: "button-icon",
     initialWidth: 40,
     typeAttributes: {
-      iconName: "utility:quick_text",
+      iconName: { fieldName: "rowIcon" },
       name: "detail",
       variant: "border-filled",
       value: "detail"
@@ -158,9 +158,9 @@ const lockedcolumns = [
     type: "button-icon",
     initialWidth: 40,
     typeAttributes: {
-      iconName: "utility:quick_text",
+      iconName: { fieldName: "rowIcon" },
       name: "detail",
-      variant: "border_filled",
+      variant: "border-filled",
       value: "detail"
     }
   }
@@ -284,8 +284,16 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
     getSessionObjectives({ sess: this.recordId })
       .then((result) => {
-        this.sessionObjectives = result;
-        this.allObjectives = result;
+        this.sessionObjectives = result.map((row) => ({
+          ...row,
+          rowIcon: row.Comment__c != null ? "utility:quick_text" : null
+        }));
+
+        console.log(`this.sessionObjectives=${this.sessionObjectives}`);
+        this.allObjectives = this.sessionObjectives;
+
+        //this.sessionObjectives=result;
+        //this.allObjectives = result;
 
         this.logit(
           DEBUG,

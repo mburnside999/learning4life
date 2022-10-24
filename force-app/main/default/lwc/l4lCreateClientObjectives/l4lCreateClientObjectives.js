@@ -446,7 +446,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           `getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
             error
           )} results`,
-          `refresh()`,
+          `getPopularClientObjectives()`,
           this.recordId
         );
       });
