@@ -438,14 +438,14 @@ export default class L4lCreateClientObjectives extends LightningElement {
       .catch((error) => {
         this.error = error;
         console.log(`ERROR XXXXXXXX '+${JSON.stringify(error)}`);
-        this.logit(
-          ERROR,
-          `getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
-            error
-          )} results`,
-          `getPopularClientObjectives()`,
-          this.recordId
-        );
+        // this.logit(
+        //   ERROR,
+        //   `getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
+        //     error
+        //   )} results`,
+        //   `getPopularClientObjectives()`,
+        //   this.recordId
+        // );
       });
     this.isLoading = false;
   }
