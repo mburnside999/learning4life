@@ -44,12 +44,6 @@ export default class L4lCreateClientObjectives extends LightningElement {
 
   //tailored result message on UI, depending on whether we are showing popular records or search results
   get resultmessage() {
-    this.logit(
-      DEBUG,
-      `resultmessage(): entering getter method, this.objectives.length=${this.objectives.length}`,
-      `resultmessage`,
-      this.recordId
-    );
     if (this.showPopular) {
       return this.objectives.length > 0
         ? `Showing a selection of POPULAR client objectives: ${this.objectives.length} records returned.`
@@ -60,6 +54,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         : "";
     }
   }
+
   //Nebula logging helper
   logit(level, message, tag, context = null) {
     this.isLoading = true;
@@ -432,21 +427,23 @@ export default class L4lCreateClientObjectives extends LightningElement {
       .then((result) => {
         this.objectives = result;
         this.allObjectives = result;
-        this.logit(
-          DEBUG,
-          `getPopularClientObjectives(): Apex getPopularObjectives ${result.length} records returned`,
-          `getPopularClientObjectives()`,
-          this.recordId
-        );
+        console.log(JSON.stringify(result));
+        // this.logit(
+        //   DEBUG,
+        //   `getPopularClientObjectives(): Apex getPopularObjectives ${result.length} records returned`,
+        //   `getPopularClientObjectives()`,
+        //   this.recordId
+        // );
       })
       .catch((error) => {
         this.error = error;
+        console.log(`ERROR XXXXXXXX '+${JSON.stringify(error)}`);
         this.logit(
           ERROR,
           `getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
-            error
-          )} results`,
-          `refresh()`,
+            this.error
+          )}`,
+          `getPopularObjectives()`,
           this.recordId
         );
       });
