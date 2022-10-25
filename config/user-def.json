@@ -1,14 +1,14 @@
 {
-    "Username": "mdh@lflpackageproto.demo",
-    "LastName": "DeHennin",
-    "FirstName": "Mike",
-    "Email": "mburnside@salesforce.com",
-    "Alias": "mdh",
-    "TimeZoneSidKey": "Australia/Melbourne",
-    "LocaleSidKey": "en_US",
-    "EmailEncodingKey": "UTF-8",
-    "LanguageLocaleKey": "en_US",
-    "profileName": "System Administrator",
-    "permsets": ["L4LPS"],
-    "generatePassword": false
+  "Username": "mdh@lflpackageproto.demo",
+  "LastName": "DeHennin",
+  "FirstName": "Mike",
+  "Email": "mburnside@salesforce.com",
+  "Alias": "mdh",
+  "TimeZoneSidKey": "Australia/Melbourne",
+  "LocaleSidKey": "en_US",
+  "EmailEncodingKey": "UTF-8",
+  "LanguageLocaleKey": "en_US",
+  "profileName": "System Administrator",
+  "permsets": ["L4LPS"],
+  "generatePassword": false
 }

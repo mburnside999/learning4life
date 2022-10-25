@@ -1,14 +1,14 @@
 .scatterplot {
-    position: relative;
+  position: relative;
 }
 
 .tooltip {
-    position: absolute;
-    background-color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 15px;
-    width: 200px;
-    text-align: left;
-    color: white;
+  position: absolute;
+  background-color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  width: 200px;
+  text-align: left;
+  color: white;
 }

@@ -1,7 +1,7 @@
 {
   "orgName": "L4L Package Development",
   "edition": "Enterprise",
-  "features": ["PersonAccounts","EnableSetPasswordInApi"],
+  "features": ["PersonAccounts", "EnableSetPasswordInApi"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true

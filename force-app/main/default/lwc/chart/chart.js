@@ -1,8 +1,8 @@
-import { LightningElement, api } from 'lwc';
-import ChartJS from '@salesforce/resourceUrl/chartjs_v280';
-import { loadScript } from 'lightning/platformResourceLoader';
-import { parseBoolean, sanitize } from 'c/utils';
-import { nanoid } from 'c/nanoid';
+import { LightningElement, api } from "lwc";
+import ChartJS from "@salesforce/resourceUrl/chartjs_v280";
+import { loadScript } from "lightning/platformResourceLoader";
+import { parseBoolean, sanitize } from "c/utils";
+import { nanoid } from "c/nanoid";
 
 import {
   ATTRIBUTE_DATA,
@@ -10,9 +10,9 @@ import {
   OPTION_EVENT_NAME,
   DISCONNECT_EVENT_NAME,
   ERROR_EVENT_NAME
-} from 'c/constants';
-import ChartConfigService from 'c/chartConfigService';
-import ReactivityManager from 'c/reactivityManager';
+} from "c/constants";
+import ChartConfigService from "c/chartConfigService";
+import ReactivityManager from "c/reactivityManager";
 
 export default class Chart extends LightningElement {
   @api width;
@@ -47,9 +47,9 @@ export default class Chart extends LightningElement {
   }
   set canvasOnchange(v) {
     // avoid leak
-    this.getCanvas().removeEventListener('mouseover', this._canvasOnchange);
+    this.getCanvas().removeEventListener("mouseover", this._canvasOnchange);
     this._canvasOnchange = v;
-    this.getCanvas().addEventListener('change', this._canvasOnchange);
+    this.getCanvas().addEventListener("change", this._canvasOnchange);
   }
   _canvasOnclick;
   @api
@@ -59,11 +59,11 @@ export default class Chart extends LightningElement {
   set canvasOnclick(v) {
     // avoid leak
     this.getCanvas().removeEventListener(
-      'mouseover',
+      "mouseover",
       this._canvas_canvasOnclickOnmouseover
     );
     this._canvasOnclick = v;
-    this.getCanvas().addEventListener('click', this._canvasOnclick);
+    this.getCanvas().addEventListener("click", this._canvasOnclick);
   }
   _canvasOnmouseover;
   @api
@@ -72,9 +72,9 @@ export default class Chart extends LightningElement {
   }
   set canvasOnmouseover(v) {
     // avoid leak
-    this.getCanvas().removeEventListener('mouseover', this._canvasOnmouseover);
+    this.getCanvas().removeEventListener("mouseover", this._canvasOnmouseover);
     this._canvasOnmouseover = v;
-    this.getCanvas().addEventListener('mouseover', this._canvasOnmouseover);
+    this.getCanvas().addEventListener("mouseover", this._canvasOnmouseover);
   }
   _canvasOnmouseout;
   @api
@@ -83,9 +83,9 @@ export default class Chart extends LightningElement {
   }
   set canvasOnmouseout(v) {
     // avoid leak
-    this.getCanvas().removeEventListener('mouseover', this._canvasOnmouseout);
+    this.getCanvas().removeEventListener("mouseover", this._canvasOnmouseout);
     this._canvasOnmouseout = v;
-    this.getCanvas().addEventListener('mouseout', this._canvasOnmouseout);
+    this.getCanvas().addEventListener("mouseout", this._canvasOnmouseout);
   }
 
   @api
@@ -180,7 +180,7 @@ export default class Chart extends LightningElement {
 
   get chartStyle() {
     return `width: ${this.width}; height: ${this.height}; ${
-      this.stylecss || ''
+      this.stylecss || ""
     }`;
   }
 
@@ -367,8 +367,8 @@ export default class Chart extends LightningElement {
   // Create the canvas and store it
   getCanvas() {
     if (!this._canvas) {
-      this._canvas = document.createElement('canvas');
-      this.template.querySelector('div').appendChild(this._canvas);
+      this._canvas = document.createElement("canvas");
+      this.template.querySelector("div").appendChild(this._canvas);
     }
     return this._canvas;
   }
@@ -380,7 +380,7 @@ export default class Chart extends LightningElement {
       this._configService.updateConfig(this._payload, null);
       if (!this._chart || !this._chart.ctx) {
         // eslint-disable-next-line no-undef
-        this._chart = new window.Chart(this.getCanvas().getContext('2d'), {
+        this._chart = new window.Chart(this.getCanvas().getContext("2d"), {
           type: this._type,
           data: this._details,
           options: this._configService.getConfig()
@@ -407,7 +407,7 @@ export default class Chart extends LightningElement {
   _callChartjsloadedCallback() {
     if (
       this._chartjsLoaded === true &&
-      typeof this._chartjsLoadedCallback === 'function'
+      typeof this._chartjsLoadedCallback === "function"
     ) {
       this._chartjsLoadedCallback();
     }
