@@ -40,14 +40,22 @@
             class="slds-modal__content slds-p-around_medium"
             id="modal-content-id-1"
           >
-            <lightning-record-form
+            <!-- <lightning-record-form
               record-id={sessionObjectiveId}
               object-api-name="Session_Obj__c"
               columns="2"
               mode="view"
               layout-type="Full"
-            >
-            </lightning-record-form>
+            > -->
+            <!-- </lightning-record-form> -->
+
+            <!-- experimental-->
+            <lightning-record-form
+              object-api-name="Session_Obj__c"
+              record-id={sessionObjectiveId}
+              mode="edit"
+              fields={fields}
+            ></lightning-record-form>
           </div>
           <div class="slds-modal__footer">
             <button

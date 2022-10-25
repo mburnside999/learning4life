@@ -27,6 +27,9 @@ const FINE = "fine";
 const INFO = "info";
 const ERROR = "error";
 
+//experimental comment editing
+import COMMENT_FIELD from "@salesforce/schema/Session_Obj__c.Comment__c";
+
 //fields for display
 const actions = [
   { label: "Delete", name: "delete" },
@@ -36,13 +39,13 @@ import SESSION_STATUS_FIELD from "@salesforce/schema/Session__c.Status__c";
 const SESSIONFIELDS = [SESSION_STATUS_FIELD];
 //columns when the session is open
 const columns = [
-  { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 150 },
-  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 150 },
+  { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 200 },
+  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 200 },
   {
     label: "Obj",
     fieldName: "Objective_Name__c",
     type: "text",
-    initialWidth: 150
+    initialWidth: 200
   },
   {
     label: "Prev",
@@ -82,17 +85,19 @@ const columns = [
     cellAttributes: { alignment: "right" },
     editable: true
   },
+  // {
+  //   label: "Comments",
+  //   fieldName: "Comment__c",
+  //   type: "text",
+  //   editable: true
+  // },
   {
     label: "Comments",
-    fieldName: "Comment__c",
-    type: "text",
-    editable: true
-  },
-  {
     type: "button-icon",
-    initialWidth: 40,
+    initialWidth: 300,
+    wrapText: true,
     typeAttributes: {
-      iconName: "utility:quick_text",
+      iconName: { fieldName: "rowIcon" },
       name: "detail",
       variant: "border-filled",
       value: "detail"
@@ -101,13 +106,13 @@ const columns = [
 ];
 //columns when the session is locked
 const lockedcolumns = [
-  { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 150 },
-  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 150 },
+  { label: "Prog", fieldName: "Program__c", type: "text", initialWidth: 200 },
+  { label: "SD", fieldName: "SD__c", type: "text", initialWidth: 200 },
   {
     label: "Obj",
     fieldName: "Objective_Name__c",
     type: "text",
-    initialWidth: 150
+    initialWidth: 200
   },
   {
     label: "Prev",
@@ -151,19 +156,21 @@ const lockedcolumns = [
   {
     label: "Comments",
     fieldName: "Comment__c",
+    initialWidth: 300,
     type: "text",
+    wrapText: true,
     editable: false
-  },
-  {
-    type: "button-icon",
-    initialWidth: 40,
-    typeAttributes: {
-      iconName: "utility:quick_text",
-      name: "detail",
-      variant: "border_filled",
-      value: "detail"
-    }
   }
+  // {
+  //   type: "button-icon",
+  //   initialWidth: 40,
+  //   typeAttributes: {
+  //     iconName: { fieldName: "rowIcon" },
+  //     name: "detail",
+  //     variant: "border-filled",
+  //     value: "detail"
+  //   }
+  //}
 ];
 
 export default class L4lGetSetSessionObjectives extends LightningElement {
@@ -187,7 +194,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
   @api testSessionStatus;
   @api sessionStatus;
-
+  //experimental comment editing
+  fields = [COMMENT_FIELD];
   // messaging
   @wire(MessageContext) messageContext;
   subscription = null;
@@ -284,8 +292,16 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
     getSessionObjectives({ sess: this.recordId })
       .then((result) => {
-        this.sessionObjectives = result;
-        this.allObjectives = result;
+        this.sessionObjectives = result.map((row) => ({
+          ...row,
+          rowIcon: row.Comment__c != null ? "utility:quick_text" : "utility:add"
+        }));
+
+        console.log(`this.sessionObjectives=${this.sessionObjectives}`);
+        this.allObjectives = this.sessionObjectives;
+
+        //this.sessionObjectives=result;
+        //this.allObjectives = result;
 
         this.logit(
           DEBUG,
@@ -536,7 +552,22 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       // code block
     }
 
-    if (this.selectedRows) {
+    //need to get rid of the iconName for DML
+    let _selectedRows = this.selectedRows.map((item) => {
+      const container = {};
+      container.Id = item.Id;
+      container.Name = item.Name;
+      container.Correct__c = item.Correct__c;
+      container.Incorrect__c = item.Incorrect__c;
+      container.Prompted__c = item.Prompted__c;
+      container.SD__c = item.SD__c;
+      container.Program__c = item.Program__c;
+      container.Comment__c = item.Comment__c;
+      container.Previous_Status__c = item.Previous_Status__c;
+      return container;
+    });
+
+    if (_selectedRows) {
       this.logit(
         DEBUG,
         `handleClickArray(): calling setSessionObjectivesByArray `,
@@ -547,14 +578,14 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       this.logit(
         FINE,
         `handleClickArray(): jsonstr=${JSON.stringify(
-          this.selectedRows
+          _selectedRows
         )} val=${mode}`,
         `handleClickArray()`,
         this.recordId
       );
-
+      console.log(`==============> ${JSON.stringify(_selectedRows)}`);
       setSessionObjectivesByArray({
-        jsonstr: JSON.stringify(this.selectedRows),
+        jsonstr: JSON.stringify(_selectedRows),
         val: mode
       })
         .then((result) => {
@@ -694,5 +725,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   }
   handleClose(event) {
     this.areDetailsVisible = false;
+    //experimental
+    this.refresh();
   }
 }

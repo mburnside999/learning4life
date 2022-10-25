@@ -441,9 +441,9 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.logit(
           ERROR,
           `getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
-            this.error
-          )}`,
-          `getPopularObjectives()`,
+            error
+          )} results`,
+          `getPopularClientObjectives()`,
           this.recordId
         );
       });
