@@ -1,6 +1,6 @@
-import { LightningElement, track, api, wire } from "lwc";
+import { LightningElement, track, api } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import { loadScript, loadStyle } from "lightning/platformResourceLoader";
+import { loadScript } from "lightning/platformResourceLoader";
 import getClientObjectivesSDCount from "@salesforce/apex/L4LSessionStatsController.getClientObjectivesSDCount";
 import getProgramsAndSds from "@salesforce/apex/L4LSessionStatsController.getProgramsAndSds";
 import D3 from "@salesforce/resourceUrl/d3";
@@ -35,11 +35,13 @@ export default class D3Nest extends LightningElement {
     Promise.all([loadScript(this, D3 + "/d3.v5.min.js")])
       .then(async () => {
         let _result = (this.result = await getProgramsAndSds({})); //this shenanigans was to get D3 to wait for the Apex to finish
+        console.log(_result);
         console.log("NEST RESULT=>" + JSON.stringify(this.result));
       })
       .then(async () => {
         let _sdcountarray = (this.sdcountarray =
           await getClientObjectivesSDCount({ clientId: this.recordId })); //this shenanigans was to get D3 to wait for the Apex to finish
+        console.log(_sdcountarray);
         console.log("SD RESULT=>" + JSON.stringify(this.sdcountarray));
         this.sdcountarray.map((object) => {
           this.sdcountmap.set(

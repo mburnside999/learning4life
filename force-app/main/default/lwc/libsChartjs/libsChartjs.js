@@ -3,9 +3,6 @@ import { loadScript } from "lightning/platformResourceLoader";
 import chartjs from "@salesforce/resourceUrl/chartJs";
 import luxon from "@salesforce/resourceUrl/luxon";
 import luxonadapter from "@salesforce/resourceUrl/luxonadapter";
-const generateRandomNumber = () => {
-  return Math.round(Math.random() * 100);
-};
 
 export default class LibsChartjs extends LightningElement {
   error;

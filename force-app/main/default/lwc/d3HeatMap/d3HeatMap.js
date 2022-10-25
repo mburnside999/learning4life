@@ -1,8 +1,6 @@
-import { LightningElement, track, api, wire } from "lwc";
+import { LightningElement, track, api } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
-import { loadScript, loadStyle } from "lightning/platformResourceLoader";
-import getD3Stats from "@salesforce/apex/L4LSessionStatsController.getD3Stats";
-import getD3StatsByProgram from "@salesforce/apex/L4LSessionStatsController.getD3StatsByProgram";
+import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import getD3StatsByProgramAndSD from "@salesforce/apex/L4LSessionStatsController.getD3StatsByProgramAndSD";
 
@@ -75,13 +73,15 @@ export default class D3HeatMap extends LightningElement {
     //load D3
     Promise.all([loadScript(this, D3 + "/d3.v5.min.js")])
       .then(async () => {
-        let result = (this.result = await getD3StatsByProgramAndSD({
+        let _result = (this.result = await getD3StatsByProgramAndSD({
           clientId: this.recordId,
           programStr: "All",
           sdStr: "All",
           periodStr: "30",
           showAcquired: this.isSelected
-        })); //this shenanigans was to get D3 to wait for the Apex to finish
+        }));
+        console.log(_result);
+        //this shenanigans was to get D3 to wait for the Apex to finish
       })
       .then(() => {
         console.log("calling initializeD3()");
@@ -263,7 +263,7 @@ export default class D3HeatMap extends LightningElement {
       .call(make_y_gridlines().tickSize(-width).tickFormat(""));
 
     // Build color scale
-    let myColor = d3.scaleLinear().range(["white", "#69b3a2"]).domain([1, 100]);
+    //let myColor = d3.scaleLinear().range(["white", "#69b3a2"]).domain([1, 100]);
 
     //use the LFL color bands
     let color = d3

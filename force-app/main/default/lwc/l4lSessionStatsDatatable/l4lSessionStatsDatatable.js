@@ -1,4 +1,4 @@
-import { LightningElement, api, wire, track } from "lwc";
+import { LightningElement, api, wire } from "lwc";
 
 import getSessionStats from "@salesforce/apex/L4LSessionStatsController.getSessionStats";
 

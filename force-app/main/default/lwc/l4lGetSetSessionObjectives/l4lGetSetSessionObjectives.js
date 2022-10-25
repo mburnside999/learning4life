@@ -31,10 +31,10 @@ const ERROR = "error";
 import COMMENT_FIELD from "@salesforce/schema/Session_Obj__c.Comment__c";
 
 //fields for display
-const actions = [
-  { label: "Delete", name: "delete" },
-  { label: "Details", name: "detail" }
-];
+// const actions = [
+//   { label: "Delete", name: "delete" },
+//   { label: "Details", name: "detail" }
+// ];
 import SESSION_STATUS_FIELD from "@salesforce/schema/Session__c.Status__c";
 const SESSIONFIELDS = [SESSION_STATUS_FIELD];
 //columns when the session is open
