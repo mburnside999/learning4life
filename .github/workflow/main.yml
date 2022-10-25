@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feature1
+      - main
     paths-ignore:
       - "sfdx-project.json"
       - "README.md"
@@ -60,47 +60,28 @@ jobs:
       - name: "Checkout source code"
         uses: actions/checkout@v2
 
-      # Store secret for dev hub
-      - name: "Populate auth file with DEVHUB_SFDX_URL secret"
-        shell: bash
-        run: |
-          echo ${{ secrets.DEVHUB_SFDX_URL}} > ./DEVHUB_SFDX_URL.txt
-          secretFileSize=$(wc -c "./DEVHUB_SFDX_URL.txt" | awk '{print $1}')
-          if [ $secretFileSize == 1 ]; then
-              echo "Missing DEVHUB_SFDX_URL secret. Is this workflow running on a fork?";
-              exit 1;
-          fi
-
       # Store secret for review sandbox
-      - name: "Populate auth file with DEVHUB_SANDBOX_REVIEW_URL secret"
+      - name: "Populate auth file with LFL_PARTIAL_SANDBOX_URL secret"
         shell: bash
         run: |
-          echo ${{ secrets.DEVHUB_SANDBOX_REVIEW_URL}} > ./DEVHUB_SANDBOX_REVIEW_URL.txt
-          secretFileSize=$(wc -c "./DEVHUB_SANDBOX_REVIEW_URL.txt" | awk '{print $1}')
+          echo ${{ secrets.LFL_PARTIAL_SANDBOX_URL}} > ./LFL_PARTIAL_SANDBOX_URL.txt
+          secretFileSize=$(wc -c "./LFL_PARTIAL_SANDBOX_URL.txt" | awk '{print $1}')
           if [ $secretFileSize == 1 ]; then
-              echo "Missing DEVHUB_SANDBOX_REVIEW_URL secret. Is this workflow running on a fork?";
+              echo "Missing LFL_PARTIAL_SANDBOX_URL secret. Is this workflow running on a fork?";
               exit 1;
           fi
-
-      # Authenticate dev hub
-      - name: "Authenticate Dev Hub"
-        run: sfdx auth:sfdxurl:store -f ./DEVHUB_SFDX_URL.txt -a devhub -d
 
       # Authenticate sandbox review
       - name: "Authenticate Sandbox review"
-        run: sfdx auth:sfdxurl:store -f ./DEVHUB_SANDBOX_REVIEW_URL.txt -a MBDEVOPSRV -s
+        run: sfdx auth:sfdxurl:store -f ./LFL_PARTIAL_SANDBOX_URL.txt -a LFLHyperPARTIAL -s
 
-      # Create scratch org
+      # Run Deploy
       - name: "Deploy"
-        run: sfdx force:source:deploy -p "./force-app/main/default" --apiversion="54.0"
-
-      # Assign permissionset
-      - name: "Assign permissionset to default user"
-        run: sfdx force:user:permset:assign -n dreamhouse
+        run: sfdx force:source:deploy -m "LightningComponentBundle:d3Nest,LightningComponentBundle:d3HeatMap,LightningComponentBundle:l4lCreateClientObjectives,LightningComponentBundle:l4lCreateIncidentData,LightningComponentBundle:l4lGetSetSessionObjectives,LightningComponentBundle:l4lPopulateSessionObjectives,LightningComponentBundle:l4lRelatedClientObjectives,LightningComponentBundle:l4lCustomDatatable" -u LFLHyperDevPro
 
       # Run Apex tests in scratch org
-      - name: "Run Apex tests"
-        run: sfdx force:apex:test:run -n "GeocodingServiceTest,TestPropertyController,TestSampleDataController" -c -r human -d ./tests/apex -w 20
+      - name: "Deploy"
+        run: sfdx force:apex:test:run -n "TestL4LController" -c -r human -d ./tests/apex -w 20
 
       # Delete temporary test file that Codecov is unable to parse
       - name: "Delete coverage file (temporary step)"
