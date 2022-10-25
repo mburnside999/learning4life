@@ -1,0 +1,3 @@
+sfdx force:source:deploy -m "LightningComponentBundle:d3Nest,LightningComponentBundle:d3HeatMap,LightningComponentBundle:l4lCreateClientObjectives,LightningComponentBundle:l4lCreateIncidentData,LightningComponentBundle:l4lGetSetSessionObjectives,LightningComponentBundle:l4lPopulateSessionObjectives,LightningComponentBundle:l4lRelatedClientObjectives,LightningComponentBundle:l4lCustomDatatable" -u LFLHyperDevPro
+sfdx force:source:deploy -m "ApexClass" -u LFLHyperDevPro --verbose -l RunLocalTests
+sfdx force:source:deploy -m "ApexClass" -u LFLHyperDevPro --verbose -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController
