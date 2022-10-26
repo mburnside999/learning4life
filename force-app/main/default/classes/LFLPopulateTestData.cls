@@ -14,6 +14,8 @@ public with sharing class LFLPopulateTestData {
     delete [SELECT id FROM NDIS_Report__c];
     delete [SELECT id FROM Session_Statistics__c];
 
+    String x;
+
     String RecTypeId = [
       SELECT Id
       FROM RecordType

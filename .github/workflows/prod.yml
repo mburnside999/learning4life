@@ -70,7 +70,7 @@ jobs:
 
       # Run Deploy Apex
       - name: "Deploy"
-        run: sfdx force:source:deploy -m "ApexClass" -u LFLHyper
+        run: sfdx force:source:deploy -m "ApexClass" -u LFLHyper -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg
 
       # Run Deploy LWC
       - name: "Deploy"
