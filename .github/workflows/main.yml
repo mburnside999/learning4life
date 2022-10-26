@@ -80,7 +80,7 @@ jobs:
 
       # Run Deploy LWC
       - name: "Deploy"
-        run: sfdx force:source:deploy -m "LightningComponentBundle:d3Nest,LightningComponentBundle:d3HeatMap,LightningComponentBundle:l4lCreateClientObjectives,LightningComponentBundle:l4lCreateIncidentData,LightningComponentBundle:l4lGetSetSessionObjectives,LightningComponentBundle:l4lPopulateSessionObjectives,LightningComponentBundle:l4lRelatedClientObjectives,LightningComponentBundle:l4lCustomDatatable" -u LFLHyperPARTIAL
+        run: sfdx force:source:deploy -m "LightningComponentBundle" -u LFLHyperPARTIAL
 
       # Run Apex tests in scratch org
       - name: "Deploy"
