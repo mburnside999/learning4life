@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="force.apex" timestamp="2022-10-26T01:15:18.000Z" hostname="https://ds969984--lflpartial.sandbox.my.salesforce.com" tests="15" failures="0"  errors="0"  time="58.03">
+        <properties>
+            <property name="outcome" value="Successful"/>
+            <property name="testsRan" value="15"/>
+            <property name="passing" value="15"/>
+            <property name="failing" value="0"/>
+            <property name="skipped" value="0"/>
+            <property name="passRate" value="100%"/>
+            <property name="failRate" value="0%"/>
+            <property name="testStartTime" value="Wed Oct 26 2022 12:15:18"/>
+            <property name="testExecutionTime" value="58.03 s"/>
+            <property name="testTotalTime" value="58.03 s"/>
+            <property name="commandTime" value="0.19 s"/>
+            <property name="hostname" value="https://ds969984--lflpartial.sandbox.my.salesforce.com"/>
+            <property name="orgId" value="00DBm000000A2dFMAS"/>
+            <property name="username" value="mikeb@lfl.hyper.lflpartial"/>
+            <property name="testRunId" value="707Bm000003jiC1"/>
+            <property name="userId" value="0058t000000JCHzAAO"/>
+            <property name="coveredLines" value="1685"/>
+            <property name="testRunCoverage" value="50%"/>
+            <property name="orgWideCoverage" value="50%"/>
+        </properties>
+        <testcase name="testCreateClientObjectivesByArray" classname="TestL4LController" time="4.58">
+        </testcase>
+        <testcase name="testCreateSessionObjectivesByArrayWithOrderedResults" classname="TestL4LController" time="4.02">
+        </testcase>
+        <testcase name="testDeleteSessionObjectives" classname="TestL4LController" time="4.11">
+        </testcase>
+        <testcase name="testGetClientObjectives" classname="TestL4LController" time="3.73">
+        </testcase>
+        <testcase name="testGetClientObjectivesForSession" classname="TestL4LController" time="3.68">
+        </testcase>
+        <testcase name="testGetUnusedObjectives" classname="TestL4LController" time="3.68">
+        </testcase>
+        <testcase name="testGetUnusedObjectivesBySearch" classname="TestL4LController" time="3.56">
+        </testcase>
+        <testcase name="testGetsessionObjectives" classname="TestL4LController" time="3.46">
+        </testcase>
+        <testcase name="testSetSessionObjectivesByArray" classname="TestL4LController" time="3.31">
+        </testcase>
+        <testcase name="testGetD3Stats" classname="TestL4LSessionStatsController" time="4.51">
+        </testcase>
+        <testcase name="testGetD3StatsByProgram" classname="TestL4LSessionStatsController" time="4.23">
+        </testcase>
+        <testcase name="testGetD3StatsByProgramAndSD" classname="TestL4LSessionStatsController" time="4.06">
+        </testcase>
+        <testcase name="testGetsessionObjectives" classname="TestL4LSessionStatsController" time="3.79">
+        </testcase>
+        <testcase name="testgetClientObjectivesSDCount" classname="TestL4LSessionStatsController" time="3.75">
+        </testcase>
+        <testcase name="testgetProgramsAndSds" classname="TestL4LSessionStatsController" time="3.57">
+        </testcase>
+    </testsuite>
+</testsuites>
