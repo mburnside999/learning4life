@@ -1,5 +1,5 @@
 # A Unique name for this workflow
-name: CI-Prod
+name: CI-LFLProduction
 
 # Definition when the workflow should run
 on:
@@ -54,7 +54,7 @@ jobs:
       - name: "Checkout source code"
         uses: actions/checkout@v2
 
-      # Store secret for review sandbox
+      # Store secret for review production
       - name: "Populate auth file with LFL_HYPER_PRODUCTION_URL secret"
         shell: bash
         run: |
@@ -64,20 +64,20 @@ jobs:
               echo "Missing LFL_HYPER_PRODUCTION_URL secret. Is this workflow running on a fork?";
               exit 1;
           fi
-      # Authenticate sandbox review
-      - name: "Authenticate Sandbox review"
+      # Authenticate sandbox
+      - name: "Authenticate Production"
         run: sfdx auth:sfdxurl:store -f ./LFL_HYPER_PRODUCTION_URL.txt -a LFLHyper -s
 
       # Run Deploy Apex
-      - name: "Deploy"
+      - name: "Deploy Apex and Run Specified Tests"
         run: sfdx force:source:deploy -m "ApexClass" -u LFLHyper -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg
 
       # Run Deploy LWC
-      - name: "Deploy"
+      - name: "Deploy LWC"
         run: sfdx force:source:deploy -m "LightningComponentBundle" -u LFLHyper
 
       # Run Apex tests in scratch org
-      - name: "Deploy"
+      - name: "Run Specifed Apex Tests to Gather Code Coverage"
         run: sfdx force:apex:test:run -l RunSpecifiedTests -t TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg  -u LFLHyper -c -r human -d ./tests/apex -w 20
 
       # Delete temporary test file that Codecov is unable to parse
