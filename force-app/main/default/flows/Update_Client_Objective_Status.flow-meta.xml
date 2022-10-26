@@ -1,5 +1,254 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Default_path_taken</name>
+        <label>Default path taken</label>
+        <locationX>1106</locationX>
+        <locationY>815</locationY>
+        <actionName>FlowLogEntry</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Save_Default</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>flowName</name>
+            <value>
+                <stringValue>Update_Client_Objective_Status</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>Default path taken, no updates to client objective</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Log_1cp_path_taken</name>
+        <label>Log 1CP path taken</label>
+        <locationX>50</locationX>
+        <locationY>815</locationY>
+        <actionName>FlowLogEntry</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Save_1CP</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>flowName</name>
+            <value>
+                <stringValue>Update_Client_Objective_Status</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>1CP Path taken</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Log_1IP_path_taken</name>
+        <label>Log 1IP path taken</label>
+        <locationX>578</locationX>
+        <locationY>815</locationY>
+        <actionName>FlowLogEntry</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Save_iP</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>flowName</name>
+            <value>
+                <stringValue>Update_Client_Objective_Status</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>1IP path taken</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Log_CIP_path_taken</name>
+        <label>Log CIP path taken</label>
+        <locationX>314</locationX>
+        <locationY>815</locationY>
+        <actionName>FlowLogEntry</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Save_CIP</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>flowName</name>
+            <value>
+                <stringValue>Update_Client_Objective_Status</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>CIP path taken</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Log_Decision_Criteria</name>
+        <label>Log Decision Criteria</label>
+        <locationX>578</locationX>
+        <locationY>575</locationY>
+        <actionName>FlowLogEntry</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Decide_Status</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>loggingLevelName</name>
+            <value>
+                <stringValue>FINE</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>flowName</name>
+            <value>
+                <stringValue>Update_Client_Objective_Status</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>ENTRY CRITERIA: Correct={!$Record.Correct__c} Incorrect={!$Record.Incorrect__c}  Previous_Status={!Get_Session_Obj.Previous_Status__c}</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Log_DNC_path_taken</name>
+        <label>Log DNC path taken</label>
+        <locationX>842</locationX>
+        <locationY>815</locationY>
+        <actionName>FlowLogEntry</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Save_DNC</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>flowName</name>
+            <value>
+                <stringValue>Update_Client_Objective_Status</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>DNC path taken</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Save_1CP</name>
+        <label>Save 1CP</label>
+        <locationX>50</locationX>
+        <locationY>935</locationY>
+        <actionName>Logger</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Client_Obj_to_1CP</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <actionCalls>
+        <name>Save_CIP</name>
+        <label>Save CIP</label>
+        <locationX>314</locationX>
+        <locationY>935</locationY>
+        <actionName>Logger</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Client_Obj_to_CIP</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <actionCalls>
+        <name>Save_Default</name>
+        <label>Save Default</label>
+        <locationX>1106</locationX>
+        <locationY>935</locationY>
+        <actionName>Logger</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <actionCalls>
+        <name>Save_DNC</name>
+        <label>Save DNC</label>
+        <locationX>842</locationX>
+        <locationY>935</locationY>
+        <actionName>Logger</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Client_Obj_to_DNC</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
+    <actionCalls>
+        <name>Save_iP</name>
+        <label>Save !iP</label>
+        <locationX>578</locationX>
+        <locationY>935</locationY>
+        <actionName>Logger</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Client_Obj_to_1IP</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <constants>
         <name>HELD</name>
@@ -23,22 +272,18 @@
         </value>
     </constants>
     <decisions>
-        <description>Choose the status update based on previous status</description>
+        <description>Choose the status update based on previous status. DNC = Did not Confirm</description>
         <name>Decide_Status</name>
         <label>Decide Status</label>
-        <locationX>536</locationX>
-        <locationY>541</locationY>
+        <locationX>578</locationX>
+        <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Default_path_taken</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Update_to_1CP</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Previous_Status__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>$Record.Correct__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -46,8 +291,22 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Session_Obj.Previous_Status__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Session_Obj.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Id</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Update_Client_Obj_to_1CP</targetReference>
+                <targetReference>Log_1cp_path_taken</targetReference>
             </connector>
             <label>Update to 1CP</label>
         </rules>
@@ -55,10 +314,10 @@
             <name>Update_to_CIP</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Previous_Status__c</leftValueReference>
+                <leftValueReference>Get_Session_Obj.Previous_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>PreviousICP</elementReference>
+                    <stringValue>1CP</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -68,38 +327,23 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Session_Obj.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Id</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Update_Client_Obj_to_CIP</targetReference>
+                <targetReference>Log_CIP_path_taken</targetReference>
             </connector>
             <label>Update to CIP</label>
-        </rules>
-        <rules>
-            <name>Update_to_OBJ</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Previous_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Previous1IP</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Incorrect__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Client_Obj_to_OBJ</targetReference>
-            </connector>
-            <label>Update to OBJ</label>
         </rules>
         <rules>
             <name>Update_to_1IP</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Previous_Status__c</leftValueReference>
+                <leftValueReference>Get_Session_Obj.Previous_Status__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -112,15 +356,51 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Session_Obj.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Id</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Update_Client_Obj_to_1IP</targetReference>
+                <targetReference>Log_1IP_path_taken</targetReference>
             </connector>
             <label>Update to 1IP</label>
+        </rules>
+        <rules>
+            <name>Update_to_DNC</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Session_Obj.Previous_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>1CP</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Incorrect__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Session_Obj.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Log_DNC_path_taken</targetReference>
+            </connector>
+            <label>Update to DNC</label>
         </rules>
     </decisions>
     <description>Updates new Client Objectives Status to either 1CP , 1IP, CIP or OBJ</description>
     <interviewLabel>Update Client-Objective Status {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>LFL Update Client-Objective Status</label>
+    <label>L4L Update Client-Objective Status</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -130,7 +410,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -141,13 +421,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Client_Details</name>
-        <label>Get Client Details</label>
-        <locationX>544</locationX>
-        <locationY>322</locationY>
+        <name>Get_Session_Details</name>
+        <label>Get Session Details</label>
+        <locationX>578</locationX>
+        <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Decide_Status</targetReference>
+            <targetReference>Get_Session_Obj</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -161,17 +441,86 @@
         <object>Session__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <description>Getting the first record of the Session for the current Objective-</description>
+        <name>Get_Session_Obj</name>
+        <label>Get Session-Obj</label>
+        <locationX>578</locationX>
+        <locationY>455</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Log_Decision_Criteria</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Session__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Session__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Objective__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Objective__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>NonResponsive__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Prompted__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Session_Obj__c</object>
+        <sortField>Name</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Client_Obj_First_to_DNC</name>
+        <label>Update Client-Obj First to DNC</label>
+        <locationX>842</locationX>
+        <locationY>1175</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Previous_Status__c</field>
+            <value>
+                <stringValue>DNC</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Session_Obj__c</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Client_Obj_to_1CP</name>
         <label>Update Client Obj to 1CP</label>
-        <locationX>64</locationX>
-        <locationY>595</locationY>
+        <locationX>50</locationX>
+        <locationY>1055</locationY>
+        <connector>
+            <targetReference>Update_SessionObj_First_Record_Status</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Client_Details.Client__c</elementReference>
+                <elementReference>Get_Session_Details.Client__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -192,14 +541,17 @@
     <recordUpdates>
         <name>Update_Client_Obj_to_1IP</name>
         <label>Update Client Obj to 1IP</label>
-        <locationX>800</locationX>
-        <locationY>661</locationY>
+        <locationX>578</locationX>
+        <locationY>1055</locationY>
+        <connector>
+            <targetReference>Update_SessionObj_First_Record_Status_0</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Client_Details.Client__c</elementReference>
+                <elementReference>Get_Session_Details.Client__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -220,14 +572,17 @@
     <recordUpdates>
         <name>Update_Client_Obj_to_CIP</name>
         <label>Update Client Obj to CIP</label>
-        <locationX>272</locationX>
-        <locationY>661</locationY>
+        <locationX>314</locationX>
+        <locationY>1055</locationY>
+        <connector>
+            <targetReference>Update_SessionObj_First_Record_Status_0_0</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Client_Details.Client__c</elementReference>
+                <elementReference>Get_Session_Details.Client__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -246,16 +601,19 @@
         <object>Client_Objective__c</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Client_Obj_to_OBJ</name>
-        <label>Update Client Obj to OBJ</label>
-        <locationX>536</locationX>
-        <locationY>661</locationY>
+        <name>Update_Client_Obj_to_DNC</name>
+        <label>Update Client Obj to DNC</label>
+        <locationX>842</locationX>
+        <locationY>1055</locationY>
+        <connector>
+            <targetReference>Update_Client_Obj_First_to_DNC</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Client_Details.Client__c</elementReference>
+                <elementReference>Get_Session_Details.Client__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -268,20 +626,82 @@
         <inputAssignments>
             <field>Status__c</field>
             <value>
-                <stringValue>OBJ</stringValue>
+                <stringValue>DNC</stringValue>
             </value>
         </inputAssignments>
         <object>Client_Objective__c</object>
     </recordUpdates>
-    <start>
-        <locationX>410</locationX>
-        <locationY>48</locationY>
-        <connector>
-            <targetReference>Get_Client_Details</targetReference>
-        </connector>
-        <doesRequireRecordChangedToMeetCriteria>false</doesRequireRecordChangedToMeetCriteria>
+    <recordUpdates>
+        <name>Update_SessionObj_First_Record_Status</name>
+        <label>Update SessionObj First Record Status</label>
+        <locationX>50</locationX>
+        <locationY>1175</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Previous_Status__c</field>
+            <value>
+                <stringValue>BLANK</stringValue>
+            </value>
+        </inputAssignments>
         <object>Session_Obj__c</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_SessionObj_First_Record_Status_0</name>
+        <label>Update SessionObj First Record Status</label>
+        <locationX>578</locationX>
+        <locationY>1175</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Previous_Status__c</field>
+            <value>
+                <stringValue>BLANK</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Session_Obj__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_SessionObj_First_Record_Status_0_0</name>
+        <label>Update SessionObj First Record Status</label>
+        <locationX>314</locationX>
+        <locationY>1175</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Session_Obj.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Previous_Status__c</field>
+            <value>
+                <stringValue>CIP</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Session_Obj__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>452</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Session_Details</targetReference>
+        </connector>
+        <object>Session_Obj__c</object>
+        <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>

@@ -4,7 +4,7 @@
         <name>Compute_Session_Stats</name>
         <label>Compute Session Stats</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>455</locationY>
         <actionName>LFLInvocableSessionStatistics</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -23,7 +23,7 @@
         <name>Mastery_Update</name>
         <label>Mastery Update</label>
         <locationX>176</locationX>
-        <locationY>575</locationY>
+        <locationY>695</locationY>
         <actionName>LFLInvocableMasteryStatistics</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -31,6 +31,49 @@
             <name>sessions</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Nebula_Logging</name>
+        <label>Nebula Logging</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <actionName>FlowLogEntry</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Compute_Session_Stats</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>loggingLevelName</name>
+            <value>
+                <stringValue>FINE</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tagsString</name>
+            <value>
+                <stringValue>Flow Computing Session Stats</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>flowName</name>
+            <value>
+                <stringValue>Compute_Session_Statistics</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>In the Compute Session Statistics Flow</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -61,7 +104,7 @@
         <name>Update_Stats_Summary</name>
         <label>Update Stats Summary</label>
         <locationX>176</locationX>
-        <locationY>455</locationY>
+        <locationY>575</locationY>
         <connector>
             <targetReference>Mastery_Update</targetReference>
         </connector>
@@ -77,7 +120,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Compute_Session_Stats</targetReference>
+            <targetReference>Nebula_Logging</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
