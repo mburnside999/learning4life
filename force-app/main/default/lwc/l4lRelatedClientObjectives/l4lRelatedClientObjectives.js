@@ -75,7 +75,8 @@ const columns = [
   {
     label: "Notes",
     fieldName: "Client_Objective_Notes__c",
-    type: "text"
+    type: "text",
+    wrapText: true
   },
   {
     type: "action",
