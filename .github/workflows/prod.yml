@@ -68,9 +68,9 @@ jobs:
       - name: "Authenticate Production"
         run: sfdx auth:sfdxurl:store -f ./LFL_HYPER_PRODUCTION_URL.txt -a LFLHyper -s
 
-      # Run Deploy Apex
+      # Run Deploy Apex and Triggers
       - name: "Deploy Apex and Run Specified Tests"
-        run: sfdx force:source:deploy -m "ApexClass" -u LFLHyper -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg
+        run: sfdx force:source:deploy -m "ApexClass,ApexTrigger" -u LFLHyper -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg
 
       # Run Deploy LWC
       - name: "Deploy LWC"
