@@ -1,0 +1,62 @@
+=== Test Summary
+NAME                 VALUE                     
+───────────────────  ──────────────────────────
+Outcome              Passed                    
+Tests Ran            9                         
+Pass Rate            100%                      
+Fail Rate            0%                        
+Skip Rate            0%                        
+Test Run Id          707Bm000003jiy5           
+Test Execution Time  22964 ms                  
+Org Id               00DBm000000A2dFMAS        
+Username             mikeb@lfl.hyper.lflpartial
+Org Wide Coverage    91%                       
+
+
+=== Test Results
+TEST NAME                                                               OUTCOME  MESSAGE  RUNTIME (MS)
+──────────────────────────────────────────────────────────────────────  ───────  ───────  ────────────
+TestL4LController.testCreateClientObjectivesByArray                     Pass              3464        
+TestL4LController.testCreateSessionObjectivesByArrayWithOrderedResults  Pass              2417        
+TestL4LController.testDeleteSessionObjectives                           Pass              2620        
+TestL4LController.testGetClientObjectives                               Pass              2444        
+TestL4LController.testGetClientObjectivesForSession                     Pass              2598        
+TestL4LController.testGetUnusedObjectives                               Pass              2448        
+TestL4LController.testGetUnusedObjectivesBySearch                       Pass              2352        
+TestL4LController.testGetsessionObjectives                              Pass              2357        
+TestL4LController.testSetSessionObjectivesByArray                       Pass              2264        
+
+
+=== Apex Code Coverage by Class
+CLASSES                           PERCENT  UNCOVERED LINES       
+────────────────────────────────  ───────  ──────────────────────
+ComponentLogger                   98%      106,136               
+Logger                            88%      325,326,375,376,507...
+LoggerSObjectHandler              87%      194,195,196,208,210...
+LoggerParameter                   100%                           
+LogMessage                        100%                           
+LogEntryEventBuilder              97%      518,519,556,648,664...
+LogHandler                        99%      255,256               
+FlowLogger                        100%                           
+LoggerTagHandler                  100%                           
+LogEntryHandler                   78%      91,107,108,118,119... 
+LogEntryEventHandler              95%      173,307,313,314,315...
+LogEntryTagHandler                100%                           
+LogEntry                          100%                           
+LoggerTag                         100%                           
+LogEntryEvent                     100%                           
+Log                               100%                           
+LogEntryTag                       100%                           
+LFLPopulateTestData               99%      2                     
+L4LController                     83%      5,6,7,8,9...          
+trgUpdateDateSinceCorrect         100%                           
+LoggerEmailSender                 89%      34,35,84,123,124...   
+LoggerCache                       100%                           
+LoggerPlugin                      96%      94,136                
+LoggerEngineDataSelector          88%      90,91,92,97,98...     
+LoggerDataStore                   100%                           
+LoggerTriggerableContext          100%                           
+LogManagementDataSelector         93%      116,117,130,139,140   
+trgUpdateSessionStatsWithProgram  100%                           
+trgCascadeSDStatus                100%                           
+trgCascadeProgramStatus           100%                           
