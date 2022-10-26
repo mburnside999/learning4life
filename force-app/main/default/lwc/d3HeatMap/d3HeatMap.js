@@ -1,3 +1,4 @@
+// Mikes D3 based heatmap
 import { LightningElement, track, api } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
