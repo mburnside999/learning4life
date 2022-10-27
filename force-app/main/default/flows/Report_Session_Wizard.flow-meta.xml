@@ -3,8 +3,8 @@
     <actionCalls>
         <name>L4L_Invocable_Report_Wizard</name>
         <label>L4L Invocable Report Wizard</label>
-        <locationX>583</locationX>
-        <locationY>544</locationY>
+        <locationX>176</locationX>
+        <locationY>1310</locationY>
         <actionName>L4LInvocableReportWizard</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -36,15 +36,31 @@
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
-        <name>WriteSessionDetails</name>
-        <label>WriteSessionDetails</label>
-        <locationX>796</locationX>
-        <locationY>441</locationY>
+        <name>Write_Incidental_Details</name>
+        <label>Write Incidental Details</label>
+        <locationX>440</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>vSessionName</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>{!ReadSessionRecords.Name} -  {!ReadSessionRecords.Date__c} -   {!ReadSessionRecords.Therapist_Name__c} &lt;br/&gt; {!ReadSessionRecords.Anecdotal_Notes__c}- {!ReadSessionRecords.Session_Length__c} hours &lt;br/&gt;</stringValue>
+                <stringValue>Incident Type - {!Loop_through_Incidental_Data.Incident_Type__c} - Intensity {!Loop_through_Incidental_Data.Intensity__c} - {!Loop_through_Incidental_Data.Duration_Hrs__c} Hours - {!Loop_through_Incidental_Data.Duration_Mins__c} min - {!Loop_through_Incidental_Data.Duration_Secs__c} sec &lt;br/&gt;</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_Incidental_Data</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>WriteSessionDetails</name>
+        <label>WriteSessionDetails</label>
+        <locationX>352</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>vSessionName</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>&lt;br/&gt;&lt;b&gt;{!ReadSessionRecords.Name}&lt;/b&gt; -  {!ReadSessionRecords.Date__c} -   {!ReadSessionRecords.Therapist_Name__c} -  {!ReadSessionRecords.Session_Length__c} hours &lt;br/&gt; {!ReadSessionRecords.Anecdotal_Notes__c}- &lt;br/&gt;</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -62,16 +78,32 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>ReadSessionRecords</targetReference>
+            <targetReference>Get_Incidental_Data_Records</targetReference>
         </connector>
     </assignments>
+    <description>Summarises Client Session Data</description>
     <interviewLabel>Report Session Wizard {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Report Session Wizard</label>
+    <label>L4L Report Wizard</label>
+    <loops>
+        <description>Write all the Incidental data for a session</description>
+        <name>Loop_through_Incidental_Data</name>
+        <label>Loop through Incidental Data</label>
+        <locationX>352</locationX>
+        <locationY>878</locationY>
+        <collectionReference>Get_Incidental_Data_Records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Write_Incidental_Details</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>ReadSessionRecords</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <loops>
         <name>ReadSessionRecords</name>
         <label>ReadSessionRecords</label>
-        <locationX>371</locationX>
-        <locationY>459</locationY>
+        <locationX>176</locationX>
+        <locationY>518</locationY>
         <collectionReference>GetSessionDetails</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -90,7 +122,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -103,8 +135,8 @@
     <recordCreates>
         <name>CreateCustomReportWizardObject</name>
         <label>CreateCustomReportWizardObject</label>
-        <locationX>919</locationX>
-        <locationY>616</locationY>
+        <locationX>176</locationX>
+        <locationY>1550</locationY>
         <inputAssignments>
             <field>Client__c</field>
             <value>
@@ -121,10 +153,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
+        <name>Get_Incidental_Data_Records</name>
+        <label>Get Incidental Data Records</label>
+        <locationX>352</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_through_Incidental_Data</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Session__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ReadSessionRecords.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Incidental_Data__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetAccountDetails</name>
         <label>GetAccountDetails</label>
-        <locationX>536</locationX>
-        <locationY>206</locationY>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Welcome_Screen</targetReference>
@@ -144,8 +197,8 @@
     <recordLookups>
         <name>GetSessionDetails</name>
         <label>GetSessionDetails</label>
-        <locationX>459</locationX>
-        <locationY>341</locationY>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ReadSessionRecords</targetReference>
@@ -181,8 +234,8 @@
     <screens>
         <name>Session_Summary</name>
         <label>Session Summary</label>
-        <locationX>756</locationX>
-        <locationY>599</locationY>
+        <locationX>176</locationX>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -200,8 +253,8 @@
     <screens>
         <name>Welcome_Screen</name>
         <label>Welcome Screen</label>
-        <locationX>734</locationX>
-        <locationY>206</locationY>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -260,8 +313,8 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>410</locationX>
-        <locationY>48</locationY>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>GetAccountDetails</targetReference>
         </connector>
@@ -272,6 +325,14 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Variable storing all the incidental data for a session</description>
+        <name>vIncidentalData</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
