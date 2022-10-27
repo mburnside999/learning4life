@@ -128,7 +128,7 @@ export default class D3Nest extends LightningElement {
     _gridData.sort((a, b) => parseFloat(b.counter) - parseFloat(a.counter));
 
     if (this.isSelected) {
-      _gridData = _gridData.filter((d) => d.counter > 1);
+      _gridData = _gridData.filter((d) => d.counter > 0);
     }
 
     //c/d3HeatMapconsole.log(`_gridData=${JSON.stringify(_gridData)}`);
