@@ -10,8 +10,8 @@ export default class D3Nest extends LightningElement {
   @api recordId;
 
   //chart dimensions
-  svgWidth = 1300;
-  svgHeight = 1000;
+  svgWidth = 1400;
+  svgHeight = 1200;
 
   isSelected = false;
 
@@ -20,9 +20,17 @@ export default class D3Nest extends LightningElement {
   @track sdcountarray = [];
   sdcountmap = new Map();
   d3Initialized = false; //rendering and control flags
-
+  programsDisplayed = 0;
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
+  }
+
+  get resultmessage() {
+    if (this.programsDisplayed > 0) {
+      return this.isSelected
+        ? "Tree contains " + this.programsDisplayed + " assigned programs."
+        : "Tree contains " + this.programsDisplayed + " total programs.";
+    }
   }
 
   renderedCallback() {
@@ -73,8 +81,8 @@ export default class D3Nest extends LightningElement {
     console.log("NEST in initializeD3()");
 
     var margin = { top: 10, right: 5, bottom: 20, left: 10 },
-      width = 1300 - margin.left - margin.right,
-      height = 1000 - margin.top - margin.bottom;
+      width = 1400 - margin.left - margin.right,
+      height = 1200 - margin.top - margin.bottom;
 
     console.log("clean up svg");
     //clean up any previous svg.d3 descendents
@@ -132,6 +140,8 @@ export default class D3Nest extends LightningElement {
     }
 
     //c/d3HeatMapconsole.log(`_gridData=${JSON.stringify(_gridData)}`);
+
+    this.programsDisplayed = _gridData.length;
 
     this.gridDataTree = { children: _gridData };
 
@@ -280,7 +290,7 @@ export default class D3Nest extends LightningElement {
   }
 
   truncate(string, limit) {
-    if (string.length <= limit) {
+    if (string.length <= limit || this.isSelected == true) {
       return string;
     }
     return string.slice(0, limit) + "...";
