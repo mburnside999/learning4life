@@ -3,6 +3,15 @@
     title="L4L Allocated Client Objectives"
     icon-name="custom:custom19"
   >
+    <lightning-button-stateful
+      label-when-off="Showing All - Click to show Assigned Only "
+      label-when-on="Showing Assigned Only - Click to show ALL"
+      icon-name-when-off="utility:check"
+      icon-name-when-on="utility:check"
+      selected={isSelected}
+      onclick={handleClick}
+    >
+    </lightning-button-stateful>
   </lightning-card>
 
   <div class="nest" lwc:dom="manual"></div>

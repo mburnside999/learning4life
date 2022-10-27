@@ -13,6 +13,8 @@ export default class D3Nest extends LightningElement {
   svgWidth = 1300;
   svgHeight = 1000;
 
+  isSelected = false;
+
   @track result; //raw returned records from Apex query
   @track gridDataTree = []; //the data that D3 iterates across
   @track sdcountarray = [];
@@ -36,13 +38,13 @@ export default class D3Nest extends LightningElement {
       .then(async () => {
         let _result = (this.result = await getProgramsAndSds({})); //this shenanigans was to get D3 to wait for the Apex to finish
         console.log(_result);
-        console.log("NEST RESULT=>" + JSON.stringify(this.result));
+        //console.log("NEST RESULT=>" + JSON.stringify(this.result));
       })
       .then(async () => {
         let _sdcountarray = (this.sdcountarray =
           await getClientObjectivesSDCount({ clientId: this.recordId })); //this shenanigans was to get D3 to wait for the Apex to finish
         console.log(_sdcountarray);
-        console.log("SD RESULT=>" + JSON.stringify(this.sdcountarray));
+        //console.log("SD RESULT=>" + JSON.stringify(this.sdcountarray));
         this.sdcountarray.map((object) => {
           this.sdcountmap.set(
             object.progname + "-" + object.sdname,
@@ -92,7 +94,7 @@ export default class D3Nest extends LightningElement {
     );
 
     let _gridData = this.result.map((row) => {
-      console.log(`row = ${JSON.stringify(row)}`);
+      //console.log(`row = ${JSON.stringify(row)}`);
       let _counter = 0;
       let _sdData = row.SDs__r.map((sd) => {
         let key = row.Name + "-" + sd.Name;
@@ -113,7 +115,9 @@ export default class D3Nest extends LightningElement {
           fullname: sd.Name
         };
       });
+
       _sdData.sort((a, b) => parseFloat(b.allocated) - parseFloat(a.allocated));
+
       return {
         name: this.truncate(row.Name, 15),
         counter: _counter,
@@ -123,7 +127,11 @@ export default class D3Nest extends LightningElement {
 
     _gridData.sort((a, b) => parseFloat(b.counter) - parseFloat(a.counter));
 
-    console.log(`_gridData=${JSON.stringify(_gridData)}`);
+    if (this.isSelected) {
+      _gridData = _gridData.filter((d) => d.counter > 1);
+    }
+
+    //c/d3HeatMapconsole.log(`_gridData=${JSON.stringify(_gridData)}`);
 
     this.gridDataTree = { children: _gridData };
 
@@ -263,6 +271,12 @@ export default class D3Nest extends LightningElement {
       .attr("fill", "black");
 
     // Add title for the 3 groups
+  }
+
+  handleClick() {
+    console.log("click");
+    this.isSelected = !this.isSelected;
+    this.initializeD3();
   }
 
   truncate(string, limit) {
