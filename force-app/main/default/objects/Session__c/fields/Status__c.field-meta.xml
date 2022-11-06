@@ -13,29 +13,32 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Planned</fullName>
-                <default>false</default>
-                <label>Planned</label>
-            </value>
-            <value>
-                <fullName>Complete</fullName>
-                <default>false</default>
-                <label>Complete</label>
-            </value>
-            <value>
-                <fullName>Reviewed</fullName>
-                <default>false</default>
-                <label>Reviewed</label>
-            </value>
-            <value>
                 <fullName>Open</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Open</label>
             </value>
             <value>
                 <fullName>Closed</fullName>
                 <default>false</default>
                 <label>Closed</label>
+            </value>
+            <value>
+                <fullName>Complete</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Complete</label>
+            </value>
+            <value>
+                <fullName>Planned</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Planned</label>
+            </value>
+            <value>
+                <fullName>Reviewed</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Reviewed</label>
             </value>
         </valueSetDefinition>
     </valueSet>

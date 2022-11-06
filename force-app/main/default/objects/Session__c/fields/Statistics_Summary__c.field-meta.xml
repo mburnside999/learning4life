@@ -7,5 +7,5 @@
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>LongTextArea</type>
-    <visibleLines>12</visibleLines>
+    <visibleLines>10</visibleLines>
 </CustomField>

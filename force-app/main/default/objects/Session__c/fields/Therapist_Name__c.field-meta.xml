@@ -3,7 +3,7 @@
     <fullName>Therapist_Name__c</fullName>
     <deprecated>false</deprecated>
     <externalId>false</externalId>
-    <formula>Therapist__r.LastName</formula>
+    <formula>Therapist__r.FirstName &amp;&quot; &quot;&amp; Therapist__r.LastName</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Therapist Name</label>
     <required>false</required>
