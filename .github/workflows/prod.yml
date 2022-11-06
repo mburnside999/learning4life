@@ -64,13 +64,17 @@ jobs:
               echo "Missing LFL_HYPER_PRODUCTION_URL secret. Is this workflow running on a fork?";
               exit 1;
           fi
-      # Authenticate sandbox
+      # Authenticate production
       - name: "Authenticate Production"
         run: sfdx auth:sfdxurl:store -f ./LFL_HYPER_PRODUCTION_URL.txt -a LFLHyper -s
 
-      # Run Deploy Apex and Triggers
+      # Run Deploy Custom Objects
+      - name: "Deploy Custom Objects"
+        run: sfdx force:source:deploy -m "CustomObject:Client_Objective__c, CustomObject:Incidental_Data__c,CustomObject:NDIS_Report__c,CustomObject:Objective__c,CustomObject:Program__c,CustomObject:SD__c,CustomObject:Session__c,CustomObject:Session_Obj__c,CustomObject:Session_Statistics__c" -u LFLHyper
+
+      # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
-        run: sfdx force:source:deploy -m "ApexClass,ApexTrigger" -u LFLHyper -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg
+        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyper -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg
 
       # Run Deploy LWC
       - name: "Deploy LWC"
