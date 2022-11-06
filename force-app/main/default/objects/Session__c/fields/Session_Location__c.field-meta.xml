@@ -4,7 +4,7 @@
     <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Session Location</label>
-    <required>false</required>
+    <required>true</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -13,9 +13,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>LFL-Kew</fullName>
+                <fullName>L4L-Kew</fullName>
                 <default>false</default>
-                <label>LFL-Kew</label>
+                <label>L4L-Kew</label>
             </value>
             <value>
                 <fullName>Client-Home</fullName>

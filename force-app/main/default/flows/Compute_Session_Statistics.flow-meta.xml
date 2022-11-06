@@ -130,6 +130,13 @@
                 <stringValue>Closed</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Session_Objectives_Count__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
         <object>Session__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
