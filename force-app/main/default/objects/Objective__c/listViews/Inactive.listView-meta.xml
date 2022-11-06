@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Inactive</fullName>
+    <columns>OBJECT_ID</columns>
+    <columns>NAME</columns>
+    <columns>Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Program__c</field>
+        <operation>equals</operation>
+        <value>Writing</value>
+    </filters>
+    <filters>
+        <field>SD_Name__c</field>
+        <operation>equals</operation>
+        <value>Write (no visual)</value>
+    </filters>
+    <label>Inactive</label>
+</ListView>

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SD_And_Objective_Str__c</fullName>
     <externalId>false</externalId>
-    <formula>SD_Name__c  &amp; &quot;: &quot;&amp;  Objective__r.Name</formula>
+    <formula>SD_Name__c &amp;&quot;: &quot;&amp; Objective__r.Name</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>SD_And_Objective_Str</label>
     <required>false</required>

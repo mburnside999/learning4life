@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>Objective__r.SD_Name__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>SD_Name</label>
+    <label>SD Name</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

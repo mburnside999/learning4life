@@ -27,6 +27,26 @@
                 <default>false</default>
                 <label>CIP</label>
             </value>
+            <value>
+                <fullName>1CP</fullName>
+                <default>false</default>
+                <label>1CP</label>
+            </value>
+            <value>
+                <fullName>1IP</fullName>
+                <default>false</default>
+                <label>1IP</label>
+            </value>
+            <value>
+                <fullName>DNC</fullName>
+                <default>false</default>
+                <label>DNC</label>
+            </value>
+            <value>
+                <fullName>BLANK</fullName>
+                <default>false</default>
+                <label>BLANK</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

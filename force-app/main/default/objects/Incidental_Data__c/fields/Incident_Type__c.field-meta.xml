@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Incident_Type__c</fullName>
+    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <label>Incident Type</label>
     <required>true</required>
@@ -29,6 +30,21 @@
                 <fullName>Self Stimulatory</fullName>
                 <default>false</default>
                 <label>Self Stimulatory</label>
+            </value>
+            <value>
+                <fullName>Reinforcement Development</fullName>
+                <default>false</default>
+                <label>Reinforcement Development</label>
+            </value>
+            <value>
+                <fullName>Play Development</fullName>
+                <default>false</default>
+                <label>Play Development</label>
+            </value>
+            <value>
+                <fullName>Tolerance</fullName>
+                <default>false</default>
+                <label>Tolerance</label>
             </value>
         </valueSetDefinition>
     </valueSet>

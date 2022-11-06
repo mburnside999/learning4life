@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>All</fullName>
+    <fullName>Active_Programs</fullName>
     <columns>NAME</columns>
+    <columns>Stage__c</columns>
     <columns>Status__c</columns>
+    <columns>LAST_UPDATE</columns>
     <columns>SD_Active_Count__c</columns>
     <columns>SD_Count__c</columns>
     <filterScope>Everything</filterScope>
-    <label>All</label>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Active</value>
+    </filters>
+    <label>Active Programs</label>
 </ListView>

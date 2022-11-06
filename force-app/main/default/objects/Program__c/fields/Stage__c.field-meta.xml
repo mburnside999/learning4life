@@ -1,55 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Status__c</fullName>
-    <deprecated>false</deprecated>
+    <fullName>Stage__c</fullName>
     <externalId>false</externalId>
-    <label>Status</label>
+    <label>Stage</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>OBJ</fullName>
+                <fullName>Stage One</fullName>
                 <default>false</default>
-                <label>OBJ</label>
+                <label>Stage One</label>
             </value>
             <value>
-                <fullName>ACQ</fullName>
+                <fullName>Stage Two</fullName>
                 <default>false</default>
-                <label>ACQ</label>
+                <label>Stage Two</label>
             </value>
             <value>
-                <fullName>CIP</fullName>
+                <fullName>Stage Three</fullName>
                 <default>false</default>
-                <label>CIP</label>
+                <label>Stage Three</label>
             </value>
             <value>
-                <fullName>ABS</fullName>
+                <fullName>Stage Four</fullName>
                 <default>false</default>
-                <label>ABS</label>
+                <label>Stage Four</label>
             </value>
             <value>
-                <fullName>HLD</fullName>
+                <fullName>School Skills</fullName>
                 <default>false</default>
-                <label>HLD</label>
+                <label>School Skills</label>
             </value>
             <value>
-                <fullName>1CP</fullName>
+                <fullName>Other</fullName>
                 <default>false</default>
-                <label>1CP</label>
-            </value>
-            <value>
-                <fullName>1IP</fullName>
-                <default>false</default>
-                <label>1IP</label>
-            </value>
-            <value>
-                <fullName>DNC</fullName>
-                <default>false</default>
-                <label>DNC</label>
+                <label>Other</label>
             </value>
         </valueSetDefinition>
     </valueSet>
