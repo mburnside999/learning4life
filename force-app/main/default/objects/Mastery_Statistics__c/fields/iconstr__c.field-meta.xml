@@ -5,7 +5,7 @@
     <formula>IF(
 Percent_Correct__c &lt; 0.50,
 &quot;/resource/red&quot;,
-IF( Percent_Correct__c &gt;= 0.95,
+IF( Percent_Correct__c &gt;= 0.90,
 &quot;/resource/green&quot;,
 &quot;/resource/orange&quot;
 ))</formula>

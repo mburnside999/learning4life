@@ -269,7 +269,7 @@ export default class D3HeatMap extends LightningElement {
     //use the LFL color bands
     let color = d3
       .scaleThreshold()
-      .domain([0, 50, 95])
+      .domain([0, 50, 90])
       .range(["#ccc", "red", "orange", "green"]);
 
     const tooltip = d3
