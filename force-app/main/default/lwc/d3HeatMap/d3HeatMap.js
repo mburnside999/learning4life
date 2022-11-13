@@ -339,7 +339,7 @@ export default class D3HeatMap extends LightningElement {
       .style("fill", "grey")
       .style("max-width", 400)
       .text(
-        "Objective Mastery V2.4  - NEW! expanded Y-axis labels, gridlines and rotated X-axis labels"
+        "Objective Mastery V2.5  - NEW! Green percent has been adjusted to >= 90% "
       );
   }
 
