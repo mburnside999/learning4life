@@ -1,6 +1,23 @@
 @isTest
 private class TestL4LSessionStatsController {
   @isTest
+  static void testGetHighAndLowBoundaries() {
+    Test.startTest();
+    // LFLPopulateTestData.load();
+    // Id sessionId = [SELECT id FROM session__c LIMIT 1].Id;
+    // Test.stopTest();
+
+    LFL_Stats_Boundary__mdt lflStatsBoundaries = LFL_Stats_Boundary__mdt.getInstance(
+      'lfl_stats_boundary'
+    );
+
+    System.assert(
+      lflStatsBoundaries != null,
+      'Must have a LFL_Stats_Boundary__mdt'
+    );
+  }
+
+  @isTest
   static void testGetsessionObjectives() {
     Test.startTest();
     LFLPopulateTestData.load();
