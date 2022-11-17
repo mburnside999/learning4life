@@ -1,4 +1,7 @@
-trigger trgUpdateDateSinceCorrect on Session_Obj__c(before update) {
+trigger trgUpdateDateSinceCorrect on Session_Obj__c(
+  before update,
+  after insert
+) {
   System.debug('trgUpdateDateSinceCorrect: entering');
 
   for (Session_Obj__c so : Trigger.New) {
