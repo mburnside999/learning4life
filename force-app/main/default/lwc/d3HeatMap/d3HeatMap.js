@@ -1,11 +1,26 @@
 // Mikes D3 based heatmap
-import { LightningElement, track, api } from "lwc";
+import { LightningElement, track, api, wire } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import getD3StatsByProgramAndSD from "@salesforce/apex/L4LSessionStatsController.getD3StatsByProgramAndSD";
+import getHighAndLowBoundaries from "@salesforce/apex/L4LSessionStatsController.getHighAndLowBoundaries";
 
 export default class D3HeatMap extends LightningElement {
+  low = 50;
+  high = 90; //actual values come from custom metadata
+
+  @wire(getHighAndLowBoundaries)
+  wiredBoundaries({ error, data }) {
+    if (data) {
+      this.high = data.High__c * 100;
+      this.low = data.Low__c * 100;
+      console.log(`high ${this.high} and low ${this.low} `);
+    } else if (error) {
+      console.log("ERROR in getHighAndLow");
+    }
+  }
+
   /* the programs radio group */
   options = [
     { label: "All", value: "All", isChecked: true }
@@ -269,7 +284,7 @@ export default class D3HeatMap extends LightningElement {
     //use the LFL color bands
     let color = d3
       .scaleThreshold()
-      .domain([0, 50, 90])
+      .domain([0, this.low, this.high])
       .range(["#ccc", "red", "orange", "green"]);
 
     const tooltip = d3

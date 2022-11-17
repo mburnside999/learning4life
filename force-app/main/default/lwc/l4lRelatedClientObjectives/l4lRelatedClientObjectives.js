@@ -63,7 +63,7 @@ const columns = [
     type: "text"
   },
   {
-    label: "Last Correct",
+    label: "Last Tested Correct",
     fieldName: "Last_Tested_Correct__c",
     type: "date"
   },

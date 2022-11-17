@@ -11,6 +11,7 @@
     <columns>Days_Since_Tested_Correct__c</columns>
     <columns>Last_Tested_Correct__c</columns>
     <columns>Re_Test_Recommended__c</columns>
+    <columns>Last_Tested__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

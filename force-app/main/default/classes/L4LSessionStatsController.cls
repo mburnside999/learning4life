@@ -1,5 +1,25 @@
 public with sharing class L4LSessionStatsController {
   @AuraEnabled(cacheable=true)
+  public static LFL_Stats_Boundary__mdt getHighAndLowBoundaries() {
+    Logger.setScenario('L4LSessionStatsController');
+    Logger.debug('Apex:getHighAndLowBoundaries')
+      .addTag('L4LSessionStatsController.getHighAndLowBoundaries()')
+      .addTag('logit()');
+
+    LFL_Stats_Boundary__mdt lflStatsBoundaries = LFL_Stats_Boundary__mdt.getInstance(
+      'lfl_stats_boundary'
+    );
+
+    Logger.debug(
+        'Apex:getHighAndLowBoundaries, lflStatsBoundaries=' + lflStatsBoundaries
+      )
+      .addTag('L4LSessionStatsController.getHighAndLowBoundaries()')
+      .addTag('logit()');
+
+    return lflStatsBoundaries;
+  }
+
+  @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getSessionStats(String searchKey) {
     Logger.setScenario('L4LSessionStatsController');
     Logger.debug('Apex:getSessionStats() recordId=' + searchKey)
