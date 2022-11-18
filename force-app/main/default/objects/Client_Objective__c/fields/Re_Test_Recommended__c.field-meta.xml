@@ -8,7 +8,7 @@
 &quot;Weekly&quot;,if( Days_Since_Tested__c &gt;7,1,0),
 &quot;Fortnightly&quot;,if( Days_Since_Tested__c &gt;14,1,0),
 &quot;Monthly&quot;,if( Days_Since_Tested__c &gt;30,1,0),
-0)==1,1==1)</formula>
+0)==1, ispickval(Status__c,&quot;ACQ&quot;))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Re-Test Recommended</label>
     <trackHistory>false</trackHistory>
