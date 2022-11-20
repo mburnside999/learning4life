@@ -30,16 +30,20 @@ trigger trgUpdateDateSinceCorrect on Session_Obj__c(
       'trgUpdateDateSinceCorrect: related client_objective: ' + co.Id
     );
     if (so.correct__c == true) {
-      System.debug(
-        'trgUpdateDateSinceCorrect: marked Correct && previous status ACQ = true '
-      );
+      System.debug('trgUpdateDateSinceCorrect: correct__c=true');
       co.last_tested_correct__c = date.today();
       System.debug(
-        'trgUpdateDateSinceCorrect: last tested correct date set to: ' +
-        co.last_tested_correct__c
+        'trgUpdateDateSinceCorrect: setting last tested correct date to today(): ' +
+        date.today()
       );
     }
+    System.debug(
+      'trgUpdateDateSinceCorrect: setting last tested date to today(): ' +
+      date.today()
+    );
     co.last_tested__c = date.today();
+
+    System.debug('trgUpdateDateSinceCorrect: updating client objective.');
     update co;
   }
 }
