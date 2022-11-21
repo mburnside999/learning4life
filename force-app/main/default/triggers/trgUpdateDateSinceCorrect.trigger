@@ -43,7 +43,9 @@ trigger trgUpdateDateSinceCorrect on Session_Obj__c(
     );
     co.last_tested__c = date.today();
 
-    System.debug('trgUpdateDateSinceCorrect: updating client objective.');
+    System.debug(
+      'trgUpdateDateSinceCorrect: updating client objective, co=' + co
+    );
     update co;
   }
 }
