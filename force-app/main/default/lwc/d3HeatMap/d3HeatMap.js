@@ -301,12 +301,12 @@ export default class D3HeatMap extends LightningElement {
         .html(
           `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>Score=${d.value}</span>`
         )
-        .style("left", d3.pointer(e)[0] + 30 + "px")
+        .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
     };
     const mousemove = (e) => {
       tooltip
-        .style("left", d3.pointer(e)[0] + 30 + "px")
+        .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
     };
     const mouseleave = (e) => {
