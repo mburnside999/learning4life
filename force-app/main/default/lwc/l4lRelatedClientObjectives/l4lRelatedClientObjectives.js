@@ -65,7 +65,7 @@ const columns = [
   {
     label: "Last Tested Correct",
     fieldName: "Last_Tested_Correct__c",
-    type: "date"
+    type: "date-local"
   },
   {
     label: "Retest",
@@ -427,7 +427,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           so.Status__c.toLowerCase().includes(searchKey)) ||
         so.SD_Name__c.toLowerCase().includes(searchKey) ||
         so.Program_Name__c.toLowerCase().includes(searchKey) ||
-        so.Objective_Name__c.toLowerCase().includes(searchKey)
+        so.Objective_Name__c.toLowerCase().includes(searchKey) ||
+        (so.Frequency__c != null &&
+          so.Frequency__c.toLowerCase().includes(searchKey)) ||
+        (so.Last_Tested_Correct__c != null &&
+          so.Last_Tested_Correct__c.toLowerCase().includes(searchKey)) ||
+        (so.Client_Objective_Notes__c != null &&
+          so.Client_Objective_Notes__c.toLowerCase().includes(searchKey))
     );
     this.logit(
       FINE,
