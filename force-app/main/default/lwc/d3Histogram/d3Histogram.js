@@ -48,7 +48,7 @@ export default class D3Histogram extends LightningElement {
 
     // set the dimensions and margins of the graph
     var margin = { top: 50, right: 30, bottom: 60, left: 100 },
-      width = 1000 - margin.left - margin.right,
+      width = 900 - margin.left - margin.right,
       height = 600 - margin.top - margin.bottom;
 
     console.log("cleaning  up  svg");
@@ -121,7 +121,7 @@ export default class D3Histogram extends LightningElement {
 
     svg
       .append("text")
-      .attr("x", (width - 18) / 2)
+      .attr("x", (width - 20) / 2)
       .attr("y", 0)
       .attr("text-anchor", "left")
       .style("font-size", "18px")
@@ -131,11 +131,21 @@ export default class D3Histogram extends LightningElement {
 
     svg
       .append("text")
+      .attr("x", (width - 80) / 2)
+      .attr("y", 20)
+      .attr("text-anchor", "left")
+      .style("font-size", "14px")
+      .style("fill", "grey")
+      .style("max-width", 400)
+      .text("Over all sessions, what percent of responses were correct.");
+
+    svg
+      .append("text")
       .attr("class", "x label")
       .attr("text-anchor", "end")
       .attr("x", (width - 25) / 2)
       .attr("y", height + 40)
-      .text("SD % of Responses Correct");
+      .text("Percent of Responses Correct");
 
     svg
       .append("text")
