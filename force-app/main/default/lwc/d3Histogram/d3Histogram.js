@@ -137,9 +137,7 @@ export default class D3Histogram extends LightningElement {
       .style("font-size", "14px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text(
-        "The number of times the client achieved these % correct in a single session."
-      );
+      .text("Times achieved these % correct in a single session.");
 
     svg
       .append("text")
