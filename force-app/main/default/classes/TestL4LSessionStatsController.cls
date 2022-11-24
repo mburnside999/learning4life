@@ -1,6 +1,17 @@
 @isTest
 private class TestL4LSessionStatsController {
   @isTest
+  static void testgetD3SessionStatsHistogramData() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+    List<Session_Statistics__c> ss = new List<Session_Statistics__c>();
+    ss = L4LSessionStatsController.getD3SessionStatsHistogramData(clientId);
+    System.assert(ss.size() > 0, 'Expected stats histogram data to return');
+  }
+
+  @isTest
   static void testGetHighAndLowBoundaries() {
     Test.startTest();
     // LFLPopulateTestData.load();
