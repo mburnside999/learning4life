@@ -112,7 +112,11 @@ export default class D3Histogram extends LightningElement {
         return height - y(d.length);
       })
       .style("fill", function (d) {
-        return "#69b3a2";
+        if (d.x0 < 50) {
+          return "orange";
+        } else {
+          return "#69b3a2";
+        }
       });
 
     svg
