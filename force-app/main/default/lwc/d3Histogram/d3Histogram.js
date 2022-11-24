@@ -21,7 +21,7 @@ export default class D3Histogram extends LightningElement {
     loadScript(this, D3 + "/d3.v5.min.js")
       .then(() => {
         console.log("calling apex");
-        return getD3SessionStatsHistogramData({});
+        return getD3SessionStatsHistogramData({ clientId: this.recordId });
       })
       .then((response) => {
         console.log("calling histo, response=" + JSON.stringify(response));

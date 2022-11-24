@@ -20,8 +20,10 @@ public with sharing class L4LSessionStatsController {
   }
 
   @AuraEnabled(cacheable=true)
-  public static List<session_statistics__c> getD3SessionStatsHistogramData() {
-    String querySessionStatsString = 'SELECT percent_correct__c FROM session_statistics__c';
+  public static List<session_statistics__c> getD3SessionStatsHistogramData(
+    String clientId
+  ) {
+    String querySessionStatsString = 'SELECT percent_correct__c FROM session_statistics__c where session__r.client__r.Id=:clientId';
     List<Session_Statistics__c> results = new List<Session_Statistics__c>();
 
     results = Database.query(querySessionStatsString);
