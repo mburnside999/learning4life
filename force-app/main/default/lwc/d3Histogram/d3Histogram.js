@@ -121,23 +121,25 @@ export default class D3Histogram extends LightningElement {
 
     svg
       .append("text")
-      .attr("x", (width - 20) / 2)
+      .attr("x", (width - 36) / 2)
       .attr("y", 0)
       .attr("text-anchor", "left")
       .style("font-size", "18px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("% Correct Responses");
+      .text("EXPERIMENTAL! % Correct Responses");
 
     svg
       .append("text")
-      .attr("x", (width - 80) / 2)
+      .attr("x", (width - 100) / 2)
       .attr("y", 20)
       .attr("text-anchor", "left")
       .style("font-size", "14px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("Over all sessions, what percent of responses were correct.");
+      .text(
+        "The number of times the client achieved these % correct in a single session."
+      );
 
     svg
       .append("text")
