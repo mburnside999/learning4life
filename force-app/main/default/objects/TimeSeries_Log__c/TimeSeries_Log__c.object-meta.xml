@@ -149,17 +149,17 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>TimesSeries Log</label>
+    <label>TimeSeries Log</label>
     <nameField>
         <displayFormat>TSL-{yyyy}-{mm}-{000000}</displayFormat>
-        <label>TimesSeries Log Name</label>
+        <label>TimeSeries Log Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>TimesSeries Logs</pluralLabel>
+    <pluralLabel>TimeSeries Logs</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
