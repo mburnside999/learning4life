@@ -156,7 +156,7 @@
     <label>TimeSeries Log</label>
     <nameField>
         <displayFormat>TSL-{yyyy}-{mm}-{000000}</displayFormat>
-        <label>TimesSeries Log Name</label>
+        <label>TimeSeries Log Name</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>TimeSeries Logs</pluralLabel>
