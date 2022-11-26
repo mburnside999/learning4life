@@ -1,7 +1,7 @@
 public with sharing class L4LTimeSeries {
   public Integer loadCOTimeSeries() {
     Logger.setScenario('L4LTimeSeries');
-    Logger.debug('Apex:loadCOTimeSeries()')
+    Logger.debug('Apex:loadCOTimeSeries() - entering')
       .addTag('L4LTimeSeries.loadCOTimeSeries()')
       .addTag('TimeSeries');
     Logger.saveLog();
@@ -50,16 +50,17 @@ public with sharing class L4LTimeSeries {
         ' client objective timeseries records';
       insert endlog;
       Logger.debug(
-          'Apex:loadCOTimeSeries() inserted ' +
+          'Apex:loadCOTimeSeries() succesfully inserted ' +
           tslist.size() +
-          'log records'
+          'timeseries log records'
         )
         .addTag('L4LTimeSeries.loadCOTimeSeries()')
         .addTag('TimeSeries');
       Logger.saveLog();
     } catch (DmlException e) {
       Logger.error(
-          'Apex:loadCOTimeSeries() error in insert to log -  ' + e.getMessage()
+          'Apex:loadCOTimeSeries() an error was encountered inserting to timeseries log -  ' +
+          e.getMessage()
         )
         .addTag('L4LTimeSeries.loadCOTimeSeries()')
         .addTag('TimeSeries');
