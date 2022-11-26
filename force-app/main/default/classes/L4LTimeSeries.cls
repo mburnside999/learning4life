@@ -1,5 +1,11 @@
 public with sharing class L4LTimeSeries {
   public Integer loadCOTimeSeries() {
+    Logger.setScenario('L4LTimeSeries');
+    Logger.debug('Apex:loadCOTimeSeries()')
+      .addTag('L4LTimeSeries.loadCOTimeSeries()')
+      .addTag('TimeSeries');
+    Logger.saveLog();
+
     TimeSeries_Log__c log = new TimeSeries_Log__c();
     log.comments__c = 'Started client objective timeseries run';
     insert log;
@@ -35,14 +41,30 @@ public with sharing class L4LTimeSeries {
       tslist.add(tsrecord);
     }
 
-    insert tslist;
-
-    log.comments__c =
-      'Successfully processed ' +
-      tslist.size() +
-      ' client objective timeseries records';
-
-    System.debug('inserted ' + tslist.size() + ' records');
+    try {
+      insert tslist;
+      TimeSeries_Log__c endlog = new TimeSeries_Log__c();
+      endlog.comments__c =
+        'Successfully processed ' +
+        tslist.size() +
+        ' client objective timeseries records';
+      insert endlog;
+      Logger.debug(
+          'Apex:loadCOTimeSeries() inserted ' +
+          tslist.size() +
+          'log records'
+        )
+        .addTag('L4LTimeSeries.loadCOTimeSeries()')
+        .addTag('TimeSeries');
+      Logger.saveLog();
+    } catch (DmlException e) {
+      Logger.error(
+          'Apex:loadCOTimeSeries() error in insert to log -  ' + e.getMessage()
+        )
+        .addTag('L4LTimeSeries.loadCOTimeSeries()')
+        .addTag('TimeSeries');
+      Logger.saveLog();
+    }
 
     return tslist.size();
   }

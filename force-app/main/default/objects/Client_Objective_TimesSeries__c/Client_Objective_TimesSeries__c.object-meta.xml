@@ -126,7 +126,14 @@
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
- 
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Client_Objective_TimesSeries_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
         <type>Default</type>
@@ -151,7 +158,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Client Objective TimesSeries</label>
     <nameField>
-        <displayFormat>COTS-{YYYY}-{MM}-{00000}</displayFormat>
+        <displayFormat>COTS-{YYYY}-{MM}-{0000000}</displayFormat>
         <label>COTS Name</label>
         <type>AutoNumber</type>
     </nameField>

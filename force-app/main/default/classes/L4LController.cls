@@ -8,6 +8,7 @@ public with sharing class L4LController {
       .setRecordId(recordId)
       .addTag('L4LController.getSessionStatus()')
       .addTag('logit()');
+    Logger.saveLog();
 
     String sessionStatus = [
       SELECT status__c
