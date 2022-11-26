@@ -11,7 +11,7 @@ public with sharing class L4LTimeSeries {
     insert log;
 
     String clientObjectiveSOQLStr =
-      'Select Client__c,Client_Objective_Notes__c, Date_Absorbed__c,' +
+      'Select Id,Client__c,Client_Objective_Notes__c, Date_Absorbed__c,' +
       'Date_Acquired__c, Date_CIP__c, Date_Held__c, Date_Introduced__c,' +
       'Days_Since_Tested_Correct__c, Days_Since_Tested__c, Frequency__c,' +
       'Name, Objective__c, Program_Name__c,' +
@@ -24,6 +24,7 @@ public with sharing class L4LTimeSeries {
 
     for (client_objective__c co : results) {
       Client_Objective_TimesSeries__c tsrecord = new Client_Objective_TimesSeries__c();
+      tsrecord.client_objective__c = co.Id;
       tsrecord.client__c = co.client__c;
       tsrecord.client_objective_notes__c = co.client_objective_notes__c;
       tsrecord.Date_Absorbed__c = co.Date_Absorbed__c;

@@ -148,13 +148,13 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>Client Objective TimesSeries</label>
+    <label>Client Objective TimeSeries</label>
     <nameField>
         <displayFormat>COTS-{YYYY}-{MM}-{0000000}</displayFormat>
         <label>COTS Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Client Objective TimesSeries</pluralLabel>
+    <pluralLabel>Client Objective TimeSeries</pluralLabel>
     <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
