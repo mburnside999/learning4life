@@ -9,6 +9,9 @@ public with sharing class L4LTimeSeries {
     TimeSeries_Log__c log = new TimeSeries_Log__c();
     log.comments__c = 'Started client objective timeseries run';
     insert log;
+    system.debug('log inserted ' + log);
+
+    String runId = [SELECT name FROM TimeSeries_Log__c WHERE id = :log.Id].Name;
 
     String clientObjectiveSOQLStr =
       'Select Id,Client__c,Client_Objective_Notes__c, Date_Absorbed__c,' +
@@ -24,6 +27,7 @@ public with sharing class L4LTimeSeries {
 
     for (client_objective__c co : results) {
       Client_Objective_TimeSeries__c tsrecord = new Client_Objective_TimeSeries__c();
+      tsrecord.runId__c = runId;
       tsrecord.client_objective__c = co.Id;
       tsrecord.client__c = co.client__c;
       tsrecord.client_objective_notes__c = co.client_objective_notes__c;
