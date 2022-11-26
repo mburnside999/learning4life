@@ -76,11 +76,11 @@ jobs:
 
       # Run Deploy Custom Objects
       - name: "Deploy Custom Objects"
-        run: sfdx force:source:deploy -m "CustomObject:Client_Objective__c, CustomObject:Incidental_Data__c,CustomObject:NDIS_Report__c,CustomObject:Objective__c,CustomObject:Program__c,CustomObject:SD__c,CustomObject:Session__c,CustomObject:Session_Obj__c,CustomObject:Session_Statistics__c" -u LFLHyperPARTIAL
+        run: sfdx force:source:deploy -m "CustomObject:Client_Objective__c, CustomObject:Client_Objective_TimesSeries__c,CustomObject:TimeSeries_Log__c,CustomObject:Incidental_Data__c,CustomObject:NDIS_Report__c,CustomObject:Objective__c,CustomObject:Program__c,CustomObject:SD__c,CustomObject:Session__c,CustomObject:Session_Obj__c,CustomObject:Session_Statistics__c" -u LFLHyperPARTIAL
 
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
-        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg
+        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg
 
       # Run Deploy LWC
       - name: "Deploy LWC"
