@@ -20,10 +20,10 @@ public with sharing class L4LTimeSeries {
     List<Client_Objective__c> results = new List<Client_Objective__c>();
     results = Database.query(clientObjectiveSOQLStr);
 
-    List<Client_Objective_TimesSeries__c> tslist = new List<Client_Objective_TimesSeries__c>();
+    List<Client_Objective_TimeSeries__c> tslist = new List<Client_Objective_TimeSeries__c>();
 
     for (client_objective__c co : results) {
-      Client_Objective_TimesSeries__c tsrecord = new Client_Objective_TimesSeries__c();
+      Client_Objective_TimeSeries__c tsrecord = new Client_Objective_TimeSeries__c();
       tsrecord.client_objective__c = co.Id;
       tsrecord.client__c = co.client__c;
       tsrecord.client_objective_notes__c = co.client_objective_notes__c;
