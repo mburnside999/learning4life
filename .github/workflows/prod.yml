@@ -82,7 +82,7 @@ jobs:
 
       # Run Apex tests in scratch org
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
-        run: sfdx force:apex:test:run -l RunSpecifiedTests -t TestL4LController,TestL4LSessionStatsController,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg  -u LFLHyper -c -r human -d ./tests/apex -w 20
+        run: sfdx force:apex:test:run -l RunSpecifiedTests -t TestL4LController,TestL4LSessionStatsController,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg  -u LFLHyper -c -r human -d ./tests/apex -w 20
 
       # Delete temporary test file that Codecov is unable to parse
       - name: "Delete coverage file (temporary step)"
