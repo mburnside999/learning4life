@@ -9,4 +9,12 @@ string tempvar = 'Enter_your_name_here';
 System.debug('Hello World!');
 System.debug('My name is ' + tempvar);
 
-L4LController.getPopularObjectives('0019h000003s1a8AAA');
+L4LSessionStatsController.getD3SessionStatsHistogramData();
+
+L4LTimeSeries x = new L4LTimeSeries();
+
+System.debug(x.loadCOTimeSeries());
+
+L4LTimeSeriesScheduler m = new L4LTimeSeriesScheduler();
+String sch = '0 0 22 ? 1 *';
+String jobID = System.schedule('Time Series Schedule', sch, m);
