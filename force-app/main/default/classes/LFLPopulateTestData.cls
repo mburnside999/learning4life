@@ -44,6 +44,7 @@ public with sharing class LFLPopulateTestData {
     SD__c sd1 = new SD__c(
       name = 'Identical',
       Stage__c = 'Stage One',
+      Area__c = 'Communication',
       Status__c = 'Active'
     );
     sd1.Program__c = p.id;
@@ -121,7 +122,12 @@ public with sharing class LFLPopulateTestData {
 
     insert so;
 
-    SD__c sd2 = new SD__c(name = 'Non-identical');
+    SD__c sd2 = new SD__c(
+      name = 'Non-identical',
+      stage__c = 'Stage One',
+      status__c = 'Active',
+      area__c = 'Communication'
+    );
     sd2.Program__c = p.id;
     insert sd2;
     o = new Objective__c(Name = 'Chair');
@@ -159,7 +165,12 @@ public with sharing class LFLPopulateTestData {
     insert so;
 
     //unassigned
-    SD__c sd = new SD__c(name = 'Test');
+    SD__c sd = new SD__c(
+      name = 'Test',
+      stage__c = 'Stage One',
+      status__c = 'Active',
+      area__c = 'Communication'
+    );
     sd.Program__c = p.id;
     insert sd;
     Objective__c ob = new Objective__c(Name = 'Test');
