@@ -1,6 +1,7 @@
 import { LightningElement, track, api } from "lwc";
 import { loadScript } from "lightning/platformResourceLoader";
 import generateD3ProgramAreaSDJson from "@salesforce/apex/L4LSessionStatsController.generateD3ProgramAreaSDJson";
+import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 import D3 from "@salesforce/resourceUrl/d3";
 
@@ -196,17 +197,17 @@ export default class D3NestExperiment extends LightningElement {
       .text(function (d) {
         return d.data.name;
       })
-      .attr("font-size", "12px")
-      .attr("fill", function (d) {
-        return color(d.data.name);
-      });
+      .attr("font-size", "12px");
+    // .attr("fill", function (d) {
+    //   return color(d.data.name);
+    // });
 
     // Add title for the 3 groups
     svg
       .append("text")
       .attr("x", 0)
-      .attr("y", 14) // +20 to adjust position (lower)
-      .text("Three group leaders and 14 employees")
+      .attr("y", 20) // +20 to adjust position (lower)
+      .text("Programs Areas and SDs")
       .attr("font-size", "19px")
       .attr("fill", "grey");
   }
