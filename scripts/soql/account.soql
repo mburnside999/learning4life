@@ -4,3 +4,45 @@
 //     SFDX: Execute SOQL Query with Currently Selected Text
 
 SELECT Id, Name FROM Account
+
+
+
+Select Client_Name__c, Client_Objective_Notes__c, Client__c, Date_Absorbed__c, 
+Date_Acquired__c, Date_CIP__c, Date_Held__c, Date_Introduced__c, 
+Days_Since_Tested_Correct__c, Days_Since_Tested__c, Frequency__c, 
+Name, Objective_Name__c, Objective__c, ProgramObjective__c, Program_Name__c, 
+Re_Test_Recommended__c, SD_Name__c, Status__c FROM Client_Objective__c 
+
+SELECT session__r.name,session__r.client__r.name, program_name__c,
+      objective__r.name ,SD_Name__c,objective__r.sd__r.name 
+      FROM Session_Statistics__c
+      WHERE session__r.client__c = '0018t000002vfSfAAI'
+      and objective__r.sd__r.Stage__c='Stage Three'
+
+      SELECT
+        Id,
+        Name,
+        (SELECT id, name, program__r.name, description__c,area__c FROM sds__r)
+      FROM Program__c
+      WHERE id IN (SELECT program__c FROM sd__c where stage__c='Stage One') AND status__c = 'Active' 
+
+
+
+      SELECT
+        
+        objective__r.sd__c sd__c,
+        count(id) sdcount
+      FROM client_objective__c
+      WHERE client__c = '0019h000003s1a8AAA'
+      GROUP BY objective__r.sd__c 
+      ORDER BY count(id)
+
+SELECT
+        objective__r.sd__r.program__R.name progname,
+        objective__r.sd__r.name sdname,
+        count(id) sdcount
+      FROM client_objective__c
+      WHERE client__c = :clientId
+      GROUP BY objective__r.sd__r.program__R.name, objective__r.sd__r.name
+      ORDER BY count(id)
+

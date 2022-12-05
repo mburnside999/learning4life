@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
-    <description>D3 Heatmap</description>
+    <description>D3 Client  Nest Experiment</description>
     <isExposed>true</isExposed>
-    <masterLabel>D3 Heatmap</masterLabel>
+    <masterLabel>D3 Nest Experiment</masterLabel>
     <targets>
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
@@ -14,10 +14,6 @@
             <supportedFormFactors>
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
-            <property
-            name="recordId"
-            type="String"
-            label="Record Id"></property>
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
            

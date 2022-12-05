@@ -220,7 +220,8 @@ public with sharing class L4LSessionStatsController {
     String programStr,
     String sdStr,
     Boolean showAcquired,
-    String periodStr
+    String periodStr,
+    String stageStr
   ) {
     Logger.setScenario('L4LSessionStatsController');
     Logger.debug(
@@ -249,6 +250,10 @@ public with sharing class L4LSessionStatsController {
       querySessionStatsString += ' AND SD_Name__c=:sdStr ';
     }
 
+    if (stageStr == 'All') {
+    } else {
+      querySessionStatsString += ' AND objective__r.sd__r.Stage__c=:stageStr ';
+    }
     if (showAcquired)
       querySessionStatsString += ' AND previous_status__c = \'ACQ\' ';
 
@@ -286,20 +291,29 @@ public with sharing class L4LSessionStatsController {
     return results;
   }
   @AuraEnabled(Cacheable=true)
-  public static List<Program__c> getProgramsAndSds() {
+  public static List<Program__c> getProgramsAndSds(String stageStr) {
     Logger.setScenario('L4LSessionStatsController');
     Logger.debug('Apex:getProgramsAndSds')
       .addTag('L4LSessionStatsController.getProgramsAndSds()')
       .addTag('logit()');
     Logger.saveLog();
-    return [
-      SELECT
-        Id,
-        Name,
-        (SELECT id, name, program__r.name, description__c FROM sds__r)
-      FROM Program__c
-      WHERE id IN (SELECT program__c FROM sd__c) AND status__c = 'Active' //have to make sure there is an SD
-    ];
+
+    String querySessionStatsString =
+      'SELECT Id, Name,' +
+      '(SELECT id, name, program__r.name, description__c FROM sds__r) ' +
+      ' FROM Program__c WHERE status__c =  \'Active\'';
+
+    if (stageStr == 'All') {
+      querySessionStatsString += ' AND id IN (SELECT program__c FROM sd__c)';
+    } else {
+      querySessionStatsString += '  AND id IN (SELECT program__c FROM sd__c where stage__C=:stageStr) ';
+    }
+    System.debug(querySessionStatsString);
+
+    List<Program__c> results = new List<Program__c>();
+    results = Database.query(querySessionStatsString);
+
+    return results;
   }
 
   @AuraEnabled(Cacheable=true)
@@ -323,5 +337,120 @@ public with sharing class L4LSessionStatsController {
       GROUP BY objective__r.sd__r.program__R.name, objective__r.sd__r.name
       ORDER BY count(id)
     ];
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static String generateD3ProgramAreaSDJson(
+    String clientId,
+    String stageStr
+  ) {
+    Logger.setScenario('L4LSessionStatsController');
+    Logger.debug('Apex:generateD3ProgramAreaSDJson')
+      .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
+      .addTag('logit()');
+
+    String jsontmp = '{"children":[';
+    jsontmp += '{"name": "flare",';
+    jsontmp += '"children": [';
+    System.debug(jsontmp);
+    Set<String> myset = new Set<string>();
+
+    List<AggregateResult> countCoBySD = [
+      SELECT objective__r.sd__c sdid, count(id) sdcount
+      FROM client_objective__c
+      WHERE client__c = :clientId
+      GROUP BY objective__r.sd__c
+      ORDER BY count(id)
+    ];
+
+    Map<Id, Integer> sdCountMap = new Map<Id, Integer>();
+
+    for (AggregateResult sdc : countCoBySD) {
+      sdCountMap.put((id) sdc.get('sdid'), (Integer) sdc.get('sdcount'));
+    }
+
+    System.debug(countCoBySD);
+
+    String queryProgramString = 'SELECT id, name  ' + 'FROM program__c ';
+
+    if (stageStr == 'All') {
+      queryProgramString += ' WHERE id IN (SELECT program__c FROM sd__c WHERE area__c != NULL)';
+    } else {
+      queryProgramString += ' WHERE id IN (SELECT program__c FROM sd__c WHERE area__c != NULL and stage__c=:stageStr)  ';
+    }
+
+    Map<id, program__c> pmap = new Map<id, program__c>(
+      (List<Program__c>) Database.query(queryProgramString)
+    );
+    System.debug('pmap=' + pmap);
+
+    Map<id, Set<String>> areamap = new Map<id, Set<String>>();
+
+    List<AggregateResult> xarlist = [
+      SELECT program__c, area__c, count(id)
+      FROM sd__c
+      WHERE area__c != NULL
+      GROUP BY program__c, area__c
+    ];
+    System.debug(xarlist);
+    for (aggregateResult a : xarlist) {
+      id i = (id) a.get('program__c');
+      string area = (string) a.get('area__c');
+
+      if (areamap.get(i) == null) {
+        Set<string> temp = new Set<string>();
+        temp.add(area);
+        areamap.put(i, temp);
+      } else {
+        Set<string> temp2 = areamap.get(i);
+        temp2.add(area);
+        areamap.put(i, temp2);
+      }
+
+      ///areamap.put(i,s);
+    }
+
+    System.debug('areamaP=' + areamap);
+
+    Set<id> idlist = pmap.keySet();
+    for (Id i : idlist) {
+      Program__c p = pmap.get(i);
+      jsontmp += '{"name":"' + p.name + '",';
+      jsontmp += '"children":[';
+      Set<string> tempset = areamap.get(p.Id);
+      for (String ss : tempset) {
+        jsontmp += '{"name":"' + (String) ss + '",';
+        jsontmp += '"children":[';
+        for (sd__c sd : [
+          SELECT Id, name
+          FROM sd__c
+          WHERE program__c = :p.Id AND area__c = :ss
+        ]) {
+          Integer val = 0;
+
+          if ((Integer) sdCountMap.get(sd.Id) == null) {
+            val = 1;
+          } else {
+            val = (Integer) sdCountMap.get(sd.Id) + 1;
+          }
+          jsontmp += '{"name":"' + sd.name + '","value":' + val + ' },';
+        }
+
+        jsontmp += ']},';
+      }
+      jsontmp += ']},';
+    }
+    jsontmp += ']}';
+    jsontmp += ']}';
+
+    String target = ',]';
+    String replacement = ']';
+    String jsonstr = jsontmp.replace(target, replacement);
+    System.debug(jsonstr);
+    Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
+      .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
+      .addTag('logit()');
+    Logger.saveLog();
+    return jsonstr;
   }
 }

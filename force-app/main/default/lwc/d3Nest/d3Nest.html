@@ -1,6 +1,6 @@
 <template>
   <lightning-card
-    title="L4L Allocated Client Objectives"
+    title="L4L Allocated Client Objectives, now with Stage Filter"
     icon-name="custom:custom19"
   >
     <lightning-button-stateful
@@ -12,6 +12,16 @@
       onclick={handleClick}
     >
     </lightning-button-stateful>
+
+    <lightning-combobox
+      name="stage"
+      label="Stage"
+      value={stageoptionval}
+      placeholder="Select Stage"
+      options={stageoptions}
+      onchange={handleStageChange}
+    ></lightning-combobox>
+
     <br />
     <br />
     {resultmessage}

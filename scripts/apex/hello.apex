@@ -12,9 +12,94 @@ System.debug('My name is ' + tempvar);
 L4LSessionStatsController.getD3SessionStatsHistogramData();
 
 L4LTimeSeries x = new L4LTimeSeries();
-
 System.debug(x.loadCOTimeSeries());
 
 L4LTimeSeriesScheduler m = new L4LTimeSeriesScheduler();
-String sch = '0 0 22 ? 1 *';
+String sch = '0 0 22 ? * 1';
 String jobID = System.schedule('Time Series Schedule', sch, m);
+
+List<Program__c> results = new List<Program__c>();
+results = L4LSessionStatsController.getProgramsAndSDs('All');
+System.debug('results.size()-' + results.size());
+
+String json = '{"children":[';
+json += '{"name": "flare",';
+json += '"children": [';
+System.debug(json);
+Set<String> myset = new Set<string>();
+
+Map<id, program__c> pmap = new Map<id, program__c>(
+  [
+    SELECT id, name
+    FROM program__c
+    WHERE id IN (SELECT program__c FROM sd__c WHERE area__c != NULL)
+  ]
+);
+System.debug('pmap=' + pmap);
+
+Map<id, Set<String>> areamap = new Map<id, Set<String>>();
+List<AggregateResult> xarlist = [
+  SELECT program__c, area__c, count(id)
+  FROM sd__c
+  WHERE area__c != NULL
+  GROUP BY program__c, area__c
+];
+System.debug(xarlist);
+for (aggregateResult a : xarlist) {
+  id i = (id) a.get('program__c');
+  string area = (string) a.get('area__c');
+
+  if (areamap.get(i) == null) {
+    Set<string> temp = new Set<string>();
+    temp.add(area);
+    areamap.put(i, temp);
+  } else {
+    Set<string> temp2 = areamap.get(i);
+    temp2.add(area);
+    areamap.put(i, temp2);
+  }
+
+  ///areamap.put(i,s);
+}
+
+System.debug('areamaP=' + areamap);
+
+Set<id> idlist = pmap.keySet();
+for (Id i : idlist) {
+  //for (Program__c p: [select id,name from program__c limit 3])
+
+  Program__c p = pmap.get(i);
+  json += '{"name":"' + p.name + '",';
+  json += '"children":[';
+
+  Set<string> tempset = areamap.get(p.Id);
+
+  for (String ss : tempset) {
+    json += '{"name":"' + (String) ss + '",';
+    json += '"children":[';
+    for (sd__c sd : [
+      SELECT name
+      FROM sd__c
+      WHERE program__c = :p.Id AND area__c = :ss
+      LIMIT 10
+    ]) {
+      json += '{"name":"' + sd.name + '","value":"20"},';
+    }
+
+    json += ']},';
+  }
+  json += ']},';
+}
+json += ']}';
+json += ']}';
+
+String target = ',]';
+String replacement = ']';
+String json2 = json.replace(target, replacement);
+System.debug(json2);
+
+
+//
+
+String j = L4LSessionStatsController.generateD3ProgramAreaSDJson('0018t000002vfSfAAI','All');
+System.debug(j);
