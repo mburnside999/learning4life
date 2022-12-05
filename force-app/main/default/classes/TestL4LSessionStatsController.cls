@@ -15,6 +15,20 @@ private class TestL4LSessionStatsController {
   }
 
   @isTest
+  static void testgenerateD3ProgramAreaSDJson2() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    String json = L4LSessionStatsController.generateD3ProgramAreaSDJson(
+      clientId,
+      'Stage One'
+    );
+    System.assert(json.length() > 0, 'Expected  at least some stub json');
+  }
+
+  @isTest
   static void testgetD3SessionStatsHistogramData() {
     Test.startTest();
     LFLPopulateTestData.load();
@@ -31,6 +45,8 @@ private class TestL4LSessionStatsController {
     // LFLPopulateTestData.load();
     // Id sessionId = [SELECT id FROM session__c LIMIT 1].Id;
     // Test.stopTest();
+
+    L4LSessionStatsController.getHighAndLowBoundaries();
 
     LFL_Stats_Boundary__mdt lflStatsBoundaries = LFL_Stats_Boundary__mdt.getInstance(
       'lfl_stats_boundary'
@@ -57,6 +73,20 @@ private class TestL4LSessionStatsController {
       'Expected at least one session_statistics__c record retrieved.'
     );
   }
+
+  @isTest
+  static void testGetClientObjectivesByProgram() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    List<AggregateResult> ar = L4LSessionStatsController.GetClientObjectivesByProgram(
+      clientId
+    );
+    System.assert(ar.size() > 0, 'Expected at least one ag result.');
+  }
+
   @isTest
   static void testGetD3Stats() {
     Test.startTest();
