@@ -29,6 +29,16 @@ export default class D3HeatMap extends LightningElement {
     // { label: "Bring Me", value: "Bring Me" }
   ];
 
+  stageoptions = [
+    { label: "All", value: "All", isChecked: true },
+    { label: "Stage One", value: "Stage One" },
+    { label: "Stage Two", value: "Stage Two" },
+    { label: "Stage Three", value: "Stage Three" },
+    { label: "Stage Four", value: "Stage Four" },
+    { label: "Stage Five", value: "Stage Five" },
+    { label: "Stage Six", value: "Stage Six" }
+  ];
+
   sdoptions = [
     { label: "All", value: "All", isChecked: true }
     // { label: "2D Matching", value: "2D Matching" },
@@ -48,6 +58,7 @@ export default class D3HeatMap extends LightningElement {
 
   optionval = "All"; //default
   sdoptionval = "All";
+  stageoptionval = "All";
   periodval = "30";
 
   //the clientId from UI
@@ -94,6 +105,7 @@ export default class D3HeatMap extends LightningElement {
           programStr: "All",
           sdStr: "All",
           periodStr: "30",
+          stageStr: "All",
           showAcquired: this.isSelected
         }));
         console.log(_result);
@@ -386,6 +398,17 @@ export default class D3HeatMap extends LightningElement {
     this.composeOptions();
   }
 
+  handleStageChange(event) {
+    console.log("in handleSDChange " + event.detail.value);
+    const selectedOption = event.detail.value;
+    this.stageoptions = this.stageoptions.map((row) => {
+      return { ...row, isChecked: row.label === selectedOption };
+    });
+    console.log("in handleStageChange " + JSON.stringify(this.stageoptions));
+
+    this.composeOptions();
+  }
+
   //the Program change handler
   handlePeriodChange(event) {
     console.log("in handlePeriodChange " + event.detail.value);
@@ -409,6 +432,13 @@ export default class D3HeatMap extends LightningElement {
     let programStr = optionJson.label;
 
     //find the curent SD
+    let stageoptionJson = this.stageoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let stageStr = stageoptionJson.label;
+    console.log("stageStr=" + stageStr);
+
+    //find the curent SD
     let sdoptionJson = this.sdoptions.find((item) => {
       return item.isChecked == true;
     });
@@ -428,7 +458,8 @@ export default class D3HeatMap extends LightningElement {
       programStr: programStr,
       sdStr: sdStr,
       periodStr: periodStr,
-      showAcquired: this.isSelected
+      showAcquired: this.isSelected,
+      stageStr: stageStr
     })
       .then((result) => {
         this.result = result;

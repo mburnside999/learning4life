@@ -1,0 +1,12 @@
+<template>
+  <lightning-combobox
+    name="stage"
+    label="Stage"
+    value={stageoptionval}
+    placeholder="Select Stage"
+    options={stageoptions}
+    onchange={handleStageChange}
+  ></lightning-combobox>
+
+  <div class="nest" lwc:dom="manual"></div>
+</template>

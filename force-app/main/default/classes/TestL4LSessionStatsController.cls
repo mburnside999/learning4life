@@ -1,6 +1,20 @@
 @isTest
 private class TestL4LSessionStatsController {
   @isTest
+  static void testgenerateD3ProgramAreaSDJson() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    String json = L4LSessionStatsController.generateD3ProgramAreaSDJson(
+      clientId,
+      'All'
+    );
+    System.assert(json.length() > 0, 'Expected  at least some stub json');
+  }
+
+  @isTest
   static void testgetD3SessionStatsHistogramData() {
     Test.startTest();
     LFLPopulateTestData.load();
@@ -113,7 +127,8 @@ private class TestL4LSessionStatsController {
       'Color',
       'Identical',
       false,
-      '180'
+      '180',
+      'All'
     );
     System.assert(
       so.size() == 0,
@@ -128,7 +143,7 @@ private class TestL4LSessionStatsController {
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
     Test.stopTest();
 
-    List<Program__c> p = L4LSessionStatsController.getProgramsAndSds();
+    List<Program__c> p = L4LSessionStatsController.getProgramsAndSds('All');
     System.assert(
       p.size() != 0,
       '??Expected at least one session_statistics__c record retrieved.'

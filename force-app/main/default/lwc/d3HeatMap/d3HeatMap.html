@@ -43,6 +43,15 @@
     ></lightning-combobox>
 
     <lightning-combobox
+      name="stage"
+      label="Stage"
+      value={stageoptionval}
+      placeholder="Select Stage"
+      options={stageoptions}
+      onchange={handleStageChange}
+    ></lightning-combobox>
+
+    <lightning-combobox
       name="period"
       label="Period"
       value={periodval}

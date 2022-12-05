@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Area__c</fullName>
+    <externalId>false</externalId>
+    <label>Area</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Stage__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Learning to Learn</fullName>
+                <default>false</default>
+                <label>Learning to Learn</label>
+            </value>
+            <value>
+                <fullName>Imitation</fullName>
+                <default>false</default>
+                <label>Imitation</label>
+            </value>
+            <value>
+                <fullName>Play Skills</fullName>
+                <default>false</default>
+                <label>Play Skills</label>
+            </value>
+            <value>
+                <fullName>Communication</fullName>
+                <default>false</default>
+                <label>Communication</label>
+            </value>
+            <value>
+                <fullName>Receptive Language</fullName>
+                <default>false</default>
+                <label>Receptive Language</label>
+            </value>
+            <value>
+                <fullName>Self-Care</fullName>
+                <default>false</default>
+                <label>Self-Care</label>
+            </value>
+            <value>
+                <fullName>Matching</fullName>
+                <default>false</default>
+                <label>Matching</label>
+            </value>
+            <value>
+                <fullName>Social Play Skills</fullName>
+                <default>false</default>
+                <label>Social Play Skills</label>
+            </value>
+            <value>
+                <fullName>Speech</fullName>
+                <default>false</default>
+                <label>Speech</label>
+            </value>
+            <value>
+                <fullName>Play-Skills</fullName>
+                <default>false</default>
+                <label>Play-Skills</label>
+            </value>
+            <value>
+                <fullName>Conversation</fullName>
+                <default>false</default>
+                <label>Conversation</label>
+            </value>
+            <value>
+                <fullName>Receptive-Language</fullName>
+                <default>false</default>
+                <label>Receptive-Language</label>
+            </value>
+            <value>
+                <fullName>Expressive Language</fullName>
+                <default>false</default>
+                <label>Expressive Language</label>
+            </value>
+            <value>
+                <fullName>Abstract Concepts</fullName>
+                <default>false</default>
+                <label>Abstract Concepts</label>
+            </value>
+            <value>
+                <fullName>Kinder Readiness</fullName>
+                <default>false</default>
+                <label>Kinder Readiness</label>
+            </value>
+            <value>
+                <fullName>SelfCare</fullName>
+                <default>false</default>
+                <label>SelfCare</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Learning to Learn</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Imitation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Play Skills</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Communication</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Receptive Language</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Self-Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Matching</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Social Play Skills</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage One</controllingFieldValue>
+            <valueName>Speech</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <valueName>Play-Skills</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <valueName>Conversation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <valueName>Receptive-Language</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <valueName>Expressive Language</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <valueName>Abstract Concepts</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <valueName>Kinder Readiness</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <valueName>SelfCare</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

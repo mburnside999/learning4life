@@ -21,6 +21,18 @@ export default class D3Nest extends LightningElement {
   sdcountmap = new Map();
   d3Initialized = false; //rendering and control flags
   programsDisplayed = 0;
+  stageoptionval = "All";
+
+  stageoptions = [
+    { label: "All", value: "All", isChecked: true },
+    { label: "Stage One", value: "Stage One" },
+    { label: "Stage Two", value: "Stage Two" },
+    { label: "Stage Three", value: "Stage Three" },
+    { label: "Stage Four", value: "Stage Four" },
+    { label: "Stage Five", value: "Stage Five" },
+    { label: "Stage Six", value: "Stage Six" }
+  ];
+
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
   }
@@ -44,7 +56,9 @@ export default class D3Nest extends LightningElement {
     //load D3
     Promise.all([loadScript(this, D3 + "/d3.v5.min.js")])
       .then(async () => {
-        let _result = (this.result = await getProgramsAndSds({})); //this shenanigans was to get D3 to wait for the Apex to finish
+        let _result = (this.result = await getProgramsAndSds({
+          stageStr: "All"
+        })); //this shenanigans was to get D3 to wait for the Apex to finish
         console.log(_result);
         //console.log("NEST RESULT=>" + JSON.stringify(this.result));
       })
@@ -286,7 +300,18 @@ export default class D3Nest extends LightningElement {
   handleClick() {
     console.log("click");
     this.isSelected = !this.isSelected;
-    this.initializeD3();
+    this.composeOptions();
+  }
+
+  handleStageChange(event) {
+    console.log("in handleSDChange " + event.detail.value);
+    const selectedOption = event.detail.value;
+    this.stageoptions = this.stageoptions.map((row) => {
+      return { ...row, isChecked: row.label === selectedOption };
+    });
+    console.log("in handleStageChange " + JSON.stringify(this.stageoptions));
+
+    this.composeOptions();
   }
 
   truncate(string, limit) {
@@ -294,5 +319,29 @@ export default class D3Nest extends LightningElement {
       return string;
     }
     return string.slice(0, limit) + "...";
+  }
+
+  /* assemble and execute the calls to Apex based on selections */
+  composeOptions() {
+    console.log("in composeOptions");
+
+    //find the curent Stage
+    let stageoptionJson = this.stageoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let stageStr = stageoptionJson.label;
+    console.log("stageStr=" + stageStr);
+
+    getProgramsAndSds({
+      stageStr: stageStr
+    })
+      .then((result) => {
+        this.result = result;
+        console.log("filtered result=" + JSON.stringify(result));
+        this.initializeD3();
+      })
+      .catch((error) => {
+        this.error = error;
+      });
   }
 }

@@ -41,7 +41,11 @@ public with sharing class LFLPopulateTestData {
     Program__c p = new Program__c(Name = '2D Matching', Status__c = 'Active');
     insert p;
 
-    SD__c sd1 = new SD__c(name = 'Identical', Status__c = 'Active');
+    SD__c sd1 = new SD__c(
+      name = 'Identical',
+      Stage__c = 'Stage One',
+      Status__c = 'Active'
+    );
     sd1.Program__c = p.id;
     insert sd1;
     Objective__c o = new Objective__c(Name = 'Car', Status__c = 'Active');
