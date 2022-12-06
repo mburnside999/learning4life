@@ -433,7 +433,16 @@ public with sharing class L4LSessionStatsController {
           } else {
             val = (Integer) sdCountMap.get(sd.Id) + 1;
           }
-          jsontmp += '{"name":"' + sd.name + '","value":' + val + ' },';
+          jsontmp +=
+            '{"name":"' +
+            sd.name +
+            '","value":' +
+            val +
+            ',"area":"' +
+            ss +
+            '","program":"' +
+            p +
+            '" },';
         }
 
         jsontmp += ']},';
