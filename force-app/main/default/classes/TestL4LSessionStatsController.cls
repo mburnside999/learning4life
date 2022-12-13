@@ -11,7 +11,28 @@ private class TestL4LSessionStatsController {
       clientId,
       'All'
     );
-    System.assert(json.length() > 0, 'Expected  at least some stub json');
+
+    Boolean isValidJSON = LFLUtil.isValidJSON(json);
+
+    System.assert(isValidJSON, 'Expected valid json');
+  }
+
+  @isTest
+  static void testgenerateD3AreaSDJson() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+
+    Test.stopTest();
+
+    String json = L4LSessionStatsController.generateD3AreaSDJson(
+      clientId,
+      'All'
+    );
+
+    Boolean isValidJSON = LFLUtil.isValidJSON(json);
+
+    System.assert(isValidJSON, 'Expected valid json');
   }
 
   @isTest
@@ -25,7 +46,10 @@ private class TestL4LSessionStatsController {
       clientId,
       'Stage One'
     );
-    System.assert(json.length() > 0, 'Expected  at least some stub json');
+
+    Boolean isValidJSON = LFLUtil.isValidJSON(json);
+
+    System.assert(isValidJSON, 'Expected valid json');
   }
 
   @isTest
@@ -36,6 +60,7 @@ private class TestL4LSessionStatsController {
     Test.stopTest();
     List<Session_Statistics__c> ss = new List<Session_Statistics__c>();
     ss = L4LSessionStatsController.getD3SessionStatsHistogramData(clientId);
+
     System.assert(ss.size() > 0, 'Expected stats histogram data to return');
   }
 

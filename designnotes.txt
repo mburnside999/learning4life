@@ -1,0 +1,29 @@
+ //   AreaSDStageMap
+  Area:SD:Stage           
+    //  ────────────────── ───────
+    //  Learning to Learn:Reading:Stage One,
+    //  Learning to Learn:Writng: Stage Two,
+    //  Learning to Learn:Comparing:,
+    //  KinderPrep:Toileting:,
+    //  KinderPrep:Greeting,
+    //  Matching: 2d Matching,
+    //  Matching: 3d Matching,
+    //  A random Area: a Random SD,
+
+OR
+    //  Learning to Learn:[{Reading,Stage One},{Writing,Stage Two}, {Comparing,Stage 1}...
+    //  KinderPrep:[{Toileting},{Greeting}...]
+
+
+    //...
+
+
+
+     //SDID               SDCOUNT
+    //  ────────────────── ───────
+    //  a0A8t0000003HqYEAU 1
+    //  a0A8t0000003HrmEAE 1
+    //  a0A8t0000003HstEAE 1
+    //  a0A8t0000003Ho7EAE 1
+    //  a0A8t0000003HnjEAE 1
+    //...

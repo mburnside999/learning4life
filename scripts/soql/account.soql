@@ -46,3 +46,19 @@ SELECT
       GROUP BY objective__r.sd__r.program__R.name, objective__r.sd__r.name
       ORDER BY count(id)
 
+      SELECT objective__r.sd__r.area__c, count(id) sdcount
+      FROM client_objective__c
+      WHERE client__c = '0018t000002vfSfAAI'
+      GROUP BY objective__r.sd__r.area__c
+      ORDER BY count(id)
+
+sfdx force:data:soql:query --query   "SELECT id, name  FROM program__c WHERE id IN (SELECT program__c FROM sd__c WHERE area__c != NULL)"
+
+sfdx force:data:soql:query --query   "SELECT program__c, area__c, count(id) FROM sd__c WHERE area__c != NULL GROUP BY program__c, area__c"
+
+sfdx force:data:soql:query --query   "SELECT area__c, count(id) FROM sd__c WHERE area__c != NULL GROUP BY area__c order by count(id) desc"
+
+sfdx force:data:soql:query --query  "SELECT Id, name, stage__c FROM sd__c WHERE area__c = 'Learning to Learn'"
+
+
+ sfdx force:data:soql:query --query "SELECT objective__r.sd__r.area__c, count(id) sdcount       FROM client_objective__c       WHERE client__c = '0018t000002vfSfAAI'   and objective__r.sd__r.area__c != null    GROUP BY objective__r.sd__r.area__c       ORDER BY count(id)"
