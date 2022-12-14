@@ -111,3 +111,5 @@ String j = L4LSessionStatsController.generateD3AreaSDJson(
   'Stage One'
 );
 System.debug(j);
+
+LFLUtil.parse('{"name":"xxx"}');

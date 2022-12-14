@@ -536,7 +536,7 @@ public with sharing class L4LSessionStatsController {
       .addTag('L4LSessionStatsController.generateD3AreaSDJson()')
       .addTag('logit()');
 
-    Map<String, List<sd__c>> sdAllAreaMap = new Map<String, List<sd__c>>();
+    Map<String, List<LFLSDWrapper>> sdAllAreaMap = new Map<String, List<LFLSDWrapper>>();
 
     String queryAreaString = 'SELECT id, name, stage__c, objective_count__c,area__c, program__r.name FROM sd__c WHERE area__c != NULL ';
     if (stageStr == 'All') {
@@ -549,12 +549,14 @@ public with sharing class L4LSessionStatsController {
 
     for (sd__c sd : sdAllAreaList) {
       if (sdAllAreaMap.get(sd.area__c) == null) {
-        List<sd__c> temp = new List<sd__c>();
-        temp.add(sd);
+        //List<sd__c> temp = new List<sd__c>();
+        List<LFLSDWrapper> temp = new List<LFLSDWrapper>();
+        temp.add(new LFLSDWrapper(sd));
         sdAllAreaMap.put(sd.area__c, temp);
       } else {
-        List<sd__c> temp2 = sdAllAreaMap.get(sd.area__c);
-        temp2.add(sd);
+        //List<sd__c> temp2 = sdAllAreaMap.get(sd.area__c);
+        List<LFLSDWrapper> temp2 = sdAllAreaMap.get(sd.area__c);
+        temp2.add(new LFLSDWrapper(sd));
         sdAllAreaMap.put(sd.area__c, temp2);
       }
 
@@ -597,11 +599,13 @@ public with sharing class L4LSessionStatsController {
     for (String areaname : sdAllAreaSet) {
       jsontmp += '{"name":"' + (String) areaname + '",';
       jsontmp += '"children":[';
-      List<sd__c> sdList = sdAllAreaMap.get(areaname);
+      List<LFLSDWrapper> sdList = sdAllAreaMap.get(areaname);
+      sdList.sort();
 
-      for (sd__c sd : sdList) {
+      for (LFLSDWRapper sdw : sdList) {
         Integer val = 0;
         Integer actualval = 0;
+        sd__c sd = sdw.sd;
         if ((Integer) sdCountMap.get(sd.Id) == null) {
           actualval = 0;
         } else {

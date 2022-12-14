@@ -202,7 +202,7 @@ export default class D3NestExperiment extends LightningElement {
         //return d.data.value == 1 ? "#E7F0F7" : "#91BE5A";
       })
       .style("opacity", function (d) {
-        return d.data.value == 1 ? 0.2 : 0.8;
+        return d.data.value == 1 ? 0.1 : 0.8;
       })
       .style("stroke", "black")
       .on("mouseover", mouseover)
