@@ -1,6 +1,8 @@
 import { LightningElement, track, api } from "lwc";
 import { loadScript } from "lightning/platformResourceLoader";
-import generateD3ProgramAreaSDJson from "@salesforce/apex/L4LSessionStatsController.generateD3ProgramAreaSDJson";
+//c/d3Histogramimport generateD3ProgramAreaSDJson from "@salesforce/apex/L4LSessionStatsController.generateD3ProgramAreaSDJson";
+import generateD3AreaSDJson from "@salesforce/apex/L4LSessionStatsController.generateD3AreaSDJson";
+
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 import D3 from "@salesforce/resourceUrl/d3";
@@ -59,7 +61,7 @@ export default class D3NestExperiment extends LightningElement {
     //load D3
     Promise.all([loadScript(this, D3 + "/d3.v5.min.js")])
       .then(async () => {
-        let _result = (this.result = await generateD3ProgramAreaSDJson({
+        let _result = (this.result = await generateD3AreaSDJson({
           clientId: this.recordId,
           stageStr: "All"
         })); //this shenanigans was to get D3 to wait for the Apex to finish
@@ -86,34 +88,38 @@ export default class D3NestExperiment extends LightningElement {
 
     console.log("NEST in initializeD3()");
 
-    // const mycolor = (area) => {
-    //   console.log("area=" + area);
-    //   let colorarray = [
-    //     "#1f77b4",
-    //     "#ff7f0e",
-    //     "#2ca02c",
-    //     "#d62728",
-    //     "#9467bd",
-    //     "#8c564b",
-    //     "#e377c2",
-    //     "#7f7f7f",
-    //     "#bcbd22",
-    //     "#17becf"
-    //   ];
+    const mycolor = (area) => {
+      console.log("area=" + area);
+      let colorarray = [
+        "#a6cee3",
+        "#1f78b4",
+        "#b2df8a",
+        "#33a02c",
+        "#fb9a99",
+        "#e31a1c",
+        "#fdbf6f",
+        "#ff7f00",
+        "#cab2d6",
+        "#6a3d9a",
+        "#ffff99",
+        "#b15928"
+      ];
 
-    //   let hash = area
-    //     .split("")
-    //     .reduce(
-    //       (prevHash, currVal) =>
-    //         ((prevHash << 5) - prevHash + currVal.charCodeAt(0)) | 0,
-    //       0
-    //     );
-    //   console.log(Math.abs(hash));
+      let hash = area
+        .split("")
+        .reduce(
+          (prevHash, currVal) =>
+            ((prevHash << 5) - prevHash + currVal.charCodeAt(0)) | 0,
+          0
+        );
 
-    //   hash = hash % 10;
+      hash = Math.abs(hash) % 12;
+      console.log(
+        "area= " + area + " ,hash= " + hash + " color=" + colorarray[hash]
+      );
 
-    //   return colorarray[hash];
-    // };
+      return colorarray[hash];
+    };
 
     var margin = { top: 10, right: 10, bottom: 10, left: 10 },
       width = 1400 - margin.left - margin.right,
@@ -135,11 +141,36 @@ export default class D3NestExperiment extends LightningElement {
       return d.value;
     });
 
+    const tooltip = d3
+      .select(this.template.querySelector(".nest"))
+      .append("span")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("font-size", "12px");
+
+    const mouseover = (e, d) => {
+      tooltip.transition().duration(600).style("opacity", 0.9);
+      tooltip
+        .html(
+          `<span style='color:white'>Stage:${d.data.stage}<br/>Area: ${d.data.area}<br/>SD:${d.data.name}<br/><br>Assigned: ${d.data.actualval}<br/></span>`
+        )
+        .style("left", d3.pointer(e)[0] + 30 + "px")
+        .style("top", d3.pointer(e)[1] + 30 + "px");
+    };
+    const mousemove = (e) => {
+      tooltip
+        .style("left", d3.pointer(e)[0] + 30 + "px")
+        .style("top", d3.pointer(e)[1] + 30 + "px");
+    };
+    const mouseleave = (e) => {
+      tooltip.transition().duration(200).style("opacity", 0);
+    };
+
     d3
       .treemap()
       .size([width, height])
-      .paddingTop(28)
-      .paddingRight(10)
+      .paddingTop(18)
+      .paddingRight(9)
       .paddingInner(4)(
       // Padding between each rectangle
       //.paddingOuter(6)
@@ -165,15 +196,18 @@ export default class D3NestExperiment extends LightningElement {
         return d.y1 - d.y0;
       })
       .style("fill", function (d) {
-        //return mycolor(d.parent.data.name);
-        return d.data.value == 1 ? "#EBF5F2" : "#72B9A8";
+        return mycolor(d.parent.data.name);
+        //return d.data.value == 1 ? "#EBF5F2" : "#72B9A8";
         //return d.data.value == 1 ? "#838996	" : "#6AB3A3";
         //return d.data.value == 1 ? "#E7F0F7" : "#91BE5A";
       })
       .style("opacity", function (d) {
-        return 0.5;
+        return d.data.value == 1 ? 0.1 : 0.8;
       })
-      .style("stroke", "black");
+      .style("stroke", "black")
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave);
 
     svg
       .selectAll("text")
@@ -210,12 +244,11 @@ export default class D3NestExperiment extends LightningElement {
       .attr("font-size", "10px")
       .attr("fill", "black");
 
-    // Add title for the 3 groups
     svg
       .selectAll("titles")
       .data(
         root.descendants().filter(function (d) {
-          return d.depth == 3;
+          return d.depth == 2;
         })
       )
 
@@ -225,12 +258,38 @@ export default class D3NestExperiment extends LightningElement {
         return d.x0;
       })
       .attr("y", function (d) {
-        return d.y0 + 21;
+        return d.y0 + 12;
       })
       .text(function (d) {
         return d.data.name;
       })
-      .attr("font-size", "12px");
+      .attr("font-size", "14px")
+      .style("font-weight", "bold");
+    // .attr("fill", function (d) {
+    //   return color(d.data.name);
+    // });
+
+    // Add title for the 3 groups
+    // svg
+    //   .selectAll("titles")
+    //   .data(
+    //     root.descendants().filter(function (d) {
+    //       return d.depth == 3;
+    //     })
+    //   )
+
+    //   .enter()
+    //   .append("text")
+    //   .attr("x", function (d) {
+    //     return d.x0;
+    //   })
+    //   .attr("y", function (d) {
+    //     return d.y0 + 6;
+    //   })
+    //   .text(function (d) {
+    //     return d.data.name;
+    //   })
+    //  .attr("font-size", "12px");
     // .attr("fill", function (d) {
     //   return color(d.data.name);
     // });
@@ -240,7 +299,7 @@ export default class D3NestExperiment extends LightningElement {
       .append("text")
       .attr("x", 0)
       .attr("y", 20) // +20 to adjust position (lower)
-      .text("Programs Areas and SDs")
+      .text("Areas and SDs")
       .attr("font-size", "19px")
       .attr("fill", "grey");
   }
@@ -267,7 +326,7 @@ export default class D3NestExperiment extends LightningElement {
     let stageStr = stageoptionJson.label;
     console.log("stageStr=" + stageStr);
 
-    generateD3ProgramAreaSDJson({
+    generateD3AreaSDJson({
       clientId: this.recordId,
       stageStr: stageStr
     })

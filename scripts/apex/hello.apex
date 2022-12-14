@@ -98,8 +98,18 @@ String replacement = ']';
 String json2 = json.replace(target, replacement);
 System.debug(json2);
 
-
 //
 
-String j = L4LSessionStatsController.generateD3ProgramAreaSDJson('0018t000002vfSfAAI','All');
+String j = L4LSessionStatsController.generateD3ProgramAreaSDJson(
+  '0018t000002vfSfAAI',
+  'All'
+);
 System.debug(j);
+
+String j = L4LSessionStatsController.generateD3AreaSDJson(
+  '0018t000002vfSfAAI',
+  'Stage One'
+);
+System.debug(j);
+
+LFLUtil.parse('{"name":"xxx"}');

@@ -349,12 +349,6 @@ public with sharing class L4LSessionStatsController {
       .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
       .addTag('logit()');
 
-    String jsontmp = '{"children":[';
-    jsontmp += '{"name": "flare",';
-    jsontmp += '"children": [';
-    System.debug(jsontmp);
-    Set<String> myset = new Set<string>();
-
     List<AggregateResult> countCoBySD = [
       SELECT objective__r.sd__c sdid, count(id) sdcount
       FROM client_objective__c
@@ -363,26 +357,51 @@ public with sharing class L4LSessionStatsController {
       ORDER BY count(id)
     ];
 
-    Map<Id, Integer> sdCountMap = new Map<Id, Integer>();
+    //SDID               SDCOUNT
+    //  ────────────────── ───────
+    //  a0A8t0000003HqYEAU 1
+    //  a0A8t0000003HrmEAE 1
+    //  a0A8t0000003HstEAE 1
+    //  a0A8t0000003Ho7EAE 1
+    //  a0A8t0000003HnjEAE 1
+    //...
 
+    Map<Id, Integer> sdCountMap = new Map<Id, Integer>();
     for (AggregateResult sdc : countCoBySD) {
       sdCountMap.put((id) sdc.get('sdid'), (Integer) sdc.get('sdcount'));
     }
-
-    System.debug(countCoBySD);
+    System.debug('countCoBySD=' + countCoBySD);
 
     String queryProgramString = 'SELECT id, name  ' + 'FROM program__c ';
-
     if (stageStr == 'All') {
       queryProgramString += ' WHERE id IN (SELECT program__c FROM sd__c WHERE area__c != NULL)';
     } else {
       queryProgramString += ' WHERE id IN (SELECT program__c FROM sd__c WHERE area__c != NULL and stage__c=:stageStr)  ';
     }
 
+    // all programs that have SDs with an area
+    //     ID                 NAME
+    //  ────────────────── ────────────────────────────
+    //  a098t000000JlWXAA0 2D Matching
+    //  a098t000000JlWsAAK Categories
+    //  a098t000000JlWyAAK Come Here
+    //  a098t000000JlX0AAK Communication Temptation
+    //  a098t000000JlXFAA0 Do That
+    //  a098t000000JlXJAA0 Emotions
+    //  a098t000000JlXOAA0 Fine motor imitation
+    //  a098t000000JlXPAA0 Fine Motor Task Completion
+    //...
+
     Map<id, program__c> pmap = new Map<id, program__c>(
       (List<Program__c>) Database.query(queryProgramString)
     );
     System.debug('pmap=' + pmap);
+
+    //pmap=
+    // {a098t000000JlWXAA0=Program__c:{Id=a098t000000JlWXAA0, Name=2D Matching},
+    // a098t000000JlWYAA0=Program__c:{Id=a098t000000JlWYAA0, Name=3D Matching},
+    // a098t000000JlWZAA0=Program__c:{Id=a098t000000JlWZAA0, Name=3D to 2D Matching},
+    //...
 
     Map<id, Set<String>> areamap = new Map<id, Set<String>>();
 
@@ -392,7 +411,22 @@ public with sharing class L4LSessionStatsController {
       WHERE area__c != NULL
       GROUP BY program__c, area__c
     ];
-    System.debug(xarlist);
+
+    //     PROGRAM__C         AREA__C             COUNT(ID)
+    //  ────────────────── ─────────────────── ─────────
+    //  a098t000000JlXFAA0 Self-Care           1
+    //  a098t000000JlZHAA0 Self-Care           1
+    //  a098t000000JlWYAA0 Play-Skills         1
+    //  a098t000000JlWgAAK Imitation           1
+    //  a098t000000JlWXAA0 Matching            2
+    //...
+
+    System.debug('xarlist=' + xarlist);
+
+    // (AggregateResult:{Program__c=a098t000000JlXFAA0, Area__c=Self-Care, expr0=1},
+    // AggregateResult:{Program__c=a098t000000JlZHAA0, Area__c=Self-Care, expr0=1},
+    // AggregateResult:{Program__c=a098t000000JlWYAA0, Area__c=Play-Skills, expr0=1},
+
     for (aggregateResult a : xarlist) {
       id i = (id) a.get('program__c');
       string area = (string) a.get('area__c');
@@ -406,11 +440,22 @@ public with sharing class L4LSessionStatsController {
         temp2.add(area);
         areamap.put(i, temp2);
       }
-
-      ///areamap.put(i,s);
     }
-
     System.debug('areamaP=' + areamap);
+
+    // areamaP=
+    // maps  program__c ===> area__c
+    // {a098t000000JlWXAA0={Matching},
+    // a098t000000JlWYAA0={Abstract Concepts, Play-Skills},
+    // a098t000000JlWZAA0={Expressive Language},
+    // a098t000000JlWaAAK={Kinder Readiness, Learning to Learn, Receptive-Language},
+    // a098t000000JlWcAAK={Expressive Language},
+
+    //generate  the JSON
+    String jsontmp = '{"children":[';
+    jsontmp += '{"name": "flare",';
+    jsontmp += '"children": [';
+    System.debug(jsontmp);
 
     Set<id> idlist = pmap.keySet();
     for (Id i : idlist) {
@@ -418,30 +463,50 @@ public with sharing class L4LSessionStatsController {
       jsontmp += '{"name":"' + p.name + '",';
       jsontmp += '"children":[';
       Set<string> tempset = areamap.get(p.Id);
-      for (String ss : tempset) {
-        jsontmp += '{"name":"' + (String) ss + '",';
+      for (String areaname : tempset) {
+        jsontmp +=
+          '{"name":"' +
+          (String) areaname +
+          '","program":"' +
+          p.name +
+          '",';
+
         jsontmp += '"children":[';
         for (sd__c sd : [
-          SELECT Id, name
+          SELECT Id, name, stage__c
           FROM sd__c
-          WHERE program__c = :p.Id AND area__c = :ss
+          WHERE program__c = :p.Id AND area__c = :areaname
         ]) {
+          // looks like
+          //  ID                 NAME          STAGE__C
+          //  ────────────────── ───────────── ─────────
+          //  a0A8t0000003HnNEAU Identical     Stage One
+          //  a0A8t0000003HnOEAU Non-Identical Stage One
+
           Integer val = 0;
+          Integer actualval = 0;
 
           if ((Integer) sdCountMap.get(sd.Id) == null) {
-            val = 1;
+            actualval = 0;
           } else {
-            val = (Integer) sdCountMap.get(sd.Id) + 1;
+            actualval = (Integer) sdCountMap.get(sd.Id);
           }
+
+          val = actualval + 1;
+
           jsontmp +=
             '{"name":"' +
             sd.name +
             '","value":' +
             val +
-            ',"area":"' +
-            ss +
+            ',"actualval":' +
+            actualval +
+            ',"stage":"' +
+            sd.stage__c +
+            '","area":"' +
+            areaname +
             '","program":"' +
-            p +
+            p.Name +
             '" },';
         }
 
@@ -460,6 +525,136 @@ public with sharing class L4LSessionStatsController {
       .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
       .addTag('logit()');
     Logger.saveLog();
+    return jsonstr;
+  }
+
+  // experimental
+  @AuraEnabled(cacheable=true)
+  public static String generateD3AreaSDJson(String clientId, String stageStr) {
+    Logger.setScenario('L4LSessionStatsController');
+    Logger.debug('Apex:generateD3AreaSDJson')
+      .addTag('L4LSessionStatsController.generateD3AreaSDJson()')
+      .addTag('logit()');
+
+    Map<String, List<LFLSDWrapper>> sdAllAreaMap = new Map<String, List<LFLSDWrapper>>();
+
+    String queryAreaString = 'SELECT id, name, stage__c, objective_count__c,area__c, program__r.name FROM sd__c WHERE area__c != NULL ';
+    if (stageStr == 'All') {
+    } else {
+      queryAreaString += ' and stage__c = :stageStr ';
+    }
+    queryAreaString += ' order by area__c,objective_count__c desc';
+
+    List<sd__c> sdAllAreaList = Database.query(queryAreaString);
+
+    for (sd__c sd : sdAllAreaList) {
+      if (sdAllAreaMap.get(sd.area__c) == null) {
+        //List<sd__c> temp = new List<sd__c>();
+        List<LFLSDWrapper> temp = new List<LFLSDWrapper>();
+        temp.add(new LFLSDWrapper(sd));
+        sdAllAreaMap.put(sd.area__c, temp);
+      } else {
+        //List<sd__c> temp2 = sdAllAreaMap.get(sd.area__c);
+        List<LFLSDWrapper> temp2 = sdAllAreaMap.get(sd.area__c);
+        temp2.add(new LFLSDWrapper(sd));
+        sdAllAreaMap.put(sd.area__c, temp2);
+      }
+
+      System.debug('sdAllAreaMap= ' + sdAllAreaMap);
+    }
+
+    List<AggregateResult> countCoBySD = [
+      SELECT objective__r.sd__c sdid, count(id) sdcount
+      FROM client_objective__c
+      WHERE client__c = :clientId
+      GROUP BY objective__r.sd__c
+      ORDER BY count(id)
+    ];
+    System.debug('countCoBySD=' + countCoBySD);
+
+    //SDID               SDCOUNT
+    //  ────────────────── ───────
+    //  a0A8t0000003HqYEAU 1
+    //  a0A8t0000003HrmEAE 1
+    //  a0A8t0000003HstEAE 1
+    //  a0A8t0000003Ho7EAE 1
+    //  a0A8t0000003HnjEAE 1
+    //...
+
+    Map<Id, Integer> sdCountMap = new Map<Id, Integer>();
+    for (AggregateResult sdc : countCoBySD) {
+      sdCountMap.put((id) sdc.get('sdid'), (Integer) sdc.get('sdcount'));
+    }
+
+    //generate  the JSON
+    String jsontmp = '{"children":[';
+    jsontmp += '{"name": "flare",';
+    jsontmp += '"children": [';
+    System.debug(jsontmp);
+
+    Set<String> sdAllAreaSet = sdAllAreaMap.keySet();
+    // List<String> sdAllNewAreaList = new List<String>(sdAllAreaSet);
+    // sdAllNewAreaList.sort();
+
+    for (String areaname : sdAllAreaSet) {
+      jsontmp += '{"name":"' + (String) areaname + '",';
+      jsontmp += '"children":[';
+      List<LFLSDWrapper> sdList = sdAllAreaMap.get(areaname);
+      sdList.sort();
+
+      for (LFLSDWRapper sdw : sdList) {
+        Integer val = 0;
+        Integer actualval = 0;
+        sd__c sd = sdw.sd;
+        if ((Integer) sdCountMap.get(sd.Id) == null) {
+          actualval = 0;
+        } else {
+          actualval = (Integer) sdCountMap.get(sd.Id);
+        }
+        val = actualval + 1;
+        String name = (String) sd.get('name');
+        String stage = (String) sd.get('stage__c');
+        jsontmp +=
+          '{"name":"' +
+          name +
+          '","value":' +
+          val +
+          ',"actualval":' +
+          actualval +
+          ',"stage":"' +
+          stage +
+          '","area":"' +
+          areaname +
+          '" },';
+      }
+
+      jsontmp += ']},';
+    }
+    jsontmp += ']}]}';
+
+    //trim the extraneous characters
+    String target = ',]';
+    String replacement = ']';
+    String jsonstr = jsontmp.replace(target, replacement);
+
+    System.debug('Final json=' + jsonstr);
+    Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
+      .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
+      .addTag('logit()');
+    Logger.saveLog();
+
+    Boolean isValidJSON = false;
+    String message = jsonstr;
+    try {
+      Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(
+        message
+      );
+      isValidJSON = true;
+    } catch (JSONException e) {
+      System.debug(e.getMessage());
+    }
+    System.debug('isValidJSON=' + isValidJSON);
+
     return jsonstr;
   }
 }
