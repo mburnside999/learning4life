@@ -12,9 +12,9 @@ public class LFLSDWrapper implements Comparable {
     sd = sdin;
   }
 
-  // Compare opportunities based on the opportunity amount.
+  // Compare SD based on the name 
   public Integer compareTo(Object compareTo) {
-    // Cast argument to OpportunityWrapper
+    // Cast argument to LFLSDWrapper
     LFLSDWrapper compareToSD = (LFLSDWrapper) compareTo;
 
     // The return value of 0 indicates that both elements are equal.
