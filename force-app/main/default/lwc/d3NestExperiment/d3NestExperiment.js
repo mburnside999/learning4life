@@ -12,7 +12,7 @@ export default class D3NestExperiment extends LightningElement {
   @api recordId;
 
   //chart dimensions
-  svgWidth = 1400;
+  svgWidth = 1800;
   svgHeight = 1200;
 
   isSelected = false;
@@ -122,8 +122,8 @@ export default class D3NestExperiment extends LightningElement {
     };
 
     var margin = { top: 10, right: 10, bottom: 10, left: 10 },
-      width = 1400 - margin.left - margin.right,
-      height = 800 - margin.top - margin.bottom;
+      width = 1800 - margin.left - margin.right,
+      height = 1200 - margin.top - margin.bottom;
 
     // clean up any previous svg.d3 descendents
     let svg = d3.select(this.template.querySelector(".nest"));
