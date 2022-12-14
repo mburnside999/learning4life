@@ -593,10 +593,10 @@ public with sharing class L4LSessionStatsController {
     System.debug(jsontmp);
 
     Set<String> sdAllAreaSet = sdAllAreaMap.keySet();
-    // List<String> sdAllNewAreaList = new List<String>(sdAllAreaSet);
-    // sdAllNewAreaList.sort();
+    List<String> sdSortedAllAreaSetList = new List<String>(sdAllAreaSet);
+    sdSortedAllAreaSetList.sort();
 
-    for (String areaname : sdAllAreaSet) {
+    for (String areaname : sdSortedAllAreaSetList) {
       jsontmp += '{"name":"' + (String) areaname + '",';
       jsontmp += '"children":[';
       List<LFLSDWrapper> sdList = sdAllAreaMap.get(areaname);
