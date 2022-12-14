@@ -35,12 +35,8 @@ jobs:
         if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.2
-        with:
-          # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{cls,cmp,component,css,html,js,json,md,page,yaml,yml}
-          only_changed: True
+      - name: "Code formatting verification with Prettier"
+        run: npm run prettier:verify
           
       # ESlint
       - name: "Lint Lightning Web Components"
