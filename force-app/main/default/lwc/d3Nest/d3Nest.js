@@ -94,6 +94,39 @@ export default class D3Nest extends LightningElement {
   initializeD3() {
     console.log("NEST in initializeD3()");
 
+    const mycolor = (name) => {
+      console.log("name=" + name);
+      let colorarray = [
+        "#a6cee3",
+        "#1f78b4",
+        "#b2df8a",
+        "#33a02c",
+        "#fb9a99",
+        "#e31a1c",
+        "#fdbf6f",
+        "#ff7f00",
+        "#cab2d6",
+        "#6a3d9a",
+        "#ffff99",
+        "#b15928"
+      ];
+
+      let hash = name
+        .split("")
+        .reduce(
+          (prevHash, currVal) =>
+            ((prevHash << 5) - prevHash + currVal.charCodeAt(0)) | 0,
+          0
+        );
+
+      hash = Math.abs(hash) % 12;
+      console.log(
+        "name= " + name + " ,hash= " + hash + " color=" + colorarray[hash]
+      );
+
+      return colorarray[hash];
+    };
+
     var margin = { top: 10, right: 5, bottom: 20, left: 10 },
       width = 1400 - margin.left - margin.right,
       height = 1200 - margin.top - margin.bottom;
@@ -219,11 +252,14 @@ export default class D3Nest extends LightningElement {
       })
       .style("stroke", "black")
       .style("fill", function (d) {
-        return d.data.value == 1 ? "#EBF5F2" : "#72B9A8";
+        return mycolor(d.parent.data.name);
+        //return d.data.value == 1 ? "#EBF5F2" : "#72B9A8";
         //return d.data.value == 1 ? "#838996	" : "#6AB3A3";
         //return d.data.value == 1 ? "#E7F0F7" : "#91BE5A";
       })
-      .style("opacity", 0.8)
+      .style("opacity", function (d) {
+        return d.data.value == 1 ? 0.1 : 0.8;
+      })
       .on("mouseover", mouseover)
       .on("mousemove", mousemove)
       .on("mouseleave", mouseleave);
