@@ -1,7 +1,4 @@
 public with sharing class LFLUtil {
-  public LFLUtil() {
-  }
-
   //Utility method to parse and validate JSON
   public static Boolean isValidJSON(String jsonstr) {
     Boolean isValid = false;
