@@ -17,7 +17,8 @@ class TestL4LTimeSeries {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
-
+    L4LTimeSeries tstest = new L4LTimeSeries();
+    Integer i = tstest.loadCOTimeSeries();
     Test.stopTest();
 
     L4LTimeSeries ts = new L4LTimeSeries();
