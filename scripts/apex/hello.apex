@@ -113,3 +113,21 @@ String j = L4LSessionStatsController.generateD3AreaSDJson(
 System.debug(j);
 
 LFLUtil.parse('{"name":"xxx"}');
+
+String queryAreaString = 'SELECT name, objective_count__c,area__c, program__r.name FROM sd__c where area__c != NULL  limit 10';
+
+List<sd__c> sdAllAreaList = Database.query(queryAreaString);
+System.debug('------sdallarealiat=' + sdAllAreaList);
+
+List<LFLSDWrapper> wrapper = new List<LFLSDWrapper>();
+
+for (sd__c s : sdAllAreaList) {
+  LFLSDWrapper w = new LFLSDWrapper(s);
+  wrapper.add(w);
+}
+
+System.debug('-----' + wrapper);
+wrapper.sort();
+System.debug('----sort--' + wrapper);
+
+sd__c s = new sd__C(name = 'sss');

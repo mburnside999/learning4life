@@ -1,4 +1,4 @@
-public with sharing class L4LTimeSeries {
+public class L4LTimeSeries {
   public Integer loadCOTimeSeries() {
     Logger.setScenario('L4LTimeSeries');
     Logger.debug('Apex:loadCOTimeSeries() - entering')
@@ -73,5 +73,73 @@ public with sharing class L4LTimeSeries {
     }
 
     return tslist.size();
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static String generateD3COTimeSeriesJson(
+    String clientId,
+    String status
+  ) {
+    String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day,count(id) val  FROM client_objective_timeseries__c ';
+
+    queryCOTSString += ' where client__c=:clientId ';
+    if (status == 'All') {
+    } else {
+      queryCOTSString += ' and status__c = :status ';
+    }
+
+    queryCOTSString += ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c) order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c)';
+    List<AggregateResult> COTSList = Database.query(queryCOTSString);
+
+    System.debug('queryCOTSString=' + queryCOTSString);
+
+    //generate  the JSON
+    String jsontmp = '[';
+
+    for (AggregateResult agg : COTSList) {
+      jsontmp += '{';
+      jsontmp +=
+        '"rundate":"' +
+        agg.get('year') +
+        '-' +
+        agg.get('month') +
+        '-' +
+        agg.get('day') +
+        '",';
+      jsontmp += '"val":' + agg.get('val') + '}';
+      jsontmp += ',';
+    }
+
+    jsontmp += ']';
+    String target = ',]';
+    String replacement = ']';
+    String jsonstr = jsontmp.replace(target, replacement);
+
+    System.debug('json str=' + jsonstr);
+
+    // //trim the extraneous characters
+    // String target = ',]';
+    // String replacement = ']';
+    // String jsonstr = jsontmp.replace(target, replacement);
+
+    // System.debug('Final json=' + jsonstr);
+    // Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
+    //   .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
+    //   .addTag('logit()');
+    // Logger.saveLog();
+
+    // Boolean isValidJSON = false;
+    // String message = jsonstr;
+    // try {
+    //   Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(
+    //     message
+    //   );
+    //   isValidJSON = true;
+    // } catch (JSONException e) {
+    //   System.debug(e.getMessage());
+    // }
+    // System.debug('isValidJSON=' + isValidJSON);
+
+    return jsonstr;
   }
 }
