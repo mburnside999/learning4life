@@ -62,3 +62,6 @@ sfdx force:data:soql:query --query  "SELECT Id, name, stage__c FROM sd__c WHERE 
 
 
  sfdx force:data:soql:query --query "SELECT objective__r.sd__r.area__c, count(id) sdcount       FROM client_objective__c       WHERE client__c = '0018t000002vfSfAAI'   and objective__r.sd__r.area__c != null    GROUP BY objective__r.sd__r.area__c       ORDER BY count(id)"
+
+SELECT calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c),count(id) FROM client_objective_timeseries__c where client__c='0018t000003DbqXAAS' and status__c='ACQ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c) order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c)
+

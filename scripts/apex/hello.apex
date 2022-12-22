@@ -131,3 +131,10 @@ wrapper.sort();
 System.debug('----sort--' + wrapper);
 
 sd__c s = new sd__C(name = 'sss');
+
+L4LSessionStatsController.getD3SessionStatsHistogramData('0018t000002vfSfAAI');
+
+L4LTimeSeries ts = new L4LTimeSeries();
+ts.loadCOTimeSeries();
+
+L4LTimeSeries.generateD3COTimeSeriesJson('0018t000002vfSfAAI', 'All');

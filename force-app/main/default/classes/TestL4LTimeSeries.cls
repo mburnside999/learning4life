@@ -28,4 +28,18 @@ class TestL4LTimeSeries {
     str = L4LTimeSeries.generateD3COTimeSeriesJson(clientId, 'ACQ');
     System.assert(str.length() > 0, 'Expected a return string');
   }
+
+  @isTest
+  static void Test3() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    L4LTimeSeries tstest = new L4LTimeSeries();
+    Integer i = tstest.loadCOTimeSeries();
+    Test.stopTest();
+
+    L4LTimeSeries ts = new L4LTimeSeries();
+    String str = L4LTimeSeries.generateD3COTimeSeriesByStatusJson(clientId);
+    System.assert(str.length() > 0, 'Expected a return string');
+  }
 }
