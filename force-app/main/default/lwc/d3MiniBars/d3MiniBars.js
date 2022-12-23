@@ -75,7 +75,7 @@ export default class D3MiniBars extends LightningElement {
     console.log("data " + JSON.stringify(data));
 
     // set the dimensions and margins of the graph
-    var margin = { top: 30, right: 0, bottom: 30, left: 50 },
+    var margin = { top: 50, right: 30, bottom: 30, left: 50 },
       width = 400 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
 
@@ -148,6 +148,7 @@ export default class D3MiniBars extends LightningElement {
     console.log("draw the Line");
 
     // Draw the line
+
     svg
       .append("path")
       .attr("fill", "none")
@@ -185,7 +186,7 @@ export default class D3MiniBars extends LightningElement {
     // svg
     //   .append("g")
     //   .selectAll("dot")
-    //   .data(data)
+    //   .data(sumstat)
     //   .enter()
     //   .append("circle")
     //   .attr("cx", function (d) {
@@ -200,7 +201,7 @@ export default class D3MiniBars extends LightningElement {
     let titlesvg = d3
       .select(this.template.querySelector(".title"))
       .attr("width", 800)
-      .attr("height", 100)
+      .attr("height", 60)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -212,8 +213,10 @@ export default class D3MiniBars extends LightningElement {
       .attr("text-anchor", "left")
       .style("font-size", "18px")
       .style("fill", "grey")
-      .style("max-width", 400)
-      .text(`EXPERIMENTAL`);
+      .style("max-width", 800)
+      .text(
+        `EXPERIMENTAL: Status Count across CO Timeseries, Refreshed 10pm Sunday`
+      );
 
     // svg
     //   .append("text")

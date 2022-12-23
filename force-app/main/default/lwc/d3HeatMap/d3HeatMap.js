@@ -144,6 +144,11 @@ export default class D3HeatMap extends LightningElement {
     let programName;
     let SDObjStr;
     let SDname;
+    let totalCorrect;
+    let totalIncorrect;
+    let totalPrompted;
+    let totalNonResponsive;
+    let totalResponses;
 
     this.sessionXAxisArray = [];
     this.progYAxisArray = [];
@@ -165,6 +170,20 @@ export default class D3HeatMap extends LightningElement {
       sessiondate = row.Session__r.Date__c;
       value = row.Percent_Correct__c;
       SDname = row.SD_Name__c;
+      totalCorrect =
+        row.TotalAcquiredCorrect__c != null ? row.TotalAcquiredCorrect__c : 0;
+      totalIncorrect =
+        row.TotalAcquiredInCorrect__c != null
+          ? row.TotalAcquiredInCorrect__c
+          : 0;
+      totalPrompted =
+        row.TotalAcquiredPrompted__c != null ? row.TotalAcquiredPrompted__c : 0;
+      totalNonResponsive =
+        row.TotalAcquiredNonResponsive__c != null
+          ? row.TotalAcquiredNonResponsive__c
+          : 0;
+      totalResponses =
+        totalCorrect + totalIncorrect + totalPrompted + totalNonResponsive;
 
       return {
         session,
@@ -174,7 +193,12 @@ export default class D3HeatMap extends LightningElement {
         sessiondate,
         programName,
         SDname,
-        SDObjStr
+        SDObjStr,
+        totalCorrect,
+        totalIncorrect,
+        totalPrompted,
+        totalNonResponsive,
+        totalResponses
       };
     });
 
@@ -311,7 +335,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>Score=${d.value}</span>`
+          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>Score=${d.value}<br/>Correct=${d.totalCorrect}<br/>Responses=${d.totalResponses}</span>`
         )
         .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");

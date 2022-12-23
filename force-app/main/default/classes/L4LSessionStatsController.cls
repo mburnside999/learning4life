@@ -236,7 +236,7 @@ public with sharing class L4LSessionStatsController {
 
     String querySessionStatsString =
       'SELECT session__r.name, session__r.client__c, session__r.client__r.name, program_name__c, ' +
-      'objective__r.name  ,session__r.Date__c ,previous_status__c ,Percent_Correct__c, SD_Name__c, SD_And_Objective_Str__c ' +
+      'objective__r.name  ,session__r.Date__c ,previous_status__c ,Percent_Correct__c,TotalAcquiredCorrect__c,TotalAcquiredIncorrect__c,TotalAcquiredNonResponsive__c,TotalAcquiredPrompted__c, SD_Name__c, SD_And_Objective_Str__c ' +
       'FROM Session_Statistics__c ' +
       'WHERE session__r.client__c = :clientId ';
 
