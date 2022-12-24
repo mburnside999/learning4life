@@ -154,12 +154,12 @@ export default class D3HeatMap extends LightningElement {
     this.progYAxisArray = [];
     this.gridData = [];
 
+    console.log("ready to parse result ===>" + JSON.stringify(this.result));
+
     this.gridData = this.result.map((row) => {
-      console.log("=======" + row.Session__r.Name);
       this.sessionsSet.add(row.Session__r.Name);
       //this.objsSet.add(row.Objective__r.Name);
       this.objsSet.add(row.SD_And_Objective_Str__c);
-
       this.progsSet.add(row.Program_Name__c);
       this.sdSet.add(row.SD_Name__c);
       session = row.Session__r.Name;
@@ -170,21 +170,13 @@ export default class D3HeatMap extends LightningElement {
       sessiondate = row.Session__r.Date__c;
       value = row.Percent_Correct__c;
       SDname = row.SD_Name__c;
-      totalCorrect =
-        row.TotalAcquiredCorrect__c != null ? row.TotalAcquiredCorrect__c : 0;
-      totalIncorrect =
-        row.TotalAcquiredInCorrect__c != null
-          ? row.TotalAcquiredInCorrect__c
-          : 0;
-      totalPrompted =
-        row.TotalAcquiredPrompted__c != null ? row.TotalAcquiredPrompted__c : 0;
-      totalNonResponsive =
-        row.TotalAcquiredNonResponsive__c != null
-          ? row.TotalAcquiredNonResponsive__c
-          : 0;
+
+      totalCorrect = row.TotalAcquiredCorrect__c;
+      totalIncorrect = row.TotalAcquiredIncorrect__c;
+      totalPrompted = row.TotalAcquiredPrompted__c;
+      totalNonResponsive = row.TotalAcquiredNonResponsive__c;
       totalResponses =
         totalCorrect + totalIncorrect + totalPrompted + totalNonResponsive;
-
       return {
         session,
         objective,
@@ -335,7 +327,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>Score=${d.value}<br/>Correct=${d.totalCorrect}<br/>Responses=${d.totalResponses}</span>`
+          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>Score=${d.value}%<br/>Correct=${d.totalCorrect}/${d.totalResponses}</span>`
         )
         .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
@@ -390,7 +382,7 @@ export default class D3HeatMap extends LightningElement {
       .style("fill", "grey")
       .style("max-width", 400)
       .text(
-        "Objective Mastery V2.5  - NEW! Green percent has been adjusted to >= 90% "
+        "Objective Mastery V2.6  - NEW! Hover now shows # of correct responses/attempts"
       );
   }
 
