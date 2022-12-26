@@ -186,7 +186,10 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       clientId: this.recordId,
       status: "All"
     }).then((response) => {
-      console.log("calling lollipop, response=" + JSON.stringify(response));
+      console.log(
+        "calling generateD3COTimeSeriesJson,response=" +
+          JSON.stringify(response)
+      );
       this.renderLineChart(response);
     });
   }
@@ -197,7 +200,23 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       clientId: this.recordId,
       status: "ACQ"
     }).then((response) => {
-      console.log("calling lollipop, response=" + JSON.stringify(response));
+      console.log(
+        "calling generateD3COTimeSeriesJson,response=" +
+          JSON.stringify(response)
+      );
+      this.renderLineChart(response);
+    });
+  }
+  handleClickOBJ(event) {
+    this.mode = "OBJ";
+    generateD3COTimeSeriesJson({
+      clientId: this.recordId,
+      status: "OBJ"
+    }).then((response) => {
+      console.log(
+        "calling generateD3COTimeSeriesJson,response=" +
+          JSON.stringify(response)
+      );
       this.renderLineChart(response);
     });
   }
