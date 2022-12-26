@@ -84,6 +84,8 @@ public class L4LTimeSeries {
 
     queryCOTSString += ' where client__c=:clientId ';
     if (status == 'All') {
+    } else if (status == 'Null') {
+      queryCOTSString += ' and status__c = null ';
     } else {
       queryCOTSString += ' and status__c = :status ';
     }

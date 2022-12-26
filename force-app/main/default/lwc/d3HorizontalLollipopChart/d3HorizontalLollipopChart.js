@@ -92,7 +92,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .call(d3.axisBottom(x));
 
     // Add Y axis
-    var y = d3.scaleLinear().domain([0, 200]).range([height, 0]);
+    var y = d3.scaleLinear().domain([0, 160]).range([height, 0]);
     svg.append("g").call(d3.axisLeft(y));
     // Add the line
     svg
@@ -180,38 +180,11 @@ export default class D3HorizontalLollipopChart extends LightningElement {
   //   this.renderHorizontalLollipopChart(this.mydata, "AvgEmployees");
   // }
 
-  handleClickAll(event) {
-    this.mode = "All";
+  handleClick(event) {
+    this.mode = event.target.label;
     generateD3COTimeSeriesJson({
       clientId: this.recordId,
-      status: "All"
-    }).then((response) => {
-      console.log(
-        "calling generateD3COTimeSeriesJson,response=" +
-          JSON.stringify(response)
-      );
-      this.renderLineChart(response);
-    });
-  }
-
-  handleClickACQ(event) {
-    this.mode = "ACQ";
-    generateD3COTimeSeriesJson({
-      clientId: this.recordId,
-      status: "ACQ"
-    }).then((response) => {
-      console.log(
-        "calling generateD3COTimeSeriesJson,response=" +
-          JSON.stringify(response)
-      );
-      this.renderLineChart(response);
-    });
-  }
-  handleClickOBJ(event) {
-    this.mode = "OBJ";
-    generateD3COTimeSeriesJson({
-      clientId: this.recordId,
-      status: "OBJ"
+      status: this.mode
     }).then((response) => {
       console.log(
         "calling generateD3COTimeSeriesJson,response=" +

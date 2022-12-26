@@ -137,4 +137,4 @@ L4LSessionStatsController.getD3SessionStatsHistogramData('0018t000002vfSfAAI');
 L4LTimeSeries ts = new L4LTimeSeries();
 ts.loadCOTimeSeries();
 
-L4LTimeSeries.generateD3COTimeSeriesJson('0018t000002vfSfAAI', 'All');
+L4LTimeSeries.generateD3COTimeSeriesJson('0018t000002vfSfAAI', 'Null');

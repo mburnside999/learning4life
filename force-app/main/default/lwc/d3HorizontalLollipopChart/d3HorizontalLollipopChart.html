@@ -1,25 +1,55 @@
 <!-- D 3 Horizontal Lollipop Chart -->
 <template>
   <lightning-card>
-    <lightning-button
-      label="All"
-      title="Looks like a link"
-      onclick={handleClickAll}
-      class="slds-m-left_x-small"
-    ></lightning-button>
-    <lightning-button
-      label="ACQ"
-      title="Looks like a link"
-      onclick={handleClickACQ}
-      class="slds-m-left_x-small"
-    ></lightning-button>
-    <lightning-button
-      label="OBJ"
-      title="Looks like a link"
-      onclick={handleClickOBJ}
-      class="slds-m-left_x-small"
-    ></lightning-button>
-
-    <svg class="horizontal-lollipop-chart" lwc:dom="manual"></svg>
+    <div class="slds-p-around_medium lgc-bg-inverse">
+      <lightning-button-group>
+        <lightning-button
+          label="All"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          label="ACQ"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          label="OBJ"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          label="1CP"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          label="1IP"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          label="CIP"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          label="HLD"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          label="DNC"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+        <lightning-button
+          label="Null"
+          onclick={handleClick}
+          class="slds-m-left_x-small"
+        ></lightning-button>
+      </lightning-button-group>
+    </div>
   </lightning-card>
+  <svg class="horizontal-lollipop-chart" lwc:dom="manual"></svg>
 </template>
