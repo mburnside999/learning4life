@@ -3,7 +3,7 @@
     <fullName>Client_Objective_Notes__c</fullName>
     <deprecated>false</deprecated>
     <externalId>false</externalId>
-    <label>Client_Objective_Notes</label>
+    <label>Notes</label>
     <length>100</length>
     <required>false</required>
     <trackHistory>false</trackHistory>

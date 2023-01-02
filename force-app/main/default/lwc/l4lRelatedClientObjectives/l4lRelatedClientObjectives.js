@@ -402,7 +402,11 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     );
     this.refresh();
   }
-
+  handleClose(event) {
+    this.areDetailsVisible = false;
+    //experimental
+    this.refresh();
+  }
   // disconnectedCallback() {
   //     // unsubscribe from inputChangeEvent event
   //     unregisterAllListeners(this);
