@@ -41,8 +41,8 @@ public class L4LTimeSeries {
       tsrecord.Frequency__c = co.Frequency__c;
       tsrecord.CO_Name__c = co.Name;
       tsrecord.Objective__c = co.Objective__c;
-      tsrecord.stage__c = co.Stage__c;
-      tsrecord.area__c = co.Area__c;
+      tsrecord.Stage__c = co.Stage__c;
+      tsrecord.Area__c = co.Area__c;
       tsrecord.status__c = co.status__c;
 
       tsrecord.Re_Test_Recommended__c = co.Re_Test_Recommended__c;

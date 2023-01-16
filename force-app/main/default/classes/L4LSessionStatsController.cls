@@ -431,7 +431,17 @@ public with sharing class L4LSessionStatsController {
       id i = (id) a.get('program__c');
       string area = (string) a.get('area__c');
 
-      if (areamap.get(i) == null) {
+      // if (areamap.get(i) == null) {
+      //   Set<string> temp = new Set<string>();
+      //   temp.add(area);
+      //   areamap.put(i, temp);
+      // } else {
+      //   Set<string> temp2 = areamap.get(i);
+      //   temp2.add(area);
+      //   areamap.put(i, temp2);
+      // }
+
+      if (!areamap.containsKey(i)) {
         Set<string> temp = new Set<string>();
         temp.add(area);
         areamap.put(i, temp);
@@ -486,7 +496,13 @@ public with sharing class L4LSessionStatsController {
           Integer val = 0;
           Integer actualval = 0;
 
-          if ((Integer) sdCountMap.get(sd.Id) == null) {
+          // if ((Integer) sdCountMap.get(sd.Id) == null) {
+          //   actualval = 0;
+          // } else {
+          //   actualval = (Integer) sdCountMap.get(sd.Id);
+          // }
+
+          if (!sdCountMap.containsKey(sd.Id)) {
             actualval = 0;
           } else {
             actualval = (Integer) sdCountMap.get(sd.Id);
@@ -548,7 +564,19 @@ public with sharing class L4LSessionStatsController {
     List<sd__c> sdAllAreaList = Database.query(queryAreaString);
 
     for (sd__c sd : sdAllAreaList) {
-      if (sdAllAreaMap.get(sd.area__c) == null) {
+      // if (sdAllAreaMap.get(sd.area__c) == null) {
+      //   //List<sd__c> temp = new List<sd__c>();
+      //   List<LFLSDWrapper> temp = new List<LFLSDWrapper>();
+      //   temp.add(new LFLSDWrapper(sd));
+      //   sdAllAreaMap.put(sd.area__c, temp);
+      // } else {
+      //   //List<sd__c> temp2 = sdAllAreaMap.get(sd.area__c);
+      //   List<LFLSDWrapper> temp2 = sdAllAreaMap.get(sd.area__c);
+      //   temp2.add(new LFLSDWrapper(sd));
+      //   sdAllAreaMap.put(sd.area__c, temp2);
+      // }
+
+      if (!sdAllAreaMap.containsKey(sd.area__c)) {
         //List<sd__c> temp = new List<sd__c>();
         List<LFLSDWrapper> temp = new List<LFLSDWrapper>();
         temp.add(new LFLSDWrapper(sd));
@@ -606,11 +634,19 @@ public with sharing class L4LSessionStatsController {
         Integer val = 0;
         Integer actualval = 0;
         sd__c sd = sdw.sd;
-        if ((Integer) sdCountMap.get(sd.Id) == null) {
+
+        // if ((Integer) sdCountMap.get(sd.Id) == null) {
+        //   actualval = 0;
+        // } else {
+        //   actualval = (Integer) sdCountMap.get(sd.Id);
+        // }
+
+        if (!sdCountMap.containsKey(sd.Id)) {
           actualval = 0;
         } else {
           actualval = (Integer) sdCountMap.get(sd.Id);
         }
+
         val = actualval + 1;
         String name = (String) sd.get('name');
         String stage = (String) sd.get('stage__c');
