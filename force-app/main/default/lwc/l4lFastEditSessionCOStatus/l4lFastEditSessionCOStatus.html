@@ -1,0 +1,59 @@
+<template>
+  <c-logger></c-logger>
+  <lightning-card title="NEW! Edit Client Objective Status">
+    <div class="page-section page-right"></div>
+    <input
+      size="50"
+      type="search"
+      placeholder="Filter Prog, Obj, SD or Status"
+      oninput={handleSearchKeyInput}
+    />
+    <div class="c-container">
+      <lightning-layout multiple-rows="true">
+        <lightning-layout-item
+          flexibility="auto"
+          padding="around-small"
+          size="12"
+        >
+          <div class="page-header page-section">
+            <i
+              >Edit one or more client objectives by double clicking the pen
+              icon in the Status column. Hint: use the Filter field to quickly
+              find the objectives you are looking for.</i
+            ><br />
+            <i
+              >Make sure to use a valid Status code such as OBJ, ACQ, 1CP
+              etc.</i
+            >
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12">
+          <lightning-datatable
+            key-field="Id"
+            data={objectives}
+            columns={columns}
+            onsave={handleSave}
+            draft-values={draftValues}
+          >
+          </lightning-datatable>
+        </lightning-layout-item>
+        <lightning-layout-item
+          flexibility="auto"
+          padding="around-small"
+          size="12"
+        >
+          <div class="page-footer page-section">
+            <i
+              >Edit one or more client objectives by double clicking the pen
+              icon in the Status column. </i
+            ><br />
+            <i
+              >Make sure to use a valid Status code such as OBJ, ACQ, 1CP
+              etc.</i
+            >
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
+</template>
