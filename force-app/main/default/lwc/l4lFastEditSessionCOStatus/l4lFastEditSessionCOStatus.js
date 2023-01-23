@@ -258,4 +258,13 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
     });
     this.dispatchEvent(evt);
   }
+
+  handleClickCancel(event) {
+    this.logit(
+      FINE,
+      `handleClickCancel(): dispatching CustomEvent(close)`,
+      `handleClickCancel()`
+    );
+    this.dispatchEvent(new CustomEvent("close"));
+  }
 }
