@@ -29,6 +29,11 @@ export default class D3HeatMap extends LightningElement {
     // { label: "Bring Me", value: "Bring Me" }
   ];
 
+  statusoptions = [
+    { label: "All", value: "false", isChecked: true },
+    { label: "ACQ", value: "true" }
+  ];
+
   stageoptions = [
     { label: "All", value: "All", isChecked: true },
     { label: "Stage One", value: "Stage One" },
@@ -47,10 +52,11 @@ export default class D3HeatMap extends LightningElement {
   ];
 
   periodoptions = [
-    { label: "*30 Days", value: "30", isChecked: true },
-    { label: "All", value: "All" },
+    { label: "All", value: "All", isChecked: true },
     { label: "1 Day", value: "1" },
     { label: "7 Days", value: "7" },
+    { label: "30 Days", value: "30" },
+    { label: "60 Days", value: "60" },
     { label: "90 Days", value: "90" },
     { label: "180 Days", value: "180" },
     { label: "365 Days", value: "365" }
@@ -59,7 +65,8 @@ export default class D3HeatMap extends LightningElement {
   optionval = "All"; //default
   sdoptionval = "All";
   stageoptionval = "All";
-  periodval = "30";
+  periodval = "All";
+  statusval = "false";
 
   //the clientId from UI
   @api recordId;
@@ -104,7 +111,7 @@ export default class D3HeatMap extends LightningElement {
           clientId: this.recordId,
           programStr: "All",
           sdStr: "All",
-          periodStr: "30",
+          periodStr: "All",
           stageStr: "All",
           showAcquired: this.isSelected
         }));
@@ -425,6 +432,18 @@ export default class D3HeatMap extends LightningElement {
     this.composeOptions();
   }
 
+  //the Status change handler
+  handleStatusChange(event) {
+    console.log("in handleStatusChange " + event.detail.value);
+
+    const selectedOption = event.detail.value;
+    this.statusoptions = this.statusoptions.map((row) => {
+      return { ...row, isChecked: row.value === selectedOption };
+    });
+    console.log("in handleStatusChange " + JSON.stringify(this.statusoptions));
+    this.composeOptions();
+  }
+
   //the Program change handler
   handlePeriodChange(event) {
     console.log("in handlePeriodChange " + event.detail.value);
@@ -447,7 +466,7 @@ export default class D3HeatMap extends LightningElement {
     });
     let programStr = optionJson.label;
 
-    //find the curent SD
+    //find the curent Stage
     let stageoptionJson = this.stageoptions.find((item) => {
       return item.isChecked == true;
     });
@@ -469,12 +488,20 @@ export default class D3HeatMap extends LightningElement {
     let periodStr = periodoptionJson.value;
     console.log("periodStr=" + periodStr + " sdStr=" + sdStr);
 
+    console.log("status options=" + JSON.stringify(this.statusoptions));
+    //find the curent Period
+    let statusoptionJson = this.statusoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let statusStr = statusoptionJson.value;
+    console.log("statusStr=" + statusStr);
+
     getD3StatsByProgramAndSD({
       clientId: this.recordId,
       programStr: programStr,
       sdStr: sdStr,
       periodStr: periodStr,
-      showAcquired: this.isSelected,
+      showAcquired: statusStr,
       stageStr: stageStr
     })
       .then((result) => {
