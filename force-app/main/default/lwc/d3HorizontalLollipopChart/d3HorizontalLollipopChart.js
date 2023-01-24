@@ -59,7 +59,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     // set the dimensions and margins of the graph
     const margin = { top: 40, right: 30, bottom: 40, left: 200 },
-      width = 1400 - margin.left - margin.right,
+      width = 1200 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
     console.log("cleaning  up  svg");
