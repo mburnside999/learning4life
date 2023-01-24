@@ -3,17 +3,23 @@
     title="L4L Program Mastery Analysis"
     icon-name="custom:custom19"
   >
-    <lightning-button-stateful
-      label-when-off="Showing ALL Objectives - Click to show ACQ Only"
-      label-when-on="Showing ACQ Objectives - - Click to show ALL"
-      icon-name-when-off="utility:check"
-      icon-name-when-on="utility:check"
-      selected={isSelected}
-      onclick={handleClick}
-    >
-    </lightning-button-stateful>
+    <div class="c-container">
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="status"
+              label="Status"
+              value={statusval}
+              options={statusoptions}
+              onchange={handleStatusChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
 
-    <!-- <lightning-radio-group
+        <!-- <lightning-radio-group
       label="Programs"
       options={options}
       value={optionval}
@@ -23,42 +29,64 @@
       required
     > 
     </lightning-radio-group>-->
-
-    <lightning-combobox
-      name="progress"
-      label="Programs"
-      value={optionval}
-      placeholder="Select Program"
-      options={options}
-      onchange={handleChange}
-    ></lightning-combobox>
-
-    <lightning-combobox
-      name="sd"
-      label="SD"
-      value={sdoptionval}
-      placeholder="Select SD"
-      options={sdoptions}
-      onchange={handleSDChange}
-    ></lightning-combobox>
-
-    <lightning-combobox
-      name="stage"
-      label="Stage"
-      value={stageoptionval}
-      placeholder="Select Stage"
-      options={stageoptions}
-      onchange={handleStageChange}
-    ></lightning-combobox>
-
-    <lightning-combobox
-      name="period"
-      label="Period"
-      value={periodval}
-      placeholder="Select Period"
-      options={periodoptions}
-      onchange={handlePeriodChange}
-    ></lightning-combobox>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="progress"
+              label="Programs"
+              value={optionval}
+              placeholder="Select Program"
+              options={options}
+              onchange={handleChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="sd"
+              label="SD"
+              value={sdoptionval}
+              placeholder="Select SD"
+              options={sdoptions}
+              onchange={handleSDChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="stage"
+              label="Stage"
+              value={stageoptionval}
+              placeholder="Select Stage"
+              options={stageoptions}
+              onchange={handleStageChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="period"
+              label="Period"
+              value={periodval}
+              placeholder="Select Period"
+              options={periodoptions}
+              onchange={handlePeriodChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
   </lightning-card>
   <lightning-card>
     <div class="scatterplot" lwc:dom="manual"></div>

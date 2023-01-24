@@ -1,0 +1,1057 @@
+{
+  "attributes": {
+    "type": "Session__c"
+  },
+  "records": [
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef1"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-21",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 9/10/2022, 5:12 pm\n---------------------------------------------------------------\nDistinct Objectives: 2\nCorrect: 10\nNonResponsive: 1\nIncorrect: 2\nPrompted: 0\n----------------------\nPercent Correct: 76%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef2"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-23",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 26/9/2022, 3:36 pm\n---------------------------------------------------------------\nDistinct Objectives: 4\nCorrect: 16\nNonResponsive: 4\nIncorrect: 16\nPrompted: 6\n----------------------\nPercent Correct: 38%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef3"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-26",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 9/10/2022, 5:12 pm\n---------------------------------------------------------------\nDistinct Objectives: 5\nCorrect: 29\nNonResponsive: 3\nIncorrect: 14\nPrompted: 3\n----------------------\nPercent Correct: 59%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef4"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-27",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 9/10/2022, 5:15 pm\n---------------------------------------------------------------\nDistinct Objectives: 5\nCorrect: 11\nNonResponsive: 3\nIncorrect: 33\nPrompted: 5\n----------------------\nPercent Correct: 21%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef5"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-28",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 28/9/2022, 2:51 pm\n---------------------------------------------------------------\nDistinct Objectives: 6\nCorrect: 29\nNonResponsive: 8\nIncorrect: 18\nPrompted: 2\n----------------------\nPercent Correct: 50%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef6"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-28",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Kinder",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 19/10/2022, 5:04 pm\n---------------------------------------------------------------\nDistinct Objectives: 2\nCorrect: 11\nNonResponsive: 0\nIncorrect: 3\nPrompted: 0\n----------------------\nPercent Correct: 78%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef7"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-30",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 9/10/2022, 5:24 pm\n---------------------------------------------------------------\nDistinct Objectives: 7\nCorrect: 47\nNonResponsive: 4\nIncorrect: 31\nPrompted: 9\n----------------------\nPercent Correct: 51%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef8"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-30",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 30/9/2022, 11:50 pm\n---------------------------------------------------------------\nDistinct Objectives: 4\nCorrect: 15\nNonResponsive: 1\nIncorrect: 16\nPrompted: 1\n----------------------\nPercent Correct: 45%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef9"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-30",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 30/9/2022, 11:53 pm\n---------------------------------------------------------------\nDistinct Objectives: 4\nCorrect: 18\nNonResponsive: 5\nIncorrect: 28\nPrompted: 1\n----------------------\nPercent Correct: 34%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef10"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-05",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 9/10/2022, 5:20 pm\n---------------------------------------------------------------\nDistinct Objectives: 6\nCorrect: 34\nNonResponsive: 2\nIncorrect: 17\nPrompted: 3\n----------------------\nPercent Correct: 60%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef11"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-06",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 7/10/2022, 3:56 pm\n---------------------------------------------------------------\nDistinct Objectives: 4\nCorrect: 23\nNonResponsive: 2\nIncorrect: 2\nPrompted: 1\n----------------------\nPercent Correct: 82%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef12"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 7/10/2022, 4:28 pm\n---------------------------------------------------------------\nDistinct Objectives: 3\nCorrect: 4\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 100%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef13"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 7/10/2022, 8:08 pm\n---------------------------------------------------------------\nDistinct Objectives: 1\nCorrect: 2\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 100%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef14"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-08",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 28/10/2022, 9:54 am\n---------------------------------------------------------------\nDistinct Objectives: 6\nCorrect: 32\nNonResponsive: 7\nIncorrect: 39\nPrompted: 5\n----------------------\nPercent Correct: 38%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef15"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-09",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/10/2022, 1:50 am\n---------------------------------------------------------------\nDistinct Objectives: 4\nCorrect: 24\nNonResponsive: 0\nIncorrect: 8\nPrompted: 0\n----------------------\nPercent Correct: 75%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef16"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-10",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Open",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\r\nSuccessfully generated session statistics at 4/11/2022, 1:24 pm\r\n---------------------------------------------------------------\r\nDistinct Objectives: 8\r\nCorrect: 14\r\nNonResponsive: 2\r\nIncorrect: 2\r\nPrompted: 1\r\n----------------------\r\nPercent Correct: 73%\r\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef17"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-10",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/10/2022, 4:32 pm\n---------------------------------------------------------------\nDistinct Objectives: 2\nCorrect: 6\nNonResponsive: 1\nIncorrect: 9\nPrompted: 1\n----------------------\nPercent Correct: 35%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef18"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-13",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 20/10/2022, 4:13 pm\n---------------------------------------------------------------\nDistinct Objectives: 5\nCorrect: 34\nNonResponsive: 13\nIncorrect: 14\nPrompted: 2\n----------------------\nPercent Correct: 53%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef19"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-20",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 20/10/2022, 10:14 pm\n---------------------------------------------------------------\nDistinct Objectives: 4\nCorrect: 26\nNonResponsive: 3\nIncorrect: 16\nPrompted: 2\n----------------------\nPercent Correct: 55%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef20"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-21",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Kinder",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 27/10/2022, 8:51 pm\n---------------------------------------------------------------\nDistinct Objectives: 6\nCorrect: 26\nNonResponsive: 6\nIncorrect: 23\nPrompted: 5\n----------------------\nPercent Correct: 43%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef21"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-14",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 5/11/2022, 8:43 am\n---------------------------------------------------------------\nDistinct Objectives: 2\nCorrect: 6\nNonResponsive: 0\nIncorrect: 0\nPrompted: 6\n----------------------\nPercent Correct: 50%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef22"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-25",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 26/10/2022, 1:48 am\n---------------------------------------------------------------\nDistinct Objectives: 1\nCorrect: 8\nNonResponsive: 0\nIncorrect: 2\nPrompted: 0\n----------------------\nPercent Correct: 80%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef23"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-27",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 28/10/2022, 2:52 am\n---------------------------------------------------------------\nDistinct Objectives: 3\nCorrect: 14\nNonResponsive: 2\nIncorrect: 17\nPrompted: 1\n----------------------\nPercent Correct: 41%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef24"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-28",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 6/11/2022, 7:16 pm\n---------------------------------------------------------------\nDistinct Objectives: 2\nCorrect: 5\nNonResponsive: 0\nIncorrect: 1\nPrompted: 0\n----------------------\nPercent Correct: 83%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef25"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-04",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/11/2022, 4:17 pm\n---------------------------------------------------------------\nDistinct Objectives: 4\nCorrect: 5\nNonResponsive: 2\nIncorrect: 5\nPrompted: 4\n----------------------\nPercent Correct: 31%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef26"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-04",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 4/11/2022, 7:48 pm\n---------------------------------------------------------------\nDistinct Objectives: 1\nCorrect: 2\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 100%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef27"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-17",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 5/11/2022, 8:42 am\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef28"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-21",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 5/11/2022, 8:42 am\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef29"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-24",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 5/11/2022, 2:37 pm\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef30"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-09-29",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 5/11/2022, 2:37 pm\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef31"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-01",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 6/11/2022, 9:26 pm\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef32"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-05",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": null
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef33"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-15",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": null
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef34"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-19",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": null
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef35"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-22",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 5/11/2022, 8:42 am\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef36"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-26",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 5/11/2022, 2:41 pm\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef37"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-10-29",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 5/11/2022, 2:41 pm\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef38"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-02",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 6/11/2022, 9:18 pm\n---------------------------------------------------------------\nDistinct Objectives: 0\nCorrect: 0\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef39"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 7/11/2022, 5:11 pm\n---------------------------------------------------------------\nDistinct Objectives: 2\nCorrect: 11\nNonResponsive: 0\nIncorrect: 11\nPrompted: 0\n----------------------\nPercent Correct: 50%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef40"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-05",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 9:20 am\n---------------------------------------------------------------\nDistinct Objectives: 18\nCorrect: 22\nNonResponsive: 0\nIncorrect: 9\nPrompted: 23\n----------------------\nPercent Correct: 40%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef41"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 11:24 am\n---------------------------------------------------------------\nDistinct Objectives: 7\nCorrect: 39\nNonResponsive: 11\nIncorrect: 21\nPrompted: 10\n----------------------\nPercent Correct: 48%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef42"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 11:26 am\n---------------------------------------------------------------\nDistinct Objectives: 5\nCorrect: 42\nNonResponsive: 4\nIncorrect: 23\nPrompted: 9\n----------------------\nPercent Correct: 53%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef43"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Open",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 11:27 am\n---------------------------------------------------------------\nDistinct Objectives: 5\nCorrect: 39\nNonResponsive: 2\nIncorrect: 13\nPrompted: 6\n----------------------\nPercent Correct: 65%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef44"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 2:32 am\n---------------------------------------------------------------\nDistinct Objectives: 1\nCorrect: 2\nNonResponsive: 2\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 50%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef45"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 2:33 am\n---------------------------------------------------------------\nDistinct Objectives: 1\nCorrect: 2\nNonResponsive: 0\nIncorrect: 0\nPrompted: 0\n----------------------\nPercent Correct: 100%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef46"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-07",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 3:45 am\n---------------------------------------------------------------\nDistinct Objectives: 5\nCorrect: 2\nNonResponsive: 10\nIncorrect: 6\nPrompted: 4\n----------------------\nPercent Correct: 9%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef47"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-08",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 7:51 am\n---------------------------------------------------------------\nDistinct Objectives: 5\nCorrect: 13\nNonResponsive: 7\nIncorrect: 11\nPrompted: 5\n----------------------\nPercent Correct: 36%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef48"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-08",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 8/11/2022, 9:54 pm\n---------------------------------------------------------------\nDistinct Objectives: 1\nCorrect: 0\nNonResponsive: 0\nIncorrect: 2\nPrompted: 0\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef49"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-09",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2.5,
+      "Session_Location__c": "Kinder",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 9/11/2022, 5:59 pm\n---------------------------------------------------------------\nDistinct Objectives: 15\nCorrect: 28\nNonResponsive: 10\nIncorrect: 0\nPrompted: 4\n----------------------\nPercent Correct: 66%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef50"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-09",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 9/11/2022, 11:26 pm\n---------------------------------------------------------------\nDistinct Objectives: 21\nCorrect: 41\nNonResponsive: 0\nIncorrect: 8\nPrompted: 25\n----------------------\nPercent Correct: 55%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef51"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-10",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/11/2022, 4:47 pm\n---------------------------------------------------------------\nDistinct Objectives: 6\nCorrect: 4\nNonResponsive: 0\nIncorrect: 5\nPrompted: 4\n----------------------\nPercent Correct: 30%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef52"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-10",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/11/2022, 5:33 pm\n---------------------------------------------------------------\nDistinct Objectives: 1\nCorrect: 0\nNonResponsive: 0\nIncorrect: 1\nPrompted: 3\n----------------------\nPercent Correct: 0%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef53"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-10",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/11/2022, 10:28 pm\n---------------------------------------------------------------\nDistinct Objectives: 6\nCorrect: 9\nNonResponsive: 1\nIncorrect: 3\nPrompted: 1\n----------------------\nPercent Correct: 64%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef54"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-10",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/11/2022, 11:47 pm\n---------------------------------------------------------------\nDistinct Objectives: 3\nCorrect: 17\nNonResponsive: 0\nIncorrect: 13\nPrompted: 1\n----------------------\nPercent Correct: 54%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef55"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-10",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/11/2022, 11:49 pm\n---------------------------------------------------------------\nDistinct Objectives: 3\nCorrect: 14\nNonResponsive: 5\nIncorrect: 10\nPrompted: 3\n----------------------\nPercent Correct: 43%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef56"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-10",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Open",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 10/11/2022, 11:54 pm\n---------------------------------------------------------------\nDistinct Objectives: 3\nCorrect: 14\nNonResponsive: 2\nIncorrect: 4\nPrompted: 4\n----------------------\nPercent Correct: 58%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef57"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-11",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 11/11/2022, 5:12 pm\n---------------------------------------------------------------\nDistinct Objectives: 23\nCorrect: 45\nNonResponsive: 15\nIncorrect: 9\nPrompted: 22\n----------------------\nPercent Correct: 49%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef58"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-12",
+      "Next_Notes__c": null,
+      "Session_Length__c": 3,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Open",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 3/1/2023, 10:15 am\n---------------------------------------------------------------\nDistinct Objectives: 19\nCorrect: 42\nNonResponsive: 4\nIncorrect: 5\nPrompted: 40\n----------------------\nPercent Correct: 46%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef59"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-14",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": null
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef60"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-14",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": null
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef61"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-14",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 14/11/2022, 5:33 pm\n---------------------------------------------------------------\nDistinct Objectives: 20\nCorrect: 30\nNonResponsive: 17\nIncorrect: 7\nPrompted: 16\n----------------------\nPercent Correct: 42%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef62"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-14",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2.5,
+      "Session_Location__c": "Kinder",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 14/11/2022, 10:04 pm\n---------------------------------------------------------------\nDistinct Objectives: 17\nCorrect: 34\nNonResponsive: 11\nIncorrect: 8\nPrompted: 16\n----------------------\nPercent Correct: 49%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef63"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-14",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": null
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef64"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-15",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 16/11/2022, 12:08 pm\n---------------------------------------------------------------\nDistinct Objectives: 19\nCorrect: 25\nNonResponsive: 8\nIncorrect: 12\nPrompted: 18\n----------------------\nPercent Correct: 39%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef65"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-16",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2.5,
+      "Session_Location__c": "Kinder",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 16/11/2022, 6:02 pm\n---------------------------------------------------------------\nDistinct Objectives: 10\nCorrect: 16\nNonResponsive: 9\nIncorrect: 7\nPrompted: 6\n----------------------\nPercent Correct: 42%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef66"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-16",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": null
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef67"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-17",
+      "Next_Notes__c": null,
+      "Session_Length__c": 2,
+      "Session_Location__c": "Client-Home",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 17/11/2022, 10:52 am\n---------------------------------------------------------------\nDistinct Objectives: 3\nCorrect: 5\nNonResponsive: 0\nIncorrect: 1\nPrompted: 9\n----------------------\nPercent Correct: 33%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef68"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2022-11-18",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 18/11/2022, 5:04 pm\n---------------------------------------------------------------\nDistinct Objectives: 3\nCorrect: 11\nNonResponsive: 1\nIncorrect: 11\nPrompted: 0\n----------------------\nPercent Correct: 47%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef69"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2023-01-12",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 12/1/2023, 8:07 pm\n---------------------------------------------------------------\nDistinct Objectives: 4\nCorrect: 21\nNonResponsive: 1\nIncorrect: 0\nPrompted: 2\n----------------------\nPercent Correct: 87%\n----------------------"
+    },
+    {
+      "attributes": {
+        "type": "Session__c",
+        "referenceId": "SessionRef70"
+      },
+      "Anecdotal_Notes__c": null,
+      "Date__c": "2023-01-19",
+      "Next_Notes__c": null,
+      "Session_Length__c": 1,
+      "Session_Location__c": "L4L-Kew",
+      "Status__c": "Closed",
+      "Therapist__c": "SfdxOrgUser",
+      "Therapist_Two__c": "SfdxOrgUser",
+      "Statistics_Summary__c": "---------------------------------------------------------------\nSuccessfully generated session statistics at 19/1/2023, 11:57 pm\n---------------------------------------------------------------\nDistinct Objectives: 3\nCorrect: 13\nNonResponsive: 2\nIncorrect: 4\nPrompted: 2\n----------------------\nPercent Correct: 61%\n----------------------"
+    }
+  ]
+}
