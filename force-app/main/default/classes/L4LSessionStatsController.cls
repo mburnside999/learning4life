@@ -79,9 +79,9 @@ public with sharing class L4LSessionStatsController {
     Logger.setScenario('L4LSessionStatsController');
     Logger.debug(
         'Apex:getD3Stats() recordId=' +
-        clientId +
-        ' showAcquired=' +
-        showAcquired
+          clientId +
+          ' showAcquired=' +
+          showAcquired
       )
       .setRecordId(clientId)
       .addTag('L4LSessionStatsController.getD3Stats()')
@@ -154,9 +154,9 @@ public with sharing class L4LSessionStatsController {
     Logger.setScenario('L4LSessionStatsController');
     Logger.debug(
         'Apex:getD3StatsByProgram() recordId=' +
-        clientId +
-        ' showAcquired=' +
-        showAcquired
+          clientId +
+          ' showAcquired=' +
+          showAcquired
       )
       .setRecordId(clientId)
       .addTag('L4LSessionStatsController.getD3StatsByProgram()')
@@ -215,6 +215,17 @@ public with sharing class L4LSessionStatsController {
   }
 
   @AuraEnabled(cacheable=true)
+  public static Integer getD3YAxisScale(String clientId) {
+    List<AggregateResult> l = [
+      SELECT count(id) c
+      FROM client_objective__c
+      WHERE client__c = :clientId
+    ];
+
+    return (Integer) l[0].get('c');
+  }
+
+  @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getD3StatsByProgramAndSD(
     String clientId,
     String programStr,
@@ -226,9 +237,9 @@ public with sharing class L4LSessionStatsController {
     Logger.setScenario('L4LSessionStatsController');
     Logger.debug(
         'Apex:getD3StatsByProgramAndSD() recordId=' +
-        clientId +
-        ' showAcquired=' +
-        showAcquired
+          clientId +
+          ' showAcquired=' +
+          showAcquired
       )
       .setRecordId(clientId)
       .addTag('L4LController.getD3StatsByProgramAndSD()')

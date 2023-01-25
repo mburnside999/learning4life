@@ -1,8 +1,9 @@
-import { LightningElement, api, track } from "lwc";
+import { LightningElement, wire, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import generateD3COTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesJson";
+import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
@@ -12,6 +13,17 @@ export default class D3HorizontalLollipopChart extends LightningElement {
   d3Initialized = false;
   @track result = [];
   mode = "All";
+  yAxisScale = 100;
+
+  @wire(getD3YAxisScale, { clientId: "$recordId" })
+  wiredYaxis({ error, data }) {
+    if (data) {
+      console.log(`yAxisScale= ${data}`);
+      this.yAxisScale = Math.ceil(data / 50) * 50;
+    } else if (error) {
+      console.log("error");
+    }
+  }
 
   renderedCallback() {
     if (this.d3Initialized) {
@@ -69,7 +81,9 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     svg.selectAll("*").remove();
 
     // append the svg object to the body of the page
-    console.log("setting up svg");
+    console.log(
+      `setting up svg yAxisScale= ${JSON.stringify(this.yAxisScale)})`
+    );
 
     svg = d3
       .select(this.template.querySelector(".horizontal-lollipop-chart"))
@@ -92,7 +106,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .call(d3.axisBottom(x));
 
     // Add Y axis
-    var y = d3.scaleLinear().domain([0, 160]).range([height, 0]);
+    var y = d3.scaleLinear().domain([0, this.yAxisScale]).range([height, 0]);
     svg.append("g").call(d3.axisLeft(y));
     // Add the line
     svg

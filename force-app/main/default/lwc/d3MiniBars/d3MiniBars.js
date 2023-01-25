@@ -122,7 +122,8 @@ export default class D3MiniBars extends LightningElement {
       .domain([
         0,
         d3.max(data, function (d) {
-          return +d.val;
+          return Math.ceil(d.val / 50) * 50;
+          //+d.val;
         })
       ])
       .range([height, 0]);
