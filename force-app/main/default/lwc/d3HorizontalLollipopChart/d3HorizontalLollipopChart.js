@@ -67,6 +67,13 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       return { rundate: d3.timeParse("%Y-%m-%d")(d.rundate), val: d.val };
     }
 
+    function make_y_gridlines() {
+      return d3.axisLeft(y).ticks(10);
+    }
+    function make_x_gridlines() {
+      return d3.axisBottom(x).ticks(10);
+    }
+
     console.log("data " + JSON.stringify(data));
 
     // set the dimensions and margins of the graph
@@ -100,14 +107,28 @@ export default class D3HorizontalLollipopChart extends LightningElement {
         })
       )
       .range([0, width]);
+
     svg
       .append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
 
+    svg
+      .append("g")
+      .attr("class", "grid")
+      .attr("transform", "translate(0," + height + ")")
+      .call(make_x_gridlines().tickSize(-height).tickFormat(""));
+
     // Add Y axis
     var y = d3.scaleLinear().domain([0, this.yAxisScale]).range([height, 0]);
+
     svg.append("g").call(d3.axisLeft(y));
+
+    svg
+      .append("g")
+      .attr("class", "grid")
+      .call(make_y_gridlines().tickSize(-width).tickFormat(""));
+
     // Add the line
     svg
       .append("path")
@@ -129,6 +150,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
           })
       );
     // Add the points
+
     svg
       .append("g")
       .selectAll("dot")
@@ -162,7 +184,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .style("font-size", "14px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("Client Objective Time Series.");
+      .text("Client Objective Time Series, auto refreshed Sunday 10pm");
 
     // Parse the Data
     // Add X axis
