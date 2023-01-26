@@ -72,6 +72,14 @@ export default class D3MiniBars extends LightningElement {
       };
     }
 
+    function make_y_gridlines() {
+      return d3.axisLeft(y).ticks(5);
+    }
+
+    function make_x_gridlines() {
+      return d3.axisBottom(x).ticks(5);
+    }
+
     console.log("data " + JSON.stringify(data));
 
     // set the dimensions and margins of the graph
@@ -114,6 +122,11 @@ export default class D3MiniBars extends LightningElement {
       .append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x).ticks(5));
+    svg
+      .append("g")
+      .attr("class", "grid")
+      .attr("transform", "translate(0," + height + ")")
+      .call(make_x_gridlines().tickSize(-height).tickFormat(""));
 
     console.log("set up Y");
 
@@ -128,6 +141,11 @@ export default class D3MiniBars extends LightningElement {
       ])
       .range([height, 0]);
     svg.append("g").call(d3.axisLeft(y).ticks(5));
+
+    svg
+      .append("g")
+      .attr("class", "grid")
+      .call(make_y_gridlines().tickSize(-width).tickFormat(""));
 
     console.log("set up color");
     // color palette
@@ -156,7 +174,7 @@ export default class D3MiniBars extends LightningElement {
       .attr("stroke", function (d) {
         return color(d[0]);
       })
-      .attr("stroke-width", 1.9)
+      .attr("stroke-width", 2.3)
       .attr("d", function (d) {
         return d3
           .line()
@@ -215,9 +233,18 @@ export default class D3MiniBars extends LightningElement {
       .style("font-size", "18px")
       .style("fill", "grey")
       .style("max-width", 800)
-      .text(
-        `EXPERIMENTAL: Status Count across CO Timeseries, Refreshed 10pm Sunday`
-      );
+      .text(`EXPERIMENTAL: Client Objective Counts by Status`);
+
+    titlesvg
+      .append("text")
+      .attr("x", 50)
+      //.attr("x", 200)
+      .attr("y", 20)
+      .attr("text-anchor", "left")
+      .style("font-size", "14px")
+      .style("fill", "grey")
+      .style("max-width", 800)
+      .text(`Client Objective Time Series, auto refreshed Sunday 10pm`);
 
     // svg
     //   .append("text")
