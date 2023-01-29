@@ -83,7 +83,7 @@ export default class D3MiniBars extends LightningElement {
     console.log("data " + JSON.stringify(data));
 
     // set the dimensions and margins of the graph
-    var margin = { top: 50, right: 30, bottom: 30, left: 50 },
+    var margin = { top: 40, right: 30, bottom: 40, left: 50 },
       width = 350 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
 
@@ -121,7 +121,13 @@ export default class D3MiniBars extends LightningElement {
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x).ticks(5));
+      .call(d3.axisBottom(x).ticks(5))
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-45)");
+
     svg
       .append("g")
       .attr("class", "grid")
@@ -247,7 +253,7 @@ export default class D3MiniBars extends LightningElement {
       .append("text")
       .attr("x", 50)
       //.attr("x", 200)
-      .attr("y", 20)
+      .attr("y", 15)
       .attr("text-anchor", "left")
       .style("font-size", "14px")
       .style("fill", "grey")

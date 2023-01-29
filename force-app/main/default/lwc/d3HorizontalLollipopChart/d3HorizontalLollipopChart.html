@@ -1,55 +1,117 @@
 <!-- D 3 Horizontal Lollipop Chart -->
 <template>
   <lightning-card>
-    <div class="slds-p-around_medium lgc-bg-inverse">
-      <lightning-button-group>
-        <lightning-button
-          label="All"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-        <lightning-button
-          label="ACQ"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-        <lightning-button
-          label="OBJ"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-        <lightning-button
-          label="1CP"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-        <lightning-button
-          label="1IP"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-        <lightning-button
-          label="CIP"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-        <lightning-button
-          label="HLD"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-        <lightning-button
-          label="DNC"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-        <lightning-button
-          label="Null"
-          onclick={handleClick}
-          class="slds-m-left_x-small"
-        ></lightning-button>
-      </lightning-button-group>
+    <div class="c-container">
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="All"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="ACQ"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="OBJ"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="1CP"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="1IP"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="CIP"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="HLD"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="DNC"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="Null"
+              onclick={handleClick}
+              class="slds-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
     </div>
   </lightning-card>
-  <svg class="horizontal-lollipop-chart" lwc:dom="manual"></svg>
+  <lightning-card>
+    <div class="c-container">
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <svg class="horizontal-lollipop-chart" lwc:dom="manual"></svg>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
 </template>
