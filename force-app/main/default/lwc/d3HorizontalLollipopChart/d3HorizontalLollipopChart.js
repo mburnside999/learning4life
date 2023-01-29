@@ -77,9 +77,9 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     console.log("data " + JSON.stringify(data));
 
     // set the dimensions and margins of the graph
-    const margin = { top: 40, right: 30, bottom: 40, left: 200 },
-      width = 1200 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+    const margin = { top: 40, right: 30, bottom: 40, left: 50 },
+      width = 1150 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
 
     console.log("cleaning  up  svg");
     let svg = d3.select(
@@ -111,7 +111,12 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     svg
       .append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-45)");
 
     svg
       .append("g")
@@ -168,7 +173,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     svg
       .append("text")
-      .attr("x", (width - 44) / 2)
+      .attr("x", (width - 300) / 2)
       .attr("y", 0)
       .attr("text-anchor", "left")
       .style("font-size", "18px")
@@ -178,7 +183,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     svg
       .append("text")
-      .attr("x", (width - 30) / 2)
+      .attr("x", (width - 300) / 2)
       .attr("y", 20)
       .attr("text-anchor", "left")
       .style("font-size", "14px")
