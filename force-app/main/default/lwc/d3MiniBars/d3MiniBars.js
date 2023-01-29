@@ -147,6 +147,13 @@ export default class D3MiniBars extends LightningElement {
       .attr("class", "grid")
       .call(make_y_gridlines().tickSize(-width).tickFormat(""));
 
+    d3.selectAll(".grid  line")
+      .style("stroke", "lightgrey")
+      .style("stroke-opacity", 0.7)
+      .style("shape-rendering", "crispEdges");
+
+    d3.selectAll(".grid  path").style("stroke-width", 0);
+
     console.log("set up color");
     // color palette
     const color = d3
@@ -176,6 +183,7 @@ export default class D3MiniBars extends LightningElement {
       })
       .attr("stroke-width", 2.3)
       .attr("d", function (d) {
+        console.log("path " + JSON.stringify(d));
         return d3
           .line()
           .x(function (d) {

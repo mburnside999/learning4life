@@ -6,7 +6,7 @@
   
   .grid line {
     stroke: lightgrey;
-    stroke-opacity: 0.3;
+    stroke-opacity: .2;
     shape-rendering: crispEdges;
   }
   
