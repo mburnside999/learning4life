@@ -1,3 +1,5 @@
+// this class was deprecated on 30/1/2023 - its  intention was to roll up stats to the Program level -- this is no longer needed
+
 public with sharing class LFLInvocableMasteryStatistics {
   //mastery
   @InvocableMethod
@@ -91,13 +93,13 @@ public with sharing class LFLInvocableMasteryStatistics {
 
     Logger.debug(
         'Apex:computeMasteryStats() correctMap=' +
-        correctMap +
-        ' nonResponsiveMap=' +
-        nonResponsiveMap +
-        ' incorrectMap=' +
-        incorrectMap +
-        ' promptedMap=' +
-        promptedMap
+          correctMap +
+          ' nonResponsiveMap=' +
+          nonResponsiveMap +
+          ' incorrectMap=' +
+          incorrectMap +
+          ' promptedMap=' +
+          promptedMap
       )
       .setRecordId(sessions[0])
       .addTag('LFLInvocableSessionStatistics.computeMasteryStats()')
