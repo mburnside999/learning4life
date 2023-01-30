@@ -1,3 +1,5 @@
+// the class that is being tested - LFLInvocableMasteryStatistics - was deprecated on 30/1/2023 - its  intention was to roll up stats to the Program level -- this is no longer needed
+
 @isTest
 private class TestLFLInvocableMasteryStatistics {
   @isTest
