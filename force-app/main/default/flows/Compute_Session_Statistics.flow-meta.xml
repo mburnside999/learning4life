@@ -20,22 +20,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Mastery_Update</name>
-        <label>Mastery Update</label>
-        <locationX>176</locationX>
-        <locationY>695</locationY>
-        <actionName>LFLInvocableMasteryStatistics</actionName>
-        <actionType>apex</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>sessions</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
         <name>Nebula_Logging</name>
         <label>Nebula Logging</label>
         <locationX>176</locationX>
@@ -79,6 +63,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <description>deprecated MasterStatistics action</description>
     <interviewLabel>Compute Session Statistics {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Compute Session Statistics</label>
     <processMetadataValues>
@@ -105,9 +90,6 @@
         <label>Update Stats Summary</label>
         <locationX>176</locationX>
         <locationY>575</locationY>
-        <connector>
-            <targetReference>Mastery_Update</targetReference>
-        </connector>
         <inputAssignments>
             <field>Statistics_Summary__c</field>
             <value>
