@@ -3,10 +3,12 @@
 import { LightningElement, track, wire, api } from "lwc";
 import getClientObjectives from "@salesforce/apex/L4LController.getClientObjectives";
 import { CurrentPageReference } from "lightning/navigation";
-//import {registerListener,unregisterAllListeners,fireEvent} from 'c/pubsub';
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
 import { updateRecord } from "lightning/uiRecordApi";
 import { deleteRecord } from "lightning/uiRecordApi";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+
 // Lightning Message service
 import {
   subscribe,
@@ -19,11 +21,9 @@ import LightningConfirm from "lightning/confirm";
 
 //debugging
 const COMPONENT = "l4lRelatedClientObjectives";
+const TAG = "L4L-Manage-Client-Objectives";
+
 const COLOR = "color:red";
-const DEBUG = "debug";
-const FINE = "fine";
-const INFO = "info";
-const ERROR = "error";
 
 const actions = [
   {
@@ -103,10 +103,26 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   rendered = false;
 
   connectedCallback() {
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+      })
+      .catch((error) => {
+        console.log("Error");
+      });
+
     console.info(`%cconnectedCallback(): entering`, COLOR);
     console.info(`%cconnectedCallback(): subscribing LMS`, COLOR);
     //console.debug(`%cconnectedCallback(): registering listener inputChangeEvent`,COLOR);
     //registerListener('inputChangeEvent', this.handleChange, this);
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.connectedCallback(): subscribing to message service `,
+      "subscribing to message service",
+      `${TAG}`
+    );
+
     this.subscription = subscribe(
       this.messageContext,
       L4LMC,
@@ -119,94 +135,44 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `%cconnectedCallback(): calling this.refresh() to get client objectives, recordId =  ${this.recordId}`,
       COLOR
     );
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.connectedCallback(): initial refresh of client objectives`,
+      "initial refresh of client objectives",
+      `${TAG}`
+    );
+
     this.refresh();
   }
-
-  renderedCallback() {
-    // if (!this.rendered) {
-    //   this.logit(
-    //     DEBUG,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.logit(
-    //     FINE,
-    //     "renderedCallback():  ignore - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.logit(
-    //     ERROR,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `${COMPONENT}.renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.rendered = true;
-    // }
-  }
-  logit(level, message, tag, context = null) {
-    let _level = `${level}`;
-    let _message = `${COMPONENT}.${message}`;
-    let _tag = `${COMPONENT}.${tag}`;
-    let _context = `${context}`;
-
-    console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
-    let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`${COMPONENT}`);
-    switch (level) {
-      case INFO:
-        logger
-          .info(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case DEBUG:
-        logger
-          .debug(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case FINE:
-        logger
-          .fine(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case ERROR:
-        logger
-          .error(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      default:
-    }
-
-    logger.saveLog();
-  }
+  renderedCallback() {}
 
   async confirmation(event) {
-    this.logit(
-      DEBUG,
-      `confirmation(): in confirmation()`,
-      `confirmation()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.confirmation(): entering method`,
+      "edit or delete action chosen on client objective datatable row",
+      `${TAG}`
     );
     let _actionName = event.detail.action.name;
     let _row = event.detail.row;
-    this.logit(
-      FINE,
-      `confirmation(): in confirmation(), calling LightningConfirm.open _actionName=${_actionName}, row=${JSON.stringify(
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.confirmation(): in confirmation(), calling LightningConfirm.open _actionName=${_actionName}, row=${JSON.stringify(
         _row
       )}`,
-      `confirmation()`,
-      this.recordId
+      "edit / delete row details",
+      `${TAG}`
     );
+
     if (_actionName == "delete") {
+      logDebug(
+        this.recordId,
+        `deleting client objectives, ask for confirmation`,
+        "deleting client objectives, ask for confirmation",
+        `${TAG}`
+      );
       await LightningConfirm.open({
         message: `Deleting client objective record: "${_row.Program_Name__c} > ${_row.SD_Name__c} > ${_row.Objective_Name__c}".  Are you sure?`,
         variant: "headerless",
@@ -214,42 +180,44 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         // setting theme would have no effect
       }).then((result) => {
         console.log(`result={result}`);
-        this.logit(
-          DEBUG,
-          `confirmation(): result=${result}`,
-          `confirmation()`,
-          this.recordId
-        );
+        // this.logit(
+        //   DEBUG,
+        //   `confirmation(): result=${result}`,
+        //   `confirmation()`,
+        //   this.recordId
+        // );
 
         if (result) {
-          this.logit(
-            DEBUG,
-            `confirmation(): calling handleRowAction`,
-            `confirmation()`,
-            this.recordId
+          logDebug(
+            this.recordId,
+            `${COMPONENT}.confirmation(): result=${result}, calling handleRowAction `,
+            "deletion decision received",
+            `${TAG}`
           );
           this.handleRowAction(_actionName, _row);
         }
       });
-    } else this.handleRowAction(_actionName, _row);
+    } else {
+      logDebug(
+        this.recordId,
+        `${COMPONENT}.confirmation() edit action chosen, calling handleRowAction`,
+        "edit action chosen",
+        `${TAG}`
+      );
+      this.handleRowAction(_actionName, _row);
+    }
   }
 
   handleRowAction(actionName, row) {
-    this.logit(
-      FINE,
-      `handleRowAction(): entering method`,
-      `handleRowAction()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleRowAction(): row=${JSON.stringify(
+        row
+      )}, actionName=${actionName}`,
+      "process the edit or delete",
+      `${TAG}`
     );
-    //const actionName = event.detail.action.name;
-    //const row = event.detail.row;
 
-    this.logit(
-      FINE,
-      `handleRowAction(): row=${JSON.stringify(row)}, actionName=${actionName}`,
-      `handleRowAction()`,
-      this.recordId
-    );
     switch (actionName) {
       case "delete":
         deleteRecord(row.Id)
@@ -261,14 +229,20 @@ export default class L4lRelatedClientObjectives extends LightningElement {
                 variant: "success"
               })
             );
+            logDebug(
+              this.recordId,
+              `${COMPONENT}.handleRowAction() edit_details()`,
+              "delete processed successfully, refreshing client objectives",
+              `${TAG}`
+            );
             this.refresh();
           })
           .catch((error) => {
-            this.logit(
-              ERROR,
-              `handleRowAction(): error=${JSON.stringify(error)}`,
-              `handleRowAction()`,
-              this.recordId
+            logError(
+              this.recordId,
+              `${COMPONENT}.handleRowAction(): error=${error}`,
+              "delete error occurred",
+              `${TAG}`
             );
 
             this.dispatchEvent(
@@ -282,12 +256,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         break;
       case "edit_details":
         this.COrecordId = row.Id;
-        this.logit(
-          FINE,
-          `handleRowAction(): in edit_details`,
-          `handleRowAction()`,
-          row.Id
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleRowAction() edit_details()`,
+          "tell the edit modal to show",
+          `${TAG}`
         );
+
         this.areDetailsVisible = true;
         break;
       default:
@@ -300,13 +276,31 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       message: "Client objective updated",
       variant: "success"
     });
-    this.logit(FINE, `handleSuccess(): dispatching event`, `handleSuccess()`);
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSuccess()`,
+      "showing the success toast",
+      `${TAG}`
+    );
     this.dispatchEvent(evt);
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSuccess()`,
+      "telling the edit modal to hide and refreshing client objectives",
+      `${TAG}`
+    );
     this.areDetailsVisible = false;
     this.refresh();
   }
 
   refresh() {
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.refresh() calling LFLController.getClientObjectives() `,
+      "processing the refresh request",
+      `${TAG}`
+    );
     console.info(`%crefresh(): entering`, COLOR);
     console.info(
       `%crefresh(): calling getClientObjectives, recordId = ${this.recordId}`,
@@ -318,26 +312,29 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       .then((result) => {
         this.clientobjectives = result;
         this.filterableObjectives = result;
-        this.logit(
-          DEBUG,
-          `refresh(): getClientObjectives ${result.length} records returned`,
-          `refresh()`,
-          this.recordId
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.refresh(): returned from Apex call to getClientObjectives, ${result.length} records returned`,
+          `client objectives refreshed, record count logged`,
+          `${TAG}`
         );
-        this.logit(
-          FINE,
-          `refresh(): getClientObjectives result=${JSON.stringify(result)}`,
-          `refresh()`,
-          this.recordId
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.refresh(): Apex call to getClientObjectives result= ${JSON.stringify(
+            result
+          )}`,
+          "client objectives refreshed, records logged",
+          `${TAG}`
         );
       })
       .catch((error) => {
         this.error = error;
-        this.logit(
-          ERROR,
-          `refresh(): getClientObjectives error ${JSON.stringify(error)}`,
-          `refresh()`,
-          this.recordId
+        logError(
+          this.recordId,
+          `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${error}`,
+          "client objectives refresh failed",
+          `${TAG}`
         );
       });
   }
@@ -346,19 +343,22 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     console.info(`%chandleCancel(): entering`, COLOR);
     this.areDetailsVisible = false;
   }
+
   handleSave(event) {
-    this.logit(
-      DEBUG,
-      "handleSave(): in handleSave()",
-      `handleSave()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSave(): entering method`,
+      "saving the client records",
+      `${TAG}`
     );
-    this.logit(
-      FINE,
+
+    logDebug(
+      this.recordId,
       `handleSave(): draftValues=${JSON.stringify(event.detail.draftValues)}`,
-      `handleSave()`,
-      this.recordId
+      `logging the draft values`,
+      `${TAG}`
     );
+
     const recordInputs = event.detail.draftValues.slice().map((draft) => {
       const fields = Object.assign({}, draft);
       return {
@@ -380,25 +380,39 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         );
         // Clear all draft values
         this.draftValues = [];
+
         // Display fresh data in the datatable
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleSave(): client objectives saved, draft values cleared, refreshing client objectives list `,
+          "client objectives saved, draft values cleared,refreshing client objectives list",
+          `${TAG}`
+        );
+
         this.refresh();
       })
       .catch((error) => {
-        this.logit(
-          ERROR,
-          `handleSave(): Promise.all error`,
-          `handleSave()`,
-          this.recordId
+        logError(
+          this.recordId,
+          `${COMPONENT}.handleSave(): error: ${error}`,
+          "error encountered while saving client objectives",
+          `${TAG}`
         );
       });
   }
 
   handleClick(event) {
-    this.logit(
-      DEBUG,
-      `handleClick(): entering method`,
-      `handleClick()`,
-      this.recordId
+    // this.logit(
+    //   DEBUG,
+    //   `handleClick(): entering method`,
+    //   `handleClick()`,
+    //   this.recordId
+    // );
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleClick: refresh button clicked, refreshing Client Objectives`,
+      "refresh button clicked, refreshing Client Objectives",
+      `${TAG}`
     );
     this.refresh();
   }
@@ -413,16 +427,20 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   // }
 
   handleSearchKeyInput(event) {
-    this.logit(
-      DEBUG,
-      `handleSearchKeyInput(): entering method`,
-      `handleSearchKeyInput()`
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSearchKeyInput: entering method`,
+      "handleSearchKeyInput",
+      `${TAG}`
     );
+
     const searchKey = event.target.value.toLowerCase();
-    this.logit(
-      FINE,
-      `handleSearchKeyInput(): searchKey=${searchKey}`,
-      `handleSearchKeyInput()`
+
+    logFine(
+      this.recordId,
+      `${COMPONENT}.handleSearchKeyInput: searchKey=${searchKey}`,
+      "handleSearchKeyInput",
+      `${TAG}`
     );
     this.clientobjectives = this.filterableObjectives.filter(
       (so) =>
@@ -439,31 +457,33 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         (so.Client_Objective_Notes__c != null &&
           so.Client_Objective_Notes__c.toLowerCase().includes(searchKey))
     );
-    this.logit(
-      FINE,
-      `handleSearchKey(): this.clientobjectives=${JSON.stringify(
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSearchKeyInput: this.clientobjectives=${JSON.stringify(
         this.clientobjectives
       )}`,
-      `handleSearchKey()`
+      "handleSearchKeyInput",
+      `${TAG}`
     );
   }
 
   handleLMS(message) {
-    this.logit(
-      FINE,
-      `handleLMS(): message received ${JSON.stringify(message)}`,
-      `handleLMS()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleLMS: message received ${JSON.stringify(message)}`,
+      "handleLMS",
+      `${TAG}`
     );
+
     this.receivedMessage = message
       ? JSON.stringify(message, null, "\t")
       : "no message payload";
 
-    this.logit(
-      DEBUG,
-      `handleLMS(): calling Apex getClientObjectives`,
-      `handleLMS()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleLMS(): calling Apex getClientObjectives`,
+      "handle-LMS",
+      `${TAG}`
     );
 
     getClientObjectives({
@@ -472,26 +492,22 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       .then((result) => {
         this.clientobjectives = result;
         this.filterableObjectives = result;
-        this.logit(
-          DEBUG,
-          `handleLMS(): getClientObjectives returned ${result.length} records`,
-          `handleLMS()`,
-          this.recordId
-        );
-        this.logit(
-          FINE,
-          `handleLMS(): getClientObjectives result= ${JSON.stringify(result)}`,
-          `handleLMS()`,
-          this.recordId
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleLMS(): Apex getClientObjectives returned result: ${JSON.stringify(
+            result
+          )}`,
+          "handle-LMS",
+          `${TAG}`
         );
       })
       .catch((error) => {
         this.error = error;
-        this.logit(
-          ERROR,
-          `handleLMS(): getClientObjectives error ${JSON.stringify(error)}`,
-          `handleLMS()`,
-          this.recordId
+        logError(
+          this.recordId,
+          `${COMPONENT}.handleLMS(): error=${error}`,
+          "handle-LMS",
+          `${TAG}`
         );
       });
   }

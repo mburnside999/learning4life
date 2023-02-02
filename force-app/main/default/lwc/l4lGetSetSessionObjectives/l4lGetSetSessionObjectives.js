@@ -5,6 +5,8 @@ import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord, getRecord, getFieldValue } from "lightning/uiRecordApi";
 import { deleteRecord } from "lightning/uiRecordApi";
 import LightningConfirm from "lightning/confirm";
+import { logDebug, logError } from "c/l4lNebulaUtil";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
 //custom Apex methods
 import getSessionObjectives from "@salesforce/apex/L4LController.getSessionObjectives";
@@ -19,13 +21,11 @@ import {
 } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
+const TAG = "L4L-Manage-Session-Objectives";
+
 //debugging
 const COMPONENT = "l4lGetSetSessionObjectives";
 const COLOR = "color:blue"; //for console log formatting
-const DEBUG = "debug";
-const FINE = "fine";
-const INFO = "info";
-const ERROR = "error";
 
 //experimental comment editing
 import COMMENT_FIELD from "@salesforce/schema/Session_Obj__c.Comment__c";
@@ -215,21 +215,36 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       `%cconnectedCallback(): subscribing to LMS L4LSessionMessageChannel__c`,
       COLOR
     );
-    this.subscription = subscribe(
-      this.messageContext,
-      L4LMC,
-      (message) => {
-        this.handleLMS(message);
-      },
-      { scope: APPLICATION_SCOPE }
-    );
+
     console.debug(`%cconnectedCallback(): calling refresh()`, COLOR);
     console.log(
       `%cconnectedCallback() Status = ${JSON.stringify(this.session.data)}`
     );
     console.log(`id =  ${this.recordId}`);
     console.log(`this.session = ${JSON.stringify(this.session)}`);
-    this.refresh();
+
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback()`,
+          "get initial list of session objectives ",
+          `${TAG}`
+        );
+        this.subscription = subscribe(
+          this.messageContext,
+          L4LMC,
+          (message) => {
+            this.handleLMS(message);
+          },
+          { scope: APPLICATION_SCOPE }
+        );
+        this.refresh();
+      })
+      .catch((error) => {
+        console.log("Error");
+      });
   }
 
   get status() {
@@ -242,53 +257,16 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     return getFieldValue(this.session.data, SESSION_STATUS_FIELD);
   }
 
-  logit(level, message, tag, context = null) {
-    let _level = `${level}`;
-    let _message = `${COMPONENT}.${message}`;
-    let _tag = `${COMPONENT}.${tag}`;
-    let _context = `${context}`;
-
-    console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
-    let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`${COMPONENT}`);
-    switch (level) {
-      case INFO:
-        logger
-          .info(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case DEBUG:
-        logger
-          .debug(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case FINE:
-        logger
-          .fine(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case ERROR:
-        logger
-          .error(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      default:
-    }
-
-    logger.saveLog();
-  }
-
   refresh() {
     console.info(`%crefresh(): entering`, COLOR);
     console.debug(`%crefresh(): calling APEX getSessionObjectives`, COLOR);
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.refresh(): calling Apex getSessionObjectives`,
+      "refreshing, calling Apex getSessionObjectives",
+      `${TAG}`
+    );
 
     getSessionObjectives({ sess: this.recordId })
       .then((result) => {
@@ -303,47 +281,43 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         //this.sessionObjectives=result;
         //this.allObjectives = result;
 
-        this.logit(
-          DEBUG,
-          `refresh(): APEX getSessionObjectives returned ${result.length} records`,
-          `refresh()`,
-          this.recordId
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.refresh(): Apex getSessionObjectives returned ${result.length} records`,
+          `Apex getSessionObjectives returned ${result.length} records`,
+          `${TAG}`
         );
-        this.logit(
-          FINE,
-          `refresh(): getSessionObjectives JSON result=${JSON.stringify(
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.refresh(): Apex getSessionObjectives returned result: ${JSON.stringify(
             result
-          )}, this.objectives=${JSON.stringify(this.objectives)}`,
-          `refresh()`,
-          this.recordId
+          )}`,
+          `Apex getSessionObjectives:all good, record payload logged`,
+          `${TAG}`
         );
       })
       .catch((error) => {
         this.error = error;
-        this.logit(
-          ERROR,
-          `refresh(): getSessionObjectives errored: ${JSON.stringify(
-            error
-          )} results`,
-          `refresh()`,
-          this.recordId
+        logError(
+          this.recordId,
+          `${COMPONENT}.refresh(): Apex getSessionObjectives error=${error}`,
+          "Apex getSessionObjectives errored",
+          `${TAG}`
         );
       });
   }
 
   handleSearchKeyInput(event) {
-    this.logit(
-      DEBUG,
-      `handleSearchKey(): entering method, bound to input.oninput`,
-      `handleSearchKey()`
-    );
     const searchKey = event.target.value.toLowerCase();
 
-    this.logit(
-      FINE,
-      `handleSearchKey(): searchKey=${searchKey}`,
-      `handleSearchKey()`
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSearchKeyInput(): searchKey=${searchKey}`,
+      `entered Search input: ${searchKey}`,
+      `${TAG}`
     );
+
     this.sessionObjectives = this.allObjectives.filter(
       (so) =>
         so.Program__c.toLowerCase().includes(searchKey) ||
@@ -354,48 +328,38 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         (!(so.Comment__c === undefined) &&
           so.Comment__c.toLowerCase().includes(searchKey))
     );
-    this.logit(
-      FINE,
-      `handleSearchKey(): this.sessionObjectives=${JSON.stringify(
-        this.sessionObjectives
-      )}`,
-      `handleSearchKey()`
-    );
   }
 
   handleLMS(message) {
-    this.logit(
-      FINE,
-      `handleLMS(): message received ${JSON.stringify(message)}`,
-      `handleLMS()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleLMS(): received message ${JSON.stringify(message)}`,
+      `received message ${JSON.stringify(
+        message
+      )}, setting this.receivedMessage, refreshing`,
+      `${TAG}`
     );
 
     this.receivedMessage = message
       ? JSON.stringify(message, null, "\t")
       : "no message payload";
 
-    this.logit(DEBUG, `handleLMS(): refreshing`, `handleLMS()`, this.recordId);
-
     this.refresh();
   }
 
   handleRowAction(event) {
-    this.logit(
-      FINE,
-      `handleRowAction(): entering method, bound to lightning-datatable.onrowaction`,
-      `handleRowAction()`,
-      this.recordId
-    );
-
     const actionName = event.detail.action.name;
     const row = event.detail.row;
-    this.logit(
-      FINE,
-      `handleRowAction(): row=${JSON.stringify(row)}, actionName=${actionName}`,
-      `handleRowAction()`,
-      this.recordId
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleRowAction(): row=${JSON.stringify(
+        row
+      )}, actionName=${actionName}`,
+      `process row action, actionName=${actionName}`,
+      `${TAG}`
     );
+
     switch (actionName) {
       case "delete":
         deleteRecord(row.Id)
@@ -407,14 +371,20 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
                 variant: "success"
               })
             );
+            logDebug(
+              this.recordId,
+              `${COMPONENT}.handleRowAction()`,
+              "delete processed successfully, refreshing session objectives",
+              `${TAG}`
+            );
             this.refresh();
           })
           .catch((error) => {
-            this.logit(
-              ERROR,
-              `handleRowAction(): error=${JSON.stringify(error)}`,
-              `handleRowAction()`,
-              this.recordId
+            logError(
+              this.recordId,
+              `${COMPONENT}.handleRowAction(): error=${error}`,
+              "error occurred during deletion",
+              `${TAG}`
             );
 
             this.dispatchEvent(
@@ -427,10 +397,28 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           });
         break;
       case "detail":
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleRowAction() case:detail`,
+          "action was : detail : clicked the add comments icon",
+          `${TAG}`
+        );
+        logDebug(
+          row.Id, // the session objective row that the comment was added to
+          `${COMPONENT}.handleRowAction() case:detail`,
+          `setting flag this.areDetailsVisible=true, rowId=${row.Id}`,
+          `${TAG}`
+        );
         this.areDetailsVisible = true;
         this.sessionObjectiveId = row.Id;
         break;
       case "edit_details":
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleRowAction() case:edit_detail`,
+          "action was: edit_details",
+          `${TAG}`
+        );
         console.debug("EDIT DETAILS");
         break;
       default:
@@ -438,11 +426,18 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   }
 
   handleSave(event) {
-    this.logit(
-      DEBUG,
-      `handleSave(): entering handleSave(), bound to lightning-datable.onSave`,
-      `handleSave()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSave(): entering method`,
+      "saving the session objective records",
+      `${TAG}`
+    );
+
+    logDebug(
+      this.recordId,
+      `handleSave(): draftValues=${JSON.stringify(event.detail.draftValues)}`,
+      `logging the draft values`,
+      `${TAG}`
     );
 
     const recordInputs = event.detail.draftValues.slice().map((draft) => {
@@ -465,26 +460,32 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         // Clear all draft values
         this.draftValues = [];
 
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleSave(): session objectives saved, draft values cleared, refreshing session objectives list `,
+          "client objectives saved, draft values cleared,refreshing session objectives list",
+          `${TAG}`
+        );
         // Display fresh data in the datatable
         this.refresh();
       })
       .catch((error) => {
         //Handle error
-        this.logit(
-          ERROR,
-          `handleSave(): ${JSON.stringify(error)}`,
-          `handleSave()`,
-          this.recordId
+        logError(
+          this.recordId,
+          `${COMPONENT}.handleSave(): error=${error}`,
+          "handleSave() error",
+          `${TAG}`
         );
       });
   }
 
   async confirmation(event) {
-    this.logit(
-      DEBUG,
-      `confirmation(): in confirmation(), calling LightningConfirm.open`,
-      `confirmation()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.confirmation(): entering method`,
+      "action chosen on session objective datatable row",
+      `${TAG}`
     );
 
     let _label = event.target.label;
@@ -496,19 +497,19 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         // setting theme would have no effect
       }).then((result) => {
         console.log(`result={result}`);
-        this.logit(
-          DEBUG,
-          `confirmation(): result=${result}`,
-          `confirmation()`,
-          this.recordId
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.confirmation(): result=${JSON.stringify(result)}`,
+          `confirmation()result=${JSON.stringify(result)} `,
+          `${TAG}`
         );
 
         if (result) {
-          this.logit(
-            DEBUG,
-            `confirmation(): calling handleClickArray with label=${_label}`,
-            `confirmation()`,
-            this.recordId
+          logDebug(
+            this.recordId,
+            `${COMPONENT}.confirmation(): result=${result}, calling handleClickArray _label=${_label} `,
+            `confirmation received _label=${_label}`,
+            `${TAG}`
           );
           this.handleClickArray(_label);
         }
@@ -517,21 +518,15 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   }
 
   handleClickArray(label) {
-    this.logit(
-      FINE,
-      `handleClickArray(): in handleClickArray`,
-      `handleClickArray()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleClickArray(): label=${label}`,
+      `handleClickArray(): label=${label}`,
+      `${TAG}`
     );
 
     let mode = "";
 
-    this.logit(
-      FINE,
-      `handleClickArray(): label=${label}`,
-      `handleClickArray()`,
-      this.recordId
-    );
     switch (label) {
       case "Mark Correct":
         mode = "Correct";
@@ -551,6 +546,12 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       default:
       // code block
     }
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleClickArray(): mode=${mode} `,
+      `${COMPONENT}.handleClickArray(): mode=${mode}`,
+      `${TAG}`
+    );
 
     //need to get rid of the iconName for DML
     let _selectedRows = this.selectedRows.map((item) => {
@@ -568,21 +569,24 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     });
 
     if (_selectedRows) {
-      this.logit(
-        DEBUG,
-        `handleClickArray(): calling setSessionObjectivesByArray `,
-        `handleClickArray()`,
-        this.recordId
-      );
-
-      this.logit(
-        FINE,
-        `handleClickArray(): jsonstr=${JSON.stringify(
+      logDebug(
+        this.recordId,
+        `${COMPONENT}.handleClickArray(): jsonstr=${JSON.stringify(
           _selectedRows
         )} val=${mode}`,
-        `handleClickArray()`,
-        this.recordId
+        `handleClickArray(): jsonstr= ${JSON.stringify(
+          _selectedRows
+        )} val= ${mode}`,
+        `${TAG}`
       );
+
+      logDebug(
+        this.recordId,
+        `${COMPONENT}.handleClickArray(): calling Apex setSessionObjectivesByArray `,
+        `handleClickArray(): calling Apex setSessionObjectivesByArray `,
+        `${TAG}`
+      );
+
       console.log(`==============> ${JSON.stringify(_selectedRows)}`);
       setSessionObjectivesByArray({
         jsonstr: JSON.stringify(_selectedRows),
@@ -590,20 +594,21 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       })
         .then((result) => {
           this.recordsProcessed = result;
-
-          this.logit(
-            FINE,
-            `handleClickArray(): result=${JSON.stringify(result)} val=${mode}`,
-            `handleClickArray()`,
-            this.recordId
+          logDebug(
+            this.recordId,
+            `${COMPONENT}.handleClickArray(): Apex setSessionObjectivesByArray returned ${JSON.stringify(
+              result
+            )}`,
+            `Apex setSessionObjectivesByArray returned, ${result} records successfully updated/deleted `,
+            `${TAG}`
           );
         })
         .then(() => {
-          this.logit(
-            DEBUG,
-            `handleClickArray(): refreshing`,
-            `handleClickArray()`,
-            this.recordId
+          logDebug(
+            this.recordId,
+            `${COMPONENT}.handleClickArray(): refreshing session objectives`,
+            `refreshing session objectives`,
+            `${TAG}`
           );
           this.refresh();
         })
@@ -624,45 +629,41 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         })
         .catch((error) => {
           this.error = error;
-          this.logit(
-            ERROR,
-            `handleClickArray(): error ${JSON.stringify(error)}`,
-            `handleClickArray()`,
-            this.recordId
+          logError(
+            this.recordId,
+            `${COMPONENT}.handleClickArray error(): ${error}`,
+            "handleClickArray error()",
+            `${TAG}`
           );
         });
     }
   }
 
   handleClickDelete(event) {
-    this.logit(
-      DEBUG,
-      `handleClickDelete(): in handleClickDelete`,
-      `handleClickDelete()`,
-      this.recordId
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleClickDelete(): calling deleteSessionObjectives`,
+      "handleClickDelete, calling deleteSessionObjectives",
+      `${TAG}`
     );
 
-    this.logit(
-      DEBUG,
-      `handleClickDelete(): calling deleteSessionObjectives`,
-      `handleClickDelete()`,
-      this.recordId
-    );
     deleteSessionObjectives({ sessionid: this.recordId })
       .then((result) => {
-        this.logit(
-          FINE,
-          `handleClickDelete(): Apex:deleteSessionObjectives returned ${result}`,
-          `handleClickDelete()`,
-          this.recordId
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleClickDelete(): Apex call deleteSessionObjectives returned result= ${JSON.stringify(
+            result
+          )}`,
+          "deleteSessionObjectives returned",
+          `${TAG}`
         );
       })
       .then(() => {
-        this.logit(
-          DEBUG,
-          `handleClickDelete(): refreshing`,
-          `handleClickDelete()`,
-          this.recordId
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleClickDelete(): refreshing session objectives`,
+          "refreshing session objectives",
+          `${TAG}`
         );
         this.refresh();
       })
@@ -676,36 +677,25 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       .catch((error) => {
         this.error = error;
 
-        this.logit(
-          ERROR,
-          `handleClickDelete(): error ${JSON.stringify(error)}`,
-          `handleClickDelete()`,
-          this.recordId
+        logError(
+          this.recordId,
+          `${COMPONENT}.handleClickDelete(): error=${error}`,
+          "delete error occurred",
+          `${TAG}`
         );
       });
   }
   getSelectedName(event) {
-    this.logit(
-      DEBUG,
-      `getSelectedName(): in getSelectedName`,
-      `getSelectedName()`,
-      this.recordId
-    );
-
     this.selectedRows = event.detail.selectedRows;
 
-    this.logit(
-      FINE,
-      `getSelectedName(): this.selectedRows=${JSON.stringify(
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.getSelectedName() this.selectedRows=${JSON.stringify(
         this.selectedRows
       )}`,
-      `getSelectedName()`,
-      this.recordId
+      "check boxed a session objective row, logged selectedRows",
+      `${TAG}`
     );
-    // Display that fieldName of the selected rows
-    //for (let i = 0; i < selectedRows.length; i++){
-    //alert("You selected: " + selectedRows[i].Name);
-    //}
   }
 
   showNotification(t, m, v) {

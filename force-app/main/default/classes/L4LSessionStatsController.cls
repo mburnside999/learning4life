@@ -1,20 +1,25 @@
 public with sharing class L4LSessionStatsController {
   @AuraEnabled(cacheable=true)
   public static LFL_Stats_Boundary__mdt getHighAndLowBoundaries() {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug('Apex:getHighAndLowBoundaries')
-      .addTag('L4LSessionStatsController.getHighAndLowBoundaries()')
-      .addTag('logit()');
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LSessionStatsController.getHighAndLowBoundaries()',
+      'L4LSessionStatsController.getHighAndLowBoundaries()',
+      'next-gen-nebula-apex'
+    );
 
     LFL_Stats_Boundary__mdt lflStatsBoundaries = LFL_Stats_Boundary__mdt.getInstance(
       'lfl_stats_boundary'
     );
 
-    Logger.debug(
-        'Apex:getHighAndLowBoundaries, lflStatsBoundaries=' + lflStatsBoundaries
-      )
-      .addTag('L4LSessionStatsController.getHighAndLowBoundaries()')
-      .addTag('logit()');
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LSessionStatsController.getHighAndLowBoundaries, returning lflStatsBoundaries=' +
+      lflStatsBoundaries,
+      'L4LSessionStatsController.getHighAndLowBoundaries()',
+      'next-gen-nebula-apex'
+    );
 
     return lflStatsBoundaries;
   }
@@ -23,21 +28,40 @@ public with sharing class L4LSessionStatsController {
   public static List<session_statistics__c> getD3SessionStatsHistogramData(
     String clientId
   ) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3SessionStatsHistogramData() clientId=' +
+      clientId,
+      'L4LSessionStatsController.getD3SessionStatsHistogramData()',
+      'next-gen-nebula-apex'
+    );
+
     String querySessionStatsString = 'SELECT percent_correct__c FROM session_statistics__c where session__r.client__r.Id=:clientId';
     List<Session_Statistics__c> results = new List<Session_Statistics__c>();
 
     results = Database.query(querySessionStatsString);
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3SessionStatsHistogramData() returning results=' +
+      results,
+      'L4LSessionStatsController.getD3SessionStatsHistogramData()',
+      'next-gen-nebula-apex'
+    );
     System.debug(results);
     return results;
   }
 
   @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getSessionStats(String searchKey) {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug('Apex:getSessionStats() recordId=' + searchKey)
-      .setRecordId(searchKey)
-      .addTag('L4LSessionStatsController.getSessionStats()')
-      .addTag('logit()');
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      searchKey,
+      'L4LSessionStatsController.getSessionStats() searchKey=' + searchKey,
+      'L4LSessionStatsController.getSessionStats()',
+      'next-gen-nebula-apex'
+    );
 
     List<Session_Statistics__c> results = new List<Session_Statistics__c>(
       [
@@ -63,11 +87,12 @@ public with sharing class L4LSessionStatsController {
       ]
     );
 
-    Logger.debug('Apex:getSessionStats() results=' + results)
-      .setRecordId(searchKey)
-      .addTag('L4LSessionStatsController.getSessionStats()')
-      .addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.logDebug(
+      searchKey,
+      'L4LSessionStatsController.getSessionStats() results=' + results,
+      'L4LSessionStatsController.getSessionStats()',
+      'next-gen-nebula-apex'
+    );
 
     return results;
   }
@@ -76,16 +101,16 @@ public with sharing class L4LSessionStatsController {
     String clientId,
     Boolean showAcquired
   ) {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug(
-        'Apex:getD3Stats() recordId=' +
-          clientId +
-          ' showAcquired=' +
-          showAcquired
-      )
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getD3Stats()')
-      .addTag('logit()');
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3Stats() clientId=' +
+        clientId +
+        ' showAcquired=' +
+        showAcquired,
+      'L4LSessionStatsController.getD3Stats()',
+      'next-gen-nebula-apex'
+    );
 
     // List<Session_Statistics__c> results = new List<Session_Statistics__c>();
     // if (showAcquired) {
@@ -131,16 +156,23 @@ public with sharing class L4LSessionStatsController {
 
     querySessionStatsString += 'ORDER BY session__r.name, objective__r.name ';
 
-    Logger.debug(
-        'Apex:getD3Stats() querySessionStatsStr=' + querySessionStatsString
-      )
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getD3Stats()')
-      .addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3Stats() querySessionStatsString=' +
+      querySessionStatsString,
+      'L4LSessionStatsController.getD3Stats()',
+      'next-gen-nebula-apex'
+    );
 
     List<Session_Statistics__c> results = new List<Session_Statistics__c>();
     results = Database.query(querySessionStatsString);
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3Stats() returning results=' + results,
+      'L4LSessionStatsController.getD3Stats()',
+      'next-gen-nebula-apex'
+    );
 
     return results;
   }
@@ -151,16 +183,18 @@ public with sharing class L4LSessionStatsController {
     String programStr,
     Boolean showAcquired
   ) {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug(
-        'Apex:getD3StatsByProgram() recordId=' +
-          clientId +
-          ' showAcquired=' +
-          showAcquired
-      )
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getD3StatsByProgram()')
-      .addTag('logit()');
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3StatsByProgram() clientId=' +
+        clientId +
+        ' programStr=' +
+        programStr +
+        ' showAcquired=' +
+        showAcquired,
+      'L4LSessionStatsController.getD3StatsByProgram()',
+      'next-gen-nebula-apex'
+    );
 
     String querySessionStatsString =
       'SELECT session__r.name, session__r.client__c, session__r.client__r.name, program_name__c, ' +
@@ -173,16 +207,25 @@ public with sharing class L4LSessionStatsController {
 
     querySessionStatsString += 'ORDER BY session__r.name, objective__r.name ';
 
-    Logger.debug(
-        'Apex:getD3Stats() querySessionStatsStr=' + querySessionStatsString
-      )
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getD3StatsByProgram()')
-      .addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3StatsByProgram() querySessionStatsString=' +
+      querySessionStatsString,
+      'L4LSessionStatsController.getD3StatsByProgram()',
+      'next-gen-nebula-apex'
+    );
 
     List<Session_Statistics__c> results = new List<Session_Statistics__c>();
     results = Database.query(querySessionStatsString);
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3StatsByProgram() returning results=' +
+      results,
+      'L4LSessionStatsController.getD3StatsByProgram()',
+      'next-gen-nebula-apex'
+    );
+
     return results;
   }
 
@@ -190,6 +233,14 @@ public with sharing class L4LSessionStatsController {
   public static List<AggregateResult> getClientObjectivesByProgram(
     String clientId
   ) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getClientObjectivesByProgram() clientId=' +
+      clientId,
+      'L4LSessionStatsController.getClientObjectivesByProgram()',
+      'next-gen-nebula-apex'
+    );
     String queryString =
       'SELECT  Objective__r.SD__r.Program__r.Name, ' +
       'count(Objective__c) objectiveCount FROM Client_Objective__c ' +
@@ -200,22 +251,26 @@ public with sharing class L4LSessionStatsController {
     List<AggregateResult> results = new List<AggregateResult>();
     results = Database.query(queryString);
 
-    Logger.debug('Apex:getD3Stats() queryStr=' + queryString)
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getClientObjectivesByProgram()')
-      .addTag('logit()');
-
-    Logger.debug('Apex:getD3Stats() results' + results)
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getClientObjectivesByProgram()')
-      .addTag('logit()');
-    Logger.saveLog();
-
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getClientObjectivesByProgram() returning results=' +
+      results,
+      'L4LSessionStatsController.getClientObjectivesByProgram()',
+      'next-gen-nebula-apex'
+    );
     return results;
   }
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3YAxisScale(String clientId) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3YAxisScale() clientId=' + clientId,
+      'L4LSessionStatsController.getD3YAxisScale()',
+      'next-gen-nebula-apex'
+    );
+
     List<AggregateResult> l = [
       SELECT count(id) c
       FROM client_objective__c
@@ -234,16 +289,24 @@ public with sharing class L4LSessionStatsController {
     String periodStr,
     String stageStr
   ) {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug(
-        'Apex:getD3StatsByProgramAndSD() recordId=' +
-          clientId +
-          ' showAcquired=' +
-          showAcquired
-      )
-      .setRecordId(clientId)
-      .addTag('L4LController.getD3StatsByProgramAndSD()')
-      .addTag('logit()');
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3StatsByProgramAndSD() clientId=' +
+        clientId +
+        ' programStr=' +
+        programStr +
+        ' sdStr=' +
+        sdStr +
+        ' showAcquired=' +
+        showAcquired +
+        ' persiodStr=' +
+        periodStr +
+        'stageStr= ' +
+        stageStr,
+      'L4LSessionStatsController.getD3StatsByProgramAndSD()',
+      'next-gen-nebula-apex'
+    );
 
     String querySessionStatsString =
       'SELECT session__r.name, session__r.client__c, session__r.client__r.name, program_name__c, ' +
@@ -279,35 +342,35 @@ public with sharing class L4LSessionStatsController {
 
     querySessionStatsString += ' ORDER BY session__r.name, objective__r.name ';
 
-    Logger.fine(
-        'Apex:getD3Stats() getD3StatsByProgramAndSD() qry=' +
-        querySessionStatsString
-      )
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getD3StatsByProgramAndSD()()')
-      .addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3StatsByProgramAndSD() querySessionStatsString=' +
+      querySessionStatsString,
+      'L4LSessionStatsController.getD3StatsByProgramAndSD()',
+      'next-gen-nebula-apex'
+    );
 
     List<Session_Statistics__c> results = new List<Session_Statistics__c>();
     results = Database.query(querySessionStatsString);
 
-    Logger.fine(
-        'Apex:getD3Stats() getD3StatsByProgramAndSD() results=' + results
-      )
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getD3StatsByProgramAndSD()()')
-      .addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3StatsByProgramAndSD() results=' + results,
+      'L4LSessionStatsController.getD3StatsByProgramAndSD()',
+      'next-gen-nebula-apex'
+    );
 
     return results;
   }
   @AuraEnabled(Cacheable=true)
   public static List<Program__c> getProgramsAndSds(String stageStr) {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug('Apex:getProgramsAndSds')
-      .addTag('L4LSessionStatsController.getProgramsAndSds()')
-      .addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LSessionStatsController.getProgramsAndSds() stageStr=' + stageStr,
+      'L4LSessionStatsController.getProgramsAndSds()',
+      'next-gen-nebula-apex'
+    );
 
     String querySessionStatsString =
       'SELECT Id, Name,' +
@@ -321,8 +384,23 @@ public with sharing class L4LSessionStatsController {
     }
     System.debug(querySessionStatsString);
 
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LSessionStatsController.getProgramsAndSds() querySessionStatsString=' +
+      querySessionStatsString,
+      'L4LSessionStatsController.getProgramsAndSds()',
+      'next-gen-nebula-apex'
+    );
+
     List<Program__c> results = new List<Program__c>();
     results = Database.query(querySessionStatsString);
+
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LSessionStatsController.getProgramsAndSds() results=' + results,
+      'L4LSessionStatsController.getProgramsAndSds()',
+      'next-gen-nebula-apex'
+    );
 
     return results;
   }
@@ -331,12 +409,14 @@ public with sharing class L4LSessionStatsController {
   public static List<AggregateResult> getClientObjectivesSDCount(
     String clientId
   ) {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug('Apex:getClientObjectivesSDCount recordId=' + clientId)
-      .setRecordId(clientId)
-      .addTag('L4LSessionStatsController.getClientObjectivesSDCount()')
-      .addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getClientObjectivesSDCount() clientId=' +
+      clientId,
+      'L4LSessionStatsController.getClientObjectivesSDCount()',
+      'next-gen-nebula-apex'
+    );
 
     return [
       SELECT
@@ -355,10 +435,16 @@ public with sharing class L4LSessionStatsController {
     String clientId,
     String stageStr
   ) {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug('Apex:generateD3ProgramAreaSDJson')
-      .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
-      .addTag('logit()');
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.generateD3ProgramAreaSDJson() clientId=' +
+        clientId +
+        ' stageStr=' +
+        stageStr,
+      'L4LSessionStatsController.generateD3ProgramAreaSDJson()',
+      'next-gen-nebula-apex'
+    );
 
     List<AggregateResult> countCoBySD = [
       SELECT objective__r.sd__c sdid, count(id) sdcount
@@ -548,20 +634,31 @@ public with sharing class L4LSessionStatsController {
     String replacement = ']';
     String jsonstr = jsontmp.replace(target, replacement);
     System.debug(jsonstr);
-    Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
-      .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
-      .addTag('logit()');
-    Logger.saveLog();
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.generateD3ProgramAreaSDJson() returning jsonstr=' +
+      jsonstr,
+      'L4LSessionStatsController.generateD3ProgramAreaSDJson()',
+      'next-gen-nebula-apex'
+    );
+
     return jsonstr;
   }
 
   // experimental
   @AuraEnabled(cacheable=true)
   public static String generateD3AreaSDJson(String clientId, String stageStr) {
-    Logger.setScenario('L4LSessionStatsController');
-    Logger.debug('Apex:generateD3AreaSDJson')
-      .addTag('L4LSessionStatsController.generateD3AreaSDJson()')
-      .addTag('logit()');
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.generateD3AreaSDJson() clientId=' +
+        clientId +
+        ' stageStr=' +
+        stageStr,
+      'L4LSessionStatsController.generateD3AreaSDJson()',
+      'next-gen-nebula-apex'
+    );
 
     Map<String, List<LFLSDWrapper>> sdAllAreaMap = new Map<String, List<LFLSDWrapper>>();
 
@@ -701,6 +798,14 @@ public with sharing class L4LSessionStatsController {
       System.debug(e.getMessage());
     }
     System.debug('isValidJSON=' + isValidJSON);
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.generateD3AreaSDJson() returning jsonstr=' +
+      jsonstr,
+      'L4LSessionStatsController.generateD3AreaSDJson()',
+      'next-gen-nebula-apex'
+    );
 
     return jsonstr;
   }

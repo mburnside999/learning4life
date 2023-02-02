@@ -4,14 +4,13 @@ import getClientObjectivesForSession from "@salesforce/apex/L4LController.getCli
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord } from "lightning/uiRecordApi";
+import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
 const COMPONENT = "l4lFastEditSessionCOStatus";
-const COLOR = "color:olive"; //for console log formatting
-const DEBUG = "debug";
-const INFO = "info";
-const FINE = "fine";
+const TAG = "L4L-Fast-Edit-Client-Objectives";
 
-const ERROR = "error";
+const COLOR = "color:olive"; //for console log formatting
 
 const columns = [
   {
@@ -66,77 +65,42 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
 
   connectedCallback() {
     console.info(`in connectedCallback`, COLOR);
-    this.refresh();
-  }
-  renderedCallback() {
-    // if (!this.rendered) {
-    //   this.logit(
-    //     DEBUG,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.logit(
-    //     FINE,
-    //     "renderedCallback():  ignore - confirming logging",
-    //     `renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.logit(
-    //     ERROR,
-    //     "renderedCallback(): ignore  - confirming logging",
-    //     `renderedCallback()`,
-    //     this.recordId
-    //   );
-    //   this.rendered = true;
-    // }
-  }
-
-  logit(level, message, tag, context = null) {
-    let _level = `${level}`;
-    let _message = `${COMPONENT}.${message}`;
-    let _tag = `${COMPONENT}.${tag}`;
-    let _context = `${context}`;
-
-    console.log(`in logger level=${_level} tag=${_tag} context=${_context}`);
-    let logger = this.template.querySelector("c-logger");
-    logger.setScenario(`${COMPONENT}`);
-    switch (level) {
-      case INFO:
-        logger
-          .info(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case DEBUG:
-        logger
-          .debug(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case FINE:
-        logger
-          .fine(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      case ERROR:
-        logger
-          .error(_message)
-          .setRecordId(_context)
-          .addTag("logit()")
-          .addTag(_tag);
-        break;
-      default:
-    }
-
-    logger.saveLog();
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback: columns=${JSON.stringify(
+            this.columns
+          )}`,
+          `${COMPONENT}.connectedCallback: columns=${JSON.stringify(
+            this.columns
+          )}`,
+          `${TAG}`
+        );
+        logDebug(
+          this.recordId,
+          `initial refresh of client objectives`,
+          `initial refresh of client objectives`,
+          `${TAG}`
+        );
+        this.refresh();
+      })
+      .catch((error) => {
+        console.log("Error");
+      });
   }
 
   async handleSave(event) {
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSave(): draftValues=${JSON.stringify(
+        event.detail.draftValues
+      )}`,
+      `${COMPONENT}.handleSave(), logging the draft values`,
+      `${TAG}`
+    );
+
     // Convert datatable draft values into record objects
     const records = event.detail.draftValues.slice().map((draftValue) => {
       const fields = Object.assign({}, draftValue);
@@ -146,12 +110,26 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
     // Clear all datatable draft values
     this.draftValues = [];
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSave(): entering try-block, update values using lightning/uiRecordApi updateRecord`,
+      `${COMPONENT}.handleSave(): entering try-block, update values using lightning/uiRecordApi updateRecord`,
+      `${TAG}`
+    );
+
     try {
       // Update all records in parallel thanks to the UI API
       const recordUpdatePromises = records.map((record) =>
         updateRecord(record)
       );
       await Promise.all(recordUpdatePromises);
+
+      logDebug(
+        this.recordId,
+        `${COMPONENT}.handleSave(): Promises resolved`,
+        `${COMPONENT}.handleSave(): Promises resolved`,
+        `${TAG}`
+      );
 
       // Report success with a toast
       this.dispatchEvent(
@@ -163,6 +141,13 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
       );
 
       // Display fresh data in the datatable
+
+      logDebug(
+        this.recordId,
+        `${COMPONENT}.handleSave(): calling refresh`,
+        `${COMPONENT}.handleSave(): calling refresh}`,
+        `${TAG}`
+      );
       this.refresh();
     } catch (error) {
       this.dispatchEvent(
@@ -180,53 +165,61 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
     console.info(`%crefresh(): entering`, COLOR);
     console.debug(`%crefresh(): calling getClientObjectivesForSession`, COLOR);
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.refresh(): entering `,
+      `${COMPONENT}.refresh(): entering`,
+      `${TAG}`
+    );
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.refresh() calling LFLController.getClientObjectivesForSession() `,
+      `${COMPONENT}.refresh() calling LFLController.getClientObjectivesForSession()`,
+      `${TAG}`
+    );
+
     getClientObjectivesForSession({
       searchKey: this.recordId
     })
       .then((result) => {
         this.objectives = result;
-        this.logit(
-          DEBUG,
-          `refresh(): getClientObjectivesForSession returned ${this.objectives.length} results`,
-          `refresh()`,
-          this.recordId
-        );
-        this.logit(
-          FINE,
-          `refresh(): getClientObjectivesForSession result= ${JSON.stringify(
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.refresh(): Apex call to getClientObjectivesForSession result= ${JSON.stringify(
             result
           )}`,
-          `refresh()`,
-          this.recordId
+          "client objectives refreshed, records logged, setting this.filterableObjectives=result",
+          `${TAG}`
         );
-        //console.debug(`refresh(): result=${JSON.stringify(result)}`);
+
         this.filterableObjectives = result;
       })
       .catch((error) => {
         this.error = error;
-        this.logit(
-          ERROR,
-          `refresh(): getClientObjectivesForSession errored: ${JSON.stringify(
-            error
-          )} results`,
-          `refresh()`,
-          this.recordId
+        logError(
+          this.recordId,
+          `${COMPONENT}.refresh(): Apex call to getClientObjectivesForSession returned error: ${error}`,
+          "client objectives refresh failed",
+          `${TAG}`
         );
       });
   }
 
   handleSearchKeyInput(event) {
-    this.logit(
-      DEBUG,
-      `handleSearchKey(): entering method`,
-      `handleSearchKey()`
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleSearchKeyInput: entering method`,
+      "handleSearchKeyInput",
+      `${TAG}`
     );
     const searchKey = event.target.value.toLowerCase();
 
-    this.logit(
-      FINE,
-      `handleSearchKey(): searchKey=${searchKey}`,
-      `handleSearchKey()`
+    logFine(
+      this.recordId,
+      `${COMPONENT}.handleSearchKeyInput: searchKey=${searchKey}`,
+      "handleSearchKeyInput",
+      `${TAG}`
     );
 
     this.objectives = this.filterableObjectives.filter(
@@ -237,20 +230,9 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
         so.SD_Name__c.toLowerCase().includes(searchKey) ||
         so.Objective_Name__c.toLowerCase().includes(searchKey)
     );
-
-    this.logit(
-      FINE,
-      `handleSearchKey(): this.objectives=${JSON.stringify(this.objectives)}`,
-      `handleSearchKey()`
-    );
   }
 
   showNotification(t, m, v) {
-    this.logit(
-      FINE,
-      `showNotification(): entering method, t=${t}, m=${m}, v=${v}`,
-      `showNotification()`
-    );
     const evt = new ShowToastEvent({
       title: t,
       message: m,
@@ -260,11 +242,13 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
   }
 
   handleClickCancel(event) {
-    this.logit(
-      FINE,
-      `handleClickCancel(): dispatching CustomEvent(close)`,
-      `handleClickCancel()`
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleClickCancel: entering method, dispatching CustomEvent(close)`,
+      `${COMPONENT}.handleClickCancel: entering method, dispatching CustomEvent(close)`,
+      `${TAG}`
     );
+
     this.dispatchEvent(new CustomEvent("close"));
   }
 }
