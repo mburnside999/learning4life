@@ -1,7 +1,6 @@
 import { LightningElement, api } from "lwc";
 
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import warnLog from "@salesforce/apex/L4LNebulaComponentController.logWarning";
 import debugLog from "@salesforce/apex/L4LNebulaComponentController.logDebug";
 
 export default class LflNextGenNebulaLogger extends LightningElement {

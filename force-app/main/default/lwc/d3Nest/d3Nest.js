@@ -6,7 +6,7 @@ import getProgramsAndSds from "@salesforce/apex/L4LSessionStatsController.getPro
 import D3 from "@salesforce/resourceUrl/d3";
 
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+import { logDebug, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3Nest";
 const TAG = "L4L-Session-Statistics-D3Nest";

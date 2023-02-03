@@ -4,7 +4,7 @@ import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import generateD3COTimeSeriesByStatusJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesByStatusJson";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+import { logDebug, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3MiniBars";
 const TAG = "L4L-Session-Statistics-D3MiniBars";

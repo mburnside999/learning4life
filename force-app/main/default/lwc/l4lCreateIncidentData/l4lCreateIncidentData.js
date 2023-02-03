@@ -31,6 +31,12 @@ export default class L4lCreateIncidentData extends LightningElement {
       })
       .catch((error) => {
         console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): error: ${JSON.stringify(error)} `,
+          `${COMPONENT}.connectedCallback(): error: ${JSON.stringify(error)}`,
+          `${TAG}`
+        );
       });
   }
 
