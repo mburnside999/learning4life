@@ -4,6 +4,11 @@ import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import generateD3COTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesJson";
 import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+
+const COMPONENT = "D3HorizontalLollipopChart";
+const TAG = "L4L-Session-Statistics-D3HorizontalLollipopChart";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
@@ -25,6 +30,29 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     }
   }
 
+  connectedCallback() {
+    console.log("in connectedCallback recordId=" + this.recordId);
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${TAG}`
+        );
+      })
+      .catch((error) => {
+        console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${TAG}`
+        );
+      });
+  }
+
   renderedCallback() {
     if (this.d3Initialized) {
       return;
@@ -34,16 +62,38 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     loadScript(this, D3 + "/d3.v5.min.js")
       .then(() => {
         console.log("calling apex");
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): calling generateD3COTimeSeriesJson, status=All`,
+          `getting data, calling Apex generateD3COTimeSeriesJson, status=All`,
+          `${TAG}`
+        );
         return generateD3COTimeSeriesJson({
           clientId: this.recordId,
           status: "All"
         });
       })
       .then((response) => {
-        console.log("calling lollipop, response=" + JSON.stringify(response));
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesJson returned ${JSON.stringify(
+            response
+          )}`,
+          `response received and logged, calling this.renderLineChart`,
+          `${TAG}`
+        );
+
         this.renderLineChart(response);
       })
       .catch((error) => {
+        logError(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${TAG}`
+        );
+
         this.dispatchEvent(
           new ShowToastEvent({
             title: "Error loading D3",
@@ -57,10 +107,17 @@ export default class D3HorizontalLollipopChart extends LightningElement {
   renderLineChart(response) {
     // let data = JSON.parse(
     //   '[{"rundate":"2022-11-26","val":60},{"rundate":"2022-12-19","val":64}]'
-    // );
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderLineChart(): parameter is response=${JSON.stringify(
+        response
+      )})`,
+      "in renderLineChart(response), logged parameter",
+      `${TAG}`
+    );
 
     let datatmp = JSON.parse(response);
-
     let data = datatmp.map(myfunction);
 
     function myfunction(d) {
@@ -76,11 +133,26 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     console.log("data " + JSON.stringify(data));
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderLineChart: data=${JSON.stringify(data)}`,
+      "preparing to draw a line chart, data logged",
+      `${TAG}`
+    );
+
     // set the dimensions and margins of the graph
     const margin = { top: 40, right: 30, bottom: 40, left: 50 },
       width = 1150 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
+        margin
+      )}`,
+      `width=${width} height=${height} margin=${JSON.stringify(margin)}`,
+      `${TAG}`
+    );
     console.log("cleaning  up  svg");
     let svg = d3.select(
       this.template.querySelector(".horizontal-lollipop-chart")
@@ -223,10 +295,27 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
   handleClick(event) {
     this.mode = event.target.label;
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3COTimeSeriesJson`,
+      `Clicked ${this.mode}, calling generateD3COTimeSeriesJson `,
+      `${TAG}`
+    );
+
     generateD3COTimeSeriesJson({
       clientId: this.recordId,
       status: this.mode
     }).then((response) => {
+      logDebug(
+        this.recordId,
+        `${COMPONENT}.handleClick(): Apex returned reponse ${JSON.stringify(
+          response
+        )}`,
+        `Apex response returned and logged, calling this.renderLineChart(response)`,
+        `${TAG}`
+      );
+
       console.log(
         "calling generateD3COTimeSeriesJson,response=" +
           JSON.stringify(response)
