@@ -5,7 +5,7 @@ import D3 from "@salesforce/resourceUrl/d3";
 import generateD3COTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesJson";
 import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+import { logDebug, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3HorizontalLollipopChart";
 const TAG = "L4L-Session-Statistics-D3HorizontalLollipopChart";
