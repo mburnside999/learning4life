@@ -5,6 +5,11 @@ import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import getD3StatsByProgramAndSD from "@salesforce/apex/L4LSessionStatsController.getD3StatsByProgramAndSD";
 import getHighAndLowBoundaries from "@salesforce/apex/L4LSessionStatsController.getHighAndLowBoundaries";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+
+const COMPONENT = "D3HeatMap";
+const TAG = "L4L-Session-Statistics-D3HeatMap";
 
 export default class D3HeatMap extends LightningElement {
   low = 50;
@@ -94,6 +99,25 @@ export default class D3HeatMap extends LightningElement {
 
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${TAG}`
+        );
+      })
+      .catch((error) => {
+        console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${TAG}`
+        );
+      });
   }
 
   renderedCallback() {
@@ -134,6 +158,12 @@ export default class D3HeatMap extends LightningElement {
   }
 
   initializeD3() {
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3(): entering `,
+      "initializing D3",
+      `${TAG}`
+    );
     console.log("in initializeD3()");
 
     //these helper sets produce the dimensions and group buttons
@@ -275,9 +305,32 @@ export default class D3HeatMap extends LightningElement {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     let d3sessionXAxis = this.sessionXAxisArray;
-
     let d3progYAxisArray = this.progYAxisArray;
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3(): X-axis: ${d3sessionXAxis}`,
+      `X-axis: ${d3sessionXAxis}`,
+      `${TAG}`
+    );
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3(): Y-axis:  ${d3progYAxisArray} `,
+      `Y-axis:  ${d3progYAxisArray}`,
+      `${TAG}`
+    );
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3(): this.gridData:  ${JSON.stringify(
+        this.gridData
+      )} `,
+      `${COMPONENT}.initializeD3(): this.gridData:  ${JSON.stringify(
+        this.gridData
+      )} `,
+      `${TAG}`
+    );
     // Build X scales and axis:
     let x = d3
       .scaleBand()
@@ -460,6 +513,13 @@ export default class D3HeatMap extends LightningElement {
   composeOptions() {
     console.log("in composeOptions");
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): entering `,
+      "composeOptions()",
+      `${TAG}`
+    );
+
     //find the curent Program
     let optionJson = this.options.find((item) => {
       return item.isChecked == true;
@@ -496,6 +556,20 @@ export default class D3HeatMap extends LightningElement {
     let statusStr = statusoptionJson.value;
     console.log("statusStr=" + statusStr);
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): calling Apex getD3StatsByProgramAndSD`,
+      "calling Apex getD3StatsByProgramAndSD",
+      `${TAG}`
+    );
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): clientId=${this.recordId}, programStr=${programStr}, sdStr=${sdStr}, periodStr=${periodStr}, showAcquired=${statusStr}, stageStr=${stageStr}  `,
+      "Apex getD3StatsByProgramAndSD() parameters logged",
+      `${TAG}`
+    );
+
     getD3StatsByProgramAndSD({
       clientId: this.recordId,
       programStr: programStr,
@@ -505,60 +579,30 @@ export default class D3HeatMap extends LightningElement {
       stageStr: stageStr
     })
       .then((result) => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): returned from Apex call, ${result.length} items returned`,
+          `returned ${result.length} items`,
+          `${TAG}`
+        );
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): result=${JSON.stringify(result)}`,
+          `setting this.result, calling initializeD3()`,
+          `${TAG}`
+        );
         this.result = result;
         console.log("filtered result=" + JSON.stringify(result));
         this.initializeD3();
       })
       .catch((error) => {
         this.error = error;
+        logError(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${error}`,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${error}`,
+          `${TAG}`
+        );
       });
   }
-
-  /* deprecated method */
-  // async apexData() {
-  //   console.log("APEX DATA calling Apex");
-  //   let result = await getD3Stats({
-  //     clientId: this.recordId,
-  //     showAcquired: this.isSelected
-  //   }).then(() => {
-  //     console.log("returned");
-  //     let session;
-  //     let objective;
-  //     let value;
-
-  //     this.gridData = result.map((row) => {
-  //       console.log("=======" + row.Session__r.Name);
-  //       this.sessionsSet.add(row.Session__r.Name);
-  //       this.objsSet.add(row.Objective__r.Name);
-  //       session = row.Session__r.Name;
-  //       objective = row.Objective__r.Name;
-  //       value = row.Percent_Correct__c;
-  //       return { session, objective, value };
-  //     });
-
-  //     console.log("thius.gridData" + JSON.stringify(this.gridData));
-
-  //     let myIterator = this.sessions.values();
-
-  //     // List all Values
-
-  //     for (const entry of myIterator) {
-  //       console.log("=========" + entry);
-  //       let s = this.sessionXAxisArray;
-  //       s.push(entry);
-  //     }
-  //     console.log("=== mygridsessions ===" + this.sessionXAxisArray);
-
-  //     let myOtherIterator = this.objsSet.values();
-
-  //     for (const entry of myOtherIterator) {
-  //       console.log("=========" + entry);
-  //       let s = this.progYAxisArray;
-  //       s.push(entry);
-  //     }
-
-  //     console.log("=== progYAxisArray ===" + this.progYAxisArray);
-  //     console.log("returning from Apex");
-  //   });
-  // }
 }

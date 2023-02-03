@@ -3,15 +3,40 @@ import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import generateD3COTimeSeriesByStatusJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesByStatusJson";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
 
-/**
- * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
- */
+const COMPONENT = "D3MiniBars";
+const TAG = "L4L-Session-Statistics-D3MiniBars";
+
 export default class D3MiniBars extends LightningElement {
   @api recordId;
   d3Initialized = false;
   @track result = [];
   mode = "All";
+
+  connectedCallback() {
+    console.log("in connectedCallback recordId=" + this.recordId);
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${TAG}`
+        );
+      })
+      .catch((error) => {
+        console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${TAG}`
+        );
+      });
+  }
 
   renderedCallback() {
     if (this.d3Initialized) {
@@ -22,15 +47,40 @@ export default class D3MiniBars extends LightningElement {
     loadScript(this, D3 + "/d3.v5.min.js")
       .then(() => {
         console.log("calling apex");
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): calling generateD3COTimeSeriesByStatusJson`,
+          `getting data, calling Apex generateD3COTimeSeriesByStatusJson`,
+          `${TAG}`
+        );
+
         return generateD3COTimeSeriesByStatusJson({
           clientId: this.recordId
         });
       })
       .then((response) => {
         console.log("calling lollipop, response=" + JSON.stringify(response));
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesByStatusJson returned ${JSON.stringify(
+            response
+          )}`,
+          `response received and logged, calling this.renderLineChart`,
+          `${TAG}`
+        );
+
         this.renderLineChart(response);
       })
       .catch((error) => {
+        logError(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${TAG}`
+        );
+
         this.dispatchEvent(
           new ShowToastEvent({
             title: "Error loading D3",
@@ -45,9 +95,16 @@ export default class D3MiniBars extends LightningElement {
     // let data = JSON.parse(
     //   '[{"rundate":"2022-11-26","val":60,"status":ACQ},{"rundate":"2022-12-19","val":64,"status":"ACQ"}]'
     // );
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderLineChart(): parameter is response=${JSON.stringify(
+        response
+      )})`,
+      "in renderLineChart(response), logged parameter",
+      `${TAG}`
+    );
 
     let datatmp = JSON.parse(response);
-
     let data = datatmp.map(myfunction);
 
     // var sumstat = d3
@@ -82,10 +139,26 @@ export default class D3MiniBars extends LightningElement {
 
     console.log("data " + JSON.stringify(data));
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderLineChart: data=${JSON.stringify(data)}`,
+      "preparing to draw multiple mini linecharts, data logged",
+      `${TAG}`
+    );
+
     // set the dimensions and margins of the graph
     var margin = { top: 40, right: 30, bottom: 40, left: 50 },
       width = 350 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
+        margin
+      )}`,
+      `width=${width} height=${height} margin=${JSON.stringify(margin)}`,
+      `${TAG}`
+    );
 
     console.log("cleaning  up  svg");
     // let svg = d3.select(this.template.querySelector(".d3-minibars-chart"));
@@ -259,65 +332,69 @@ export default class D3MiniBars extends LightningElement {
       .style("fill", "grey")
       .style("max-width", 800)
       .text(`Client Objective Time Series, auto refreshed Sunday 10pm`);
-
-    // svg
-    //   .append("text")
-    //   .attr("x", 1170 / 2 - 150)
-    //   // .attr("x", 200)
-    //   .attr("y", 20)
-    //   .attr("text-anchor", "left")
-    //   .style("font-size", "14px")
-    //   .style("fill", "grey")
-    //   .style("max-width", 400)
-    //   .text("Client Objective Time Series.");
-
-    // Parse the Data
-    // Add X axis
-
-    // svg
-    //   .selectAll("mybar")
-    //   .data(data)
-    //   .enter()
-    //   .append("rect")
-    //   .attr("x", function (d) {
-    //     return x(d.week);
-    //   })
-    //   .attr("y", function (d) {
-    //     return y(d.val);
-    //   })
-    //   .attr("width", x.bandwidth())
-    //   .attr("height", function (d) {
-    //     return height - y(d.val);
-    //   })
-    //   .attr("fill", "#69b3a2");
   }
 
-  // handleClickMax(event) {
-  //   this.clickedButtonLabel = event.target.label;
-  //   this.renderHorizontalLollipopChart(this.mydata, "MaxEmployees");
+  // handleClickAll(event) {
+  //   logDebug(
+  //     this.recordId,
+  //     `${COMPONENT}.handleClickAll(): setting this.mode=All `,
+  //     `clicked All, setting this.mode=All`,
+  //     `${TAG}`
+  //   );
+
+  //   this.mode = "All";
+
+  //   logDebug(
+  //     this.recordId,
+  //     `${COMPONENT}.handleClickAll(): this.mode=${this.mode}`,
+  //     `this.mode=${this.mode}`,
+  //     `${TAG}`
+  //   );
+
+  //   logDebug(
+  //     this.recordId,
+  //     `${COMPONENT}.handleClickAll(): calling generateD3COTimeSeriesByStatusJson`,
+  //     `getting data via Apex generateD3COTimeSeriesByStatusJson `,
+  //     `${TAG}`
+  //   );
+
+  //   generateD3COTimeSeriesByStatusJson({
+  //     clientId: this.recordId
+  //   }).then((response) => {
+  //     logDebug(
+  //       this.recordId,
+  //       `${COMPONENT}.handleClickAll(): generateD3COTimeSeriesByStatusJson returned ${JSON.stringify(
+  //         response
+  //       )}`,
+  //       `response received, logged, rendering chart via this.renderLineChart()`,
+  //       `${TAG}`
+  //     );
+  //   this.renderLineChart(response);
+  // });
+  //}
+
+  // handleClickACQ(event) {
+  //   logDebug(
+  //     this.recordId,
+  //     `${COMPONENT}.handleClickACQ(): setting this.mode=ACQ `,
+  //     `clicked ACQ, setting this.mode=ACQ`,
+  //     `${TAG}`
+  //   );
+
+  //   this.mode = "ACQ";
+
+  //   logDebug(
+  //     this.recordId,
+  //     `${COMPONENT}.handleClickAll(): this.mode=${this.mode}`,
+  //     `this.mode=${this.mode}`,
+  //     `${TAG}`
+  //   );
+
+  //   generateD3COTimeSeriesByStatusJson({
+  //     clientId: this.recordId
+  //   }).then((response) => {
+  //     console.log("calling lollipop, response=" + JSON.stringify(response));
+  //     this.renderLineChart(response);
+  //   });
   // }
-  // handleClickAvg(event) {
-  //   this.clickedButtonLabel = event.target.label;
-  //   this.renderHorizontalLollipopChart(this.mydata, "AvgEmployees");
-  // }
-
-  handleClickAll(event) {
-    this.mode = "All";
-    generateD3COTimeSeriesByStatusJson({
-      clientId: this.recordId
-    }).then((response) => {
-      console.log("calling lollipop, response=" + JSON.stringify(response));
-      this.renderLineChart(response);
-    });
-  }
-
-  handleClickACQ(event) {
-    this.mode = "ACQ";
-    generateD3COTimeSeriesByStatusJson({
-      clientId: this.recordId
-    }).then((response) => {
-      console.log("calling lollipop, response=" + JSON.stringify(response));
-      this.renderLineChart(response);
-    });
-  }
 }

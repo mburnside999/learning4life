@@ -2,10 +2,14 @@ import { LightningElement, track, api } from "lwc";
 import { loadScript } from "lightning/platformResourceLoader";
 //c/d3Histogramimport generateD3ProgramAreaSDJson from "@salesforce/apex/L4LSessionStatsController.generateD3ProgramAreaSDJson";
 import generateD3AreaSDJson from "@salesforce/apex/L4LSessionStatsController.generateD3AreaSDJson";
-
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 
 import D3 from "@salesforce/resourceUrl/d3";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+
+const COMPONENT = "D3Nest";
+const TAG = "L4L-Session-Statistics-D3NestExperiment";
 
 export default class D3NestExperiment extends LightningElement {
   //the clientId from UI
@@ -48,10 +52,35 @@ export default class D3NestExperiment extends LightningElement {
 
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${TAG}`
+        );
+      })
+      .catch((error) => {
+        console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${TAG}`
+        );
+      });
   }
 
   renderedCallback() {
     console.log("in renderedCallback recordId=" + this.recordId);
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderedCallback(): this.d3Initialized=${this.d3Initialized}`,
+      `${COMPONENT}.renderedCallback(): this.d3Initialized=${this.d3Initialized}`,
+      `${TAG}`
+    );
 
     if (this.d3Initialized) {
       return;
@@ -61,6 +90,13 @@ export default class D3NestExperiment extends LightningElement {
     //load D3
     Promise.all([loadScript(this, D3 + "/d3.v5.min.js")])
       .then(async () => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): calling generateD3AreaSDJson with stageStr=All`,
+          `calling generateD3AreaSDJson with stageStr=All`,
+          `${TAG}`
+        );
+
         let _result = (this.result = await generateD3AreaSDJson({
           clientId: this.recordId,
           stageStr: "All"
@@ -70,6 +106,19 @@ export default class D3NestExperiment extends LightningElement {
       })
       .then(() => {
         console.log("NEST calling initializeD3()");
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): generateD3AreaSDJson returned, this.result has ${this.result.length} items`,
+          `generateD3AreaSDJson returned, this.result has ${this.result.length} items`,
+          `${TAG}`
+        );
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): calling initializeD3()`,
+          `calling initializeD3()`,
+          `${TAG}`
+        );
         this.initializeD3();
       })
       .catch((error) => {
@@ -88,6 +137,12 @@ export default class D3NestExperiment extends LightningElement {
 
     console.log("NEST in initializeD3()");
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3(): entering `,
+      "initializing D3",
+      `${TAG}`
+    );
     const mycolor = (area) => {
       console.log("area=" + area);
       let colorarray = [
@@ -125,6 +180,15 @@ export default class D3NestExperiment extends LightningElement {
       width = 1800 - margin.left - margin.right,
       height = 1200 - margin.top - margin.bottom;
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3: width=${width} height=${height} margin=${JSON.stringify(
+        margin
+      )}`,
+      `width=${width} height=${height} margin=${JSON.stringify(margin)}`,
+      `${TAG}`
+    );
+
     // clean up any previous svg.d3 descendents
     let svg = d3.select(this.template.querySelector(".nest"));
     svg.selectAll("*").remove();
@@ -136,6 +200,15 @@ export default class D3NestExperiment extends LightningElement {
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3: this.gridDataTree=${JSON.stringify(
+        this.gridDataTree
+      )}`,
+      `draw a d3.hierarchy using gridDataTree (logged)`,
+      `${TAG}`
+    );
 
     var root = d3.hierarchy(this.gridDataTree).sum(function (d) {
       return d.value;
@@ -319,6 +392,13 @@ export default class D3NestExperiment extends LightningElement {
   composeOptions() {
     console.log("in composeOptions");
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): entering `,
+      "composeOptions()",
+      `${TAG}`
+    );
+
     //find the curent Stage
     let stageoptionJson = this.stageoptions.find((item) => {
       return item.isChecked == true;
@@ -326,17 +406,43 @@ export default class D3NestExperiment extends LightningElement {
     let stageStr = stageoptionJson.label;
     console.log("stageStr=" + stageStr);
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): calling Apex generateD3AreaSDJson, stageStr=${stageStr} `,
+      "calling Apex generateD3AreaSDJson",
+      `${TAG}`
+    );
+
     generateD3AreaSDJson({
       clientId: this.recordId,
       stageStr: stageStr
     })
       .then((result) => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): returned from Apex call, ${result.length} items returned`,
+          `returned ${result.length} items`,
+          `${TAG}`
+        );
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): result=${JSON.stringify(result)}`,
+          `setting this.result, calling initializeD3()`,
+          `${TAG}`
+        );
+
         this.result = result;
         console.log("filtered result=" + JSON.stringify(result));
         this.initializeD3();
       })
       .catch((error) => {
         this.error = error;
+        logError(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${error}`,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${error}`,
+          `${TAG}`
+        );
       });
   }
 }

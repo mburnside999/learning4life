@@ -5,6 +5,12 @@ import getClientObjectivesSDCount from "@salesforce/apex/L4LSessionStatsControll
 import getProgramsAndSds from "@salesforce/apex/L4LSessionStatsController.getProgramsAndSds";
 import D3 from "@salesforce/resourceUrl/d3";
 
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+
+const COMPONENT = "D3Nest";
+const TAG = "L4L-Session-Statistics-D3Nest";
+
 export default class D3Nest extends LightningElement {
   //the clientId from UI
   @api recordId;
@@ -35,6 +41,25 @@ export default class D3Nest extends LightningElement {
 
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${TAG}`
+        );
+      })
+      .catch((error) => {
+        console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${TAG}`
+        );
+      });
   }
 
   get resultmessage() {
@@ -48,6 +73,13 @@ export default class D3Nest extends LightningElement {
   renderedCallback() {
     console.log("in renderedCallback recordId=" + this.recordId);
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderedCallback(): this.d3Initialized=${this.d3Initialized}`,
+      `${COMPONENT}.renderedCallback(): this.d3Initialized=${this.d3Initialized}`,
+      `${TAG}`
+    );
+
     if (this.d3Initialized) {
       return;
     }
@@ -56,6 +88,12 @@ export default class D3Nest extends LightningElement {
     //load D3
     Promise.all([loadScript(this, D3 + "/d3.v5.min.js")])
       .then(async () => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): calling getProgramsAndSds with stageStr=All`,
+          `calling getProgramsAndSds`,
+          `${TAG}`
+        );
         let _result = (this.result = await getProgramsAndSds({
           stageStr: "All"
         })); //this shenanigans was to get D3 to wait for the Apex to finish
@@ -63,6 +101,18 @@ export default class D3Nest extends LightningElement {
         //console.log("NEST RESULT=>" + JSON.stringify(this.result));
       })
       .then(async () => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): getProgramsAndSds returned, this.result has ${this.result.length} items`,
+          `getProgramsAndSds returned, this.result has ${this.result.length} items`,
+          `${TAG}`
+        );
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): calling getClientObjectivesSDCount`,
+          `calling getClientObjectivesSDCount`,
+          `${TAG}`
+        );
         let _sdcountarray = (this.sdcountarray =
           await getClientObjectivesSDCount({ clientId: this.recordId })); //this shenanigans was to get D3 to wait for the Apex to finish
         console.log(_sdcountarray);
@@ -77,7 +127,19 @@ export default class D3Nest extends LightningElement {
         //console.log("NEST D3Test=>" + JSON.stringify(d3test));
       })
       .then(() => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): getClientObjectivesSDCount returned, this.sdcountarray has ${this.sdcountarray.length} items`,
+          `getClientObjectivesSDCount returned, this.sdcountarray has ${this.sdcountarray.length} items`,
+          `${TAG}`
+        );
         console.log("NEST calling initializeD3()");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): calling initializeD3()`,
+          `calling initializeD3()`,
+          `${TAG}`
+        );
         this.initializeD3();
       })
       .catch((error) => {
@@ -94,6 +156,12 @@ export default class D3Nest extends LightningElement {
   initializeD3() {
     console.log("NEST in initializeD3()");
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3(): entering `,
+      "initializing D3",
+      `${TAG}`
+    );
     const mycolor = (name) => {
       console.log("name=" + name);
       let colorarray = [
@@ -130,6 +198,15 @@ export default class D3Nest extends LightningElement {
     var margin = { top: 10, right: 5, bottom: 20, left: 10 },
       width = 1400 - margin.left - margin.right,
       height = 1200 - margin.top - margin.bottom;
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3: width=${width} height=${height} margin=${JSON.stringify(
+        margin
+      )}`,
+      `width=${width} height=${height} margin=${JSON.stringify(margin)}`,
+      `${TAG}`
+    );
 
     console.log("clean up svg");
     //clean up any previous svg.d3 descendents
@@ -191,6 +268,15 @@ export default class D3Nest extends LightningElement {
     this.programsDisplayed = _gridData.length;
 
     this.gridDataTree = { children: _gridData };
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.initializeD3: this.gridDataTree=${JSON.stringify(
+        this.gridDataTree
+      )}`,
+      `draw a d3.hierarchy using gridDataTree (logged)`,
+      `${TAG}`
+    );
 
     var root = d3.hierarchy(this.gridDataTree).sum(function (d) {
       return d.value;
@@ -361,6 +447,12 @@ export default class D3Nest extends LightningElement {
   composeOptions() {
     console.log("in composeOptions");
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): entering `,
+      "composeOptions()",
+      `${TAG}`
+    );
     //find the curent Stage
     let stageoptionJson = this.stageoptions.find((item) => {
       return item.isChecked == true;
@@ -368,16 +460,42 @@ export default class D3Nest extends LightningElement {
     let stageStr = stageoptionJson.label;
     console.log("stageStr=" + stageStr);
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): calling Apex getProgramsAndSds,stageStr=${stageStr} `,
+      "calling Apex getProgramsAndSds",
+      `${TAG}`
+    );
+
     getProgramsAndSds({
       stageStr: stageStr
     })
       .then((result) => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): returned from Apex call, ${result.length} items returned`,
+          `returned ${result.length} items`,
+          `${TAG}`
+        );
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): result=${JSON.stringify(result)}`,
+          `setting this.result, calling initializeD3()`,
+          `${TAG}`
+        );
+
         this.result = result;
         console.log("filtered result=" + JSON.stringify(result));
         this.initializeD3();
       })
       .catch((error) => {
         this.error = error;
+        logError(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${error}`,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${error}`,
+          `${TAG}`
+        );
       });
   }
 }

@@ -106,44 +106,46 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${TAG}`
+        );
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): subscribing to message service `,
+          "subscribing to message service",
+          `${TAG}`
+        );
+
+        this.subscription = subscribe(
+          this.messageContext,
+          L4LMC,
+          (message) => {
+            this.handleLMS(message);
+          },
+          { scope: APPLICATION_SCOPE }
+        );
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): initial refresh of client objectives`,
+          "initial refresh of client objectives",
+          `${TAG}`
+        );
+        this.refresh();
       })
       .catch((error) => {
         console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${TAG}`
+        );
       });
-
-    console.info(`%cconnectedCallback(): entering`, COLOR);
-    console.info(`%cconnectedCallback(): subscribing LMS`, COLOR);
-    //console.debug(`%cconnectedCallback(): registering listener inputChangeEvent`,COLOR);
-    //registerListener('inputChangeEvent', this.handleChange, this);
-
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.connectedCallback(): subscribing to message service `,
-      "subscribing to message service",
-      `${TAG}`
-    );
-
-    this.subscription = subscribe(
-      this.messageContext,
-      L4LMC,
-      (message) => {
-        this.handleLMS(message);
-      },
-      { scope: APPLICATION_SCOPE }
-    );
-    console.debug(
-      `%cconnectedCallback(): calling this.refresh() to get client objectives, recordId =  ${this.recordId}`,
-      COLOR
-    );
-
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.connectedCallback(): initial refresh of client objectives`,
-      "initial refresh of client objectives",
-      `${TAG}`
-    );
-
-    this.refresh();
   }
   renderedCallback() {}
 
