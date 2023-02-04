@@ -30,6 +30,26 @@ class TestL4LTimeSeries {
   }
 
   @isTest
+  static void TestRetest() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    L4LTimeSeries tstest = new L4LTimeSeries();
+    Integer i = tstest.loadCOTimeSeries();
+    Test.stopTest();
+
+    L4LTimeSeries ts = new L4LTimeSeries();
+    String str = L4LTimeSeries.generateD3CORetestTimeSeriesJson(
+      clientId,
+      'All'
+    );
+    System.assert(str.length() >= 0, 'Expected a return string');
+
+    str = L4LTimeSeries.generateD3CORetestTimeSeriesJson(clientId, 'ACQ');
+    System.assert(str.length() >= 0, 'Expected a return string');
+  }
+
+  @isTest
   static void Test3() {
     Test.startTest();
     LFLPopulateTestData.load();

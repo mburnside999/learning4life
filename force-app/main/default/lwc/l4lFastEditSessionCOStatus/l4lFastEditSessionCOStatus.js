@@ -80,8 +80,8 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
         );
         logDebug(
           this.recordId,
-          `initial refresh of client objectives`,
-          `initial refresh of client objectives`,
+          `${COMPONENT}.connectedCallback: initial refresh of client objectives`,
+          `${COMPONENT}.connectedCallback: initial refresh of client objectives`,
           `${TAG}`
         );
         this.refresh();
@@ -189,7 +189,7 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
           `${COMPONENT}.refresh(): Apex call to getClientObjectivesForSession result= ${JSON.stringify(
             result
           )}`,
-          "client objectives refreshed, records logged, setting this.filterableObjectives=result",
+          `${COMPONENT}.refresh(): client objectives refreshed, records logged, setting this.filterableObjectives=result`,
           `${TAG}`
         );
 
@@ -200,7 +200,7 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.refresh(): Apex call to getClientObjectivesForSession returned error: ${error}`,
-          "client objectives refresh failed",
+          `${COMPONENT}.refresh(): client objectives refresh failed`,
           `${TAG}`
         );
       });
@@ -210,7 +210,7 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSearchKeyInput: entering method`,
-      "handleSearchKeyInput",
+      `${COMPONENT}.handleSearchKeyInput: entering method`,
       `${TAG}`
     );
     const searchKey = event.target.value.toLowerCase();
@@ -218,7 +218,7 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
     logFine(
       this.recordId,
       `${COMPONENT}.handleSearchKeyInput: searchKey=${searchKey}`,
-      "handleSearchKeyInput",
+      `${COMPONENT}.handleSearchKeyInput: searchKey=${searchKey}`,
       `${TAG}`
     );
 

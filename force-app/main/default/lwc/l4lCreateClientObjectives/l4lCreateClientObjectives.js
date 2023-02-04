@@ -59,7 +59,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.resultmessage(): tailoring a result message for display`,
-      "tailoring a result message for display",
+      `${COMPONENT}.resultmessage(): tailoring a result message for display`,
       `${TAG}`
     );
     if (this.showPopular) {
@@ -79,7 +79,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.refresh(): calling Apex getUnusedObjectivesBySearch`,
-      "refreshing, calling Apex getUnusedObjectivesBySearch",
+      `${COMPONENT}.refresh(): calling Apex getUnusedObjectivesBySearch`,
       `${TAG}`
     );
 
@@ -106,7 +106,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           `${COMPONENT}.refresh(): Apex getUnusedObjectivesBySearch returned result=${JSON.stringify(
             result
           )}`,
-          "Apex getUnusedObjectivesBySearch returned result",
+          `${COMPONENT}.refresh(): Apex getUnusedObjectivesBySearch returned result`,
           `${TAG}`
         );
       })
@@ -115,7 +115,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.refresh(): Apex getUnusedObjectivesBySearch error=${error}`,
-          "Apex getUnusedObjectivesBySearch errored",
+          `${COMPONENT}.refresh(): Apex getUnusedObjectivesBySearch error=${error}`,
           `${TAG}`
         );
       });
@@ -126,7 +126,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleRefreshPopular(): calling getPopularClientObjectives()`,
-      "Refresh Popular button pressed, calling getPopularClientObjectives()",
+      `${COMPONENT}.handleRefreshPopular(): Refresh Popular button pressed, calling getPopularClientObjectives()`,
       `${TAG}`
     );
     this.getPopularClientObjectives();
@@ -136,7 +136,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.getSelectedName() bound to lightning-datatable onrowselection `,
-      "getSelectedName",
+      `${COMPONENT}.getSelectedName()`,
       `${TAG}`
     );
 
@@ -147,7 +147,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
       `${COMPONENT}.getSelectedName() getSelectedName(): this.selectedRows=${JSON.stringify(
         this.selectedRows
       )}`,
-      "getSelectedName",
+      `${COMPONENT}.getSelectedName(): getSelectedName`,
       "next-gen-LWC-nebula"
     );
   }
@@ -156,23 +156,23 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickArray(): entering method, bound to lightning-button Create Client Objectives`,
-      "handleClickArray",
+      `${COMPONENT}.handleClickArray(): entering method, bound to lightning-button Create Client Objectives`,
       "next-gen-LWC-nebula"
     );
     if (this.selectedRows) {
       logDebug(
         this.recordId,
-        `${COMPONENT}.handleClickArray()jsonstr=selectedRows=${JSON.stringify(
+        `${COMPONENT}.handleClickArray(): jsonstr=selectedRows=${JSON.stringify(
           this.selectedRows
         )}, sess=${this.recordId}`,
-        "handleClickArray",
+        `${COMPONENT}.handleClickArray(): jsonstr logged`,
         "next-gen-LWC-nebula"
       );
 
       logDebug(
         this.recordId,
         `${COMPONENT}.handleClickArray(): imperative Call to Apex createClientObjectivesByArray`,
-        "handleClickArray",
+        `${COMPONENT}.handleClickArray(): imperative Call to Apex createClientObjectivesByArray`,
         "next-gen-LWC-nebula"
       );
 
@@ -185,7 +185,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.handleClickArray():handleClickArray(): Apex createClientObjectivesByArray this.recordsProcessed=${result}`,
-            "handleClickArray",
+            `${COMPONENT}.handleClickArray():handleClickArray(): Apex createClientObjectivesByArray this.recordsProcessed logged`,
             "next-gen-LWC-nebula"
           );
         })
@@ -202,7 +202,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.handleClickArray():setting this.objectives=null, calling refresh() `,
-            "handleClickArray",
+            `${COMPONENT}.handleClickArray():setting this.objectives=null, calling refresh() `,
             "next-gen-LWC-nebula"
           );
           let inp = this.template.querySelector("input");
@@ -211,7 +211,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.handleClickArray():handleClickArray(): this.showPopular=${this.showPopular}`,
-            "handleClickArray",
+            `${COMPONENT}.handleClickArray():handleClickArray(): this.showPopular=${this.showPopular}`,
             "next-gen-LWC-nebula"
           );
 
@@ -219,7 +219,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
             logDebug(
               this.recordId,
               `${COMPONENT}.handleClickArray():Yes, will show popular, calling this.getPopularClientObjectives()`,
-              "handleClickArray",
+              `${COMPONENT}.handleClickArray():Yes, will show popular, calling this.getPopularClientObjectives()`,
               "next-gen-LWC-nebula"
             );
             this.getPopularClientObjectives();
@@ -227,7 +227,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
             logDebug(
               this.recordId,
               `${COMPONENT}.handleClickArray():No, will not show popular, just calling this.refresh()`,
-              "handleClickArray",
+              `${COMPONENT}.handleClickArray():No, will not show popular, just calling this.refresh()`,
               "next-gen-LWC-nebula"
             );
             this.refresh();
@@ -237,7 +237,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.handleClickArray():publishing LMS event`,
-            "handleClickArray",
+            `${COMPONENT}.handleClickArray():publishing LMS event`,
             "next-gen-LWC-nebula"
           );
           const message = {
@@ -252,7 +252,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
             `${COMPONENT}.handleClickArray():Sending message via L4LMC, message=${JSON.stringify(
               message
             )}`,
-            "handleClickArray",
+            `${COMPONENT}.handleClickArray():Sending message via L4LMC`,
             "next-gen-LWC-nebula"
           );
 
@@ -263,7 +263,9 @@ export default class L4lCreateClientObjectives extends LightningElement {
             `${COMPONENT}.handleClickArray():published ${JSON.stringify(
               message
             )} to L4LMC`,
-            "handleClickArray",
+            `${COMPONENT}.handleClickArray():published ${JSON.stringify(
+              message
+            )} to L4LMC`,
             "next-gen-LWC-nebula"
           );
         })
@@ -272,8 +274,8 @@ export default class L4lCreateClientObjectives extends LightningElement {
 
           logError(
             this.recordId,
-            `${COMPONENT}.handleClickArray():Error ${JSON.stringify(error)}`,
-            "handleClickArray",
+            `${COMPONENT}.handleClickArray():Error ${error}`,
+            `${COMPONENT}.handleClickArray():Error ${error}`,
             "next-gen-LWC-nebula"
           );
         });
@@ -284,7 +286,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleFilteKeyInput(): entering method`,
-      "handleFilteKeyInput()",
+      `${COMPONENT}.handleFilteKeyInput(): entering method`,
       "next-gen-LWC-nebula"
     );
     const filterKey = event.target.value.toLowerCase();
@@ -301,7 +303,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
       `${COMPONENT}.handleFilterKeyInput(): this.objectives=${JSON.stringify(
         this.objectives
       )}`,
-      "handleFilterKeyInput()",
+      `${COMPONENT}.handleFilterKeyInput(): this.objectives logged}`,
       "next-gen-LWC-nebula"
     );
   }
@@ -325,7 +327,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickCancel(): dispatching CustomEvent(close)`,
-      "handleClickCancel()",
+      `${COMPONENT}.handleClickCancel(): dispatching CustomEvent(close)`,
       "next-gen-LWC-nebula"
     );
     this.dispatchEvent(new CustomEvent("close"));
@@ -340,7 +342,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSearchWord(): entering, bound to Search lightning-button.onclick - searchValue=${this.searchValue}`,
-      "pressed the Search button",
+      `${COMPONENT}.handleSearchWord(): pressed the Search button`,
       `${TAG}`
     );
 
@@ -348,7 +350,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.handleSearchKeyword(): calling getUnusedbjectivesBySearch, searchstring=${this.searchValue}`,
-        `Calling Apex with search string=${this.searchValue}`,
+        `${COMPONENT}.handleSearchKeyword(): calling getUnusedbjectivesBySearch, searchstring=${this.searchValue}`,
         `${TAG}`
       );
 
@@ -369,7 +371,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
             `${COMPONENT}.handleSearchKeyword(): result=${JSON.stringify(
               result
             )}`,
-            "search returned records",
+            `${COMPONENT}.handleSearchKeyword(): logged search return records`,
             `${TAG}`
           );
           this.objectives = result;
@@ -403,7 +405,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.getPopularClientObjectives(): isLoading=${this.isLoading}, searchValue=${this.searchValue}, showPopular=${this.showPopular}, calling Apex getPopularObjectives`,
-      `calling Apex getPopularObjectives`,
+      `${COMPONENT}.getPopularClientObjectives(): isLoading=${this.isLoading}, searchValue=${this.searchValue}, showPopular=${this.showPopular}, calling Apex getPopularObjectives`,
       `${TAG}`
     );
 
@@ -423,7 +425,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.getPopularClientObjectives(): Apex getPopularObjectives ${result.length} records returned`,
-          "getPopularObjectives returned records, # of records logged",
+          `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives returned records, # of records logged`,
           `${TAG}`
         );
       })
@@ -432,10 +434,8 @@ export default class L4lCreateClientObjectives extends LightningElement {
         console.log(`ERROR XXXXXXXX '+${JSON.stringify(error)}`);
         logError(
           this.recordId,
-          `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
-            error
-          )}`,
-          "call to getPopularObjectives errored",
+          `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives errored: ${error}`,
+          `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives errored: ${error}`,
           `${TAG}`
         );
       });

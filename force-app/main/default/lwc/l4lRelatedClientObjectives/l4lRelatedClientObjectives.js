@@ -116,7 +116,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): subscribing to message service `,
-          "subscribing to message service",
+          `${COMPONENT}.connectedCallback(): subscribing to message service`,
           `${TAG}`
         );
 
@@ -132,7 +132,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): initial refresh of client objectives`,
-          "initial refresh of client objectives",
+          `${COMPONENT}.connectedCallback(): initial refresh of client objectives`,
           `${TAG}`
         );
         this.refresh();
@@ -153,7 +153,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.confirmation(): entering method`,
-      "edit or delete action chosen on client objective datatable row",
+      `${COMPONENT}.confirmation(): edit or delete action chosen on client objective datatable row`,
       `${TAG}`
     );
     let _actionName = event.detail.action.name;
@@ -164,15 +164,15 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${COMPONENT}.confirmation(): in confirmation(), calling LightningConfirm.open _actionName=${_actionName}, row=${JSON.stringify(
         _row
       )}`,
-      "edit / delete row details",
+      `${COMPONENT}.confirmation(): edit / delete row details`,
       `${TAG}`
     );
 
     if (_actionName == "delete") {
       logDebug(
         this.recordId,
-        `deleting client objectives, ask for confirmation`,
-        "deleting client objectives, ask for confirmation",
+        `${COMPONENT}.confirmation(): deleting client objectives, ask for confirmation`,
+        `${COMPONENT}.confirmation(): deleting client objectives, ask for confirmation`,
         `${TAG}`
       );
       await LightningConfirm.open({
@@ -193,7 +193,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.confirmation(): result=${result}, calling handleRowAction `,
-            "deletion decision received",
+            `${COMPONENT}.confirmation(): deletion decision received`,
             `${TAG}`
           );
           this.handleRowAction(_actionName, _row);
@@ -203,7 +203,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.confirmation() edit action chosen, calling handleRowAction`,
-        "edit action chosen",
+        `${COMPONENT}.confirmation() edit action chosen`,
         `${TAG}`
       );
       this.handleRowAction(_actionName, _row);
@@ -216,7 +216,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${COMPONENT}.handleRowAction(): row=${JSON.stringify(
         row
       )}, actionName=${actionName}`,
-      "process the edit or delete",
+      `${COMPONENT}.handleRowAction(): process the edit or delete`,
       `${TAG}`
     );
 
@@ -233,8 +233,8 @@ export default class L4lRelatedClientObjectives extends LightningElement {
             );
             logDebug(
               this.recordId,
-              `${COMPONENT}.handleRowAction() edit_details()`,
-              "delete processed successfully, refreshing client objectives",
+              `${COMPONENT}.handleRowAction(): edit_details()`,
+              `${COMPONENT}.handleRowAction(): delete processed successfully, refreshing client objectives`,
               `${TAG}`
             );
             this.refresh();
@@ -262,7 +262,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.handleRowAction() edit_details()`,
-          "tell the edit modal to show",
+          `${COMPONENT}.handleRowAction() tell the edit modal to show`,
           `${TAG}`
         );
 
@@ -281,15 +281,15 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.handleSuccess()`,
-      "showing the success toast",
+      `${COMPONENT}.handleSuccess():`,
+      `${COMPONENT}.handleSuccess(): showing the success toast`,
       `${TAG}`
     );
     this.dispatchEvent(evt);
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSuccess()`,
-      "telling the edit modal to hide and refreshing client objectives",
+      `${COMPONENT}.handleSuccess(): telling the edit modal to hide and refreshing client objectives`,
       `${TAG}`
     );
     this.areDetailsVisible = false;
@@ -299,8 +299,8 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   refresh() {
     logDebug(
       this.recordId,
-      `${COMPONENT}.refresh() calling LFLController.getClientObjectives() `,
-      "processing the refresh request",
+      `${COMPONENT}.refresh(): calling LFLController.getClientObjectives() `,
+      `${COMPONENT}.refresh(): processing the refresh request`,
       `${TAG}`
     );
     console.info(`%crefresh(): entering`, COLOR);
@@ -318,7 +318,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.refresh(): returned from Apex call to getClientObjectives, ${result.length} records returned`,
-          `client objectives refreshed, record count logged`,
+          `${COMPONENT}.refresh(): client objectives refreshed, record count logged`,
           `${TAG}`
         );
         logDebug(
@@ -326,7 +326,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${COMPONENT}.refresh(): Apex call to getClientObjectives result= ${JSON.stringify(
             result
           )}`,
-          "client objectives refreshed, records logged",
+          `${COMPONENT}.refresh(): client objectives refreshed, records logged`,
           `${TAG}`
         );
       })
@@ -335,7 +335,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${error}`,
-          "client objectives refresh failed",
+          `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${error}`,
           `${TAG}`
         );
       });
@@ -350,14 +350,16 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSave(): entering method`,
-      "saving the client records",
+      `${COMPONENT}.handleSave(): saving the client records`,
       `${TAG}`
     );
 
     logDebug(
       this.recordId,
-      `handleSave(): draftValues=${JSON.stringify(event.detail.draftValues)}`,
-      `logging the draft values`,
+      `${COMPONENT}.handleSave(): draftValues=${JSON.stringify(
+        event.detail.draftValues
+      )}`,
+      `${COMPONENT}.handleSave(): logging the draft values`,
       `${TAG}`
     );
 
@@ -387,7 +389,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.handleSave(): client objectives saved, draft values cleared, refreshing client objectives list `,
-          "client objectives saved, draft values cleared,refreshing client objectives list",
+          `${COMPONENT}.handleSave(): client objectives saved, draft values cleared,refreshing client objectives list`,
           `${TAG}`
         );
 
@@ -397,7 +399,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.handleSave(): error: ${error}`,
-          "error encountered while saving client objectives",
+          `${COMPONENT}.handleSave(): error encountered while saving client objectives`,
           `${TAG}`
         );
       });
@@ -413,7 +415,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClick: refresh button clicked, refreshing Client Objectives`,
-      "refresh button clicked, refreshing Client Objectives",
+      `${COMPONENT}.handleClick: refresh button clicked, refreshing Client Objectives`,
       `${TAG}`
     );
     this.refresh();
@@ -432,7 +434,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSearchKeyInput: entering method`,
-      "handleSearchKeyInput",
+      `${COMPONENT}.handleSearchKeyInput: entering method`,
       `${TAG}`
     );
 
@@ -441,7 +443,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logFine(
       this.recordId,
       `${COMPONENT}.handleSearchKeyInput: searchKey=${searchKey}`,
-      "handleSearchKeyInput",
+      `${COMPONENT}.handleSearchKeyInput: searchKey=${searchKey}`,
       `${TAG}`
     );
     this.clientobjectives = this.filterableObjectives.filter(
@@ -464,7 +466,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${COMPONENT}.handleSearchKeyInput: this.clientobjectives=${JSON.stringify(
         this.clientobjectives
       )}`,
-      "handleSearchKeyInput",
+      `${COMPONENT}.handleSearchKeyInput: this.clientobjectives logged`,
       `${TAG}`
     );
   }
@@ -473,7 +475,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleLMS: message received ${JSON.stringify(message)}`,
-      "handleLMS",
+      `${COMPONENT}.handleLMS: message received ${JSON.stringify(message)}`,
       `${TAG}`
     );
 
@@ -484,7 +486,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleLMS(): calling Apex getClientObjectives`,
-      "handle-LMS",
+      `${COMPONENT}.handleLMS(): calling Apex getClientObjectives`,
       `${TAG}`
     );
 
@@ -499,7 +501,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${COMPONENT}.handleLMS(): Apex getClientObjectives returned result: ${JSON.stringify(
             result
           )}`,
-          "handle-LMS",
+          `${COMPONENT}.handleLMS(): Apex getClientObjectives returned result`,
           `${TAG}`
         );
       })
@@ -508,7 +510,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.handleLMS(): error=${error}`,
-          "handle-LMS",
+          `${COMPONENT}.handleLMS(): error=${error}`,
           `${TAG}`
         );
       });

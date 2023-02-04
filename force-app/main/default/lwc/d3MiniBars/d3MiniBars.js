@@ -51,7 +51,7 @@ export default class D3MiniBars extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.renderedCallback(): calling generateD3COTimeSeriesByStatusJson`,
-          `getting data, calling Apex generateD3COTimeSeriesByStatusJson`,
+          `${COMPONENT}.handleClick(): getting data, calling Apex generateD3COTimeSeriesByStatusJson`,
           `${TAG}`
         );
 
@@ -67,7 +67,7 @@ export default class D3MiniBars extends LightningElement {
           `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesByStatusJson returned ${JSON.stringify(
             response
           )}`,
-          `response received and logged, calling this.renderLineChart`,
+          `${COMPONENT}.handleClick(): response received and logged, calling this.renderLineChart`,
           `${TAG}`
         );
 
@@ -100,7 +100,7 @@ export default class D3MiniBars extends LightningElement {
       `${COMPONENT}.renderLineChart(): parameter is response=${JSON.stringify(
         response
       )})`,
-      "in renderLineChart(response), logged parameter",
+      `${COMPONENT}.renderLineChart(): in renderLineChart(response), logged parameter`,
       `${TAG}`
     );
 
@@ -141,8 +141,8 @@ export default class D3MiniBars extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.renderLineChart: data=${JSON.stringify(data)}`,
-      "preparing to draw multiple mini linecharts, data logged",
+      `${COMPONENT}.renderLineChart(): data=${JSON.stringify(data)}`,
+      `${COMPONENT}.renderLineChart(): preparing to draw multiple mini linecharts, data logged`,
       `${TAG}`
     );
 
@@ -153,10 +153,12 @@ export default class D3MiniBars extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
+      `${COMPONENT}.renderLineChart(): width=${width} height=${height} margin=${JSON.stringify(
         margin
       )}`,
-      `width=${width} height=${height} margin=${JSON.stringify(margin)}`,
+      `${COMPONENT}.renderLineChart(): width=${width} height=${height} margin=${JSON.stringify(
+        margin
+      )}`,
       `${TAG}`
     );
 

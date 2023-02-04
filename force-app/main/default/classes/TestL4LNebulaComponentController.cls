@@ -32,7 +32,7 @@ private class TestL4LNebulaComponentController {
       'context',
       'tag'
     );
-    L4LNebulaComponentController.logInfo(
+    L4LNebulaComponentController.logError(
       sessionId,
       'message',
       'context',

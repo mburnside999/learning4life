@@ -1,34 +1,34 @@
-import { LightningElement, wire, api, track } from "lwc";
+import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
-import generateD3COTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesJson";
-import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
+import generateD3CORetestTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3CORetestTimeSeriesJson";
+//import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logError } from "c/l4lNebulaUtil";
 
-const COMPONENT = "D3HorizontalLollipopChart";
-const TAG = "L4L-Session-Statistics-D3HorizontalLollipopChart";
+const COMPONENT = "D3COTSRetestChart";
+const TAG = "L4L-Session-Statistics-D3COTSRetestChart";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
  */
-export default class D3HorizontalLollipopChart extends LightningElement {
+export default class D3COTSRetestChart extends LightningElement {
   @api recordId;
   d3Initialized = false;
   @track result = [];
   mode = "All";
-  yAxisScale = 100;
+  yAxisScale = 50;
 
-  @wire(getD3YAxisScale, { clientId: "$recordId" })
-  wiredYaxis({ error, data }) {
-    if (data) {
-      console.log(`yAxisScale= ${data}`);
-      this.yAxisScale = Math.ceil(data / 50) * 50;
-    } else if (error) {
-      console.log("error");
-    }
-  }
+  //   @wire(getD3YAxisScale, { clientId: "$recordId" })
+  //   wiredYaxis({ error, data }) {
+  //     if (data) {
+  //       console.log(`yAxisScale= ${data}`);
+  //       this.yAxisScale = Math.ceil(data / 50) * 50;
+  //     } else if (error) {
+  //       console.log("error");
+  //     }
+  //   }
 
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
@@ -65,11 +65,11 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
         logDebug(
           this.recordId,
-          `${COMPONENT}.renderedCallback(): calling generateD3COTimeSeriesJson, status=All`,
-          `${COMPONENT}.renderedCallback(): calling generateD3COTimeSeriesJson, status=All`,
+          `${COMPONENT}.renderedCallback(): calling generateD3CORetestTimeSeriesJson, status=All`,
+          `${COMPONENT}.renderedCallback(): calling generateD3CORetestTimeSeriesJson, status=All`,
           `${TAG}`
         );
-        return generateD3COTimeSeriesJson({
+        return generateD3CORetestTimeSeriesJson({
           clientId: this.recordId,
           status: "All"
         });
@@ -77,8 +77,9 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .then((response) => {
         logDebug(
           this.recordId,
-          `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesJson returned ${response}`,
-          `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesJson returned ${response}`,
+          `${COMPONENT}.renderedCallback(): generateD3CORetestTimeSeriesJson returned ${response}
+          }`,
+          `${COMPONENT}.renderedCallback(): response received and logged, calling this.renderLineChart`,
           `${TAG}`
         );
 
@@ -131,8 +132,8 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.renderLineChart(): data=${JSON.stringify(data)}`,
-      `${COMPONENT}.renderLineChart(): preparing to draw a line chart, data logged`,
+      `${COMPONENT}.renderLineChart: data=${JSON.stringify(data)}`,
+      `${COMPONENT}.renderLineChart: preparing to draw a line chart, data logged`,
       `${TAG}`
     );
 
@@ -143,10 +144,10 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.renderLineChart(): width=${width} height=${height} margin=${JSON.stringify(
+      `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
         margin
       )}`,
-      `${COMPONENT}.renderLineChart(): width=${width} height=${height} margin=${JSON.stringify(
+      `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
         margin
       )}`,
       `${TAG}`
@@ -194,8 +195,9 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .attr("transform", "translate(0," + height + ")")
       .call(make_x_gridlines().tickSize(-height).tickFormat(""));
 
-    // Add Y axis
+    // Add Y axis (curr hard coded to 50)
     var y = d3.scaleLinear().domain([0, this.yAxisScale]).range([height, 0]);
+    //todo - build a better y-Axis scale as per d3Lollipop
 
     svg.append("g").call(d3.axisLeft(y));
 
@@ -249,7 +251,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .style("font-size", "18px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text(`EXPERIMENTAL - Plotting ${this.mode} Client Objectives`);
+      .text(`EXPERIMENTAL - Plotting Re-Test Due, Status=${this.mode}`);
 
     svg
       .append("text")
@@ -296,24 +298,26 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3COTimeSeriesJson`,
-      `Clicked ${this.mode}, calling generateD3COTimeSeriesJson `,
+      `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3CORetestTimeSeriesJson`,
+      `Clicked ${this.mode}, calling generateD3CORetestTimeSeriesJson `,
       `${TAG}`
     );
 
-    generateD3COTimeSeriesJson({
+    generateD3CORetestTimeSeriesJson({
       clientId: this.recordId,
       status: this.mode
     }).then((response) => {
       logDebug(
         this.recordId,
-        `${COMPONENT}.handleClick(): Apex returned reponse ${response}`,
+        `${COMPONENT}.handleClick(): Apex returned reponse ${JSON.stringify(
+          response
+        )}`,
         `${COMPONENT}.handleClick(): Apex response returned and logged, calling this.renderLineChart(response)`,
         `${TAG}`
       );
 
       console.log(
-        "calling generateD3COTimeSeriesJson,response=" +
+        "calling generateD3CORetestTimeSeriesJson,response=" +
           JSON.stringify(response)
       );
       this.renderLineChart(response);

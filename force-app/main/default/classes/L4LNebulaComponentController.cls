@@ -27,7 +27,7 @@ public with sharing class L4LNebulaComponentController {
     String tag
   ) {
     Logger.setScenario(scenario);
-    Logger.info(message + ' record=' + recordId).setRecordId(recordId);
+    Logger.info(message);
     saveNebulaLog();
   }
 
@@ -39,7 +39,7 @@ public with sharing class L4LNebulaComponentController {
     String tag
   ) {
     Logger.setScenario(scenario);
-    Logger.fine(message + ' record=' + recordId).setRecordId(recordId);
+    Logger.fine(message);
     saveNebulaLog();
   }
 
@@ -51,8 +51,7 @@ public with sharing class L4LNebulaComponentController {
     String tag
   ) {
     Logger.setScenario(scenario);
-    Logger.error('ERROR: ' + message + ' record=' + recordId)
-      .setRecordId(recordId);
+    Logger.error(message).setRecordId(recordId);
     saveNebulaLog();
   }
 
@@ -64,9 +63,7 @@ public with sharing class L4LNebulaComponentController {
     String tag
   ) {
     Logger.setScenario(scenario);
-    Logger.debug(message + ' recordId=' + recordId)
-      .setRecordId(recordId)
-      .addTag(tag);
+    Logger.debug(message).setRecordId(recordId).addTag(tag);
     saveNebulaLog();
   }
 
