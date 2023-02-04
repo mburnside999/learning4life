@@ -516,7 +516,7 @@ export default class D3HeatMap extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.composeOptions(): entering `,
-      "composeOptions()",
+      `${COMPONENT}.composeOptions(): entering `,
       `${TAG}`
     );
 
@@ -559,14 +559,14 @@ export default class D3HeatMap extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.composeOptions(): calling Apex getD3StatsByProgramAndSD`,
-      "calling Apex getD3StatsByProgramAndSD",
+      `${COMPONENT}.composeOptions(): calling Apex getD3StatsByProgramAndSD`,
       `${TAG}`
     );
 
     logDebug(
       this.recordId,
       `${COMPONENT}.composeOptions(): clientId=${this.recordId}, programStr=${programStr}, sdStr=${sdStr}, periodStr=${periodStr}, showAcquired=${statusStr}, stageStr=${stageStr}  `,
-      "Apex getD3StatsByProgramAndSD() parameters logged",
+      `${COMPONENT}.composeOptions(): clientId=${this.recordId}, programStr=${programStr}, sdStr=${sdStr}, periodStr=${periodStr}, showAcquired=${statusStr}, stageStr=${stageStr}  `,
       `${TAG}`
     );
 
@@ -582,13 +582,13 @@ export default class D3HeatMap extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.composeOptions(): returned from Apex call, ${result.length} items returned`,
-          `returned ${result.length} items`,
+          `${COMPONENT}.composeOptions(): returned from Apex call, ${result.length} items returned`,
           `${TAG}`
         );
         logDebug(
           this.recordId,
           `${COMPONENT}.composeOptions(): result=${JSON.stringify(result)}`,
-          `setting this.result, calling initializeD3()`,
+          `${COMPONENT}.composeOptions(): result logged, calling initializeD3`,
           `${TAG}`
         );
         this.result = result;
