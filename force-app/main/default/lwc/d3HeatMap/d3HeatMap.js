@@ -441,9 +441,7 @@ export default class D3HeatMap extends LightningElement {
       .style("font-size", "16px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text(
-        "Objective Mastery V2.6  - NEW! Hover now shows # of correct responses/attempts"
-      );
+      .text("Objective Mastery HeatMap");
   }
 
   // the ACQ/ALL handler
