@@ -1,7 +1,7 @@
 .line {
     fill: none;
     stroke: steelblue;
-    stroke-width: 1px;
+    stroke-width: var(--lwc-borderWidthThin, 1px);
   }
   
   .grid line {
@@ -11,5 +11,5 @@
   }
   
   .grid path {
-    stroke-width: 0;
+    stroke-width: var(--lwc-spacingNone, 0);
   }

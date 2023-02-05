@@ -1,14 +1,26 @@
 public class L4LTimeSeries {
   public Integer loadCOTimeSeries() {
-    Logger.setScenario('L4LTimeSeries');
-    Logger.debug('Apex:loadCOTimeSeries() - entering')
-      .addTag('L4LTimeSeries.loadCOTimeSeries()')
-      .addTag('TimeSeries');
-    Logger.saveLog();
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LTimeSeries.loadCOTimeSeries',
+      'L4LTimeSeries.loadCOTimeSeries',
+      'next-gen-nebula-apex'
+    );
 
     TimeSeries_Log__c log = new TimeSeries_Log__c();
     log.comments__c = 'Started client objective timeseries run';
     insert log;
+
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LTimeSeries.loadCOTimeSeries: successfully inserted record to TimeSeries_Log__c: ' +
+      log,
+      'L4LTimeSeries.loadCOTimeSeries: successfully inserted record to TimeSeries_Log__c: ' +
+      log,
+      'next-gen-nebula-apex'
+    );
+
     system.debug('log inserted ' + log);
 
     String runId = [SELECT name FROM TimeSeries_Log__c WHERE id = :log.Id].Name;
@@ -21,6 +33,16 @@ public class L4LTimeSeries {
       'Re_Test_Recommended__c, Status__c FROM Client_Objective__c ';
 
     List<Client_Objective__c> results = new List<Client_Objective__c>();
+
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LTimeSeries.loadCOTimeSeries, clientObjectiveSOQLStr=' +
+      clientObjectiveSOQLStr,
+      'L4LTimeSeries.loadCOTimeSeries, clientObjectiveSOQLStr=' +
+      clientObjectiveSOQLStr,
+      'next-gen-nebula-apex'
+    );
+
     results = Database.query(clientObjectiveSOQLStr);
 
     List<Client_Objective_TimeSeries__c> tslist = new List<Client_Objective_TimeSeries__c>();
@@ -51,28 +73,39 @@ public class L4LTimeSeries {
 
     try {
       insert tslist;
+      L4LNebulaComponentController.logDebug(
+        null,
+        'L4LTimeSeries.loadCOTimeSeries, succesfully inserted ' +
+          tslist.size() +
+          ' client_objective_timeseries records',
+        'L4LTimeSeries.loadCOTimeSeries, succesfully inserted ' +
+          tslist.size() +
+          ' client_objective_timeseries records',
+        'next-gen-nebula-apex'
+      );
+
       TimeSeries_Log__c endlog = new TimeSeries_Log__c();
       endlog.comments__c =
         'Successfully processed ' +
         tslist.size() +
         ' client objective timeseries records';
       insert endlog;
-      Logger.debug(
-          'Apex:loadCOTimeSeries() succesfully inserted ' +
-            tslist.size() +
-            'timeseries log records'
-        )
-        .addTag('L4LTimeSeries.loadCOTimeSeries()')
-        .addTag('TimeSeries');
-      Logger.saveLog();
+
+      L4LNebulaComponentController.logDebug(
+        null,
+        'L4LTimeSeries.loadCOTimeSeries: successfully inserted record to TimeSeries_Log__c: ' +
+        endlog,
+        'L4LTimeSeries.loadCOTimeSeries: successfully inserted record to TimeSeries_Log__c: ' +
+        endlog,
+        'next-gen-nebula-apex'
+      );
     } catch (DmlException e) {
-      Logger.error(
-          'Apex:loadCOTimeSeries() an error was encountered inserting to timeseries log -  ' +
-          e.getMessage()
-        )
-        .addTag('L4LTimeSeries.loadCOTimeSeries()')
-        .addTag('TimeSeries');
-      Logger.saveLog();
+      L4LNebulaComponentController.logError(
+        null,
+        'Apex:loadCOTimeSeries() an error was encountered: ' + e.getMessage(),
+        'Apex:loadCOTimeSeries() an error was encountered: ' + e.getMessage(),
+        'next-gen-nebula-apex'
+      );
     }
 
     return tslist.size();
@@ -83,6 +116,14 @@ public class L4LTimeSeries {
     String clientId,
     String status
   ) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3COTimeSeriesJson',
+      'L4LTimeSeries.generateD3COTimeSeriesJson',
+      'next-gen-nebula-apex'
+    );
+
     String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day,count(id) val  FROM client_objective_timeseries__c ';
 
     queryCOTSString += ' where client__c=:clientId ';
@@ -94,6 +135,16 @@ public class L4LTimeSeries {
     }
 
     queryCOTSString += ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c) order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c)';
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3COTimeSeriesJson, queryCOTSString=' +
+      queryCOTSString,
+      'L4LTimeSeries.generateD3COTimeSeriesJson, queryCOTSString=' +
+      queryCOTSString,
+      'next-gen-nebula-apex'
+    );
+
     List<AggregateResult> COTSList = Database.query(queryCOTSString);
 
     System.debug('queryCOTSString=' + queryCOTSString);
@@ -145,18 +196,40 @@ public class L4LTimeSeries {
     // }
     // System.debug('isValidJSON=' + isValidJSON);
 
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3COTimeSeriesJson, returning jsonstr=' + jsonstr,
+      'L4LTimeSeries.generateD3COTimeSeriesJson, returning jsonstr=' + jsonstr,
+      'next-gen-nebula-apex'
+    );
+
     return jsonstr;
   }
 
   @AuraEnabled(cacheable=true)
   public static String generateD3COTimeSeriesByStatusJson(String clientId) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson',
+      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson',
+      'next-gen-nebula-apex'
+    );
+
     String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day, status__c, count(id) val  FROM client_objective_timeseries__c ';
-
     queryCOTSString += ' where client__c=:clientId ';
-
     queryCOTSString += ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c),status__c order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c),status__c';
-    List<AggregateResult> COTSList = Database.query(queryCOTSString);
 
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, queryCOTSString=' +
+      queryCOTSString,
+      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, queryCOTSString=' +
+      queryCOTSString,
+      'next-gen-nebula-apex'
+    );
+
+    List<AggregateResult> COTSList = Database.query(queryCOTSString);
     System.debug('queryCOTSString=' + queryCOTSString);
 
     //generate  the JSON
@@ -207,6 +280,14 @@ public class L4LTimeSeries {
     // }
     // System.debug('isValidJSON=' + isValidJSON);
 
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, returning jsonstr=' +
+      jsonstr,
+      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, returning jsonstr=' +
+      jsonstr,
+      'next-gen-nebula-apex'
+    );
     return jsonstr;
   }
 
@@ -215,8 +296,15 @@ public class L4LTimeSeries {
     String clientId,
     String status
   ) {
-    String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day,count(id) val  FROM client_objective_timeseries__c ';
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3CORetestTimeSeriesJson',
+      'L4LTimeSeries.generateD3CORetestTimeSeriesJson',
+      'next-gen-nebula-apex'
+    );
 
+    String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day,count(id) val  FROM client_objective_timeseries__c ';
     queryCOTSString += ' where client__c=:clientId and re_test_recommended__c= true ';
     if (status == 'All') {
     } else if (status == 'Null') {
@@ -226,6 +314,16 @@ public class L4LTimeSeries {
     }
 
     queryCOTSString += ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c) order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c)';
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3CORetestTimeSeriesJson, queryCOTSString=' +
+      queryCOTSString,
+      'L4LTimeSeries.generateD3CORetestTimeSeriesJson, queryCOTSString=' +
+      queryCOTSString,
+      'next-gen-nebula-apex'
+    );
+
     List<AggregateResult> COTSList = Database.query(queryCOTSString);
 
     System.debug('queryCOTSString=' + queryCOTSString);
@@ -277,6 +375,14 @@ public class L4LTimeSeries {
     // }
     // System.debug('isValidJSON=' + isValidJSON);
 
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LTimeSeries.generateD3CORetestTimeSeriesJson, returning jsonstr=' +
+      jsonstr,
+      'L4LTimeSeries.generateD3CORetestTimeSeriesJson, returning jsonstr=' +
+      jsonstr,
+      'next-gen-nebula-apex'
+    );
     return jsonstr;
   }
 }
