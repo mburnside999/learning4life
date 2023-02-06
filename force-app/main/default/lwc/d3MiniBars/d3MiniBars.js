@@ -5,6 +5,7 @@ import D3 from "@salesforce/resourceUrl/d3";
 import generateD3COTimeSeriesByStatusJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesByStatusJson";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logError } from "c/l4lNebulaUtil";
+//import getD3StatusYAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3StatusYAxisScale";
 
 const COMPONENT = "D3MiniBars";
 const TAG = "L4L-Session-Statistics-D3MiniBars";
@@ -14,7 +15,18 @@ export default class D3MiniBars extends LightningElement {
   d3Initialized = false;
   @track result = [];
   mode = "All";
+  //yAxisScale = 50;
 
+  // @wire(getD3StatusYAxisScale, { clientId: "$recordId" })
+  // wiredYaxis({ error, data }) {
+  //   if (data) {
+  //     console.log(`raw yAxisScale= ${data}`);
+  //     this.yAxisScale = Math.ceil(data / 20) * 20;
+  //     console.log(`rounded yAxisScale=${this.yAxisScale}`);
+  //   } else if (error) {
+  //     console.log("error");
+  //   }
+  // }
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
     setNewSession()
@@ -216,7 +228,7 @@ export default class D3MiniBars extends LightningElement {
       .domain([
         0,
         d3.max(data, function (d) {
-          return Math.ceil(d.val / 50) * 50;
+          return Math.ceil(d.val / 20) * 20;
           //+d.val;
         })
       ])

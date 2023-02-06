@@ -356,6 +356,8 @@ public with sharing class L4LSessionStatsController {
     return result;
   }
 
+  //
+
   @AuraEnabled(cacheable=true)
   public static Integer getD3RetestYAxisScale(String clientId) {
     L4LNebulaComponentController.setupCache();
@@ -448,6 +450,64 @@ public with sharing class L4LSessionStatsController {
         ts_max +
         ', returning result = ' +
         result,
+      'next-gen-nebula-apex'
+    );
+
+    return result;
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static Integer getD3StatusYAxisScale(String clientId) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3StatusYAxisScale() clientId=' + clientId,
+      'L4LSessionStatsController.getD3StatusYAxisScale() clientId=' + clientId,
+      'next-gen-nebula-apex'
+    );
+
+    Integer ts_max = 0;
+    Integer result = 0;
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT runid__c,status__c,count(id) c FROM client_objective_timeseries__c ' +
+        ' WHERE client__c = ' +
+        clientId +
+        ' GROUP BY runid__c,Status__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
+      'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT runid__c,status__c,count(id) c FROM client_objective_timeseries__c ' +
+        ' WHERE client__c = ' +
+        clientId +
+        ' GROUP BY Status__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
+      'next-gen-nebula-apex'
+    );
+
+    // this is the current maximum of the timeseries set
+    List<AggregateResult> ts_agg = [
+      SELECT runid__c, status__c, count(id) c
+      FROM client_objective_timeseries__c
+      WHERE client__c = :clientId
+      GROUP BY runid__c, Status__c
+      ORDER BY count(id) DESC
+      LIMIT 1
+    ];
+
+    if (ts_agg.isEmpty()) {
+      ts_max = 0;
+    } else {
+      ts_max = (integer) ts_agg[0].get('c');
+    }
+
+    result = ts_max;
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'returning result = ' + result,
+      'returning result = ' + result,
       'next-gen-nebula-apex'
     );
 

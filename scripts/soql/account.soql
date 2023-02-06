@@ -94,11 +94,11 @@ SELECT
 
 
       List<AggregateResult> l = [
-      SELECT count(id) c
+      "SELECT count(id) c
       FROM client_objective_timeseries__c
       WHERE client__c ='0018t000002vfZfAAI'
       group by runId__c
-      order by count(id) desc limit 1];
+      order by count(id) desc limit 1]"
 
     if (l.isEmpty()) 
     { 
@@ -111,7 +111,7 @@ SELECT
 
 
 
-Id clientId='0018t000002vfZfAAI';
+Id clientId='a019n000008Qx6LAAT';
 
 Integer ts_max = 0;
     Integer curr_max = 0;
@@ -136,7 +136,7 @@ Integer ts_max = 0;
       LIMIT 1
     ];
 
-    if (tsmax.isEmpty()) {
+    if (ts_agg.isEmpty()) {
       ts_max = 0;
     } else {
       ts_max = (integer) ts_agg[0].get('c');
@@ -146,5 +146,50 @@ Integer ts_max = 0;
       result = curr_max;
     else
       result = ts_max;
+System.debug('result = '+result);
 
+
+
+L4LSessionStatsController.getD3YAxisScale('0018t000002vfSfAAI');
+
+
+SELECT runid__c,status__c,count(id) c
+      FROM client_objective_timeseries__c
+      WHERE client__c = '0018t000003DbqmAAC'
+      GROUP BY runid__c,Status__c
+      ORDER BY count(id) DESC 
+
+
+
+Id objectiveId='a088t000000Dt6XAAT';
+Id clientId='0018t000002vfSfAAI';
+
+try {
+     Client_Objective__c co = [
+      SELECT id, last_tested__c, last_tested_Correct__c
+      FROM client_objective__c
+      WHERE client__c = :clientid AND objective__C = :objectiveId
+      LIMIT 1
+    ];
+    } catch (System.QueryException e) {
+System.debug('error = +e.getMessage());
+throw e;
+    }
+
+
+
+      Client_Objective__c co = [
+      SELECT id, last_tested__c, last_tested_Correct__c
+      FROM client_objective__c
+      WHERE client__c = :clientid AND objective__C = :so.objective__c
+      LIMIT 1
+    ];
+
+
+Client_Objective__c co = [
+      SELECT id, objective__c,last_tested__c, last_tested_Correct__c
+      FROM client_objective__c
+      LIMIT 1
+    ];
+    System.debug(co);
 
