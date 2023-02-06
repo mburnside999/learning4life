@@ -113,8 +113,12 @@ export default class D3HeatMap extends LightningElement {
         console.log("Error");
         logError(
           this.recordId,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
@@ -597,8 +601,12 @@ export default class D3HeatMap extends LightningElement {
         this.error = error;
         logError(
           this.recordId,
-          `${COMPONENT}.composeOptions(): Apex call returned error: ${error}`,
-          `${COMPONENT}.composeOptions(): Apex call returned error: ${error}`,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
