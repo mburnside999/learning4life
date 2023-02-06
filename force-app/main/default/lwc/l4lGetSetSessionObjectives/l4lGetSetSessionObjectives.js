@@ -301,8 +301,12 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         this.error = error;
         logError(
           this.recordId,
-          `${COMPONENT}.refresh(): Apex getSessionObjectives error=${error}`,
-          `${COMPONENT}.refresh(): Apex getSessionObjectives error=${error}`,
+          `${COMPONENT}.refresh(): Apex getSessionObjectives error=${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.refresh(): Apex getSessionObjectives error=${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
@@ -382,8 +386,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           .catch((error) => {
             logError(
               this.recordId,
-              `${COMPONENT}.handleRowAction(): error=${error}`,
-              `${COMPONENT}.handleRowAction(): error=${error}`,
+              `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
+              `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
               `${TAG}`
             );
 
@@ -475,8 +479,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         //Handle error
         logError(
           this.recordId,
-          `${COMPONENT}.handleSave(): error=${error}`,
-          `${COMPONENT}.handleSave(): error=${error}`,
+          `${COMPONENT}.handleSave(): error=${JSON.stringify(error)}`,
+          `${COMPONENT}.handleSave(): error=${JSON.stringify(error)}`,
           `${TAG}`
         );
       });
@@ -633,8 +637,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           this.error = error;
           logError(
             this.recordId,
-            `${COMPONENT}.handleClickArray error(): ${error}`,
-            `${COMPONENT}.handleClickArray error(): ${error}`,
+            `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
+            `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
             `${TAG}`
           );
         });
@@ -681,8 +685,8 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
         logError(
           this.recordId,
-          `${COMPONENT}.handleClickDelete(): error=${error}`,
-          `${COMPONENT}.handleClickDelete(): error=${error}`,
+          `${COMPONENT}.handleClickDelete(): error=${JSON.stringify(error)}`,
+          `${COMPONENT}.handleClickDelete(): error=${JSON.stringify(error)}`,
           `${TAG}`
         );
       });

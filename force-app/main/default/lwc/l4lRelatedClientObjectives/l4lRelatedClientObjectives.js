@@ -141,8 +141,12 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         console.log("Error");
         logError(
           this.recordId,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
@@ -242,7 +246,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           .catch((error) => {
             logError(
               this.recordId,
-              `${COMPONENT}.handleRowAction(): error=${error}`,
+              `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
               "delete error occurred",
               `${TAG}`
             );
@@ -334,8 +338,12 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         this.error = error;
         logError(
           this.recordId,
-          `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${error}`,
-          `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${error}`,
+          `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
@@ -398,7 +406,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       .catch((error) => {
         logError(
           this.recordId,
-          `${COMPONENT}.handleSave(): error: ${error}`,
+          `${COMPONENT}.handleSave(): error: ${JSON.stringify(error)}`,
           `${COMPONENT}.handleSave(): error encountered while saving client objectives`,
           `${TAG}`
         );
@@ -509,8 +517,8 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         this.error = error;
         logError(
           this.recordId,
-          `${COMPONENT}.handleLMS(): error=${error}`,
-          `${COMPONENT}.handleLMS(): error=${error}`,
+          `${COMPONENT}.handleLMS(): error=${JSON.stringify(error)}`,
+          `${COMPONENT}.handleLMS(): error=${JSON.stringify(error)}`,
           `${TAG}`
         );
       });

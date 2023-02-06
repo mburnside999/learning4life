@@ -241,6 +241,7 @@ public with sharing class L4LSessionStatsController {
       'L4LSessionStatsController.getClientObjectivesByProgram()',
       'next-gen-nebula-apex'
     );
+
     String queryString =
       'SELECT  Objective__r.SD__r.Program__r.Name, ' +
       'count(Objective__c) objectiveCount FROM Client_Objective__c ' +
@@ -271,13 +272,186 @@ public with sharing class L4LSessionStatsController {
       'next-gen-nebula-apex'
     );
 
-    List<AggregateResult> l = [
+    Integer ts_max = 0;
+    Integer curr_max = 0;
+    Integer result = 0;
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3YAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
+      clientId,
+      'L4LSessionStatsController.getD3YAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
+      clientId,
+      'next-gen-nebula-apex'
+    );
+
+    // this is the current maximum
+    List<AggregateResult> curr_agg = [
       SELECT count(id) c
       FROM client_objective__c
       WHERE client__c = :clientId
     ];
 
-    return (Integer) l[0].get('c');
+    curr_max = (Integer) curr_agg[0].get('c');
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
+        ' WHERE client__c = ' +
+        clientId +
+        ' GROUP BY runId__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
+      'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
+        ' WHERE client__c = ' +
+        clientId +
+        ' GROUP BY runId__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
+      'next-gen-nebula-apex'
+    );
+
+    // this is the current maximum of the timeseries set
+    List<AggregateResult> ts_agg = [
+      SELECT count(id) c
+      FROM client_objective_timeseries__c
+      WHERE client__c = :clientId
+      GROUP BY runId__c
+      ORDER BY count(id) DESC
+      LIMIT 1
+    ];
+
+    if (ts_agg.isEmpty()) {
+      ts_max = 0;
+    } else {
+      ts_max = (integer) ts_agg[0].get('c');
+    }
+
+    if (curr_max >= ts_max)
+      result = curr_max;
+    else
+      result = ts_max;
+
+    System.debug(
+      'curr_max=' + curr_max + ', ts_max=' + ts_max + ', result = ' + result
+    );
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'curr_max=' +
+        curr_max +
+        ', ts_max=' +
+        ts_max +
+        ', returning result = ' +
+        result,
+      'curr_max=' +
+        curr_max +
+        ', ts_max=' +
+        ts_max +
+        ', returning result = ' +
+        result,
+      'next-gen-nebula-apex'
+    );
+
+    return result;
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static Integer getD3RetestYAxisScale(String clientId) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3RetestYAxisScale() clientId=' + clientId,
+      'L4LSessionStatsController.getD3RetestYAxisScale()',
+      'next-gen-nebula-apex'
+    );
+
+    Integer ts_max = 0;
+    Integer curr_max = 0;
+    Integer result = 0;
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3RetestYAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
+        clientId +
+        ' and re_test_recommended__c=true',
+      'L4LSessionStatsController.getD3RetestYAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
+        clientId +
+        ' and re_test_recommended__c=true',
+      'next-gen-nebula-apex'
+    );
+
+    // this is the current maximum
+    List<AggregateResult> curr_agg = [
+      SELECT count(id) c
+      FROM client_objective__c
+      WHERE client__c = :clientId AND re_test_recommended__c = TRUE
+    ];
+
+    curr_max = (Integer) curr_agg[0].get('c');
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
+        ' WHERE client__c = ' +
+        clientId +
+        ' AND re_test_recommended__c=true ' +
+        ' GROUP BY runId__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
+      'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
+        ' WHERE client__c = ' +
+        clientId +
+        +' and re_test_recommended__c=true' +
+        ' GROUP BY runId__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
+      'next-gen-nebula-apex'
+    );
+
+    // this is the current maximum of the timeseries set
+    List<AggregateResult> ts_agg = [
+      SELECT count(id) c
+      FROM client_objective_timeseries__c
+      WHERE client__c = :clientId AND re_test_recommended__c = TRUE
+      GROUP BY runId__c
+      ORDER BY count(id) DESC
+      LIMIT 1
+    ];
+
+    if (ts_agg.isEmpty()) {
+      ts_max = 0;
+    } else {
+      ts_max = (integer) ts_agg[0].get('c');
+    }
+
+    if (curr_max >= ts_max)
+      result = curr_max;
+    else
+      result = ts_max;
+
+    System.debug(
+      'curr_max=' + curr_max + ', ts_max=' + ts_max + ', result = ' + result
+    );
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'curr_max=' +
+        curr_max +
+        ', ts_max=' +
+        ts_max +
+        ', returning result = ' +
+        result,
+      'curr_max=' +
+        curr_max +
+        ', ts_max=' +
+        ts_max +
+        ', returning result = ' +
+        result,
+      'next-gen-nebula-apex'
+    );
+
+    return result;
   }
 
   @AuraEnabled(cacheable=true)

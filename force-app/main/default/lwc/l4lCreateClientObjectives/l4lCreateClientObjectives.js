@@ -114,8 +114,12 @@ export default class L4lCreateClientObjectives extends LightningElement {
         this.error = error;
         logError(
           this.recordId,
-          `${COMPONENT}.refresh(): Apex getUnusedObjectivesBySearch error=${error}`,
-          `${COMPONENT}.refresh(): Apex getUnusedObjectivesBySearch error=${error}`,
+          `${COMPONENT}.refresh(): Apex getUnusedObjectivesBySearch error=${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.refresh(): Apex getUnusedObjectivesBySearch error=${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
@@ -274,8 +278,8 @@ export default class L4lCreateClientObjectives extends LightningElement {
 
           logError(
             this.recordId,
-            `${COMPONENT}.handleClickArray():Error ${error}`,
-            `${COMPONENT}.handleClickArray():Error ${error}`,
+            `${COMPONENT}.handleClickArray():Error ${JSON.stringify(error)}`,
+            `${COMPONENT}.handleClickArray():Error ${JSON.stringify(error)}`,
             "next-gen-LWC-nebula"
           );
         });
@@ -434,8 +438,12 @@ export default class L4lCreateClientObjectives extends LightningElement {
         console.log(`ERROR XXXXXXXX '+${JSON.stringify(error)}`);
         logError(
           this.recordId,
-          `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives errored: ${error}`,
-          `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives errored: ${error}`,
+          `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });

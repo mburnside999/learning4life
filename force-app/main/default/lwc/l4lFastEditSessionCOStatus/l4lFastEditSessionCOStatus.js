@@ -88,6 +88,12 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
       })
       .catch((error) => {
         console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): error: ${JSON.stringify(error)}`,
+          `${COMPONENT}.connectedCallback(): error: ${JSON.stringify(error)} `,
+          `${TAG}`
+        );
       });
   }
 
@@ -199,7 +205,9 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
         this.error = error;
         logError(
           this.recordId,
-          `${COMPONENT}.refresh(): Apex call to getClientObjectivesForSession returned error: ${error}`,
+          `${COMPONENT}.refresh(): Apex call to getClientObjectivesForSession returned error: ${JSON.stringify(
+            error
+          )}`,
           `${COMPONENT}.refresh(): client objectives refresh failed`,
           `${TAG}`
         );
