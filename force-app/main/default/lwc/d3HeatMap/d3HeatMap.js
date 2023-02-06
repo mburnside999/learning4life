@@ -5,6 +5,7 @@ import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import getD3StatsByProgramAndSD from "@salesforce/apex/L4LSessionStatsController.getD3StatsByProgramAndSD";
 import getHighAndLowBoundaries from "@salesforce/apex/L4LSessionStatsController.getHighAndLowBoundaries";
+
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logError } from "c/l4lNebulaUtil";
 
