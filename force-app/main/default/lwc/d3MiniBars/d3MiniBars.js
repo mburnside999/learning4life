@@ -31,10 +31,10 @@ export default class D3MiniBars extends LightningElement {
         console.log("Error");
         logError(
           this.recordId,
-          `${COMPONENT}.connectedCallback() returned error: ${JDSON.stringify(
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.connectedCallback() returned error: ${JDSON.stringify(
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
           `${TAG}`
@@ -68,9 +68,7 @@ export default class D3MiniBars extends LightningElement {
 
         logDebug(
           this.recordId,
-          `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesByStatusJson returned ${JSON.stringify(
-            response
-          )}`,
+          `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesByStatusJson returned ${response}`,
           `${COMPONENT}.handleClick(): response received and logged, calling this.renderLineChart`,
           `${TAG}`
         );
@@ -101,9 +99,7 @@ export default class D3MiniBars extends LightningElement {
     // );
     logDebug(
       this.recordId,
-      `${COMPONENT}.renderLineChart(): parameter is response=${JSON.stringify(
-        response
-      )})`,
+      `${COMPONENT}.renderLineChart(): parameter is response=${response}`,
       `${COMPONENT}.renderLineChart(): in renderLineChart(response), logged parameter`,
       `${TAG}`
     );

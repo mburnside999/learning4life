@@ -313,9 +313,7 @@ export default class D3COTSRetestChart extends LightningElement {
     }).then((response) => {
       logDebug(
         this.recordId,
-        `${COMPONENT}.handleClick(): Apex returned reponse ${JSON.stringify(
-          response
-        )}`,
+        `${COMPONENT}.handleClick(): Apex returned reponse ${response}`,
         `${COMPONENT}.handleClick(): Apex response returned and logged, calling this.renderLineChart(response)`,
         `${TAG}`
       );
