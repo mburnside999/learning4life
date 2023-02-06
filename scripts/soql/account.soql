@@ -83,3 +83,68 @@ SELECT
         FROM session_statistics__c where session__r.name='S-00167'
 
         select count(id) from client_objective__c
+
+
+
+      SELECT count(id) c
+      FROM client_objective_timeseries__c
+      WHERE client__c ='0018t000002vfSfAAI'
+      group by runId__c
+      order by count(id) desc limit 1
+
+
+      List<AggregateResult> l = [
+      SELECT count(id) c
+      FROM client_objective_timeseries__c
+      WHERE client__c ='0018t000002vfZfAAI'
+      group by runId__c
+      order by count(id) desc limit 1];
+
+    if (l.isEmpty()) 
+    { 
+    system.debug('empty');
+    }
+
+
+
+    L4LSessionStatsController.getD3YAxisScale('0018t000002vfZfAAI');
+
+
+
+Id clientId='0018t000002vfZfAAI';
+
+Integer ts_max = 0;
+    Integer curr_max = 0;
+    Integer result = 0;
+
+    // this is the current maximum
+    List<AggregateResult> curr_agg = [
+      SELECT count(id) c
+      FROM client_objective__c
+      WHERE client__c = :clientId
+    ];
+
+    curr_max = (Integer) curr_agg[0].get('c');
+
+    // this is the current maximum of the timeseries set
+    List<AggregateResult> ts_agg = [
+      SELECT count(id) c
+      FROM client_objective_timeseries__c
+      WHERE client__c = :clientId
+      GROUP BY runId__c
+      ORDER BY count(id) DESC
+      LIMIT 1
+    ];
+
+    if (tsmax.isEmpty()) {
+      ts_max = 0;
+    } else {
+      ts_max = (integer) ts_agg[0].get('c');
+    }
+
+    if (curr_max >= ts_max)
+      result = curr_max;
+    else
+      result = ts_max;
+
+

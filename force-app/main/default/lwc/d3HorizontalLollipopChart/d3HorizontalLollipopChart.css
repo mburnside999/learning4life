@@ -11,5 +11,5 @@
   }
   
   .grid path {
-    stroke-width: var(--lwc-spacingNone, 0);
+    stroke-width: 0;
   }

@@ -31,8 +31,12 @@ export default class D3MiniBars extends LightningElement {
         console.log("Error");
         logError(
           this.recordId,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JDSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JDSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });

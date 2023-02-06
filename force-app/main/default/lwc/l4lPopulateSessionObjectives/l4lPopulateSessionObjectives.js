@@ -95,8 +95,12 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       .catch((error) => {
         logError(
           this.recordId,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
@@ -150,7 +154,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         this.error = error;
         logError(
           this.recordId,
-          `${COMPONENT}.refresh(): error=${error}`,
+          `${COMPONENT}.refresh(): error=${JSON.stringify(error)}`,
           `client objectives refresh failed`,
           `${TAG}`
         );
@@ -458,8 +462,8 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           this.error = error;
           logError(
             this.recordId,
-            `${COMPONENT}.handleClickArray(): error=${error}`,
-            `${COMPONENT}.handleClickArray(): error=${error}`,
+            `${COMPONENT}.handleClickArray(): error=${JSON.stringify(error)}`,
+            `${COMPONENT}.handleClickArray(): error=${JSON.stringify(error)}`,
             `${TAG}`
           );
         });

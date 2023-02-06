@@ -1,9 +1,9 @@
-import { LightningElement, api, track } from "lwc";
+import { LightningElement, api, wire, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import generateD3CORetestTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3CORetestTimeSeriesJson";
-//import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
+import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3RetestYAxisScale";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logError } from "c/l4lNebulaUtil";
 
@@ -20,15 +20,15 @@ export default class D3COTSRetestChart extends LightningElement {
   mode = "All";
   yAxisScale = 50;
 
-  //   @wire(getD3YAxisScale, { clientId: "$recordId" })
-  //   wiredYaxis({ error, data }) {
-  //     if (data) {
-  //       console.log(`yAxisScale= ${data}`);
-  //       this.yAxisScale = Math.ceil(data / 50) * 50;
-  //     } else if (error) {
-  //       console.log("error");
-  //     }
-  //   }
+  @wire(getD3YAxisScale, { clientId: "$recordId" })
+  wiredYaxis({ error, data }) {
+    if (data) {
+      console.log(`yAxisScale= ${data}`);
+      this.yAxisScale = Math.ceil(data / 20) * 20;
+    } else if (error) {
+      console.log("error");
+    }
+  }
 
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
@@ -46,8 +46,12 @@ export default class D3COTSRetestChart extends LightningElement {
         console.log("Error");
         logError(
           this.recordId,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
@@ -88,8 +92,8 @@ export default class D3COTSRetestChart extends LightningElement {
       .catch((error) => {
         logError(
           this.recordId,
-          `${COMPONENT}.renderedCallback(): error: ${error}`,
-          `${COMPONENT}.renderedCallback(): error: ${error}`,
+          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
           `${TAG}`
         );
 

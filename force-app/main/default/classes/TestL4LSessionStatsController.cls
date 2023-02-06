@@ -77,6 +77,18 @@ private class TestL4LSessionStatsController {
   }
 
   @isTest
+  static void testgetD3RetestYAxisScale() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+    Integer c = 0;
+    c = L4LSessionStatsController.getD3RetestYAxisScale(clientId);
+
+    System.assert(c >= 0, 'Expected a valid count');
+  }
+
+  @isTest
   static void testGetHighAndLowBoundaries() {
     Test.startTest();
     // LFLPopulateTestData.load();

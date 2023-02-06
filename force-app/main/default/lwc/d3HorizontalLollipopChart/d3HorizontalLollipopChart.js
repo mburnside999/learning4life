@@ -46,8 +46,12 @@ export default class D3HorizontalLollipopChart extends LightningElement {
         console.log("Error");
         logError(
           this.recordId,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
-          `${COMPONENT}.connectedCallback() returned error: ${error}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
           `${TAG}`
         );
       });
@@ -87,8 +91,8 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .catch((error) => {
         logError(
           this.recordId,
-          `${COMPONENT}.renderedCallback(): error: ${error}`,
-          `${COMPONENT}.renderedCallback(): error: ${error}`,
+          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
           `${TAG}`
         );
 
