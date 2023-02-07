@@ -153,7 +153,7 @@ public with sharing class L4LController {
     String debugsoql =
       'SELECT Id,Name,Objective__c,Objective_Name__c,Client__c,' +
       'SD_Name__c,Status__c,Re_Test_Recommended__c,Days_Since_Tested_Correct__c,Client_Objective_Notes__c' +
-      ' FROM client_objective__c WHERE Client__c IN (SELECT client__c FROM session__c WHERE id = :searchKey)' +
+      ' FROM client_objective__c WHERE active__c=true and Client__c IN (SELECT client__c FROM session__c WHERE id = :searchKey)' +
       ' ORDER BY Program_Name__c';
 
     L4LNebulaComponentController.logDebug(
@@ -179,7 +179,12 @@ public with sharing class L4LController {
           Client_Objective_Notes__c
         FROM client_objective__c
         WHERE
-          Client__c IN (SELECT client__c FROM session__c WHERE id = :searchKey)
+          active__c = TRUE
+          AND Client__c IN (
+            SELECT client__c
+            FROM session__c
+            WHERE id = :searchKey
+          )
         ORDER BY Program_Name__c
       ]
     );
@@ -208,7 +213,7 @@ public with sharing class L4LController {
     String debugsoql =
       'SELECT Id,Name,Client__c,Objective_Name__c,SD_Name__c,Program_Name__c,' +
       'Status__c,Frequency__c,Last_Tested_Correct__c,Re_Test_Recommended__c,Client_Objective_Notes__c' +
-      ' FROM Client_Objective__c WHERE Client__c = :clientId ORDER BY Program_Name__c, Name';
+      ' FROM Client_Objective__c WHERE active__c=true and Client__c = :clientId ORDER BY Program_Name__c, Name';
 
     L4LNebulaComponentController.logDebug(
       clientId,
@@ -232,7 +237,7 @@ public with sharing class L4LController {
           Re_Test_Recommended__c,
           Client_Objective_Notes__c
         FROM Client_Objective__c
-        WHERE Client__c = :clientId
+        WHERE active__c = TRUE AND Client__c = :clientId
         ORDER BY Program_Name__c, Name
       ]
     );

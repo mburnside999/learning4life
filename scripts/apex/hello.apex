@@ -145,3 +145,30 @@ Integer i = L4LSessionStatsController.getD3StatusYAxisScale(
 System.debug(i);
 
 throw new L4LClientObjectiveMissingException('hello');
+
+//update co to active
+list<client_objective__c> colist = new List<client_objective__c>();
+
+for (client_objective__c co : [
+  SELECT id
+  FROM client_objective__c
+  WHERE active__c = NULL OR active__c = FALSE
+]) {
+  co.active__c = true;
+  colist.add(co);
+}
+System.debug(colist.size());
+//update colist;
+
+//update cots to active
+list<client_objective_timeseries__c> cotslist = new List<client_objective_timeseries__c>();
+for (client_objective_timeseries__c ts : [
+  SELECT id
+  FROM client_objective_timeseries__c
+  WHERE active__c = NULL OR active__c = FALSE
+]) {
+  ts.active__c = true;
+  cotslist.add(ts);
+}
+System.debug(cotslist.size());
+//update cotslist;

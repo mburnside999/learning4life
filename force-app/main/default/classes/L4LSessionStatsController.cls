@@ -279,9 +279,11 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
-      clientId,
+        clientId +
+        ' and active__c=true',
       'L4LSessionStatsController.getD3YAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
-      clientId,
+        clientId +
+        ' and active__c=true',
       'next-gen-nebula-apex'
     );
 
@@ -289,7 +291,7 @@ public with sharing class L4LSessionStatsController {
     List<AggregateResult> curr_agg = [
       SELECT count(id) c
       FROM client_objective__c
-      WHERE client__c = :clientId
+      WHERE client__c = :clientId AND active__c = TRUE
     ];
 
     curr_max = (Integer) curr_agg[0].get('c');
@@ -299,12 +301,14 @@ public with sharing class L4LSessionStatsController {
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
         ' WHERE client__c = ' +
         clientId +
+        ' and active__c=true ' +
         ' GROUP BY runId__c ' +
         ' ORDER BY count(id) DESC ' +
         ' LIMIT 1',
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
         ' WHERE client__c = ' +
         clientId +
+        ' and active__c=true ' +
         ' GROUP BY runId__c ' +
         ' ORDER BY count(id) DESC ' +
         ' LIMIT 1',
@@ -315,7 +319,7 @@ public with sharing class L4LSessionStatsController {
     List<AggregateResult> ts_agg = [
       SELECT count(id) c
       FROM client_objective_timeseries__c
-      WHERE client__c = :clientId
+      WHERE client__c = :clientId AND active__c = TRUE
       GROUP BY runId__c
       ORDER BY count(id) DESC
       LIMIT 1
@@ -387,7 +391,10 @@ public with sharing class L4LSessionStatsController {
     List<AggregateResult> curr_agg = [
       SELECT count(id) c
       FROM client_objective__c
-      WHERE client__c = :clientId AND re_test_recommended__c = TRUE
+      WHERE
+        client__c = :clientId
+        AND active__c = TRUE
+        AND re_test_recommended__c = TRUE
     ];
 
     curr_max = (Integer) curr_agg[0].get('c');
@@ -397,14 +404,14 @@ public with sharing class L4LSessionStatsController {
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
         ' WHERE client__c = ' +
         clientId +
-        ' AND re_test_recommended__c=true ' +
+        ' AND active__c=true and re_test_recommended__c=true ' +
         ' GROUP BY runId__c ' +
         ' ORDER BY count(id) DESC ' +
         ' LIMIT 1',
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
         ' WHERE client__c = ' +
         clientId +
-        +' and re_test_recommended__c=true' +
+        +' and active__c=true and re_test_recommended__c=true' +
         ' GROUP BY runId__c ' +
         ' ORDER BY count(id) DESC ' +
         ' LIMIT 1',
@@ -415,7 +422,10 @@ public with sharing class L4LSessionStatsController {
     List<AggregateResult> ts_agg = [
       SELECT count(id) c
       FROM client_objective_timeseries__c
-      WHERE client__c = :clientId AND re_test_recommended__c = TRUE
+      WHERE
+        client__c = :clientId
+        AND active__c = TRUE
+        AND re_test_recommended__c = TRUE
       GROUP BY runId__c
       ORDER BY count(id) DESC
       LIMIT 1
@@ -474,12 +484,14 @@ public with sharing class L4LSessionStatsController {
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT runid__c,status__c,count(id) c FROM client_objective_timeseries__c ' +
         ' WHERE client__c = ' +
         clientId +
+        ' AND active__c = TRUE' +
         ' GROUP BY runid__c,Status__c ' +
         ' ORDER BY count(id) DESC ' +
         ' LIMIT 1',
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT runid__c,status__c,count(id) c FROM client_objective_timeseries__c ' +
         ' WHERE client__c = ' +
         clientId +
+        ' AND active__c = TRUE' +
         ' GROUP BY Status__c ' +
         ' ORDER BY count(id) DESC ' +
         ' LIMIT 1',
@@ -490,7 +502,7 @@ public with sharing class L4LSessionStatsController {
     List<AggregateResult> ts_agg = [
       SELECT runid__c, status__c, count(id) c
       FROM client_objective_timeseries__c
-      WHERE client__c = :clientId
+      WHERE client__c = :clientId AND active__c = TRUE
       GROUP BY runid__c, Status__c
       ORDER BY count(id) DESC
       LIMIT 1
@@ -648,7 +660,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getClientObjectivesSDCount() clientId=' +
       clientId,
-      'L4LSessionStatsController.getClientObjectivesSDCount()',
+      'L4LSessionStatsController.getClientObjectivesSDCount() filering Active=true',
       'next-gen-nebula-apex'
     );
 
@@ -658,7 +670,7 @@ public with sharing class L4LSessionStatsController {
         objective__r.sd__r.name sdname,
         count(id) sdcount
       FROM client_objective__c
-      WHERE client__c = :clientId
+      WHERE client__c = :clientId AND active__c = TRUE
       GROUP BY objective__r.sd__r.program__R.name, objective__r.sd__r.name
       ORDER BY count(id)
     ];
@@ -683,7 +695,7 @@ public with sharing class L4LSessionStatsController {
     List<AggregateResult> countCoBySD = [
       SELECT objective__r.sd__c sdid, count(id) sdcount
       FROM client_objective__c
-      WHERE client__c = :clientId
+      WHERE client__c = :clientId AND active__c = TRUE
       GROUP BY objective__r.sd__c
       ORDER BY count(id)
     ];
@@ -936,7 +948,7 @@ public with sharing class L4LSessionStatsController {
     List<AggregateResult> countCoBySD = [
       SELECT objective__r.sd__c sdid, count(id) sdcount
       FROM client_objective__c
-      WHERE client__c = :clientId
+      WHERE client__c = :clientId AND active__c = TRUE
       GROUP BY objective__r.sd__c
       ORDER BY count(id)
     ];
