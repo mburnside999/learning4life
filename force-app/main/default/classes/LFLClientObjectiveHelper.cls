@@ -14,6 +14,7 @@ public class LFLClientObjectiveHelper {
       FROM Client_Objective__c
       WHERE
         client__c = :clientId
+        AND active__c = TRUE
         AND status__c IN ('ACQ', 'HLD', 'ABS', 'OBJ')
         AND lastmodifieddate > :starttime
         AND lastmodifieddate <= :endtime

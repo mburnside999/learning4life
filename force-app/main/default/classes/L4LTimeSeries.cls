@@ -30,7 +30,7 @@ public class L4LTimeSeries {
       'Date_Acquired__c, Date_CIP__c, Date_Held__c, Date_Introduced__c,' +
       'Days_Since_Tested_Correct__c, Days_Since_Tested__c, Frequency__c,' +
       'Name, Objective__c, Program_Name__c, Area__c, Stage__c,' +
-      'Re_Test_Recommended__c, Status__c FROM Client_Objective__c ';
+      'Re_Test_Recommended__c, Status__c, Active__c FROM Client_Objective__c ';
 
     List<Client_Objective__c> results = new List<Client_Objective__c>();
 
@@ -66,6 +66,7 @@ public class L4LTimeSeries {
       tsrecord.Stage__c = co.Stage__c;
       tsrecord.Area__c = co.Area__c;
       tsrecord.status__c = co.status__c;
+      tsrecord.active__c = co.active__c;
 
       tsrecord.Re_Test_Recommended__c = co.Re_Test_Recommended__c;
       tslist.add(tsrecord);
@@ -126,7 +127,7 @@ public class L4LTimeSeries {
 
     String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day,count(id) val  FROM client_objective_timeseries__c ';
 
-    queryCOTSString += ' where client__c=:clientId ';
+    queryCOTSString += ' where active__c=true and client__c=:clientId ';
     if (status == 'All') {
     } else if (status == 'Null') {
       queryCOTSString += ' and status__c = null ';
@@ -217,7 +218,7 @@ public class L4LTimeSeries {
     );
 
     String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day, status__c, count(id) val  FROM client_objective_timeseries__c ';
-    queryCOTSString += ' where client__c=:clientId ';
+    queryCOTSString += ' where active__c=true and client__c=:clientId ';
     queryCOTSString += ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c),status__c order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c),status__c';
 
     L4LNebulaComponentController.logDebug(
@@ -305,7 +306,7 @@ public class L4LTimeSeries {
     );
 
     String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day,count(id) val  FROM client_objective_timeseries__c ';
-    queryCOTSString += ' where client__c=:clientId and re_test_recommended__c= true ';
+    queryCOTSString += ' where active__c=true and client__c=:clientId and re_test_recommended__c= true ';
     if (status == 'All') {
     } else if (status == 'Null') {
       queryCOTSString += ' and status__c = null ';

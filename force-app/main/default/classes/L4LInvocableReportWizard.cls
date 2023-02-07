@@ -10,6 +10,14 @@ global with sharing class L4LInvocableReportWizard {
   ) {
     // initialise our list of results
 
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      recordId,
+      'L4LInvocableReportWizard.getStatusCountsBetweenDates() note filtered client objective active__c =true',
+      'L4LInvocableReportWizard.getStatusCountsBetweenDates() note filtered client objective active__c =true',
+      'next-gen-nebula-apex'
+    );
+
     List<String> result = new List<String>();
 
     String str = '';
@@ -41,8 +49,8 @@ global with sharing class L4LInvocableReportWizard {
     Integer offset = tz.getOffset(starttime.dateGMT());
     System.debug(
       'L4LInvocableReportWizard: at the received starttime the offset to GMT is : ' +
-      offset / 1000 +
-      ' seconds.'
+        offset / 1000 +
+        ' seconds.'
     );
     starttime = starttime.addSeconds(0 - (offset / 1000));
     System.debug(
@@ -64,8 +72,8 @@ global with sharing class L4LInvocableReportWizard {
     offset = tz.getOffset(endtime.dateGMT());
     System.debug(
       'L4LInvocableReportWizard: at the stretched endtime the offset to GMT is: ' +
-      offset / 1000 +
-      ' seconds.'
+        offset / 1000 +
+        ' seconds.'
     );
     endtime = endtime.addSeconds(0 - (offset / 1000));
     System.debug(
@@ -78,9 +86,9 @@ global with sharing class L4LInvocableReportWizard {
     );
     System.debug(
       'L4LInvocableReportWizard: BOTTOM LINE we submit a SOQL statement that says=> SELECT..cols.. WHERE lastmodifieddate>=' +
-      starttime +
-      ' AND lastmodifieddate < ' +
-      endtime
+        starttime +
+        ' AND lastmodifieddate < ' +
+        endtime
     );
 
     // execute a SOQL aggregate query
@@ -89,6 +97,7 @@ global with sharing class L4LInvocableReportWizard {
       FROM Client_Objective__c
       WHERE
         client__c = :clientId
+        AND active__c = TRUE
         AND status__c IN ('ACQ', 'HLD', 'ABS', 'OBJ')
         AND lastmodifieddate >= :starttime
         AND lastmodifieddate < :endtime
@@ -182,6 +191,7 @@ global with sharing class L4LInvocableReportWizard {
       FROM Client_Objective__c
       WHERE
         client__c = :clientId
+        AND active__c = TRUE
         AND Objective__r.SD__r.Program__r.Name = :pname
         AND status__c = 'ACQ'
       GROUP BY Objective__r.SD__r.Program__r.Name
@@ -206,6 +216,7 @@ global with sharing class L4LInvocableReportWizard {
       FROM Client_Objective__c
       WHERE
         client__c = :clientId
+        AND active__c = TRUE
         AND status__c = :status
         AND Objective__r.SD__r.Program__r.Name = :pname
         AND lastmodifieddate >= :starttime
