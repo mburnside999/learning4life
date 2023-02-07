@@ -225,7 +225,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
     setNewSession()
       .then((returnVal) => {
-        console.log("Success");
+        console.log("Successful");
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback()`,
@@ -477,6 +477,15 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       })
       .catch((error) => {
         //Handle error
+
+        console.log(JSON.stringify(error));
+
+        this.showNotification(
+          "An error occurred in HandleSave",
+          `Error: JSON.stringify(error)`,
+          "error"
+        );
+
         logError(
           this.recordId,
           `${COMPONENT}.handleSave(): error=${JSON.stringify(error)}`,
@@ -502,7 +511,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         label: "this is the aria-label value"
         // setting theme would have no effect
       }).then((result) => {
-        console.log(`result={result}`);
+        console.log(`result=${result}`);
         logDebug(
           this.recordId,
           `${COMPONENT}.confirmation(): result=${JSON.stringify(result)}`,
@@ -634,12 +643,20 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           }
         })
         .catch((error) => {
-          this.error = error;
+          console.log(JSON.stringify(error));
+
+          //this.error = error;
           logError(
             this.recordId,
             `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
             `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
             `${TAG}`
+          );
+
+          this.showNotification(
+            "Error in handleclickArray!",
+            "Error in handleclickArray!",
+            "error"
           );
         });
     }

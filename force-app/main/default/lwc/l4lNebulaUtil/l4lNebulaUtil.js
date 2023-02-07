@@ -10,10 +10,14 @@ function logDebug(recordId, message, scenario, tag) {
     tag: tag
   })
     .then((returnVal) => {
-      console.log("Success");
+      console.log(
+        "Successfully returned from L4LNebulaComponentController.logDebug"
+      );
     })
     .catch((error) => {
-      console.log("Error");
+      console.log(
+        "Error encountered in call to logDebug: " + JSON.stringify(error)
+      );
     });
 }
 
@@ -40,10 +44,10 @@ function logError(recordId, message, scenario, tag) {
     tag: tag
   })
     .then((returnVal) => {
-      console.log("Success");
+      "Successfully returned from L4LNebulaComponentController.logError";
     })
     .catch((error) => {
-      console.log("Error");
+      "Error encountered in call to logDebug: " + JSON.stringify(error);
     });
 }
 

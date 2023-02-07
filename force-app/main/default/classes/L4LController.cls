@@ -549,6 +549,7 @@ public with sharing class L4LController {
       jsonstr,
       List<Session_Obj__c>.class
     );
+
     for (Session_Obj__c so : soDeserialized) {
       switch on val {
         when 'Correct' {
