@@ -12,7 +12,7 @@ global with sharing class L4LInvocableReportWizard {
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logDebug(
-      recordId,
+      null,
       'L4LInvocableReportWizard.getStatusCountsBetweenDates() note filtered client objective active__c =true',
       'L4LInvocableReportWizard.getStatusCountsBetweenDates() note filtered client objective active__c =true',
       'next-gen-nebula-apex'
