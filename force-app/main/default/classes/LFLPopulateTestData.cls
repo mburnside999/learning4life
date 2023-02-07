@@ -56,6 +56,7 @@ public with sharing class LFLPopulateTestData {
     Client_Objective__c co = new Client_Objective__c(
       Client__c = newAccount.Id,
       Objective__c = o.Id,
+      active__c = true,
       Client_Objective_Notes__c = 'client objective notes'
     );
     insert co;
