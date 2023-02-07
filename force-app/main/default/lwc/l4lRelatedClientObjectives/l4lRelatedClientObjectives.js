@@ -179,10 +179,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         `${COMPONENT}.confirmation(): deleting client objectives, ask for confirmation`,
         `${TAG}`
       );
+
       await LightningConfirm.open({
-        message: `Deleting client objective record: "${_row.Program_Name__c} > ${_row.SD_Name__c} > ${_row.Objective_Name__c}".  Are you sure?`,
-        variant: "headerless",
-        label: "this is the aria-label value"
+        message: `Deleting "${_row.Program_Name__c} > ${_row.SD_Name__c} > ${_row.Objective_Name__c}".  Are you sure?`,
+        label:
+          "Warning: deleting client objective records is not recommended, there may be session objectives already allocated. Proceed with caution.",
+        theme: "warning"
+
         // setting theme would have no effect
       }).then((result) => {
         console.log(`result={result}`);
