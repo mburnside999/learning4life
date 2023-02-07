@@ -172,7 +172,7 @@ try {
       LIMIT 1
     ];
     } catch (System.QueryException e) {
-System.debug('error = +e.getMessage());
+System.debug('error = '+e.getMessage());
 throw e;
     }
 

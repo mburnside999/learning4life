@@ -139,5 +139,9 @@ ts.loadCOTimeSeries();
 
 L4LTimeSeries.generateD3COTimeSeriesJson('0018t000002vfSfAAI', 'Null');
 
-Integer i = L4LSessionStatsController.getD3YAxisScale('0018t000003DbqmAAC');
+Integer i = L4LSessionStatsController.getD3StatusYAxisScale(
+  '0018t000003DbqmAAC'
+);
 System.debug(i);
+
+throw new L4LClientObjectiveMissingException('hello');
