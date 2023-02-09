@@ -65,9 +65,19 @@ private class TestL4LController {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Id clientObjectiveId = [
+      SELECT id
+      FROM client_objective__c
+      WHERE client__c = :clientId
+      LIMIT 1
+    ]
+    .Id;
+
     Test.stopTest();
 
-    Client_Objective__c co = L4LController.deactivateClientObjective(clientId);
+    Client_Objective__c co = L4LController.deactivateClientObjective(
+      clientObjectiveId
+    );
     System.assert(co.active__c == false, 'Expected active=false');
   }
 

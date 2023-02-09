@@ -376,10 +376,12 @@ public with sharing class L4LController {
   }
 
   @AuraEnabled(cacheable=false)
-  public static Client_Objective__c deactivateClientObjective(String clientId) {
+  public static Client_Objective__c deactivateClientObjective(
+    String clientObjectiveId
+  ) {
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logDebug(
-      clientId,
+      clientObjectiveId,
       'L4LController.deactivateClientObjective()',
       'L4LController.deactivateClientObjective()',
       'next-gen-nebula-apex'
@@ -388,7 +390,7 @@ public with sharing class L4LController {
     client_objective__c co = [
       SELECT id, active__c
       FROM client_objective__c
-      WHERE id = :clientId
+      WHERE id = :clientObjectiveId
     ];
     co.active__c = false;
     update co;

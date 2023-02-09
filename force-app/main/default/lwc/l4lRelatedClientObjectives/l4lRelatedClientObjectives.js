@@ -287,7 +287,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
     switch (actionName) {
       case "deactivate":
-        deactivateClientObjective({ clientId: row.Id })
+        deactivateClientObjective({ clientObjectiveId: row.Id })
           .then(() => {
             this.dispatchEvent(
               new ShowToastEvent({
