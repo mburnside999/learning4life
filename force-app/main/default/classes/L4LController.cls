@@ -235,7 +235,8 @@ public with sharing class L4LController {
           Frequency__c,
           Last_Tested_Correct__c,
           Re_Test_Recommended__c,
-          Client_Objective_Notes__c
+          Client_Objective_Notes__c,
+          active__c
         FROM Client_Objective__c
         WHERE active__c = TRUE AND Client__c = :clientId
         ORDER BY Program_Name__c, Name
@@ -258,6 +259,141 @@ public with sharing class L4LController {
     );
 
     return retlist;
+  }
+
+  @AuraEnabled(cacheable=false)
+  public static List<Client_Objective__c> getClientObjectivesFilteredOnActive(
+    String clientId,
+    boolean showActiveOnly
+  ) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LController.getClientObjectivesFilteredOnActive()',
+      'L4LController.getClientObjectivesFilteredOnActive()',
+      'next-gen-nebula-apex'
+    );
+
+    String queryCOString =
+      'SELECT Id,Name,Client__c,Objective_Name__c,SD_Name__c,Program_Name__c,' +
+      'Status__c,Frequency__c,Last_Tested_Correct__c,Re_Test_Recommended__c,Client_Objective_Notes__c,active__c ' +
+      ' FROM Client_Objective__c WHERE Client__c = :clientId ';
+
+    if (showActiveOnly) {
+      queryCOString += ' and active__c=true';
+    } else {
+    }
+
+    queryCOString += ' ORDER BY Program_Name__c, Name';
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LController.getClientObjectivesFilteredOnActive() queryCOString=' +
+      queryCOString,
+      'L4LController.getClientObjectivesFilteredOnActive() queryCOString=' +
+      queryCOString,
+      'next-gen-nebula-apex'
+    );
+
+    List<Client_Objective__c> retlist = Database.query(queryCOString);
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LController.getClientObjectivesFilteredOnActive()() returning retlist.size()=' +
+      retlist.size(),
+      'L4LController.getClientObjectivesFilteredOnActive()() returning retlist.size()=' +
+      retlist.size(),
+      'next-gen-nebula-apex'
+    );
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LController.getClientObjectivesFilteredOnActive()() returning retlist=' +
+      retlist,
+      'L4LController.getClientObjectivesFilteredOnActive()() retlist logged',
+      'next-gen-nebula-apex'
+    );
+
+    return retlist;
+  }
+
+  @AuraEnabled(cacheable=false)
+  public static String getCOActivationSummary(String clientId) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LController.getCOActivationSummary()',
+      'L4LController.getCOActivationSummary()',
+      'next-gen-nebula-apex'
+    );
+
+    String queryString =
+      'SELECT count(id) active FROM client_objective__c ' +
+      'WHERE client__c = :clientId AND active__c = TRUE group by active__c';
+
+    List<AggregateResult> active = new List<AggregateResult>();
+    active = Database.query(queryString);
+    Integer activeInt;
+    if (active.size() == 0) {
+      activeInt = 0;
+    } else {
+      activeInt = (Integer) active[0].get('active');
+    }
+    queryString =
+      'SELECT count(id) inactive FROM client_objective__c ' +
+      'WHERE client__c = :clientId AND (active__c != TRUE or active__c=null) group by active__c';
+
+    List<AggregateResult> inactive = new List<AggregateResult>();
+    inactive = Database.query(queryString);
+    Integer inactiveInt;
+    if (inactive.size() == 0) {
+      inactiveInt = 0;
+    } else {
+      inactiveInt = (Integer) inactive[0].get('deactivated');
+    }
+
+    Integer totalInt = activeInt + inactiveInt;
+
+    String retStr =
+      '{"active":' +
+      activeInt +
+      ',' +
+      '"inactive":' +
+      inactiveInt +
+      ',' +
+      '"total":' +
+      totalInt +
+      '}';
+
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LController.getCOActivationSummary() retstr=' + retstr,
+      'L4LController.getCOActivationSummary() retstr=' + retstr,
+      'next-gen-nebula-apex'
+    );
+
+    return retstr;
+  }
+
+  @AuraEnabled(cacheable=false)
+  public static Client_Objective__c deactivateClientObjective(String clientId) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      clientId,
+      'L4LController.deactivateClientObjective()',
+      'L4LController.deactivateClientObjective()',
+      'next-gen-nebula-apex'
+    );
+
+    client_objective__c co = [
+      SELECT id, active__c
+      FROM client_objective__c
+      WHERE id = :clientId
+    ];
+    co.active__c = false;
+    update co;
+
+    return co;
   }
 
   @AuraEnabled

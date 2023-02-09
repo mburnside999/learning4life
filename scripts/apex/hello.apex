@@ -172,3 +172,8 @@ for (client_objective_timeseries__c ts : [
 }
 System.debug(cotslist.size());
 //update cotslist;
+String x = L4LController.getCOArchiveSummary('0018t000003DbqmAAC');
+System.debug(x);
+
+
+SELECT count(id) archived FROM client_objective__c WHERE id = '0018t000003DbqmAAC' AND active__c != TRUE 

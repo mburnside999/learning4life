@@ -1,11 +1,10 @@
 <template>
-  <c-logger></c-logger>
   <lightning-card
-    title="L4L Assigned Client Objectives"
+    title="L4L Assigned Client Objectives - NEW!! Now with record Activation/Deactivation"
     icon-name="custom:custom63"
   >
     <div class="c-container">
-      <lightning-layout multiple-rows="true">
+      <lightning-layout>
         <lightning-layout-item padding="around-small" size="12">
           <template if:true={areDetailsVisible}>
             <section
@@ -16,20 +15,6 @@
               class="slds-modal slds-fade-in-open"
             >
               <div class="slds-modal__container">
-                <!-- <button
-                  class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
-                >
-                  <label>Close</label>
-                  <svg
-                    class="slds-button__icon slds-button__icon_large"
-                    aria-hidden="true"
-                  >
-                    <use
-                      xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"
-                    ></use>
-                  </svg>
-                  <span class="slds-assistive-text">Cancel and close</span>
-                </button> -->
                 <div class="slds-modal__header">
                   <h1
                     id="modal-heading-01"
@@ -69,30 +54,75 @@
               role="presentation"
             ></div>
           </template>
-
-          &nbsp;&nbsp;
-          <input
-            size="45"
-            type="search"
-            placeholder="Filter across all fields"
-            oninput={handleSearchKeyInput}
-          />
-          <lightning-button
-            label="Refresh"
-            title="Refresh"
-            onclick={handleClick}
-            class="slds-var-m-left_x-small"
-          ></lightning-button>
-          <br /><br />
-          <lightning-datatable
-            hide-checkbox-column
-            key-field="Id"
-            data={clientobjectives}
-            show-row-number-column
-            columns={columns}
-            onrowaction={confirmation}
+        </lightning-layout-item>
+      </lightning-layout>
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
-          </lightning-datatable>
+            <input
+              size="45"
+              type="search"
+              placeholder="Filter across all fields"
+              oninput={handleSearchKeyInput}
+            />
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-input
+              type="checkbox"
+              label="Show Active Only"
+              checked={showActiveOnly}
+              onchange={handleChange}
+            >
+            </lightning-input>
+          </div>
+        </lightning-layout-item>
+
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <div class="slds-text-heading_medium">
+              <div class="slds-text-color_success">
+                Active({activeCOCount}) Inactive({inactiveCOCount})
+                Filtered({recs})
+              </div>
+            </div>
+          </div>
+        </lightning-layout-item>
+
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="Refresh"
+              title="Refresh"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item> -->
+      </lightning-layout>
+
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <div>
+            <lightning-datatable
+              hide-checkbox-column
+              key-field="Id"
+              data={clientobjectives}
+              show-row-number-column
+              columns={columns}
+              onrowaction={confirmation}
+            >
+            </lightning-datatable>
+          </div>
         </lightning-layout-item>
       </lightning-layout>
     </div>
