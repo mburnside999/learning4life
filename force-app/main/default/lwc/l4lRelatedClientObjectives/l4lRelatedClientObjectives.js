@@ -1,7 +1,11 @@
 /* eslint-disable no-console */
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { LightningElement, track, wire, api } from "lwc";
-import getClientObjectives from "@salesforce/apex/L4LController.getClientObjectives";
+//import getClientObjectives from "@salesforce/apex/L4LController.getClientObjectives";
+import getClientObjectivesFilteredOnActive from "@salesforce/apex/L4LController.getClientObjectivesFilteredOnActive";
+import deactivateClientObjective from "@salesforce/apex/L4LController.deactivateClientObjective";
+import getCOActivationSummary from "@salesforce/apex/L4LController.getCOActivationSummary";
+
 import { CurrentPageReference } from "lightning/navigation";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
@@ -27,11 +31,15 @@ const COLOR = "color:red";
 
 const actions = [
   {
-    label: "Edit details",
+    label: "Edit client objective details",
     name: "edit_details"
   },
   {
-    label: "Delete",
+    label: "Deactivate client objective",
+    name: "deactivate"
+  },
+  {
+    label: "Delete this client objective (CAUTION)",
     name: "delete"
   }
 ];
@@ -70,13 +78,20 @@ const columns = [
   {
     label: "Retest",
     fieldName: "Re_Test_Recommended__c",
-    type: "boolean"
+    type: "boolean",
+    initialWidth: 60
   },
   {
     label: "Notes",
     fieldName: "Client_Objective_Notes__c",
     type: "text",
     wrapText: true
+  },
+  {
+    label: "Active",
+    fieldName: "Active__c",
+    type: "boolean",
+    initialWidth: 60
   },
   {
     type: "action",
@@ -101,7 +116,12 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   subscription = null;
   @wire(MessageContext) messageContext;
   rendered = false;
+  activeString;
+  inactiveCOCount;
+  activeCOCount;
+  totalCOCount;
 
+  showActiveOnly = true;
   connectedCallback() {
     setNewSession()
       .then((returnVal) => {
@@ -153,6 +173,10 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   }
   renderedCallback() {}
 
+  get recs() {
+    if (this.clientobjectives != null) return this.clientobjectives.length;
+  }
+
   async confirmation(event) {
     logDebug(
       this.recordId,
@@ -181,10 +205,10 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       );
 
       await LightningConfirm.open({
-        message: `Deleting "${_row.Program_Name__c} > ${_row.SD_Name__c} > ${_row.Objective_Name__c}".  Are you sure?`,
+        message: `Deleting record: "${_row.Program_Name__c} > ${_row.SD_Name__c} > ${_row.Objective_Name__c}".  Are you sure?`,
         label:
-          "Warning: deleting client objective records is not recommended, there may be session objectives already allocated. Proceed with caution.",
-        theme: "warning"
+          "Caution: Deleting client objective records is not recommended, there may be session objectives already allocated.",
+        theme: "error"
 
         // setting theme would have no effect
       }).then((result) => {
@@ -201,6 +225,40 @@ export default class L4lRelatedClientObjectives extends LightningElement {
             this.recordId,
             `${COMPONENT}.confirmation(): result=${result}, calling handleRowAction `,
             `${COMPONENT}.confirmation(): deletion decision received`,
+            `${TAG}`
+          );
+          this.handleRowAction(_actionName, _row);
+        }
+      });
+    } else if (_actionName == "deactivate") {
+      logDebug(
+        this.recordId,
+        `${COMPONENT}.confirmation(): deactivating client objective`,
+        `${COMPONENT}.confirmation(): deactivating client objective`,
+        `${TAG}`
+      );
+
+      await LightningConfirm.open({
+        message: `Deactivating "${_row.Program_Name__c} > ${_row.SD_Name__c} > ${_row.Objective_Name__c}".  Are you sure?`,
+        label:
+          "Warning: deactivated client objective records will not be available to add to sessions until activated.",
+        theme: "warning"
+
+        // setting theme would have no effect
+      }).then((result) => {
+        console.log(`result={result}`);
+        // this.logit(
+        //   DEBUG,
+        //   `confirmation(): result=${result}`,
+        //   `confirmation()`,
+        //   this.recordId
+        // );
+
+        if (result) {
+          logDebug(
+            this.recordId,
+            `${COMPONENT}.confirmation(): result=${result}, calling handleRowAction `,
+            `${COMPONENT}.confirmation(): deactivate decision received`,
             `${TAG}`
           );
           this.handleRowAction(_actionName, _row);
@@ -228,6 +286,43 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     );
 
     switch (actionName) {
+      case "deactivate":
+        deactivateClientObjective({ clientId: row.Id })
+          .then(() => {
+            this.dispatchEvent(
+              new ShowToastEvent({
+                title: "Success",
+                message: "Cient Objective deactivated",
+                variant: "success"
+              })
+            );
+            logDebug(
+              this.recordId,
+              `${COMPONENT}.handleRowAction(): deactivate()`,
+              `${COMPONENT}.handleRowAction(): deactivation processed successfully, refreshing client objectives`,
+              `${TAG}`
+            );
+            let inp = this.template.querySelector("input");
+            inp.value = "";
+            this.refresh();
+          })
+          .catch((error) => {
+            logError(
+              this.recordId,
+              `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
+              "error occurred during deactivation",
+              `${TAG}`
+            );
+
+            this.dispatchEvent(
+              new ShowToastEvent({
+                title: "Error deactivating record",
+                message: "Error",
+                variant: "error"
+              })
+            );
+          });
+        break;
       case "delete":
         deleteRecord(row.Id)
           .then(() => {
@@ -244,6 +339,8 @@ export default class L4lRelatedClientObjectives extends LightningElement {
               `${COMPONENT}.handleRowAction(): delete processed successfully, refreshing client objectives`,
               `${TAG}`
             );
+            let inp = this.template.querySelector("input");
+            inp.value = "";
             this.refresh();
           })
           .catch((error) => {
@@ -300,23 +397,68 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${TAG}`
     );
     this.areDetailsVisible = false;
+
+    let inp = this.template.querySelector("input");
+    inp.value = "";
     this.refresh();
   }
 
   refresh() {
     logDebug(
       this.recordId,
-      `${COMPONENT}.refresh(): calling LFLController.getClientObjectives() `,
+      `${COMPONENT}.refresh(): calling LFLController.getCOActivationSummary() `,
+      `${COMPONENT}.refresh(): calling LFLController.getCOActivationSummary() `,
+      `${TAG}`
+    );
+
+    console.info(`%crefresh(): calling getCOActivationSummary`, COLOR);
+
+    getCOActivationSummary({ clientId: this.recordId })
+      .then((result) => {
+        let tmp = JSON.parse(result);
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.refresh(): calling LFLController.refresh() getCOActivationSummary returned ${JSON.stringify(
+            tmp
+          )}`,
+          `${COMPONENT}.refresh(): calling LFLController.refresh() getCOActivationSummary returned ${JSON.stringify(
+            tmp
+          )}`,
+          `${TAG}`
+        );
+        this.inactiveCOCount = tmp.inactive;
+        this.activeCOCount = tmp.active;
+        this.totalCOCount = tmp.total;
+        //this.activeString = result;
+      })
+      .catch((error) => {
+        this.error = error;
+        logError(
+          this.recordId,
+          `${COMPONENT}.refresh(): Apex call to getCOActivationSummary returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${COMPONENT}.refresh(): Apex call to getCOActivationSummary returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${TAG}`
+        );
+      });
+
+    console.info(
+      `%crefresh(): calling getClientObjectivesFilteredOnActive, showActiveOnly=${this.showActiveOnly}, recordId = ${this.recordId}`,
+      COLOR
+    );
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.refresh(): calling LFLController.getClientObjectivesFilteredOnActive() showActiveOnly=${this.showActiveOnly} `,
       `${COMPONENT}.refresh(): processing the refresh request`,
       `${TAG}`
     );
-    console.info(`%crefresh(): entering`, COLOR);
-    console.info(
-      `%crefresh(): calling getClientObjectives, recordId = ${this.recordId}`,
-      COLOR
-    );
-    getClientObjectives({
-      clientId: this.recordId
+
+    getClientObjectivesFilteredOnActive({
+      clientId: this.recordId,
+      showActiveOnly: this.showActiveOnly
     })
       .then((result) => {
         this.clientobjectives = result;
@@ -324,13 +466,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
         logDebug(
           this.recordId,
-          `${COMPONENT}.refresh(): returned from Apex call to getClientObjectives, ${result.length} records returned`,
+          `${COMPONENT}.refresh(): returned from Apex call to getClientObjectivesFilteredOnActive, ${result.length} records returned`,
           `${COMPONENT}.refresh(): client objectives refreshed, record count logged`,
           `${TAG}`
         );
         logDebug(
           this.recordId,
-          `${COMPONENT}.refresh(): Apex call to getClientObjectives result= ${JSON.stringify(
+          `${COMPONENT}.refresh(): Apex call to getClientObjectivesFilteredOnActive result= ${JSON.stringify(
             result
           )}`,
           `${COMPONENT}.refresh(): client objectives refreshed, records logged`,
@@ -341,10 +483,10 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         this.error = error;
         logError(
           this.recordId,
-          `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${JSON.stringify(
+          `${COMPONENT}.refresh(): Apex call to getClientObjectivesFilteredOnActive returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.refresh(): Apex call to getClientObjectives returned error: ${JSON.stringify(
+          `${COMPONENT}.refresh(): Apex call to getClientObjectivesFilteredOnActive returned error: ${JSON.stringify(
             error
           )}`,
           `${TAG}`
@@ -431,6 +573,15 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     );
     this.refresh();
   }
+
+  handleChange(event) {
+    this.showActiveOnly = !this.showActiveOnly;
+    console.log("this.showActiveOnly=" + this.showActiveOnly);
+    let inp = this.template.querySelector("input");
+    inp.value = "";
+    this.refresh();
+  }
+
   handleClose(event) {
     this.areDetailsVisible = false;
     //experimental
@@ -496,23 +647,24 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.handleLMS(): calling Apex getClientObjectives`,
-      `${COMPONENT}.handleLMS(): calling Apex getClientObjectives`,
+      `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,
+      `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,
       `${TAG}`
     );
 
-    getClientObjectives({
-      clientId: this.recordId
+    getClientObjectivesFilteredOnActive({
+      clientId: this.recordId,
+      showActiveOnly: this.showActiveOnly
     })
       .then((result) => {
         this.clientobjectives = result;
         this.filterableObjectives = result;
         logDebug(
           this.recordId,
-          `${COMPONENT}.handleLMS(): Apex getClientObjectives returned result: ${JSON.stringify(
+          `${COMPONENT}.handleLMS(): Apex getClientObjectivesFilteredOnActive returned result: ${JSON.stringify(
             result
           )}`,
-          `${COMPONENT}.handleLMS(): Apex getClientObjectives returned result`,
+          `${COMPONENT}.handleLMS(): Apex getClientObjectivesFilteredOnActive returned result`,
           `${TAG}`
         );
       })

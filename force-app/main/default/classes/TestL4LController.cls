@@ -44,6 +44,45 @@ private class TestL4LController {
   }
 
   @isTest
+  static void testClientObjectivesFilteredOnActive() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    List<Client_Objective__c> co = L4LController.getClientObjectivesFilteredOnActive(
+      clientId,
+      true
+    );
+    System.assert(
+      co.size() > 0,
+      'Expected at least one client_objective__c record retrieved'
+    );
+  }
+
+  @isTest
+  static void testDeactivateCO() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    Client_Objective__c co = L4LController.deactivateClientObjective(clientId);
+    System.assert(co.active__c == false, 'Expected active=false');
+  }
+
+  @isTest
+  static void testGetCOActivationSummary() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    String summary = L4LController.getCOActivationSummary(clientId);
+    System.assert(summary != null, 'Expected a summary string');
+  }
+
+  @isTest
   static void testGetUnusedObjectives() {
     Test.startTest();
     LFLPopulateTestData.load();

@@ -193,3 +193,5 @@ Client_Objective__c co = [
     ];
     System.debug(co);
 
+
+select active__c,count(id) c from client_objective__c where client__c=active__c!=true group by active__c
