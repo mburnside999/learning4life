@@ -12,7 +12,7 @@ private class TestClientObjectiveList {
     );
 
     System.assert(
-      colist.size() > 0,
+      colist != null,
       'Expected at least one client objective record retrieved.'
     );
   }

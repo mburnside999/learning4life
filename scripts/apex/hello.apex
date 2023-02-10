@@ -175,5 +175,6 @@ System.debug(cotslist.size());
 String x = L4LController.getCOArchiveSummary('0018t000003DbqmAAC');
 System.debug(x);
 
-
+List<Client_Objective__c> l = L4LController.getClientObjectivesFilteredOnActive('0018t000003DbqmAAC',true);
+Syastem.debug('size = '+l.size());
 SELECT count(id) archived FROM client_objective__c WHERE id = '0018t000003DbqmAAC' AND active__c != TRUE 
