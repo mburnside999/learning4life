@@ -59,7 +59,6 @@ public with sharing class LFLPopulateTestData {
         status__c = 'ACQ',
         Client_Objective_Notes__c = 'client objective notes'
       );
-      co.active__c = true;
       insert co;
 
       Session_Obj__c so = new Session_Obj__c();
@@ -89,8 +88,7 @@ public with sharing class LFLPopulateTestData {
         Client__c = newAccount.Id,
         Objective__c = o.Id,
         Client_Objective_Notes__c = 'client objective notes',
-        status__c = 'ACQ',
-        active__c = true
+        status__c = 'ACQ'
       );
       insert co;
 
