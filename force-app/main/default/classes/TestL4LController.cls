@@ -98,7 +98,6 @@ private class TestL4LController {
   }
 
   @isTest
-  @isTest
   static void testGetUnusedObjectives() {
     Test.startTest();
     LFLPopulateTestData.load();
