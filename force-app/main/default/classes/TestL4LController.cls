@@ -98,26 +98,6 @@ private class TestL4LController {
   }
 
   @isTest
-  static void testX() {
-    Test.startTest();
-    LFLPopulateTestData.load();
-    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
-    List<client_objective__c> l = [
-      SELECT id, active__c
-      FROM client_objective__c
-      WHERE id != NULL
-      LIMIT 1
-    ];
-    client_objective__c co = new client_objective__c();
-    co.client__c = clientId;
-    co.active__c = true;
-    insert co;
-
-    Test.stopTest();
-
-    System.assertEquals(true, co.active__c, 'xxx');
-  }
-
   @isTest
   static void testGetUnusedObjectives() {
     Test.startTest();
