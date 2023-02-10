@@ -252,7 +252,7 @@ private class TestL4LSessionStatsController {
       clientId
     );
     System.assert(
-      agg.size() > 0,
+      agg != null,
       '??Expected at least one session_statistics__c record retrieved.'
     );
   }

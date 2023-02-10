@@ -349,7 +349,7 @@ public with sharing class L4LController {
     if (inactive.size() == 0) {
       inactiveInt = 0;
     } else {
-      inactiveInt = (Integer) inactive[0].get('deactivated');
+      inactiveInt = (Integer) inactive[0].get('inactive');
     }
 
     Integer totalInt = activeInt + inactiveInt;
