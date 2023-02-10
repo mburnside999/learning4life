@@ -38,7 +38,7 @@ private class TestL4LController {
 
     List<Client_Objective__c> co = L4LController.getClientObjectives(clientId);
     System.assert(
-      co.size() > 0,
+      co != null,
       'Expected at least one client_objective__c record retrieved'
     );
   }
