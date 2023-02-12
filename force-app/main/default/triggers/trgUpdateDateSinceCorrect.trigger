@@ -63,7 +63,7 @@ trigger trgUpdateDateSinceCorrect on Session_Obj__c(
       ];
 
       // allow edits when inactive CO detected but log a warning
-      if (co.active__c = false) {
+      if (co.active__c == false) {
         L4LNebulaComponentController.logWarning(
           co.id,
           'Trigger: trgUpdateDateSinceCorrect: Warning, the related CO is inactive - why is the SO being assessed?!',

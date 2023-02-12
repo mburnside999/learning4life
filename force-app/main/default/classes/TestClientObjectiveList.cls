@@ -11,6 +11,8 @@ private class TestClientObjectiveList {
       clientId
     );
 
+    System.debug('xxxxxxxx' + clientId + ' ===> ' + colist);
+
     System.assert(
       colist != null,
       'Expected at least one client objective record retrieved.'
