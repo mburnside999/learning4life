@@ -1,27 +1,17 @@
 public class L4LTimeSeries {
   public Integer loadCOTimeSeries() {
-    L4LNebulaComponentController.setupCache();
-    L4LNebulaComponentController.logDebug(
-      null,
-      'L4LTimeSeries.loadCOTimeSeries',
-      'L4LTimeSeries.loadCOTimeSeries',
-      'next-gen-nebula-apex'
-    );
+    System.debug('in loadCOTimeSeries()');
+
+    System.debug('in loadCOTimeSeries(): logging START to TimeSeries_Log__c()');
 
     TimeSeries_Log__c log = new TimeSeries_Log__c();
     log.comments__c = 'Started client objective timeseries run';
     insert log;
 
-    L4LNebulaComponentController.logDebug(
-      null,
-      'L4LTimeSeries.loadCOTimeSeries: successfully inserted record to TimeSeries_Log__c: ' +
-      log,
-      'L4LTimeSeries.loadCOTimeSeries: successfully inserted record to TimeSeries_Log__c: ' +
-      log,
-      'next-gen-nebula-apex'
+    System.debug(
+      'in loadCOTimeSeries(): successfully logged START to TimeSeries_Log__c(): ' +
+      log
     );
-
-    system.debug('log inserted ' + log);
 
     String runId = [SELECT name FROM TimeSeries_Log__c WHERE id = :log.Id].Name;
 
@@ -34,14 +24,7 @@ public class L4LTimeSeries {
 
     List<Client_Objective__c> results = new List<Client_Objective__c>();
 
-    L4LNebulaComponentController.logDebug(
-      null,
-      'L4LTimeSeries.loadCOTimeSeries, clientObjectiveSOQLStr=' +
-      clientObjectiveSOQLStr,
-      'L4LTimeSeries.loadCOTimeSeries, clientObjectiveSOQLStr=' +
-      clientObjectiveSOQLStr,
-      'next-gen-nebula-apex'
-    );
+    System.debug('clientObjectiveSOQLStr= ' + clientObjectiveSOQLStr);
 
     results = Database.query(clientObjectiveSOQLStr);
 
@@ -74,15 +57,9 @@ public class L4LTimeSeries {
 
     try {
       insert tslist;
-      L4LNebulaComponentController.logDebug(
-        null,
-        'L4LTimeSeries.loadCOTimeSeries, succesfully inserted ' +
-          tslist.size() +
-          ' client_objective_timeseries records',
-        'L4LTimeSeries.loadCOTimeSeries, succesfully inserted ' +
-          tslist.size() +
-          ' client_objective_timeseries records',
-        'next-gen-nebula-apex'
+
+      System.debug(
+        'loadCOTimeSeries(): logging END to TimeSeries_Log__c(): ' + log
       );
 
       TimeSeries_Log__c endlog = new TimeSeries_Log__c();
@@ -92,23 +69,16 @@ public class L4LTimeSeries {
         ' client objective timeseries records';
       insert endlog;
 
-      L4LNebulaComponentController.logDebug(
-        null,
-        'L4LTimeSeries.loadCOTimeSeries: successfully inserted record to TimeSeries_Log__c: ' +
-        endlog,
-        'L4LTimeSeries.loadCOTimeSeries: successfully inserted record to TimeSeries_Log__c: ' +
-        endlog,
-        'next-gen-nebula-apex'
+      System.debug(
+        'loadCOTimeSeries(): successfully logged END to TimeSeries_Log__c(): ' +
+        log
       );
     } catch (DmlException e) {
-      L4LNebulaComponentController.logError(
-        null,
-        'Apex:loadCOTimeSeries() an error was encountered: ' + e.getMessage(),
-        'Apex:loadCOTimeSeries() an error was encountered: ' + e.getMessage(),
-        'next-gen-nebula-apex'
-      );
+      System.debug('error ' + e.getMessage());
     }
-
+    System.debug(
+      tslist.size() + ' Client Objective TimeSeries records processed '
+    );
     return tslist.size();
   }
 

@@ -15,6 +15,7 @@ public with sharing class LFLPopulateTestData {
 
     String x;
 
+    //create a test client
     String RecTypeId = [
       SELECT Id
       FROM RecordType
@@ -30,7 +31,7 @@ public with sharing class LFLPopulateTestData {
     );
     insert newAccount;
 
-    //Program
+    //create a Program
     Program__c p = new Program__c(
       Name = '2D Matching',
       Status__c = 'Active',
@@ -38,7 +39,7 @@ public with sharing class LFLPopulateTestData {
     );
     insert p;
 
-    //SD
+    //create an SD to associate with the Program
     SD__c sd1 = new SD__c(
       name = 'Identical',
       Stage__c = 'Stage One',
@@ -48,7 +49,7 @@ public with sharing class LFLPopulateTestData {
     sd1.Program__c = p.id;
     insert sd1;
 
-    //Objective
+    //create Objectives
     Objective__c o1 = new Objective__c(Name = 'Obj-1', Status__c = 'Active');
     o1.SD__c = sd1.id;
     insert o1;
@@ -61,11 +62,15 @@ public with sharing class LFLPopulateTestData {
     Objective__c o4 = new Objective__c(Name = 'Obj-4', Status__c = 'Active');
     o4.SD__c = sd1.id;
     insert o4;
-    Objective__c o5 = new Objective__c(Name = 'Obj-4', Status__c = 'Active');
+    // an active, unassigned objective
+    Objective__c o5 = new Objective__c(
+      Name = 'Unassigned-Obj-5',
+      Status__c = 'Active'
+    );
     o5.SD__c = sd1.id;
     insert o5;
 
-    //CO
+    //create Client objectives with a variety of Statuses
     Client_Objective__c co1 = new Client_Objective__c(
       Client__c = newAccount.Id,
       Status__c = 'HLD',
@@ -75,6 +80,7 @@ public with sharing class LFLPopulateTestData {
       Client_Objective_Notes__c = 'client objective notes'
     );
     insert co1;
+
     Client_Objective__c co2 = new Client_Objective__c(
       Client__c = newAccount.Id,
       Status__c = 'OBJ',
@@ -84,6 +90,7 @@ public with sharing class LFLPopulateTestData {
       Client_Objective_Notes__c = 'client objective notes'
     );
     insert co2;
+
     Client_Objective__c co3 = new Client_Objective__c(
       Client__c = newAccount.Id,
       Status__c = 'ACQ',
@@ -93,6 +100,7 @@ public with sharing class LFLPopulateTestData {
       Client_Objective_Notes__c = 'client objective notes'
     );
     insert co3;
+
     Client_Objective__c co4 = new Client_Objective__c(
       Client__c = newAccount.Id,
       Status__c = 'CIP',
@@ -103,13 +111,15 @@ public with sharing class LFLPopulateTestData {
     );
     insert co4;
 
-    //session
+    //create a session for our client
     Session__c session = new Session__c();
     session.Client__c = newAccount.Id;
     session.date__c = Date.today();
     session.session_length__c = 1;
     session.session_location__c = 'Other';
     insert session;
+
+    //create session objectives with C,I,P and N scores
 
     Session_Obj__c so1 = new Session_Obj__c();
     so1.Session__c = session.Id;
@@ -134,6 +144,8 @@ public with sharing class LFLPopulateTestData {
     so4.Objective__c = o4.Id;
     so4.nonresponsive__c = true;
     insert so4;
+
+    //fake up some session stats
 
     Session_Statistics__c sessStat1 = new Session_Statistics__c();
     sessStat1.objective__c = o1.Id;
@@ -175,49 +187,9 @@ public with sharing class LFLPopulateTestData {
     sessStat4.TotalAcquiredNonResponsive__c = 1;
     insert sessStat4;
 
-    // o = new Objective__c(Name = 'Dog');
-    // o.SD__c = sd1.id;
-    // insert o;
+    // this section sets up to test the last_correct_date trigger logic
 
-    // co = new Client_Objective__c(
-    //   Client__c = newAccount.Id,
-    //   Objective__c = o.Id,
-    //   Client_Objective_Notes__c = 'client objective notes',
-    //   status__c = 'ACQ'
-    // );
-    // insert co;
-    // so = new Session_Obj__c();
-    // so.Session__c = session.Id;
-    // so.Objective__c = o.Id;
-    // so.correct__c = true;
-    // so.previous_status__c = 'ACQ';
-
-    // insert so;
-
-    // so = new Session_Obj__c();
-    // so.Session__c = session.Id;
-    // so.Objective__c = o.Id;
-    // so.incorrect__c = true;
-    // so.previous_status__c = 'OBJ';
-
-    // insert so;
-
-    // so = new Session_Obj__c();
-    // so.Session__c = session.Id;
-    // so.Objective__c = o.Id;
-    // so.prompted__c = true;
-    // so.previous_status__c = 'ACQ';
-
-    // insert so;
-
-    // so = new Session_Obj__c();
-    // so.Session__c = session.Id;
-    // so.Objective__c = o.Id;
-    // so.nonresponsive__c = true;
-    // so.previous_status__c = 'OBJ';
-
-    // insert so;
-
+    // a new active SD, associated with the program
     SD__c sd2 = new SD__c(
       name = 'Non-identical',
       stage__c = 'Stage One',
@@ -226,9 +198,13 @@ public with sharing class LFLPopulateTestData {
     );
     sd2.Program__c = p.id;
     insert sd2;
+
+    // a new objective for the SD
     Objective__c o = new Objective__c(Name = 'Chair');
     o.SD__c = sd2.id;
     insert o;
+
+    // a client objective that is active
     Client_Objective__c co5 = new Client_Objective__c(
       Client__c = newAccount.Id,
       active__c = true,
@@ -238,41 +214,12 @@ public with sharing class LFLPopulateTestData {
     );
     insert co5;
 
+    // create a session objective with correct=false -- the test classs will update this as correct
     Session_Obj__c so = new Session_Obj__c();
     so.Session__c = session.Id;
     so.Objective__c = o.Id;
     so.correct__c = false;
     so.previous_status__c = 'ACQ';
     insert so;
-
-    // o = new Objective__c(Name = 'Banana');
-    // o.SD__c = sd2.id;
-    // insert o;
-    // co = new Client_Objective__c(
-    //   Client__c = newAccount.Id,
-    //   Objective__c = o.Id,
-    //   Client_Objective_Notes__c = 'client objective notes',
-    //   status__c = 'ACQ'
-    // );
-    // insert co;
-    // so = new Session_Obj__c();
-    // so.Session__c = session.Id;
-    // so.Objective__c = o.Id;
-    // so.correct__c = true;
-    // so.previous_status__c = 'OBJ';
-    // insert so;
-
-    // //unassigned
-    // SD__c sd = new SD__c(
-    //   name = 'Test',
-    //   stage__c = 'Stage One',
-    //   status__c = 'Active',
-    //   area__c = 'Communication'
-    // );
-    // sd.Program__c = p.id;
-    // insert sd;
-    // Objective__c ob = new Objective__c(Name = 'Test');
-    // ob.SD__c = sd.id;
-    // insert ob;
   }
 }

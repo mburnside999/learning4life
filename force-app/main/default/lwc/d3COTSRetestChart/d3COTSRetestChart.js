@@ -255,7 +255,7 @@ export default class D3COTSRetestChart extends LightningElement {
       .style("font-size", "18px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text(`EXPERIMENTAL - Plotting Re-Test Due, Status=${this.mode}`);
+      .text(`EXPERIMENTAL: Re-Test-Recommended Count`);
 
     svg
       .append("text")
