@@ -3,17 +3,18 @@
 //     query text and running the command:
 //     SFDX: Execute SOQL Query with Currently Selected Text
 
-SELECT Id, Name FROM Account
+//SELECT Id, Name FROM Account;
 
 
 
-Select Client_Name__c, Client_Objective_Notes__c, Client__c, Date_Absorbed__c, 
-Date_Acquired__c, Date_CIP__c, Date_Held__c, Date_Introduced__c, 
-Days_Since_Tested_Correct__c, Days_Since_Tested__c, Frequency__c, 
-Name, Objective_Name__c, Objective__c, ProgramObjective__c, Program_Name__c, 
-Re_Test_Recommended__c, SD_Name__c, Status__c FROM Client_Objective__c 
+//Select Client_Name__c, Client_Objective_Notes__c, Client__c, Date_Absorbed__c, 
+//Date_Acquired__c, Date_CIP__c, Date_Held__c, Date_Introduced__c, 
+//Days_Since_Tested_Correct__c, Days_Since_Tested__c, Frequency__c, 
+//Name, Objective_Name__c, Objective__c, ProgramObjective__c, Program_Name__c, 
+//Re_Test_Recommended__c, SD_Name__c, Status__c FROM Client_Objective__c ;
 
-SELECT session__r.name,session__r.client__r.name, program_name__c,
+
+//SELECT session__r.name,session__r.client__r.name, program_name__c,
       objective__r.name ,SD_Name__c,objective__r.sd__r.name 
       FROM Session_Statistics__c
       WHERE session__r.client__c = '0018t000002vfSfAAI'
