@@ -195,3 +195,15 @@ Client_Objective__c co = [
 
 
 select active__c,count(id) c from client_objective__c where client__c=active__c!=true group by active__c
+
+
+SELECT CronJobDetail.Name, cronjobdetail.JobType ,
+  CreatedBy.name,CronExpression,EndTime,Id, 
+  NextFireTime,PreviousFireTime,StartTime,State, TimesTriggered FROM 
+  CronTrigger 
+  where cronjobdetail.JobType = '7'
+  or cronjobdetail.JobType = '9'
+  order by PreviousFireTime desc limit 25
+
+
+  DateTime LastExecution = DateTime.valueOf([SELECT MAX(PreviousFireTime)LastRun FROM CronTrigger WHERE CronJobDetail.Name LIKE :cronName][0].get('LastRun')

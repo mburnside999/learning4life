@@ -176,5 +176,15 @@ String x = L4LController.getCOArchiveSummary('0018t000003DbqmAAC');
 System.debug(x);
 
 List<Client_Objective__c> l = L4LController.getClientObjectivesFilteredOnActive('0018t000003DbqmAAC',true);
-Syastem.debug('size = '+l.size());
+System.debug('size = '+l.size());
 SELECT count(id) archived FROM client_objective__c WHERE id = '0018t000003DbqmAAC' AND active__c != TRUE 
+
+
+
+sfdx force:data:soql:query --query  "SELECT client__c, Objective__r.SD__r.Program__r.Name, status__c, count(id)
+      FROM Client_Objective__c
+      WHERE
+        active__c = TRUE
+        AND status__c IN ('ACQ', 'HLD', 'ABS', 'OBJ')
+      GROUP BY client__c, Objective__r.SD__r.Program__r.Name, status__c"
+    ;
