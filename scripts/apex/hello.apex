@@ -188,3 +188,4 @@ sfdx force:data:soql:query --query  "SELECT client__c, Objective__r.SD__r.Progra
         AND status__c IN ('ACQ', 'HLD', 'ABS', 'OBJ')
       GROUP BY client__c, Objective__r.SD__r.Program__r.Name, status__c"
     ;
+    
