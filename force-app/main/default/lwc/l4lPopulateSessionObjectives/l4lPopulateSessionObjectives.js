@@ -438,6 +438,15 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           this.resetCounters();
           this.selectCount = 0;
         })
+        .catch((error) => {
+          this.error = error;
+          logError(
+            this.recordId,
+            `${COMPONENT}.handleClickArray(): error=${JSON.stringify(error)}`,
+            `${COMPONENT}.handleClickArray(): error=${JSON.stringify(error)}`,
+            `${TAG}`
+          );
+        })
         .finally(() => {
           const message = {
             recordId: "",
@@ -457,15 +466,6 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
             `${TAG}`
           );
           publish(this.messageContext, L4LMC, message);
-        })
-        .catch((error) => {
-          this.error = error;
-          logError(
-            this.recordId,
-            `${COMPONENT}.handleClickArray(): error=${JSON.stringify(error)}`,
-            `${COMPONENT}.handleClickArray(): error=${JSON.stringify(error)}`,
-            `${TAG}`
-          );
         });
     }
   }
