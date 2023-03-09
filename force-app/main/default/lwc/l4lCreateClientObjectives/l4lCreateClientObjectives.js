@@ -36,6 +36,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
   @track recordsProcessed = 0;
   isLoading = false;
   showPopular = true;
+  disableButton = false;
 
   connectedCallback() {
     setNewSession()
@@ -157,6 +158,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
   }
 
   handleClickArray(event) {
+    this.disableButton = true;
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickArray(): entering method, bound to lightning-button Create Client Objectives`,
@@ -237,7 +239,16 @@ export default class L4lCreateClientObjectives extends LightningElement {
             this.refresh();
           }
         })
+        .catch((error) => {
+          this.error = error;
+          this.showNotification(
+            "Trigger Error",
+            `An error occurred, most likely an attempt to insert a duplicate client objective.`,
+            "error"
+          );
+        })
         .finally(() => {
+          this.disableButton = false;
           logDebug(
             this.recordId,
             `${COMPONENT}.handleClickArray():publishing LMS event`,

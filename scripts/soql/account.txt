@@ -18,25 +18,17 @@
       objective__r.name ,SD_Name__c,objective__r.sd__r.name 
       FROM Session_Statistics__c
       WHERE session__r.client__c = '0018t000002vfSfAAI'
-      and objective__r.sd__r.Stage__c='Stage Three'
-
-      SELECT
-        Id,
-        Name,
-        (SELECT id, name, program__r.name, description__c,area__c FROM sds__r)
-      FROM Program__c
-      WHERE id IN (SELECT program__c FROM sd__c where stage__c='Stage One') AND status__c = 'Active' 
+      and objective__r.sd__r.Stage__c='Stage Three';
 
 
-
-      SELECT
-        
+      SELECT 
         objective__r.sd__c sd__c,
         count(id) sdcount
       FROM client_objective__c
       WHERE client__c = '0019h000003s1a8AAA'
       GROUP BY objective__r.sd__c 
       ORDER BY count(id)
+
 
 SELECT
         objective__r.sd__r.program__R.name progname,
@@ -208,3 +200,12 @@ SELECT CronJobDetail.Name, cronjobdetail.JobType ,
 
 
   DateTime LastExecution = DateTime.valueOf([SELECT MAX(PreviousFireTime)LastRun FROM CronTrigger WHERE CronJobDetail.Name LIKE :cronName][0].get('LastRun')
+
+
+select client__c,objective_name__c,count(id) from client_objective__c group by client__c,objective_name__c
+
+
+select min(createddate),max(createddate) from client_objective_timeseries__c where client__c='0018t000003DbqmAAC'
+
+select client__c,objective_name__c,count(id) from client_objective__c where client__c='0018t000003DbqmAAC' group by client__c,objective_name__c
+

@@ -645,37 +645,70 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       ? JSON.stringify(message, null, "\t")
       : "no message payload";
 
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,
-      `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,
-      `${TAG}`
-    );
+    this.refresh();
+    // logDebug(
+    //   this.recordId,
+    //   `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,
+    //   `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,
+    //   `${TAG}`
+    // );
 
-    getClientObjectivesFilteredOnActive({
-      clientId: this.recordId,
-      showActiveOnly: this.showActiveOnly
-    })
-      .then((result) => {
-        this.clientobjectives = result;
-        this.filterableObjectives = result;
-        logDebug(
-          this.recordId,
-          `${COMPONENT}.handleLMS(): Apex getClientObjectivesFilteredOnActive returned result: ${JSON.stringify(
-            result
-          )}`,
-          `${COMPONENT}.handleLMS(): Apex getClientObjectivesFilteredOnActive returned result`,
-          `${TAG}`
-        );
-      })
-      .catch((error) => {
-        this.error = error;
-        logError(
-          this.recordId,
-          `${COMPONENT}.handleLMS(): error=${JSON.stringify(error)}`,
-          `${COMPONENT}.handleLMS(): error=${JSON.stringify(error)}`,
-          `${TAG}`
-        );
-      });
+    // getClientObjectivesFilteredOnActive({
+    //   clientId: this.recordId,
+    //   showActiveOnly: this.showActiveOnly
+    // })
+    //   .then((result) => {
+    //     this.clientobjectives = result;
+    //     this.filterableObjectives = result;
+    //     logDebug(
+    //       this.recordId,
+    //       `${COMPONENT}.handleLMS(): Apex getClientObjectivesFilteredOnActive returned result: ${JSON.stringify(
+    //         result
+    //       )}`,
+    //       `${COMPONENT}.handleLMS(): Apex getClientObjectivesFilteredOnActive returned result`,
+    //       `${TAG}`
+    //     );
+    //   })
+    //   .catch((error) => {
+    //     this.error = error;
+    //     logError(
+    //       this.recordId,
+    //       `${COMPONENT}.handleLMS(): error=${JSON.stringify(error)}`,
+    //       `${COMPONENT}.handleLMS(): error=${JSON.stringify(error)}`,
+    //       `${TAG}`
+    //     );
+    //   });
+
+    // getCOActivationSummary({ clientId: this.recordId })
+    //   .then((result) => {
+    //     let tmp = JSON.parse(result);
+    //     logDebug(
+    //       this.recordId,
+    //       `${COMPONENT}.refresh(): calling LFLController.refresh() getCOActivationSummary returned ${JSON.stringify(
+    //         tmp
+    //       )}`,
+    //       `${COMPONENT}.refresh(): calling LFLController.refresh() getCOActivationSummary returned ${JSON.stringify(
+    //         tmp
+    //       )}`,
+    //       `${TAG}`
+    //     );
+    //     this.inactiveCOCount = tmp.inactive;
+    //     this.activeCOCount = tmp.active;
+    //     this.totalCOCount = tmp.total;
+    //     //this.activeString = result;
+    //   })
+    //   .catch((error) => {
+    //     this.error = error;
+    //     logError(
+    //       this.recordId,
+    //       `${COMPONENT}.refresh(): Apex call to getCOActivationSummary returned error: ${JSON.stringify(
+    //         error
+    //       )}`,
+    //       `${COMPONENT}.refresh(): Apex call to getCOActivationSummary returned error: ${JSON.stringify(
+    //         error
+    //       )}`,
+    //       `${TAG}`
+    //     );
+    //   });
   }
 }

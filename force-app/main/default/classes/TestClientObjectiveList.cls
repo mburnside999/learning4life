@@ -11,10 +11,10 @@ private class TestClientObjectiveList {
       clientId
     );
 
-    System.debug('xxxxxxxx' + clientId + ' ===> ' + colist);
+    System.debug('clientId=' + clientId + 'colist ===> ' + colist);
 
     System.assert(
-      colist != null,
+      colist.size() > 0,
       'Expected at least one client objective record retrieved.'
     );
   }
