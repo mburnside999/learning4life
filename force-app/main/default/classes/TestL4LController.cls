@@ -48,11 +48,34 @@ private class TestL4LController {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
-    Id objId = [SELECT id FROM objective__c LIMIT 1].id;
+
+    Program__c p = new Program__c(
+      Name = 'XXX',
+      Status__c = 'Active',
+      Stage__c = 'Stage One'
+    );
+    insert p;
+
+    //create an SD to associate with the Program
+    SD__c sd1 = new SD__c(
+      name = 'XXXX',
+      Stage__c = 'Stage One',
+      Area__c = 'Communication',
+      Status__c = 'Active'
+    );
+
+    sd1.Program__c = p.id;
+    insert sd1;
+
+    //create Objectives
+    Objective__c o1 = new Objective__c(Name = 'XXXX', Status__c = 'Active');
+    o1.SD__c = sd1.id;
+    insert o1;
+
     client_objective__c co = new client_objective__c();
     co.client__c = clientId;
     co.active__c = true;
-    co.objective__c = objId;
+    co.objective__c = o1.Id;
     insert co;
 
     Test.stopTest();
@@ -73,11 +96,34 @@ private class TestL4LController {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
-    Id objId = [SELECT id FROM objective__c LIMIT 1].id;
+
+    Program__c p = new Program__c(
+      Name = 'XXX',
+      Status__c = 'Active',
+      Stage__c = 'Stage One'
+    );
+    insert p;
+
+    //create an SD to associate with the Program
+    SD__c sd1 = new SD__c(
+      name = 'XXXX',
+      Stage__c = 'Stage One',
+      Area__c = 'Communication',
+      Status__c = 'Active'
+    );
+
+    sd1.Program__c = p.id;
+    insert sd1;
+
+    //create Objectives
+    Objective__c o1 = new Objective__c(Name = 'XXXX', Status__c = 'Active');
+    o1.SD__c = sd1.id;
+    insert o1;
+
     client_objective__c co = new client_objective__c();
     co.client__c = clientId;
     co.active__c = true;
-    co.objective__c = objId;
+    co.objective__c = o1.Id;
     insert co;
 
     Test.stopTest();
@@ -191,15 +237,41 @@ private class TestL4LController {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
-    Test.stopTest();
+
+    Program__c p = new Program__c(
+      Name = 'XXX',
+      Status__c = 'Active',
+      Stage__c = 'Stage One'
+    );
+    insert p;
+
+    //create an SD to associate with the Program
+    SD__c sd1 = new SD__c(
+      name = 'XXXX',
+      Stage__c = 'Stage One',
+      Area__c = 'Communication',
+      Status__c = 'Active'
+    );
+
+    sd1.Program__c = p.id;
+    insert sd1;
+
+    //create Objectives
+    Objective__c o1 = new Objective__c(Name = 'XXXX', Status__c = 'Active');
+    o1.SD__c = sd1.id;
+    insert o1;
 
     List<Objective__c> objs = [
       SELECT id, program__c, sd__c, sd_name__c
       FROM objective__c
+      WHERE id = :o1.Id
       LIMIT 1
     ];
 
     String jsonstr = JSON.serialize(objs);
+
+    Test.stopTest();
+
     Integer noOfCOsCreated = L4LController.createClientObjectivesByArray(
       jsonstr,
       clientId
