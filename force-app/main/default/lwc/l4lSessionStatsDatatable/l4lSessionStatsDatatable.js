@@ -2,6 +2,11 @@ import { LightningElement, api, wire } from "lwc";
 
 import getSessionStats from "@salesforce/apex/L4LSessionStatsController.getSessionStats";
 
+const COMPONENT = "l4lPopulateSessionStatsDataTable";
+const TAG = "L4L-Session-Statistics";
+import { logInfo } from "c/l4lNebulaUtil";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+
 const COLS = [
   // { label: "Name", fieldName: "Name" },
   // { label: "Session", fieldName: "Session" },
@@ -40,6 +45,7 @@ export default class L4lSessionStatsDatatable extends LightningElement {
   columns = COLS;
   wiredrecords;
   records;
+  queryrecords = {};
 
   @wire(getSessionStats, { searchKey: "$recordId" })
   wiredSessionStat(value) {
@@ -55,11 +61,44 @@ export default class L4lSessionStatsDatatable extends LightningElement {
           Percent_Correct: row.Percent_Correct__c + "%"
         };
       });
+
       this.records = tempRecords;
+      this.queryrecords = this.records;
+      //console.log("queryrecords=>" + JSON.stringify(this.queryrecords));
       this.error = undefined;
     } else if (error) {
       this.error = error;
       this.records = undefined;
     }
+  }
+
+  connectedCallback() {
+    console.info(`in connectedCallback`);
+
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logInfo(
+          this.recordId,
+          `${COMPONENT}.connectedCallback()`,
+          `connectedCallback()`,
+          `${TAG}`
+        );
+      })
+      .catch((error) => {
+        console.log("Error");
+      });
+  }
+
+  handleFilterKeyInput(event) {
+    const filterKey = event.target.value.toLowerCase();
+    //console.log(filterkey);
+    this.records = this.queryrecords.filter(
+      (row) =>
+        row.Program_Name__c.toLowerCase().includes(filterKey) ||
+        row.SD_Name__c.toLowerCase().includes(filterKey) ||
+        row.Objective.toLowerCase().includes(filterKey) ||
+        row.Previous_Status__c.toLowerCase().includes(filterKey)
+    );
   }
 }

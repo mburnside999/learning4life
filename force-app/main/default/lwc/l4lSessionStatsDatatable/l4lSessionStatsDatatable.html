@@ -1,5 +1,13 @@
 <template>
-  <lightning-card title="Session Statistics - Summary">
+  <lightning-card title="Session Statistics - NEW! now with filtering">
+    <input
+      class="slds-input"
+      size="40"
+      type="text"
+      placeholder="You can filter results here on any field ...e.g. type ACQ to see all Acquired stats"
+      oninput={handleFilterKeyInput}
+    />
+    <br /><br />
     <c-l4l-custom-datatable
       key-field="id"
       data={records}

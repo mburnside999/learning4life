@@ -29,6 +29,7 @@
       GROUP BY objective__r.sd__c 
       ORDER BY count(id)
 
+
 SELECT
         objective__r.sd__r.program__R.name progname,
         objective__r.sd__r.name sdname,
@@ -199,3 +200,12 @@ SELECT CronJobDetail.Name, cronjobdetail.JobType ,
 
 
   DateTime LastExecution = DateTime.valueOf([SELECT MAX(PreviousFireTime)LastRun FROM CronTrigger WHERE CronJobDetail.Name LIKE :cronName][0].get('LastRun')
+
+
+select client__c,objective_name__c,count(id) from client_objective__c group by client__c,objective_name__c
+
+
+select min(createddate),max(createddate) from client_objective_timeseries__c where client__c='0018t000003DbqmAAC'
+
+select client__c,objective_name__c,count(id) from client_objective__c where client__c='0018t000003DbqmAAC' group by client__c,objective_name__c
+
