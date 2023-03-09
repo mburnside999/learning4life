@@ -80,7 +80,7 @@ jobs:
 
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
-        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionClientObjectiveMissing
+        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClient,TestLFLDTDRates
 
       # Run Deploy LWC
       - name: "Deploy LWC"
