@@ -80,7 +80,7 @@ jobs:
 
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
-        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClient,TestLFLDTDRates
+        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClientObjective,TestLFLTimeSeriesBatch,TestLFLTimeSeriesBatchScheduler,TestLFLDTDRates
 
       # Run Deploy LWC
       - name: "Deploy LWC"
@@ -88,7 +88,7 @@ jobs:
 
       # Run Apex tests in scratch org
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
-        run: sfdx force:apex:test:run -l RunSpecifiedTests -t TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLUtil,TestLFLSDWrapper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClient,TestLFLDTDRates -u LFLHyperPARTIAL -c -r human -d ./tests/apex -w 20
+        run: sfdx force:apex:test:run -l RunSpecifiedTests -t TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClientObjective,TestLFLTimeSeriesBatch,TestLFLTimeSeriesBatchScheduler,TestLFLDTDRates -u LFLHyperPARTIAL -c -r human -d ./tests/apex -w 20
 
       # Delete temporary test file that Codecov is unable to parse
       - name: "Delete coverage file (temporary step)"
