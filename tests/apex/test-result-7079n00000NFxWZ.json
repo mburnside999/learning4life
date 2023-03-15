@@ -1,0 +1,77 @@
+{
+  "summary": {
+    "outcome": "Passed",
+    "testsRan": 1,
+    "passing": 1,
+    "failing": 0,
+    "skipped": 0,
+    "passRate": "100%",
+    "failRate": "0%",
+    "testStartTime": "Thu Mar 16 2023 8:30:05 AM",
+    "testExecutionTime": "16 ms",
+    "testTotalTime": "16 ms",
+    "commandTime": "1586 ms",
+    "hostname": "https://l4l--lflpartial.sandbox.my.salesforce.com",
+    "orgId": "00D9n000000R9f7EAC",
+    "username": "mikeb@lfl.hyper.lflpartial",
+    "testRunId": "7079n00000NFxWZ",
+    "userId": "0058t000000JCHzAAO",
+    "testRunCoverage": "0%",
+    "orgWideCoverage": "35%"
+  },
+  "tests": [
+    {
+      "Id": "07M9n000002bCx7EAE",
+      "QueueItemId": "7099n000001UcSHAA0",
+      "StackTrace": null,
+      "Message": null,
+      "AsyncApexJobId": "7079n00000NFxWZAA1",
+      "MethodName": "test1",
+      "Outcome": "Pass",
+      "ApexClass": {
+        "Id": "01p9n000000PzY9AAK",
+        "Name": "TestL4LExceptionRateCalculation",
+        "NamespacePrefix": null
+      },
+      "RunTime": 16,
+      "FullName": "TestL4LExceptionRateCalculation.test1"
+    }
+  ],
+  "coverage": {
+    "coverage": [
+      {
+        "id": "01p9n000000PvfpAAC",
+        "name": "L4LRateCalculationException",
+        "totalLines": 0,
+        "lines": {},
+        "totalCovered": 0,
+        "coveredPercent": 0
+      }
+    ],
+    "records": [
+      {
+        "ApexTestClass": {
+          "Id": "07M9n000002bCx7EAE",
+          "Name": "TestL4LExceptionRateCalculation"
+        },
+        "Coverage": {
+          "coveredLines": [],
+          "uncoveredLines": []
+        },
+        "TestMethodName": "test1",
+        "NumLinesCovered": 0,
+        "ApexClassOrTrigger": {
+          "Id": "01p9n000000PvfpAAC",
+          "Name": "L4LRateCalculationException"
+        },
+        "NumLinesUncovered": 0
+      }
+    ],
+    "summary": {
+      "totalLines": 0,
+      "coveredLines": 0,
+      "orgWideCoverage": "35%",
+      "testRunCoverage": "0%"
+    }
+  }
+}
