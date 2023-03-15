@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="force.apex" timestamp="2023-03-15T21:14:30.000Z" hostname="https://l4l--lflpartial.sandbox.my.salesforce.com" tests="2" failures="0"  errors="0"  time="21.80">
+        <properties>
+            <property name="outcome" value="Successful"/>
+            <property name="testsRan" value="2"/>
+            <property name="passing" value="2"/>
+            <property name="failing" value="0"/>
+            <property name="skipped" value="0"/>
+            <property name="passRate" value="100%"/>
+            <property name="failRate" value="0%"/>
+            <property name="testStartTime" value="Thu Mar 16 2023 8:14:30 AM"/>
+            <property name="testExecutionTime" value="21.80 s"/>
+            <property name="testTotalTime" value="21.80 s"/>
+            <property name="commandTime" value="1.61 s"/>
+            <property name="hostname" value="https://l4l--lflpartial.sandbox.my.salesforce.com"/>
+            <property name="orgId" value="00D9n000000R9f7EAC"/>
+            <property name="username" value="mikeb@lfl.hyper.lflpartial"/>
+            <property name="testRunId" value="7079n00000NFxiz"/>
+            <property name="userId" value="0058t000000JCHzAAO"/>
+            <property name="coveredLines" value="1596"/>
+            <property name="testRunCoverage" value="50%"/>
+            <property name="orgWideCoverage" value="35%"/>
+        </properties>
+        <testcase name="Test1" classname="TestLFLDTDRates" time="11.47">
+        </testcase>
+        <testcase name="Test2" classname="TestLFLDTDRates" time="10.33">
+        </testcase>
+    </testsuite>
+</testsuites>

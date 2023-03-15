@@ -1,0 +1,25 @@
+=== Test Summary
+NAME                 VALUE                     
+───────────────────  ──────────────────────────
+Outcome              Passed                    
+Tests Ran            1                         
+Pass Rate            100%                      
+Fail Rate            0%                        
+Skip Rate            0%                        
+Test Run Id          7079n00000NFxWZ           
+Test Execution Time  16 ms                     
+Org Id               00D9n000000R9f7EAC        
+Username             mikeb@lfl.hyper.lflpartial
+Org Wide Coverage    35%                       
+
+
+=== Test Results
+TEST NAME                              OUTCOME  MESSAGE  RUNTIME (MS)
+─────────────────────────────────────  ───────  ───────  ────────────
+TestL4LExceptionRateCalculation.test1  Pass              16          
+
+
+=== Apex Code Coverage by Class
+CLASSES                      PERCENT  UNCOVERED LINES
+───────────────────────────  ───────  ───────────────
+L4LRateCalculationException  0%                      
