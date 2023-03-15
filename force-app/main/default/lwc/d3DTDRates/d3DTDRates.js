@@ -2,29 +2,33 @@ import { LightningElement, api, wire, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
-import generateD3CORetestTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3CORetestTimeSeriesJson";
+import getDTDRateArray from "@salesforce/apex/LFLDTDRateMaster.getDTDRateArray";
 import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3RetestYAxisScale";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logError } from "c/l4lNebulaUtil";
 
-const COMPONENT = "D3COTSRetestChart";
-const TAG = "L4L-Session-Statistics-D3COTSRetestChart";
+const COMPONENT = "D3DTDRates";
+const TAG = "L4L-Session-Statistics-D3DTDRatesChart";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
  */
-export default class D3COTSRetestChart extends LightningElement {
+export default class D3DTDRates extends LightningElement {
   @api recordId;
   d3Initialized = false;
   @track result = [];
   mode = "All";
-  yAxisScale = 50;
+  yAxisScale = 20;
+  yAxisMax = 20;
+  yAxisMin = -5;
+  yAxisMaxSessions = 10;
+  yAxisMinSessions = 0;
 
   @wire(getD3YAxisScale, { clientId: "$recordId" })
   wiredYaxis({ error, data }) {
     if (data) {
       console.log(`yAxisScale= ${data}`);
-      this.yAxisScale = Math.ceil(data / 20) * 20;
+      //this.yAxisScale = Math.ceil(data / 20) * 20;
     } else if (error) {
       console.log("error");
     }
@@ -73,15 +77,16 @@ export default class D3COTSRetestChart extends LightningElement {
           `${COMPONENT}.renderedCallback(): calling generateD3CORetestTimeSeriesJson, status=All`,
           `${TAG}`
         );
-        return generateD3CORetestTimeSeriesJson({
+        return getDTDRateArray({
           clientId: this.recordId,
-          status: "All"
+          iters: "12"
         });
       })
       .then((response) => {
+        console.log("response=" + response);
         logDebug(
           this.recordId,
-          `${COMPONENT}.renderedCallback(): generateD3CORetestTimeSeriesJson returned ${response}
+          `${COMPONENT}.renderedCallback(): returned ${response}
           }`,
           `${COMPONENT}.renderedCallback(): response received and logged, calling this.renderLineChart`,
           `${TAG}`
@@ -119,10 +124,39 @@ export default class D3COTSRetestChart extends LightningElement {
     );
 
     let datatmp = JSON.parse(response);
+    function findMinMax(key) {
+      const datas = datatmp.map((node) => node[key]);
+
+      return {
+        min: Math.min(...datas),
+        max: Math.max(...datas)
+      };
+    }
+    console.log(findMinMax("rate").max);
+    console.log(findMinMax("rate").min);
+    this.yAxisMax = findMinMax("rate").max + 5;
+    this.yAxisMin = findMinMax("rate").min - 5;
+
+    console.log(findMinMax("sessionCount").max);
+    console.log(findMinMax("sessionCount").min);
+    //this.yAxisMaxSessions = findMinMax("sessionCount").max + 5;
+    //this.yAxisMinSessions = findMinMax("sessionCount").min;
+
     let data = datatmp.map(myfunction);
+    let sessiondata = datatmp.map(mysessionfunction);
 
     function myfunction(d) {
-      return { endd: d3.timeParse("%Y-%m-%d")(d.endd), val: d.val };
+      return {
+        endd: d3.timeParse("%Y-%m-%d")(d.endd),
+        val: d.rate
+      };
+    }
+
+    function mysessionfunction(d) {
+      return {
+        endd: d3.timeParse("%Y-%m-%d")(d.endd),
+        val: d.sessionCount
+      };
     }
 
     function make_y_gridlines() {
@@ -178,7 +212,7 @@ export default class D3COTSRetestChart extends LightningElement {
       .scaleTime()
       .domain(
         d3.extent(data, function (d) {
-          return d.rundate;
+          return d.endd;
         })
       )
       .range([0, width]);
@@ -200,7 +234,10 @@ export default class D3COTSRetestChart extends LightningElement {
       .call(make_x_gridlines().tickSize(-height).tickFormat(""));
 
     // Add Y axis (curr hard coded to 50)
-    var y = d3.scaleLinear().domain([0, this.yAxisScale]).range([height, 0]);
+    var y = d3
+      .scaleLinear()
+      .domain([this.yAxisMin, this.yAxisMax])
+      .range([height, 0]);
     //todo - build a better y-Axis scale as per d3Lollipop
 
     svg.append("g").call(d3.axisLeft(y));
@@ -224,7 +261,7 @@ export default class D3COTSRetestChart extends LightningElement {
         d3
           .line()
           .x(function (d) {
-            return x(d.rundate);
+            return x(d.endd);
           })
           .y(function (d) {
             return y(d.val);
@@ -239,7 +276,7 @@ export default class D3COTSRetestChart extends LightningElement {
       .enter()
       .append("circle")
       .attr("cx", function (d) {
-        return x(d.rundate);
+        return x(d.endd);
       })
       .attr("cy", function (d) {
         return y(d.val);
@@ -255,7 +292,7 @@ export default class D3COTSRetestChart extends LightningElement {
       .style("font-size", "18px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text(`EXPERIMENTAL: Re-Test-Recommended Count`);
+      .text(`EXPERIMENTAL: Skills Acquisition Rate (ACQ/Week)`);
 
     svg
       .append("text")
@@ -265,7 +302,133 @@ export default class D3COTSRetestChart extends LightningElement {
       .style("font-size", "14px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("Client Objective Time Series, auto refreshed Sunday 10pm");
+      .text("Source: Client Objective Time Series, auto refreshed Sunday 10pm")
+      .attr("x", (width - 300) / 2)
+      .attr("y", 40)
+      .attr("text-anchor", "left")
+      .style("font-size", "14px")
+      .style("fill", "grey")
+      .style("max-width", 400)
+      .text(
+        "Remember this is a view of RATE, not the number of skills acquired."
+      );
+
+    /* sessions*/
+
+    let sessionssvg = d3.select(this.template.querySelector(".sessions"));
+    sessionssvg.selectAll("*").remove();
+
+    // append the svg object to the body of the page
+
+    sessionssvg = d3
+      .select(this.template.querySelector(".sessions"))
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    x = d3
+      .scaleTime()
+      .domain(
+        d3.extent(sessiondata, function (d) {
+          return d.endd;
+        })
+      )
+      .range([0, width]);
+
+    sessionssvg
+      .append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-45)");
+
+    sessionssvg
+      .append("g")
+      .attr("class", "grid")
+      .attr("transform", "translate(0," + height + ")")
+      .call(make_x_gridlines().tickSize(-height).tickFormat(""));
+
+    // Add Y axis (curr hard coded to 50)
+    y = d3
+      .scaleLinear()
+      .domain([this.yAxisMinSessions, this.yAxisMaxSessions])
+      .range([height, 0]);
+    //todo - build a better y-Axis scale as per d3Lollipop
+
+    sessionssvg.append("g").call(d3.axisLeft(y));
+
+    sessionssvg
+      .append("g")
+      .attr("class", "grid")
+      .call(make_y_gridlines().tickSize(-width).tickFormat(""));
+
+    // Add the line
+    sessionssvg
+      .append("path")
+      .datum(sessiondata)
+      .transition()
+      .duration(2000)
+      .attr("fill", "none")
+      .attr("stroke", "#69b3a2")
+      .attr("stroke-width", 2.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(function (d) {
+            return x(d.endd);
+          })
+          .y(function (d) {
+            return y(d.val);
+          })
+      );
+    // Add the points
+
+    sessionssvg
+      .append("g")
+      .selectAll("dot")
+      .data(sessiondata)
+      .enter()
+      .append("circle")
+      .attr("cx", function (d) {
+        return x(d.endd);
+      })
+      .attr("cy", function (d) {
+        return y(d.val);
+      })
+      .attr("r", 5)
+      .attr("fill", "#69b3a2");
+
+    sessionssvg
+      .append("text")
+      .attr("x", (width - 300) / 2)
+      .attr("y", 0)
+      .attr("text-anchor", "left")
+      .style("font-size", "18px")
+      .style("fill", "grey")
+      .style("max-width", 400)
+      .text(`EXPERIMENTAL: Sessions`);
+
+    sessionssvg
+      .append("text")
+      .attr("x", (width - 300) / 2)
+      .attr("y", 20)
+      .attr("text-anchor", "left")
+      .style("font-size", "14px")
+      .style("fill", "grey")
+      .style("max-width", 400)
+      .text("Source: Client Objective Time Series, auto refreshed Sunday 10pm")
+      .attr("x", (width - 300) / 2)
+      .attr("y", 40)
+      .attr("text-anchor", "left")
+      .style("font-size", "14px")
+      .style("fill", "grey")
+      .style("max-width", 400)
+      .text("Remember this is a view of sessions.");
 
     // Parse the Data
     // Add X axis
@@ -297,32 +460,32 @@ export default class D3COTSRetestChart extends LightningElement {
   //   this.renderHorizontalLollipopChart(this.mydata, "AvgEmployees");
   // }
 
-  handleClick(event) {
-    this.mode = event.target.label;
+  // handleClick(event) {
+  //   this.mode = event.target.label;
 
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3CORetestTimeSeriesJson`,
-      `Clicked ${this.mode}, calling generateD3CORetestTimeSeriesJson `,
-      `${TAG}`
-    );
+  //   logDebug(
+  //     this.recordId,
+  //     `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3CORetestTimeSeriesJson`,
+  //     `Clicked ${this.mode}, calling generateD3CORetestTimeSeriesJson `,
+  //     `${TAG}`
+  //   );
 
-    generateD3CORetestTimeSeriesJson({
-      clientId: this.recordId,
-      status: this.mode
-    }).then((response) => {
-      logDebug(
-        this.recordId,
-        `${COMPONENT}.handleClick(): Apex returned reponse ${response}`,
-        `${COMPONENT}.handleClick(): Apex response returned and logged, calling this.renderLineChart(response)`,
-        `${TAG}`
-      );
+  //   generateD3CORetestTimeSeriesJson({
+  //     clientId: this.recordId,
+  //     status: this.mode
+  //   }).then((response) => {
+  //     logDebug(
+  //       this.recordId,
+  //       `${COMPONENT}.handleClick(): Apex returned reponse ${response}`,
+  //       `${COMPONENT}.handleClick(): Apex response returned and logged, calling this.renderLineChart(response)`,
+  //       `${TAG}`
+  //     );
 
-      console.log(
-        "calling generateD3CORetestTimeSeriesJson,response=" +
-          JSON.stringify(response)
-      );
-      this.renderLineChart(response);
-    });
-  }
+  //     console.log(
+  //       "calling generateD3CORetestTimeSeriesJson,response=" +
+  //         JSON.stringify(response)
+  //     );
+  //     this.renderLineChart(response);
+  //   });
+  // }
 }
