@@ -1,6 +1,6 @@
 <template>
   <lightning-card
-    title="L4L Assigned Client Objectives - NEW!! Now with record Activation/Deactivation"
+    title="L4L Assigned Client Objectives - NEW! Multi-Edit"
     icon-name="custom:custom63"
   >
     <div class="c-container">
@@ -87,10 +87,10 @@
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
-            <div class="slds-text-heading_medium">
+            <div class="slds-text-heading_small">
               <div class="slds-text-color_success">
-                Active({activeCOCount}) Inactive({inactiveCOCount})
-                Filtered({recs})
+                Active({activeCOCount}) + Inactive({inactiveCOCount}) =
+                Total({totalCOCount}), Displaying({recs})
               </div>
             </div>
           </div>
@@ -109,17 +109,46 @@
           </div>
         </lightning-layout-item> -->
       </lightning-layout>
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <lightning-button-group>
+            <lightning-button
+              label="Mark ACQ"
+              title="Mark ACQ"
+              onclick={btnConfirmation}
+            >
+            </lightning-button>
+            <lightning-button
+              label="Mark OBJ"
+              title="Mark OBJ"
+              onclick={btnConfirmation}
+            >
+            </lightning-button>
+            <lightning-button
+              label="Activate"
+              title="Activate"
+              onclick={btnConfirmation}
+            >
+            </lightning-button>
+            <lightning-button
+              label="De-Activate"
+              title="De-Activate"
+              onclick={btnConfirmation}
+            >
+            </lightning-button>
+          </lightning-button-group>
+        </lightning-layout-item>
+      </lightning-layout>
 
       <lightning-layout>
         <lightning-layout-item padding="around-small">
           <div>
             <lightning-datatable
-              hide-checkbox-column
               key-field="Id"
               data={clientobjectives}
-              show-row-number-column
               columns={columns}
               onrowaction={confirmation}
+              onrowselection={getSelectedName}
             >
             </lightning-datatable>
           </div>

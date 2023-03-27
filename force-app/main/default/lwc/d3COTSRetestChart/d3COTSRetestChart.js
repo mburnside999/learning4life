@@ -118,11 +118,12 @@ export default class D3COTSRetestChart extends LightningElement {
       `${TAG}`
     );
 
+    console.log("response ====> " + response);
     let datatmp = JSON.parse(response);
     let data = datatmp.map(myfunction);
 
     function myfunction(d) {
-      return { endd: d3.timeParse("%Y-%m-%d")(d.endd), val: d.val };
+      return { rundate: d3.timeParse("%Y-%m-%d")(d.rundate), val: d.val };
     }
 
     function make_y_gridlines() {

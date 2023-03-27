@@ -182,6 +182,8 @@ export default class L4lCreateClientObjectives extends LightningElement {
         "next-gen-LWC-nebula"
       );
 
+      console.log(JSON.stringify(this.selectedRows));
+
       createClientObjectivesByArray({
         jsonstr: JSON.stringify(this.selectedRows),
         sess: this.recordId
@@ -242,8 +244,8 @@ export default class L4lCreateClientObjectives extends LightningElement {
         .catch((error) => {
           this.error = error;
           this.showNotification(
-            "Trigger Error",
-            `An error occurred, most likely an attempt to insert a duplicate client objective.`,
+            "An error occurred when creating Client Objectives. ",
+            `Error: Limit exceeded (100 records) or client objective is already assigned `,
             "error"
           );
         })

@@ -735,6 +735,66 @@ public with sharing class L4LController {
     return soDeserialized.size();
   }
 
+  @AuraEnabled
+  public static Integer setClientObjectivesByArray(String jsonstr, String val) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LController.setClientObjectivesByArray jsonstr=' +
+        jsonstr +
+        ' val=' +
+        val,
+      'L4LController.setClientObjectivesByArray',
+      'next-gen-nebula-apex'
+    );
+
+    boolean del = false;
+    List<Client_Objective__c> coDeserialized = (List<Client_Objective__c>) JSON.deserializeStrict(
+      jsonstr,
+      List<Client_Objective__c>.class
+    );
+
+    Integer recsUpdated = 0;
+    List<Client_Objective__c> updCOList = new List<Client_Objective__c>();
+
+    for (Client_Objective__c co : coDeserialized) {
+      switch on val {
+        when 'ACQ' {
+          if (co.Active__c == true) {
+            co.Status__c = 'ACQ';
+            updCOList.add(co);
+            recsUpdated += 1;
+          }
+        }
+        when 'OBJ' {
+          if (co.Active__c == true) {
+            co.Status__c = 'OBJ';
+            updCOList.add(co);
+            recsUpdated += 1;
+          }
+        }
+        when 'Deactivate' {
+          co.Active__c = false;
+          updCOList.add(co);
+          recsUpdated += 1;
+        }
+        when 'Activate' {
+          co.Active__c = true;
+          updCOList.add(co);
+          recsUpdated += 1;
+        }
+        // when 'Delete' {
+        //   delete co;
+        // }
+      }
+    }
+    if (updCOList.size() > 0) {
+      update updCOList;
+    }
+
+    return updCOList.size();
+  }
+
   public class SessionResult {
     public String skill { get; set; }
   }
