@@ -309,4 +309,32 @@ private class TestL4LController {
     );
     System.assert(noOfSOsSet == 1, 'Expected one SO to be set');
   }
+
+  @isTest
+  static void testSetClientObjectivesByArray() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Test.stopTest();
+    List<Client_objective__c> cobjs = [
+      SELECT Id, Name, Status__c, Active__c
+      FROM client_objective__c
+      LIMIT 1
+    ];
+    Integer noOfCOsSet = 0;
+    String val = 'ACQ';
+    String jsonstr = JSON.serialize(cobjs);
+
+    noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
+    System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
+
+    val = 'OBJ';
+    noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
+    System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
+    val = 'Activate';
+    noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
+    System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
+    val = 'Deactivate';
+    noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
+    System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
+  }
 }

@@ -12,6 +12,7 @@ import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
 import { updateRecord } from "lightning/uiRecordApi";
 import { deleteRecord } from "lightning/uiRecordApi";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import setClientObjectivesByArray from "@salesforce/apex/L4LController.setClientObjectivesByArray";
 
 // Lightning Message service
 import {
@@ -33,10 +34,6 @@ const actions = [
   {
     label: "Edit client objective details",
     name: "edit_details"
-  },
-  {
-    label: "Deactivate client objective",
-    name: "deactivate"
   },
   {
     label: "Delete this client objective (CAUTION)",
@@ -177,13 +174,49 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     if (this.clientobjectives != null) return this.clientobjectives.length;
   }
 
-  async confirmation(event) {
+  async btnConfirmation(event) {
+    console.log("btnConfirmation");
+
     logDebug(
       this.recordId,
-      `${COMPONENT}.confirmation(): entering method`,
-      `${COMPONENT}.confirmation(): edit or delete action chosen on client objective datatable row`,
+      `${COMPONENT}.btnConfirmation(): action chosen on session objective datatable row`,
+      `${COMPONENT}.btnConfirmation(): action chosen on session objective datatable row`,
       `${TAG}`
     );
+
+    let _label = event.target.label;
+
+    if (this.selectedRows.length > 0) {
+      if (_label == "De-Activate") {
+        await LightningConfirm.open({
+          message: `Deactivated client objective records will not be available to add to sessions. Are you sure?`,
+          label: "Caution!",
+          theme: "warning"
+
+          // setting theme would have no effect
+        }).then((result) => {
+          if (result) {
+            this.handleClickArray(_label);
+          }
+        });
+      } else {
+        await LightningConfirm.open({
+          message: `This operation will update ${this.selectedRows.length} record(s). Are you sure?`,
+          variant: "headerless",
+          label: "this is the aria-label value"
+          // setting theme would have no effect
+        }).then((result) => {
+          console.log(`result=${result}`);
+
+          if (result) {
+            this.handleClickArray(_label);
+          }
+        });
+      }
+    }
+  }
+
+  async confirmation(event) {
     let _actionName = event.detail.action.name;
     let _row = event.detail.row;
 
@@ -273,6 +306,19 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       );
       this.handleRowAction(_actionName, _row);
     }
+  }
+
+  getSelectedName(event) {
+    this.selectedRows = event.detail.selectedRows;
+    console.log(`this.selectedRows=${JSON.stringify(this.selectedRows)}`);
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.getSelectedName() this.selectedRows=${JSON.stringify(
+        this.selectedRows
+      )}`,
+      `${COMPONENT}.getSelectedName() check boxed a session objective row, logged selectedRows`,
+      `${TAG}`
+    );
   }
 
   handleRowAction(actionName, row) {
@@ -558,6 +604,92 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       });
   }
 
+  handleClickArray(label) {
+    let mode = "";
+    switch (label) {
+      case "Mark ACQ":
+        mode = "ACQ";
+        break;
+      case "Mark OBJ":
+        mode = "OBJ";
+        break;
+      case "Activate":
+        mode = "Activate";
+        break;
+      case "De-Activate":
+        mode = "Deactivate";
+        break;
+      default:
+      // code block
+    }
+    console.log("mode=" + mode);
+    /* 
+ [{"Id":"a059n0000039TPFAA2","Name":"CO-000797",
+"Client__c":"0018t000002vfSfAAI","Objective_Name__c":"Bath",
+"SD_Name__c":"Non-Identical","Program_Name__c":"2D Matching",
+"Re_Test_Recommended__c":false,"Active__c":true}]*/
+
+    let _selectedRows = this.selectedRows.map((item) => {
+      const container = {};
+      container.Id = item.Id;
+      container.Name = item.Name;
+      container.Re_Test_Recommended__c = item.Re_Test_Recommended__c;
+      container.Active__c = item.Active__c;
+      container.Status__c = item.Status__c != undefined ? item.Status__c : null;
+      return container;
+    });
+
+    console.log("=====>" + JSON.stringify(_selectedRows));
+
+    setClientObjectivesByArray({
+      jsonstr: JSON.stringify(_selectedRows),
+      val: mode
+    })
+      .then((result) => {
+        this.recordsProcessed = result;
+        console.log("======" + this.recordsProcessed);
+      })
+      .then(() => {
+        this.refresh();
+      })
+      .then(() => {
+        if (this.recordsProcessed > 0) {
+          this.showNotification(
+            "Success!",
+            `${this.recordsProcessed} record(s) successfully updated.`,
+            "success"
+          );
+        }
+        if (this.recordsProcessed != _selectedRows.length) {
+          let disparity = _selectedRows.length - this.recordsProcessed;
+          this.showNotification(
+            `${disparity} record updates failed`,
+            `HINT: Remember to Activate any records before changing their status.`,
+            "error"
+          );
+        }
+        this.template.querySelector("lightning-datatable").selectedRows = [];
+        this.template.querySelector("input").value = "";
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+
+        //this.error = error;
+        logError(
+          this.recordId,
+          `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
+          `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
+          `${TAG}`
+        );
+
+        this.showNotification(
+          "Error",
+          "setClientObjectivesByArray() returned an error (too many records?) ",
+          "error"
+        );
+      });
+  }
+
   handleClick(event) {
     // this.logit(
     //   DEBUG,
@@ -710,5 +842,15 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     //       `${TAG}`
     //     );
     //   });
+  }
+
+  showNotification(t, m, v) {
+    console.info(`showNotification(): entering`, COLOR);
+    const evt = new ShowToastEvent({
+      title: t,
+      message: m,
+      variant: v
+    });
+    this.dispatchEvent(evt);
   }
 }

@@ -2,7 +2,6 @@
 private class TestL4LExceptionRateCalculation {
   @isTest
   static void test1() {
-    //L4LClientObjectiveMissingException e = new L4LClientObjectiveMissingException();
     boolean caughtexception = false;
     try {
       throw new L4LRateCalculationException('hello');

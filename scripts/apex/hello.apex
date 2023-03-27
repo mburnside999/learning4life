@@ -303,3 +303,26 @@ sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,Lig
 
 sfdx force:source:deploy -m "ApexClass:L4LDTDRateMaster, ApexClass:TestL4LDTDRateMaster" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LDTDRateMaster
 LFLDTDRateMaster.getDTDRateArray('0018t000002vfSfAAI',3);
+
+
+
+select count(id) from session_obj__C 
+select count(id) from session_obj__C where  NOT(session__r.client__r.name  like '%Test%')
+select session__r.client__r.name,count(Id) from session_obj__c group by session__r.client__r.name
+select client__r.name,active__c,count(id) from client_objective__c group by client__r.name,active__c
+
+
+String s = '[{"Id":"a088t000000Dt7LAAS","Name":"Bath","Program__c":"Receptive Labels","SD_Name__c":"3D Receptive","SD__c":"a0A8t0000003HsLEAU"},{"Id":"a088t000000Dt7MAAS","Name":"Bed","Program__c":"Receptive Labels","SD_Name__c":"3D Receptive","SD__c":"a0A8t0000003HsLEAU"},{"Id":"a088t000000Dt7NAAS","Name":"Bike","Program__c":"Receptive Labels","SD_Name__c":"3D Receptive","SD__c":"a0A8t0000003HsLEAU"},{"Id":"a088t000000Dt7OAAS","Name":"Block","Program__c":"Receptive Labels","SD_Name__c":"3D Receptive","SD__c":"a0A8t0000003HsLEAU"},{"Id":"a088t000000Dt7PAAS","Name":"Bowl","Program__c":"Receptive Labels","SD_Name__c":"3D Receptive","SD__c":"a0A8t0000003HsLEAU"}]';
+Integer i = L4LController.createClientObjectivesByArray(s,'0018t000002vfSfAAI');
+System.debug('======'+i);
+
+sfdx force:source:deploy -m "ApexClass:L4LInvocableListUnusedObj,ApexClass:TestLFLInvocableListUnusedObj,ApexClass:L4LSDStageMap,ApexClass:TestL4LSDStageMap,ApexClass:ClientObjectiveList,ApexClass:TestClientObjectiveList" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LSDStageMap,TestLFLInvocableListUnusedObj,TestC;lientObjectiveList
+
+SELECT SELECT DurableId, QualifiedApiName, Label, DataType, ValueTypeId, PublisherId, Length, Precision, Scale, EntityDefinitionId, RelationshipName
+    FROM FieldDefinition
+    ORDER BY Label ASC NULLS FIRST
+
+
+
+
+sfdx force:data:soql:query --query "SELECT SELECT DurableId, QualifiedApiName, Label, DataType, ValueTypeId, PublisherId, Length, Precision, Scale, EntityDefinitionId, RelationshipName"  --usetoolingapi
