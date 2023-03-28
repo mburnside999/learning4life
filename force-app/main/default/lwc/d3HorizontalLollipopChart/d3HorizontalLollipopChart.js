@@ -1,9 +1,9 @@
-import { LightningElement, wire, api, track } from "lwc";
+import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import generateD3COTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesJson";
-import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
+//import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logError } from "c/l4lNebulaUtil";
 
@@ -20,15 +20,15 @@ export default class D3HorizontalLollipopChart extends LightningElement {
   mode = "All";
   yAxisScale = 100;
 
-  @wire(getD3YAxisScale, { clientId: "$recordId" })
-  wiredYaxis({ error, data }) {
-    if (data) {
-      console.log(`yAxisScale= ${data}`);
-      this.yAxisScale = Math.ceil(data / 50) * 50;
-    } else if (error) {
-      console.log("error");
-    }
-  }
+  // @wire(getD3YAxisScale, { clientId: "$recordId" })
+  // wiredYaxis({ error, data }) {
+  //   if (data) {
+  //     console.log(`yAxisScale= ${data}`);
+  //     this.yAxisScale = Math.ceil(data / 50) * 50;
+  //   } else if (error) {
+  //     console.log("error");
+  //   }
+  // }
 
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
@@ -119,6 +119,19 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     let datatmp = JSON.parse(response);
     let data = datatmp.map(myfunction);
+
+    function findMinMax(key) {
+      const datas = datatmp.map((node) => node[key]);
+
+      return {
+        min: Math.min(...datas),
+        max: Math.max(...datas)
+      };
+    }
+    console.log(findMinMax("val").max);
+    console.log(findMinMax("val").min);
+
+    this.yAxisScale = findMinMax("val").max + 5;
 
     function myfunction(d) {
       return { rundate: d3.timeParse("%Y-%m-%d")(d.rundate), val: d.val };

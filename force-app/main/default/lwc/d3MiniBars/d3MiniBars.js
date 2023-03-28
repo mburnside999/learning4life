@@ -160,8 +160,8 @@ export default class D3MiniBars extends LightningElement {
 
     // set the dimensions and margins of the graph
     var margin = { top: 40, right: 30, bottom: 40, left: 50 },
-      width = 350 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      width = 600 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
 
     logDebug(
       this.recordId,
@@ -228,7 +228,7 @@ export default class D3MiniBars extends LightningElement {
       .domain([
         0,
         d3.max(data, function (d) {
-          return Math.ceil(d.val / 20) * 20;
+          return Math.ceil(d.val / 20) * 20 + 5;
           //+d.val;
         })
       ])
