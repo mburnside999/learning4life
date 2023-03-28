@@ -1,0 +1,132 @@
+=== Test Summary
+NAME                 VALUE                     
+───────────────────  ──────────────────────────
+Outcome              Passed                    
+Tests Ran            58                        
+Pass Rate            100%                      
+Fail Rate            0%                        
+Skip Rate            0%                        
+Test Run Id          7079n00000OAlLR           
+Test Execution Time  445514 ms                 
+Org Id               00D9n000000R9f7EAC        
+Username             mikeb@lfl.hyper.lflpartial
+Org Wide Coverage    57%                       
+
+
+=== Test Results
+TEST NAME                                                                  OUTCOME  MESSAGE  RUNTIME (MS)
+─────────────────────────────────────────────────────────────────────────  ───────  ───────  ────────────
+TestL4LController.testClientObjectivesFilteredOnActive                     Pass              5936        
+TestL4LController.testCreateClientObjectivesByArray                        Pass              5300        
+TestL4LController.testCreateSessionObjectivesByArrayWithOrderedResults     Pass              6783        
+TestL4LController.testDeactivateCO                                         Pass              5867        
+TestL4LController.testDeleteSessionObjectives                              Pass              5534        
+TestL4LController.testGetCOActivationSummary                               Pass              5567        
+TestL4LController.testGetClientObjectives                                  Pass              5850        
+TestL4LController.testGetClientObjectivesForSession                        Pass              5632        
+TestL4LController.testGetUnusedObjectives                                  Pass              5838        
+TestL4LController.testGetUnusedObjectivesBySearch                          Pass              5761        
+TestL4LController.testGetsessionObjectives                                 Pass              5518        
+TestL4LController.testSetClientObjectivesByArray                           Pass              5680        
+TestL4LController.testSetSessionObjectivesByArray                          Pass              5061        
+TestL4LSessionStatsController.testGetClientObjectivesByProgram             Pass              11142       
+TestL4LSessionStatsController.testGetD3Stats                               Pass              11505       
+TestL4LSessionStatsController.testGetD3StatsByProgram                      Pass              11310       
+TestL4LSessionStatsController.testGetD3StatsByProgramAndSD                 Pass              11446       
+TestL4LSessionStatsController.testGetHighAndLowBoundaries                  Pass              466         
+TestL4LSessionStatsController.testGetsessionObjectives                     Pass              10585       
+TestL4LSessionStatsController.testgenerateD3AreaSDJson                     Pass              10816       
+TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson              Pass              10048       
+TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson2             Pass              9933        
+TestL4LSessionStatsController.testgetClientObjectivesSDCount               Pass              10041       
+TestL4LSessionStatsController.testgetD3RetestYAxisScale                    Pass              10525       
+TestL4LSessionStatsController.testgetD3SessionStatsHistogramData           Pass              10333       
+TestL4LSessionStatsController.testgetD3StatusYAxisScale                    Pass              10843       
+TestL4LSessionStatsController.testgetD3YAxisScale                          Pass              10820       
+TestL4LSessionStatsController.testgetProgramsAndSds                        Pass              10467       
+TestL4LSDStageMap.testRemoveDuplicates                                     Pass              5652        
+TestLFLUtil.testUtil                                                       Pass              18          
+TestLFLSDWrapper.testcomparison                                            Pass              17          
+TestL4LTimeSeries.Test                                                     Pass              5772        
+TestL4LTimeSeries.Test2                                                    Pass              5561        
+TestL4LTimeSeries.Test3                                                    Pass              5686        
+TestL4LTimeSeries.TestRetest                                               Pass              6189        
+TestL4LTimeSeriesScheduler.test                                            Pass              251         
+TestLFLClientObjectiveHelper.test1                                         Pass              10884       
+TestLFLInvocableMasteryStatistics.test1                                    Pass              11005       
+TestLFLInvocableReportWizard.test1                                         Pass              13382       
+TestLFLInvocableSessionStatistics.test1                                    Pass              16263       
+TestLFLPopulateTestData.test1                                              Pass              10827       
+TestLFLProgramStatusCascadeUtil.testUpdateObjectiveStatus                  Pass              5760        
+TestLFLProgramStatusCascadeUtil.testUpdateSDStatus                         Pass              5074        
+TestCascadeProgramStatusTrg.testTrg                                        Pass              13725       
+TestCascadeSDStatusTrg.testTrg                                             Pass              11591       
+TestDaysSinceUpdatedTrg.testTrg                                            Pass              14673       
+TestLFLSessionStatsTrg.testTrg                                             Pass              11864       
+TestClientObjectiveList.testGetsessionObjectives                           Pass              11691       
+TestL4LNebulaComponentController.testnebula                                Pass              5828        
+TestL4LExceptionRateCalculation.test1                                      Pass              31          
+TestL4LExceptionClientObjectiveMissing.test1                               Pass              30          
+TestTrgUniqueObjectivePerClientObjective.testDuplicateObjectivePrevention  Pass              10755       
+TestLFLTimeSeriesBatch.testbatch                                           Pass              12162       
+TestLFLTimeSeriesBatchScheduler.test                                       Pass              477         
+TestLFLDTDRates.Test1                                                      Pass              5236        
+TestLFLDTDRates.Test2                                                      Pass              5204        
+TestLFLDTDRateMaster.Test1                                                 Pass              4756        
+TestLFLInvocableListUnusedObj.test1                                        Pass              10543       
+
+
+=== Apex Code Coverage by Class
+CLASSES                               PERCENT  UNCOVERED LINES       
+────────────────────────────────────  ───────  ──────────────────────
+ComponentLogger                       0%       19,20,31,32,33...     
+Logger                                23%      85,86,87,115,148...   
+LoggerSObjectHandler                  50%      93,94,95,108,119...   
+LoggerParameter                       44%      131,132,133,143,144...
+LogMessage                            0%       25,26,27,39,40...     
+LogEntryEventBuilder                  56%      101,102,103,106,136...
+LogHandler                            69%      60,61,69,70,84...     
+FlowLogger                            0%       67,88,89,90,94...     
+LoggerTagHandler                      100%                           
+LogEntryHandler                       73%      36,37,43,71,90...     
+LogEntryEventHandler                  75%      90,161,162,164,173... 
+LogEntryTagHandler                    75%      30,31,33              
+LogEntry                              100%                           
+LoggerTag                             100%                           
+LogEntryEvent                         100%                           
+Log                                   100%                           
+LogEntryTag                           100%                           
+L4LInvocableReportWizard              95%      133,136,142,202       
+LFLClientObjectiveHelper              91%      51,54,60              
+LFLPopulateTestData                   99%      2                     
+L4LController                         83%      5,6,7,8,9...          
+trgUpdateDateSinceCorrect             91%      67,68,69,70,71        
+LFLInvocableSessionStatistics         89%      54,55,56,57,60...     
+LoggerEmailSender                     26%      18,20,21,23,29...     
+LoggerCache                           100%                           
+LoggerPlugin                          26%      42,43,44,45,46...     
+LoggerEngineDataSelector              70%      67,90,91,92,97...     
+LoggerDataStore                       28%      40,41,45,46,50...     
+LoggerTriggerableContext              86%      65,66,67,68,70        
+LogManagementDataSelector             19%      32,33,34,71,72...     
+trgUpdateSessionStatsWithProgram      100%                           
+L4LSessionStatsController             97%      331,337,437,443,514...
+LFLInvocableMasteryStatistics         78%      55,56,57,59,63...     
+LFLProgramStatusCascadeUtil           100%                           
+trgCascadeSDStatus                    100%                           
+trgCascadeProgramStatus               100%                           
+L4LTimeSeriesScheduler                100%                           
+L4LTimeSeries                         92%      76,104,283,307,308... 
+LFLUtil                               100%                           
+LFLSDWrapper                          100%                           
+ClientObjectiveList                   100%                           
+L4LSDStageMap                         92%      54,55                 
+L4LInvocableListUnusedObj             100%                           
+L4LNebulaComponentController          100%                           
+L4LClientObjectiveMissingException    0%                             
+LFLTimeSeriesBatch                    100%                           
+LFLTimeSeriesBatchScheduler           100%                           
+trgUniqueObjectivePerClientObjective  93%      27                    
+LFLDTDRates                           97%      12,115,130            
+L4LRateCalculationException           0%                             
+LFLDTDRateMaster                      100%                           
