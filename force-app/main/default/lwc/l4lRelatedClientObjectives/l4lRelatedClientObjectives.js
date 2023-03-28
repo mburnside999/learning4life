@@ -8,7 +8,7 @@ import getCOActivationSummary from "@salesforce/apex/L4LController.getCOActivati
 
 import { CurrentPageReference } from "lightning/navigation";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+import { logDebug, logFine, logInfo, logError } from "c/l4lNebulaUtil";
 import { updateRecord } from "lightning/uiRecordApi";
 import { deleteRecord } from "lightning/uiRecordApi";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
@@ -27,7 +27,7 @@ import LightningConfirm from "lightning/confirm";
 //debugging
 const COMPONENT = "l4lRelatedClientObjectives";
 const TAG = "L4L-Manage-Client-Objectives";
-
+const SCENARIO = "View and Manage client Objectives";
 const COLOR = "color:red";
 
 const actions = [
@@ -126,14 +126,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): subscribing to message service `,
-          `${COMPONENT}.connectedCallback(): subscribing to message service`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -149,7 +149,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): initial refresh of client objectives`,
-          `${COMPONENT}.connectedCallback(): initial refresh of client objectives`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+        logInfo(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): All good,session is commencing `,
+          `${SCENARIO}`,
           `${TAG}`
         );
         this.refresh();
@@ -161,13 +167,12 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
   }
+
   renderedCallback() {}
 
   get recs() {
@@ -177,14 +182,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   async btnConfirmation(event) {
     console.log("btnConfirmation");
 
-    logDebug(
+    let _label = event.target.label;
+
+    logInfo(
       this.recordId,
-      `${COMPONENT}.btnConfirmation(): action chosen on session objective datatable row`,
-      `${COMPONENT}.btnConfirmation(): action chosen on session objective datatable row`,
+      `${COMPONENT}.btnConfirmation(): ${_label} action chosen on ${this.selectedRows.length} datatable rows, `,
+      `${SCENARIO}`,
       `${TAG}`
     );
-
-    let _label = event.target.label;
 
     if (this.selectedRows.length > 0) {
       if (_label == "De-Activate") {
@@ -225,15 +230,15 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${COMPONENT}.confirmation(): in confirmation(), calling LightningConfirm.open _actionName=${_actionName}, row=${JSON.stringify(
         _row
       )}`,
-      `${COMPONENT}.confirmation(): edit / delete row details`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
     if (_actionName == "delete") {
-      logDebug(
+      logInfo(
         this.recordId,
-        `${COMPONENT}.confirmation(): deleting client objectives, ask for confirmation`,
-        `${COMPONENT}.confirmation(): deleting client objectives, ask for confirmation`,
+        `${COMPONENT}.confirmation(): deleting client objectives`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -257,17 +262,17 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.confirmation(): result=${result}, calling handleRowAction `,
-            `${COMPONENT}.confirmation(): deletion decision received`,
+            `${SCENARIO}`,
             `${TAG}`
           );
           this.handleRowAction(_actionName, _row);
         }
       });
     } else if (_actionName == "deactivate") {
-      logDebug(
+      logInfo(
         this.recordId,
         `${COMPONENT}.confirmation(): deactivating client objective`,
-        `${COMPONENT}.confirmation(): deactivating client objective`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -291,7 +296,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.confirmation(): result=${result}, calling handleRowAction `,
-            `${COMPONENT}.confirmation(): deactivate decision received`,
+            `${SCENARIO}`,
             `${TAG}`
           );
           this.handleRowAction(_actionName, _row);
@@ -301,7 +306,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.confirmation() edit action chosen, calling handleRowAction`,
-        `${COMPONENT}.confirmation() edit action chosen`,
+        `${SCENARIO}`,
         `${TAG}`
       );
       this.handleRowAction(_actionName, _row);
@@ -316,7 +321,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${COMPONENT}.getSelectedName() this.selectedRows=${JSON.stringify(
         this.selectedRows
       )}`,
-      `${COMPONENT}.getSelectedName() check boxed a session objective row, logged selectedRows`,
+      `${SCENARIO}`,
       `${TAG}`
     );
   }
@@ -327,12 +332,18 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${COMPONENT}.handleRowAction(): row=${JSON.stringify(
         row
       )}, actionName=${actionName}`,
-      `${COMPONENT}.handleRowAction(): process the edit or delete`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
     switch (actionName) {
       case "deactivate":
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleRowAction() calling deactivateClientObjective`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
         deactivateClientObjective({ clientObjectiveId: row.Id })
           .then(() => {
             this.dispatchEvent(
@@ -342,12 +353,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
                 variant: "success"
               })
             );
-            logDebug(
-              this.recordId,
-              `${COMPONENT}.handleRowAction(): deactivate()`,
-              `${COMPONENT}.handleRowAction(): deactivation processed successfully, refreshing client objectives`,
-              `${TAG}`
-            );
+
             let inp = this.template.querySelector("input");
             inp.value = "";
             this.refresh();
@@ -370,8 +376,20 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           });
         break;
       case "delete":
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleRowAction(): calling deleteRecord()`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
         deleteRecord(row.Id)
           .then(() => {
+            logDebug(
+              this.recordId,
+              `${COMPONENT}.handleRowAction(): deleteRecord() returned succesfully`,
+              `${SCENARIO}`,
+              `${TAG}`
+            );
             this.dispatchEvent(
               new ShowToastEvent({
                 title: "Success",
@@ -382,7 +400,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
             logDebug(
               this.recordId,
               `${COMPONENT}.handleRowAction(): edit_details()`,
-              `${COMPONENT}.handleRowAction(): delete processed successfully, refreshing client objectives`,
+              `${SCENARIO}`,
               `${TAG}`
             );
             let inp = this.template.querySelector("input");
@@ -412,7 +430,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.handleRowAction() edit_details()`,
-          `${COMPONENT}.handleRowAction() tell the edit modal to show`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -432,14 +450,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSuccess():`,
-      `${COMPONENT}.handleSuccess(): showing the success toast`,
+      `${SCENARIO}`,
       `${TAG}`
     );
     this.dispatchEvent(evt);
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSuccess()`,
-      `${COMPONENT}.handleSuccess(): telling the edit modal to hide and refreshing client objectives`,
+      `${SCENARIO}`,
       `${TAG}`
     );
     this.areDetailsVisible = false;
@@ -453,7 +471,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.refresh(): calling LFLController.getCOActivationSummary() `,
-      `${COMPONENT}.refresh(): calling LFLController.getCOActivationSummary() `,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -467,9 +485,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${COMPONENT}.refresh(): calling LFLController.refresh() getCOActivationSummary returned ${JSON.stringify(
             tmp
           )}`,
-          `${COMPONENT}.refresh(): calling LFLController.refresh() getCOActivationSummary returned ${JSON.stringify(
-            tmp
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         this.inactiveCOCount = tmp.inactive;
@@ -484,9 +500,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${COMPONENT}.refresh(): Apex call to getCOActivationSummary returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.refresh(): Apex call to getCOActivationSummary returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -498,7 +512,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.refresh(): calling LFLController.getClientObjectivesFilteredOnActive() showActiveOnly=${this.showActiveOnly} `,
-      `${COMPONENT}.refresh(): processing the refresh request`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -512,16 +526,10 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
         logDebug(
           this.recordId,
-          `${COMPONENT}.refresh(): returned from Apex call to getClientObjectivesFilteredOnActive, ${result.length} records returned`,
-          `${COMPONENT}.refresh(): client objectives refreshed, record count logged`,
-          `${TAG}`
-        );
-        logDebug(
-          this.recordId,
           `${COMPONENT}.refresh(): Apex call to getClientObjectivesFilteredOnActive result= ${JSON.stringify(
             result
           )}`,
-          `${COMPONENT}.refresh(): client objectives refreshed, records logged`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -532,9 +540,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${COMPONENT}.refresh(): Apex call to getClientObjectivesFilteredOnActive returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.refresh(): Apex call to getClientObjectivesFilteredOnActive returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -548,17 +554,10 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   handleSave(event) {
     logDebug(
       this.recordId,
-      `${COMPONENT}.handleSave(): entering method`,
-      `${COMPONENT}.handleSave(): saving the client records`,
-      `${TAG}`
-    );
-
-    logDebug(
-      this.recordId,
       `${COMPONENT}.handleSave(): draftValues=${JSON.stringify(
         event.detail.draftValues
       )}`,
-      `${COMPONENT}.handleSave(): logging the draft values`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -588,7 +587,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.handleSave(): client objectives saved, draft values cleared, refreshing client objectives list `,
-          `${COMPONENT}.handleSave(): client objectives saved, draft values cleared,refreshing client objectives list`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -598,7 +597,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.handleSave(): error: ${JSON.stringify(error)}`,
-          `${COMPONENT}.handleSave(): error encountered while saving client objectives`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -622,6 +621,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       default:
       // code block
     }
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleClickArray(): mode=${mode}`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
+
     console.log("mode=" + mode);
     /* 
  [{"Id":"a059n0000039TPFAA2","Name":"CO-000797",
@@ -641,12 +648,25 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
     console.log("=====>" + JSON.stringify(_selectedRows));
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleClickArray(): calling setClientObjectivesByArray`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
+
     setClientObjectivesByArray({
       jsonstr: JSON.stringify(_selectedRows),
       val: mode
     })
       .then((result) => {
         this.recordsProcessed = result;
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleClickArray(): setClientObjectivesByArray returned ${this.recordsProcessed} count`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
         console.log("======" + this.recordsProcessed);
       })
       .then(() => {
@@ -678,7 +698,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
-          `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -700,7 +720,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClick: refresh button clicked, refreshing Client Objectives`,
-      `${COMPONENT}.handleClick: refresh button clicked, refreshing Client Objectives`,
+      `${SCENARIO}`,
       `${TAG}`
     );
     this.refresh();
@@ -728,7 +748,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSearchKeyInput: entering method`,
-      `${COMPONENT}.handleSearchKeyInput: entering method`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -737,7 +757,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logFine(
       this.recordId,
       `${COMPONENT}.handleSearchKeyInput: searchKey=${searchKey}`,
-      `${COMPONENT}.handleSearchKeyInput: searchKey=${searchKey}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
     this.clientobjectives = this.filterableObjectives.filter(
@@ -760,7 +780,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${COMPONENT}.handleSearchKeyInput: this.clientobjectives=${JSON.stringify(
         this.clientobjectives
       )}`,
-      `${COMPONENT}.handleSearchKeyInput: this.clientobjectives logged`,
+      `${SCENARIO}`,
       `${TAG}`
     );
   }
@@ -769,7 +789,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleLMS: message received ${JSON.stringify(message)}`,
-      `${COMPONENT}.handleLMS: message received ${JSON.stringify(message)}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -777,7 +797,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       ? JSON.stringify(message, null, "\t")
       : "no message payload";
 
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.handleLMS: refreshing`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
     this.refresh();
+
     // logDebug(
     //   this.recordId,
     //   `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,

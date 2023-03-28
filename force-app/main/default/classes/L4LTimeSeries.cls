@@ -99,6 +99,7 @@ public class L4LTimeSeries {
 
     queryCOTSString += ' where active__c=true and client__c=:clientId ';
     if (status == 'All') {
+      queryCOTSString += ' and status__c in (\'ACQ\',\'CIP\') ';
     } else if (status == 'Null') {
       queryCOTSString += ' and status__c = null ';
     } else {
@@ -188,7 +189,7 @@ public class L4LTimeSeries {
     );
 
     String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day, status__c, count(id) val  FROM client_objective_timeseries__c ';
-    queryCOTSString += ' where active__c=true and client__c=:clientId ';
+    queryCOTSString += ' where active__c=true and client__c=:clientId and status__c in (\'ACQ\',\'CIP\')';
     queryCOTSString += ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c),status__c order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c),status__c';
 
     L4LNebulaComponentController.logDebug(
