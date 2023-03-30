@@ -5,7 +5,7 @@ import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord, getRecord, getFieldValue } from "lightning/uiRecordApi";
 import { deleteRecord } from "lightning/uiRecordApi";
 import LightningConfirm from "lightning/confirm";
-import { logDebug, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
 //custom Apex methods
@@ -22,6 +22,7 @@ import {
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
 const TAG = "L4L-Manage-Session-Objectives";
+const SCENARIO = "Manage Session Objectives for a client";
 
 //debugging
 const COMPONENT = "l4lGetSetSessionObjectives";
@@ -226,10 +227,10 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Successful");
-        logDebug(
+        logInfo(
           this.recordId,
-          `${COMPONENT}.connectedCallback()`,
-          `${COMPONENT}.connectedCallback() get initial list of session objectives`,
+          `${COMPONENT}.connectedCallback(): all good, initializing seassion objective data`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         this.subscription = subscribe(
@@ -264,7 +265,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.refresh(): calling Apex getSessionObjectives`,
-      `${COMPONENT}.refresh(): calling Apex getSessionObjectives`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -284,7 +285,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.refresh(): Apex getSessionObjectives returned ${result.length} records`,
-          `${COMPONENT}.refresh(): Apex getSessionObjectives returned ${result.length} records`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -293,7 +294,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           `${COMPONENT}.refresh(): Apex getSessionObjectives returned result: ${JSON.stringify(
             result
           )}`,
-          `${COMPONENT}.refresh(): Apex getSessionObjectives:all good, record payload logged`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -304,9 +305,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           `${COMPONENT}.refresh(): Apex getSessionObjectives error=${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.refresh(): Apex getSessionObjectives error=${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -318,7 +317,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSearchKeyInput(): searchKey=${searchKey}`,
-      `${COMPONENT}.handleSearchKeyInput(): searchKey=${searchKey}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -338,9 +337,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleLMS(): received message ${JSON.stringify(message)}`,
-      `${COMPONENT}.handleLMS(): received message ${JSON.stringify(
-        message
-      )}, setting this.receivedMessage, refreshing`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -360,7 +357,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       `${COMPONENT}.handleRowAction(): row=${JSON.stringify(
         row
       )}, actionName=${actionName}`,
-      `${COMPONENT}.handleRowAction(): process row action, actionName=${actionName}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -378,7 +375,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
             logDebug(
               this.recordId,
               `${COMPONENT}.handleRowAction()`,
-              `${COMPONENT}.handleRowAction() delete processed successfully, refreshing session objectives`,
+              `${SCENARIO}`,
               `${TAG}`
             );
             this.refresh();
@@ -387,7 +384,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
             logError(
               this.recordId,
               `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
-              `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
+              `${SCENARIO}`,
               `${TAG}`
             );
 
@@ -404,13 +401,13 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.handleRowAction() case:detail`,
-          `${COMPONENT}.handleRowAction() action was : detail : clicked the add comments icon`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         logDebug(
           row.Id, // the session objective row that the comment was added to
           `${COMPONENT}.handleRowAction() case:detail`,
-          `${COMPONENT}.handleRowAction() setting flag this.areDetailsVisible=true, rowId=${row.Id}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         this.areDetailsVisible = true;
@@ -420,7 +417,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.handleRowAction() case:edit_detail`,
-          `${COMPONENT}.handleRowAction() case:edit_detail`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         console.debug("EDIT DETAILS");
@@ -433,7 +430,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSave(): saving the session objective records`,
-      `${COMPONENT}.handleSave(): saving the session objective records`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -442,7 +439,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       `${COMPONENT}.handleSave(): draftValues=${JSON.stringify(
         event.detail.draftValues
       )}`,
-      `${COMPONENT}.handleSave(): logging the draft values`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -469,7 +466,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.handleSave(): session objectives saved, draft values cleared, refreshing session objectives list `,
-          `${COMPONENT}.handleSave(): session objectives saved, draft values cleared, refreshing session objectives list `,
+          `${SCENARIO}`,
           `${TAG}`
         );
         // Display fresh data in the datatable
@@ -489,7 +486,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.handleSave(): error=${JSON.stringify(error)}`,
-          `${COMPONENT}.handleSave(): error=${JSON.stringify(error)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -499,7 +496,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.confirmation(): action chosen on session objective datatable row`,
-      `${COMPONENT}.confirmation(): action chosen on session objective datatable row`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -515,7 +512,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.confirmation(): result=${JSON.stringify(result)}`,
-          `${COMPONENT}.confirmation(): result=${JSON.stringify(result)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -523,7 +520,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.confirmation(): result=${result}, calling handleClickArray _label=${_label} `,
-            `${COMPONENT}.confirmation(): result=${result}, calling handleClickArray _label=${_label} `,
+            `${SCENARIO}`,
             `${TAG}`
           );
           this.handleClickArray(_label);
@@ -536,7 +533,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickArray(): label=${label}`,
-      `${COMPONENT}.handleClickArray(): label=${label}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -564,7 +561,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickArray(): mode=${mode} `,
-      `${COMPONENT}.handleClickArray(): mode=${mode}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -589,16 +586,14 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         `${COMPONENT}.handleClickArray(): jsonstr=${JSON.stringify(
           _selectedRows
         )} val=${mode}`,
-        `${COMPONENT}.handleClickArray(): jsonstr= ${JSON.stringify(
-          _selectedRows
-        )} val= ${mode}`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
       logDebug(
         this.recordId,
         `${COMPONENT}.handleClickArray(): calling Apex setSessionObjectivesByArray `,
-        `${COMPONENT}.handleClickArray(): calling Apex setSessionObjectivesByArray `,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -614,7 +609,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
             `${COMPONENT}.handleClickArray(): Apex setSessionObjectivesByArray returned ${JSON.stringify(
               result
             )}`,
-            `${COMPONENT}.handleClickArray(): Apex setSessionObjectivesByArray returned, ${result} records successfully updated/deleted `,
+            `${SCENARIO}`,
             `${TAG}`
           );
         })
@@ -622,7 +617,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.handleClickArray(): refreshing session objectives`,
-            `${COMPONENT}.handleClickArray(): refreshing session objectives`,
+            `${SCENARIO}`,
             `${TAG}`
           );
           this.refresh();
@@ -649,7 +644,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           logError(
             this.recordId,
             `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
-            `${COMPONENT}.handleClickArray error(): ${JSON.stringify(error)}`,
+            `${SCENARIO}`,
             `${TAG}`
           );
 
@@ -666,7 +661,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickDelete(): calling deleteSessionObjectives`,
-      `${COMPONENT}.handleClickDelete(): calling deleteSessionObjectives`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -677,7 +672,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           `${COMPONENT}.handleClickDelete(): Apex call deleteSessionObjectives returned result= ${JSON.stringify(
             result
           )}`,
-          "${COMPONENT}.handleClickDelete(): deleteSessionObjectives returned",
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -685,7 +680,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.handleClickDelete(): refreshing session objectives`,
-          `${COMPONENT}.handleClickDelete(): refreshing session objectives`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         this.refresh();
@@ -703,7 +698,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.handleClickDelete(): error=${JSON.stringify(error)}`,
-          `${COMPONENT}.handleClickDelete(): error=${JSON.stringify(error)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -716,7 +711,7 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       `${COMPONENT}.getSelectedName() this.selectedRows=${JSON.stringify(
         this.selectedRows
       )}`,
-      `${COMPONENT}.getSelectedName() check boxed a session objective row, logged selectedRows`,
+      `${SCENARIO}`,
       `${TAG}`
     );
   }

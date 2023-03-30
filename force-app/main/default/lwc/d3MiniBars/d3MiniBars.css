@@ -1,15 +1,15 @@
 .line {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: var(--lwc-borderWidthThin, 1px);
-  }
-  
-  .grid line {
-    stroke: lightgrey;
-    stroke-opacity: .2;
-    shape-rendering: crispEdges;
-  }
-  
-  .grid path {
-    stroke-width: 0;
-  }
+  fill: none;
+  stroke: steelblue;
+  stroke-width: var(--lwc-borderWidthThin, 1px);
+}
+
+.grid line {
+  stroke: lightgrey;
+  stroke-opacity: 0.2;
+  shape-rendering: crispEdges;
+}
+
+.grid path {
+  stroke-width: 0;
+}

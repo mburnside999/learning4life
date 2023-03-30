@@ -12,7 +12,7 @@ public class LFLSDWrapper implements Comparable {
     sd = sdin;
   }
 
-  // Compare SD based on the name 
+  // Compare SD based on the name
   public Integer compareTo(Object compareTo) {
     // Cast argument to LFLSDWrapper
     LFLSDWrapper compareToSD = (LFLSDWrapper) compareTo;

@@ -2,12 +2,12 @@
 NAME                 VALUE                     
 ───────────────────  ──────────────────────────
 Outcome              Passed                    
-Tests Ran            58                        
+Tests Ran            60                        
 Pass Rate            100%                      
 Fail Rate            0%                        
 Skip Rate            0%                        
-Test Run Id          7079n00000OAlLR           
-Test Execution Time  445514 ms                 
+Test Run Id          7079n00000OApkZ           
+Test Execution Time  502878 ms                 
 Org Id               00D9n000000R9f7EAC        
 Username             mikeb@lfl.hyper.lflpartial
 Org Wide Coverage    57%                       
@@ -16,64 +16,66 @@ Org Wide Coverage    57%
 === Test Results
 TEST NAME                                                                  OUTCOME  MESSAGE  RUNTIME (MS)
 ─────────────────────────────────────────────────────────────────────────  ───────  ───────  ────────────
-TestL4LController.testClientObjectivesFilteredOnActive                     Pass              5936        
-TestL4LController.testCreateClientObjectivesByArray                        Pass              5300        
-TestL4LController.testCreateSessionObjectivesByArrayWithOrderedResults     Pass              6783        
-TestL4LController.testDeactivateCO                                         Pass              5867        
-TestL4LController.testDeleteSessionObjectives                              Pass              5534        
-TestL4LController.testGetCOActivationSummary                               Pass              5567        
-TestL4LController.testGetClientObjectives                                  Pass              5850        
-TestL4LController.testGetClientObjectivesForSession                        Pass              5632        
-TestL4LController.testGetUnusedObjectives                                  Pass              5838        
-TestL4LController.testGetUnusedObjectivesBySearch                          Pass              5761        
-TestL4LController.testGetsessionObjectives                                 Pass              5518        
-TestL4LController.testSetClientObjectivesByArray                           Pass              5680        
-TestL4LController.testSetSessionObjectivesByArray                          Pass              5061        
-TestL4LSessionStatsController.testGetClientObjectivesByProgram             Pass              11142       
-TestL4LSessionStatsController.testGetD3Stats                               Pass              11505       
-TestL4LSessionStatsController.testGetD3StatsByProgram                      Pass              11310       
-TestL4LSessionStatsController.testGetD3StatsByProgramAndSD                 Pass              11446       
-TestL4LSessionStatsController.testGetHighAndLowBoundaries                  Pass              466         
-TestL4LSessionStatsController.testGetsessionObjectives                     Pass              10585       
-TestL4LSessionStatsController.testgenerateD3AreaSDJson                     Pass              10816       
-TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson              Pass              10048       
-TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson2             Pass              9933        
-TestL4LSessionStatsController.testgetClientObjectivesSDCount               Pass              10041       
-TestL4LSessionStatsController.testgetD3RetestYAxisScale                    Pass              10525       
-TestL4LSessionStatsController.testgetD3SessionStatsHistogramData           Pass              10333       
-TestL4LSessionStatsController.testgetD3StatusYAxisScale                    Pass              10843       
-TestL4LSessionStatsController.testgetD3YAxisScale                          Pass              10820       
-TestL4LSessionStatsController.testgetProgramsAndSds                        Pass              10467       
-TestL4LSDStageMap.testRemoveDuplicates                                     Pass              5652        
-TestLFLUtil.testUtil                                                       Pass              18          
-TestLFLSDWrapper.testcomparison                                            Pass              17          
-TestL4LTimeSeries.Test                                                     Pass              5772        
-TestL4LTimeSeries.Test2                                                    Pass              5561        
-TestL4LTimeSeries.Test3                                                    Pass              5686        
-TestL4LTimeSeries.TestRetest                                               Pass              6189        
-TestL4LTimeSeriesScheduler.test                                            Pass              251         
-TestLFLClientObjectiveHelper.test1                                         Pass              10884       
-TestLFLInvocableMasteryStatistics.test1                                    Pass              11005       
-TestLFLInvocableReportWizard.test1                                         Pass              13382       
-TestLFLInvocableSessionStatistics.test1                                    Pass              16263       
-TestLFLPopulateTestData.test1                                              Pass              10827       
-TestLFLProgramStatusCascadeUtil.testUpdateObjectiveStatus                  Pass              5760        
-TestLFLProgramStatusCascadeUtil.testUpdateSDStatus                         Pass              5074        
-TestCascadeProgramStatusTrg.testTrg                                        Pass              13725       
-TestCascadeSDStatusTrg.testTrg                                             Pass              11591       
-TestDaysSinceUpdatedTrg.testTrg                                            Pass              14673       
-TestLFLSessionStatsTrg.testTrg                                             Pass              11864       
-TestClientObjectiveList.testGetsessionObjectives                           Pass              11691       
-TestL4LNebulaComponentController.testnebula                                Pass              5828        
-TestL4LExceptionRateCalculation.test1                                      Pass              31          
-TestL4LExceptionClientObjectiveMissing.test1                               Pass              30          
-TestTrgUniqueObjectivePerClientObjective.testDuplicateObjectivePrevention  Pass              10755       
-TestLFLTimeSeriesBatch.testbatch                                           Pass              12162       
-TestLFLTimeSeriesBatchScheduler.test                                       Pass              477         
-TestLFLDTDRates.Test1                                                      Pass              5236        
-TestLFLDTDRates.Test2                                                      Pass              5204        
-TestLFLDTDRateMaster.Test1                                                 Pass              4756        
-TestLFLInvocableListUnusedObj.test1                                        Pass              10543       
+TestL4LController.testClientObjectivesFilteredOnActive                     Pass              5969        
+TestL4LController.testCreateClientObjectivesByArray                        Pass              5343        
+TestL4LController.testCreateSessionObjectivesByArrayWithOrderedResults     Pass              6803        
+TestL4LController.testDeactivateCO                                         Pass              5587        
+TestL4LController.testDeleteSessionObjectives                              Pass              5676        
+TestL4LController.testGetCOActivationSummary                               Pass              5431        
+TestL4LController.testGetClientObjectives                                  Pass              5368        
+TestL4LController.testGetClientObjectivesForSession                        Pass              5251        
+TestL4LController.testGetUnusedObjectives                                  Pass              5509        
+TestL4LController.testGetUnusedObjectivesBySearch                          Pass              5476        
+TestL4LController.testGetsessionObjectives                                 Pass              6601        
+TestL4LController.testSetClientObjectivesByArray                           Pass              6461        
+TestL4LController.testSetSessionObjectivesByArray                          Pass              5761        
+TestL4LSessionStatsController.testGetClientObjectivesByProgram             Pass              11471       
+TestL4LSessionStatsController.testGetD3Stats                               Pass              11671       
+TestL4LSessionStatsController.testGetD3StatsByProgram                      Pass              11617       
+TestL4LSessionStatsController.testGetD3StatsByProgramAndSD                 Pass              11884       
+TestL4LSessionStatsController.testGetHighAndLowBoundaries                  Pass              513         
+TestL4LSessionStatsController.testGetsessionObjectives                     Pass              10687       
+TestL4LSessionStatsController.testgenerateD3AreaSDJson                     Pass              10960       
+TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson              Pass              11155       
+TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson2             Pass              11301       
+TestL4LSessionStatsController.testgetClientObjectivesSDCount               Pass              10899       
+TestL4LSessionStatsController.testgetD3RetestYAxisScale                    Pass              11061       
+TestL4LSessionStatsController.testgetD3SessionStatsHistogramData           Pass              10693       
+TestL4LSessionStatsController.testgetD3StatusYAxisScale                    Pass              10945       
+TestL4LSessionStatsController.testgetD3YAxisScale                          Pass              11141       
+TestL4LSessionStatsController.testgetProgramSetFromCO                      Pass              10638       
+TestL4LSessionStatsController.testgetProgramsAndSds                        Pass              11180       
+TestL4LSessionStatsController.testgetSDSetFromCO                           Pass              10570       
+TestL4LSDStageMap.testRemoveDuplicates                                     Pass              10716       
+TestLFLUtil.testUtil                                                       Pass              43          
+TestLFLSDWrapper.testcomparison                                            Pass              54          
+TestL4LTimeSeries.Test                                                     Pass              11593       
+TestL4LTimeSeries.Test2                                                    Pass              12094       
+TestL4LTimeSeries.Test3                                                    Pass              11322       
+TestL4LTimeSeries.TestRetest                                               Pass              11743       
+TestL4LTimeSeriesScheduler.test                                            Pass              382         
+TestLFLClientObjectiveHelper.test1                                         Pass              10661       
+TestLFLInvocableMasteryStatistics.test1                                    Pass              11314       
+TestLFLInvocableReportWizard.test1                                         Pass              12747       
+TestLFLInvocableSessionStatistics.test1                                    Pass              8026        
+TestLFLPopulateTestData.test1                                              Pass              6328        
+TestLFLProgramStatusCascadeUtil.testUpdateObjectiveStatus                  Pass              5713        
+TestLFLProgramStatusCascadeUtil.testUpdateSDStatus                         Pass              5552        
+TestCascadeProgramStatusTrg.testTrg                                        Pass              12039       
+TestCascadeSDStatusTrg.testTrg                                             Pass              14432       
+TestDaysSinceUpdatedTrg.testTrg                                            Pass              12173       
+TestLFLSessionStatsTrg.testTrg                                             Pass              10418       
+TestClientObjectiveList.testGetsessionObjectives                           Pass              10829       
+TestL4LNebulaComponentController.testnebula                                Pass              6105        
+TestL4LExceptionRateCalculation.test1                                      Pass              24          
+TestL4LExceptionClientObjectiveMissing.test1                               Pass              29          
+TestTrgUniqueObjectivePerClientObjective.testDuplicateObjectivePrevention  Pass              11600       
+TestLFLTimeSeriesBatch.testbatch                                           Pass              11197       
+TestLFLTimeSeriesBatchScheduler.test                                       Pass              428         
+TestLFLDTDRates.Test1                                                      Pass              12941       
+TestLFLDTDRates.Test2                                                      Pass              11959       
+TestLFLDTDRateMaster.Test1                                                 Pass              10465       
+TestLFLInvocableListUnusedObj.test1                                        Pass              6329        
 
 
 === Apex Code Coverage by Class

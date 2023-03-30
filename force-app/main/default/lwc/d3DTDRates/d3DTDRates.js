@@ -5,10 +5,11 @@ import D3 from "@salesforce/resourceUrl/d3";
 import getDTDRateArray from "@salesforce/apex/LFLDTDRateMaster.getDTDRateArray";
 import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3RetestYAxisScale";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3DTDRates";
 const TAG = "L4L-Session-Statistics-D3DTDRatesChart";
+const SCENARIO = "View the D3 DTD Acquisition Rate chart";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
@@ -39,10 +40,10 @@ export default class D3DTDRates extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
-        logDebug(
+        logInfo(
           this.recordId,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -53,9 +54,7 @@ export default class D3DTDRates extends LightningElement {
           `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -74,7 +73,7 @@ export default class D3DTDRates extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.renderedCallback(): calling generateD3CORetestTimeSeriesJson, status=All`,
-          `${COMPONENT}.renderedCallback(): calling generateD3CORetestTimeSeriesJson, status=All`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         return getDTDRateArray({
@@ -88,7 +87,7 @@ export default class D3DTDRates extends LightningElement {
           this.recordId,
           `${COMPONENT}.renderedCallback(): returned ${response}
           }`,
-          `${COMPONENT}.renderedCallback(): response received and logged, calling this.renderLineChart`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -98,7 +97,7 @@ export default class D3DTDRates extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
-          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -116,10 +115,17 @@ export default class D3DTDRates extends LightningElement {
     // let data = JSON.parse(
     //   '[{"rundate":"2022-11-26","val":60},{"rundate":"2022-12-19","val":64}]'
 
+    logInfo(
+      this.recordId,
+      `${COMPONENT}.renderLineChart(): wrangling data and drawing the Line chart`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
+
     logDebug(
       this.recordId,
       `${COMPONENT}.renderLineChart(): parameter is response=${response})`,
-      `${COMPONENT}.renderLineChart(): in renderLineChart(response), logged parameter`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -137,10 +143,8 @@ export default class D3DTDRates extends LightningElement {
     this.yAxisMax = findMinMax("rate").max + 5;
     this.yAxisMin = findMinMax("rate").min - 5;
 
-    console.log(findMinMax("sessionCount").max);
-    console.log(findMinMax("sessionCount").min);
-    //this.yAxisMaxSessions = findMinMax("sessionCount").max + 5;
-    //this.yAxisMinSessions = findMinMax("sessionCount").min;
+    // console.log(findMinMax("sessionCount").max);
+    // console.log(findMinMax("sessionCount").min);
 
     let data = datatmp.map(myfunction);
     let sessiondata = datatmp.map(mysessionfunction);
@@ -171,7 +175,7 @@ export default class D3DTDRates extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.renderLineChart: data=${JSON.stringify(data)}`,
-      `${COMPONENT}.renderLineChart: preparing to draw a line chart, data logged`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -185,9 +189,7 @@ export default class D3DTDRates extends LightningElement {
       `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
         margin
       )}`,
-      `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
-        margin
-      )}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
     console.log("cleaning  up  svg");
@@ -429,63 +431,5 @@ export default class D3DTDRates extends LightningElement {
       .style("fill", "grey")
       .style("max-width", 400)
       .text("Remember this is a view of sessions.");
-
-    // Parse the Data
-    // Add X axis
-
-    // svg
-    //   .selectAll("mybar")
-    //   .data(data)
-    //   .enter()
-    //   .append("rect")
-    //   .attr("x", function (d) {
-    //     return x(d.week);
-    //   })
-    //   .attr("y", function (d) {
-    //     return y(d.val);
-    //   })
-    //   .attr("width", x.bandwidth())
-    //   .attr("height", function (d) {
-    //     return height - y(d.val);
-    //   })
-    //   .attr("fill", "#69b3a2");
   }
-
-  // handleClickMax(event) {
-  //   this.clickedButtonLabel = event.target.label;
-  //   this.renderHorizontalLollipopChart(this.mydata, "MaxEmployees");
-  // }
-  // handleClickAvg(event) {
-  //   this.clickedButtonLabel = event.target.label;
-  //   this.renderHorizontalLollipopChart(this.mydata, "AvgEmployees");
-  // }
-
-  // handleClick(event) {
-  //   this.mode = event.target.label;
-
-  //   logDebug(
-  //     this.recordId,
-  //     `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3CORetestTimeSeriesJson`,
-  //     `Clicked ${this.mode}, calling generateD3CORetestTimeSeriesJson `,
-  //     `${TAG}`
-  //   );
-
-  //   generateD3CORetestTimeSeriesJson({
-  //     clientId: this.recordId,
-  //     status: this.mode
-  //   }).then((response) => {
-  //     logDebug(
-  //       this.recordId,
-  //       `${COMPONENT}.handleClick(): Apex returned reponse ${response}`,
-  //       `${COMPONENT}.handleClick(): Apex response returned and logged, calling this.renderLineChart(response)`,
-  //       `${TAG}`
-  //     );
-
-  //     console.log(
-  //       "calling generateD3CORetestTimeSeriesJson,response=" +
-  //         JSON.stringify(response)
-  //     );
-  //     this.renderLineChart(response);
-  //   });
-  // }
 }

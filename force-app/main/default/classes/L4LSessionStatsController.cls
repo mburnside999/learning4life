@@ -1055,4 +1055,38 @@ public with sharing class L4LSessionStatsController {
 
     return jsonstr;
   }
+
+  @AuraEnabled(cacheable=true)
+  public static List<String> getProgramSetFromCO(String clientId) {
+    Set<String> pTmpSet = new Set<String>();
+    for (client_objective__c l : [
+      SELECT program_name__c
+      FROM client_objective__c
+      WHERE client__c = :clientId
+      ORDER BY program_name__c
+    ]) {
+      pTmpSet.add(l.program_name__c);
+    }
+    List<String> pSet = new List<String>(pTmpSet);
+    System.debug(pSet);
+    return pSet;
+  }
+
+  @AuraEnabled(cacheable=true)
+  public static List<String> getSDSetFromCO(String clientId) {
+    Set<String> sdTmpSet = new Set<String>();
+    List<client_objective__c> coList = [
+      SELECT sd_name__c
+      FROM client_objective__c
+      WHERE client__c = :clientId
+      ORDER BY sd_name__c
+    ];
+
+    for (client_objective__c co : coList) {
+      sdTmpSet.add(co.sd_name__c);
+    }
+    List<String> sdSet = new List<String>(sdTmpSet);
+    System.debug(sdSet);
+    return sdSet;
+  }
 }

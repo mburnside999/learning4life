@@ -4,11 +4,12 @@ import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
 import generateD3COTimeSeriesByStatusJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesByStatusJson";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 //import getD3StatusYAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3StatusYAxisScale";
 
 const COMPONENT = "D3MiniBars";
 const TAG = "L4L-Session-Statistics-D3MiniBars";
+const SCENARIO = "Viewing D3 Client Objectiive mini line charts";
 
 export default class D3MiniBars extends LightningElement {
   @api recordId;
@@ -32,10 +33,10 @@ export default class D3MiniBars extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
-        logDebug(
+        logInfo(
           this.recordId,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -46,9 +47,7 @@ export default class D3MiniBars extends LightningElement {
           `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -67,7 +66,7 @@ export default class D3MiniBars extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.renderedCallback(): calling generateD3COTimeSeriesByStatusJson`,
-          `${COMPONENT}.handleClick(): getting data, calling Apex generateD3COTimeSeriesByStatusJson`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -81,7 +80,7 @@ export default class D3MiniBars extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesByStatusJson returned ${response}`,
-          `${COMPONENT}.handleClick(): response received and logged, calling this.renderLineChart`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -91,7 +90,7 @@ export default class D3MiniBars extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
-          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -109,10 +108,18 @@ export default class D3MiniBars extends LightningElement {
     // let data = JSON.parse(
     //   '[{"rundate":"2022-11-26","val":60,"status":ACQ},{"rundate":"2022-12-19","val":64,"status":"ACQ"}]'
     // );
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}.renderLineChart(): wrangling data and drawing mini line charts`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
+
     logDebug(
       this.recordId,
       `${COMPONENT}.renderLineChart(): parameter is response=${response}`,
-      `${COMPONENT}.renderLineChart(): in renderLineChart(response), logged parameter`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -347,68 +354,4 @@ export default class D3MiniBars extends LightningElement {
       .style("max-width", 800)
       .text(`Client Objective Time Series, auto refreshed Sunday 10pm`);
   }
-
-  // handleClickAll(event) {
-  //   logDebug(
-  //     this.recordId,
-  //     `${COMPONENT}.handleClickAll(): setting this.mode=All `,
-  //     `clicked All, setting this.mode=All`,
-  //     `${TAG}`
-  //   );
-
-  //   this.mode = "All";
-
-  //   logDebug(
-  //     this.recordId,
-  //     `${COMPONENT}.handleClickAll(): this.mode=${this.mode}`,
-  //     `this.mode=${this.mode}`,
-  //     `${TAG}`
-  //   );
-
-  //   logDebug(
-  //     this.recordId,
-  //     `${COMPONENT}.handleClickAll(): calling generateD3COTimeSeriesByStatusJson`,
-  //     `getting data via Apex generateD3COTimeSeriesByStatusJson `,
-  //     `${TAG}`
-  //   );
-
-  //   generateD3COTimeSeriesByStatusJson({
-  //     clientId: this.recordId
-  //   }).then((response) => {
-  //     logDebug(
-  //       this.recordId,
-  //       `${COMPONENT}.handleClickAll(): generateD3COTimeSeriesByStatusJson returned ${JSON.stringify(
-  //         response
-  //       )}`,
-  //       `response received, logged, rendering chart via this.renderLineChart()`,
-  //       `${TAG}`
-  //     );
-  //   this.renderLineChart(response);
-  // });
-  //}
-
-  // handleClickACQ(event) {
-  //   logDebug(
-  //     this.recordId,
-  //     `${COMPONENT}.handleClickACQ(): setting this.mode=ACQ `,
-  //     `clicked ACQ, setting this.mode=ACQ`,
-  //     `${TAG}`
-  //   );
-
-  //   this.mode = "ACQ";
-
-  //   logDebug(
-  //     this.recordId,
-  //     `${COMPONENT}.handleClickAll(): this.mode=${this.mode}`,
-  //     `this.mode=${this.mode}`,
-  //     `${TAG}`
-  //   );
-
-  //   generateD3COTimeSeriesByStatusJson({
-  //     clientId: this.recordId
-  //   }).then((response) => {
-  //     console.log("calling lollipop, response=" + JSON.stringify(response));
-  //     this.renderLineChart(response);
-  //   });
-  // }
 }

@@ -131,13 +131,13 @@ public with sharing class LFLInvocableSessionStatistics {
 
     Logger.debug(
         'Apex:computeSessionStats() correctMap=' +
-        correctMap +
-        ' nonResponsiveMap=' +
-        nonResponsiveMap +
-        ' incorrectMap=' +
-        incorrectMap +
-        ' promptedMap=' +
-        promptedMap
+          correctMap +
+          ' nonResponsiveMap=' +
+          nonResponsiveMap +
+          ' incorrectMap=' +
+          incorrectMap +
+          ' promptedMap=' +
+          promptedMap
       )
       .setRecordId(sessions[0])
       .addTag('LFLInvocableSessionStatistics.computeSessionStats()')

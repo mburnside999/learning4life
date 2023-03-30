@@ -4,6 +4,8 @@ import getSessionStats from "@salesforce/apex/L4LSessionStatsController.getSessi
 
 const COMPONENT = "l4lPopulateSessionStatsDataTable";
 const TAG = "L4L-Session-Statistics";
+const SCENARIO = "View and filter session statistics";
+
 import { logInfo } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
@@ -80,8 +82,8 @@ export default class L4lSessionStatsDatatable extends LightningElement {
         console.log("Success");
         logInfo(
           this.recordId,
-          `${COMPONENT}.connectedCallback()`,
-          `connectedCallback()`,
+          `${COMPONENT}.connectedCallback(): all good`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })

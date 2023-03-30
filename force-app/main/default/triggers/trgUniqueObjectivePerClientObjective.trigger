@@ -22,7 +22,7 @@ trigger trgUniqueObjectivePerClientObjective on client_objective__c(
       FROM client_objective__c
       WHERE client__c = :co.client__c AND objective__c IN :l
     ];
-  
+
     if (recs.size() > 0)
       co.objective__c.addError('objective already exists');
   }
