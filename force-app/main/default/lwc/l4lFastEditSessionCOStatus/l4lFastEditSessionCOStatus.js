@@ -4,11 +4,12 @@ import getClientObjectivesForSession from "@salesforce/apex/L4LController.getCli
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { CurrentPageReference } from "lightning/navigation";
 import { updateRecord } from "lightning/uiRecordApi";
-import { logDebug, logFine, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logFine, logError } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
 const COMPONENT = "l4lFastEditSessionCOStatus";
 const TAG = "L4L-Fast-Edit-Client-Objectives";
+const SCENARIO = "Fast editing client objectives";
 
 const COLOR = "color:olive"; //for console log formatting
 
@@ -78,10 +79,10 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
           )}`,
           `${TAG}`
         );
-        logDebug(
+        logInfo(
           this.recordId,
-          `${COMPONENT}.connectedCallback: initial refresh of client objectives`,
-          `${COMPONENT}.connectedCallback: initial refresh of client objectives`,
+          `${COMPONENT}.connectedCallback: all good, calling initial refresh of client objectives`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         this.refresh();

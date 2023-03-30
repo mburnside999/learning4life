@@ -6,7 +6,7 @@ import getAcquisitionRateByDates from "@salesforce/apex/LFLDTDRates.getAcquisiti
 
 //const COMPONENT = "l4lDTDAcquistionRate";
 //const TAG = "L4L-Rates";
-const sd = new Date("2022-03-25");
+const sd = new Date("2022-03-25"); //just an arbritary early date, i.e. long before TimeSeries
 const ed = new Date();
 export default class LflDTDAcquisitionRate extends LightningElement {
   @api recordId;

@@ -7,6 +7,48 @@
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
+            <lightning-combobox
+              name="status"
+              label="Status"
+              value={statusval}
+              options={statusoptions}
+              onchange={handleStatusChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="progress"
+              label="Programs"
+              value={programval}
+              placeholder="Select Program"
+              options={programoptions}
+              onchange={handleProgramChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="sd"
+              label="SD"
+              value={sdval}
+              placeholder="Select SD"
+              options={sdoptions}
+              onchange={handleSDChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
             <lightning-button
               label="All"
               onclick={handleClick}
@@ -24,7 +66,7 @@
               class="slds-var-m-left_x-small"
             ></lightning-button>
           </div>
-        </lightning-layout-item>
+        </lightning-layout-item> -->
         <!-- <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
@@ -58,7 +100,7 @@
             ></lightning-button>
           </div>
         </lightning-layout-item> -->
-        <lightning-layout-item padding="around-small">
+        <!-- <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
@@ -68,7 +110,7 @@
               class="slds-var-m-left_x-small"
             ></lightning-button>
           </div>
-        </lightning-layout-item>
+        </lightning-layout-item> -->
         <!-- <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"

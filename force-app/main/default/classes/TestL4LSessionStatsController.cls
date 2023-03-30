@@ -256,4 +256,26 @@ private class TestL4LSessionStatsController {
       '??Expected at least one session_statistics__c record retrieved.'
     );
   }
+
+  @isTest
+  static void testgetSDSetFromCO() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    List<String> s = L4LSessionStatsController.getSDSetFromCO(clientId);
+    System.assert(s.size() > 0, 'expected a set of SD names');
+  }
+
+  @isTest
+  static void testgetProgramSetFromCO() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    List<String> s = L4LSessionStatsController.getProgramSetFromCO(clientId);
+    System.assert(s.size() > 0, 'expected a set of Program names');
+  }
 }

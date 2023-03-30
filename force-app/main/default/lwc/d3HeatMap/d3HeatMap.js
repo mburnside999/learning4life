@@ -7,10 +7,11 @@ import getD3StatsByProgramAndSD from "@salesforce/apex/L4LSessionStatsController
 import getHighAndLowBoundaries from "@salesforce/apex/L4LSessionStatsController.getHighAndLowBoundaries";
 
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3HeatMap";
 const TAG = "L4L-Session-Statistics-D3HeatMap";
+const SCENARIO = "View Program Mastery D3HeatMap";
 
 export default class D3HeatMap extends LightningElement {
   low = 50;
@@ -103,10 +104,10 @@ export default class D3HeatMap extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
-        logDebug(
+        logInfo(
           this.recordId,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -117,9 +118,7 @@ export default class D3HeatMap extends LightningElement {
           `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -163,10 +162,10 @@ export default class D3HeatMap extends LightningElement {
   }
 
   initializeD3() {
-    logDebug(
+    logInfo(
       this.recordId,
-      `${COMPONENT}.initializeD3(): entering `,
-      "initializing D3",
+      `${COMPONENT}.initializeD3(): wranglng data and drawing the HeatMap chart `,
+      `${SCENARIO}`,
       `${TAG}`
     );
     console.log("in initializeD3()");
@@ -519,7 +518,7 @@ export default class D3HeatMap extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.composeOptions(): entering `,
-      `${COMPONENT}.composeOptions(): entering `,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -562,14 +561,14 @@ export default class D3HeatMap extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.composeOptions(): calling Apex getD3StatsByProgramAndSD`,
-      `${COMPONENT}.composeOptions(): calling Apex getD3StatsByProgramAndSD`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
     logDebug(
       this.recordId,
       `${COMPONENT}.composeOptions(): clientId=${this.recordId}, programStr=${programStr}, sdStr=${sdStr}, periodStr=${periodStr}, showAcquired=${statusStr}, stageStr=${stageStr}  `,
-      `${COMPONENT}.composeOptions(): clientId=${this.recordId}, programStr=${programStr}, sdStr=${sdStr}, periodStr=${periodStr}, showAcquired=${statusStr}, stageStr=${stageStr}  `,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -585,13 +584,13 @@ export default class D3HeatMap extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.composeOptions(): returned from Apex call, ${result.length} items returned`,
-          `${COMPONENT}.composeOptions(): returned from Apex call, ${result.length} items returned`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         logDebug(
           this.recordId,
           `${COMPONENT}.composeOptions(): result=${JSON.stringify(result)}`,
-          `${COMPONENT}.composeOptions(): result logged, calling initializeD3`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         this.result = result;
@@ -605,9 +604,7 @@ export default class D3HeatMap extends LightningElement {
           `${COMPONENT}.composeOptions(): Apex call returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.composeOptions(): Apex call returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });

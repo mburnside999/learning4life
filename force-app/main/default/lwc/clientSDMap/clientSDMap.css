@@ -1,60 +1,61 @@
 .board {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .tile {
-    width: 200px;
-    margin: 10px;
-    background-color: #fff;
-    box-shadow:  var(--lwc-borderWidthThick, 2px) var(--lwc-spacingXxSmall, 0.25rem) rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    position: relative;
-  }
-  
-  .false {
-    padding: 15px;
-    border: var(--lwc-borderWidthThick, 10px) solid #a6d0f5;
-    background-color: #fff;
-    color: rgb(11, 11, 11);
-    font-size: fontSize4 ;
-    font-weight: bold;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  .true {
-    padding: 15px;
-    background-color: #a6d0f5;
-    color: rgb(11, 11, 11);
-    font-size: fontSize4 ;
-    font-weight: bold;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  .tile__header {
-    padding: 15px;
-    background-color: #a6d0f5;
-    color: rgb(11, 11, 11);
-    font-size: fontSize4 ;
-    font-weight: bold;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  
-  .tile__body {
-    padding: 15px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  .tile--blue {
-    background-color: blue;
-  }
+.tile {
+  width: 200px;
+  margin: 10px;
+  background-color: #fff;
+  box-shadow: var(--lwc-borderWidthThick, 2px)
+    var(--lwc-spacingXxSmall, 0.25rem) rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  position: relative;
+}
 
-  .tile--pink {
-    background-color: pink;
-  }
+.false {
+  padding: 15px;
+  border: var(--lwc-borderWidthThick, 10px) solid #a6d0f5;
+  background-color: #fff;
+  color: rgb(11, 11, 11);
+  font-size: fontSize4;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.true {
+  padding: 15px;
+  background-color: #a6d0f5;
+  color: rgb(11, 11, 11);
+  font-size: fontSize4;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.tile__header {
+  padding: 15px;
+  background-color: #a6d0f5;
+  color: rgb(11, 11, 11);
+  font-size: fontSize4;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
 
-  .custom-modal {
-    background-color: rgba(251, 248, 248, 0.299);   
+.tile__body {
+  padding: 15px;
+}
+
+.tile--blue {
+  background-color: blue;
+}
+
+.tile--pink {
+  background-color: pink;
+}
+
+.custom-modal {
+  background-color: rgba(251, 248, 248, 0.299);
 }
 
 .add-button {

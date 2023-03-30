@@ -2,13 +2,16 @@ import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
-import generateD3COTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3COTimeSeriesJson";
-//import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3YAxisScale";
+import generateD3COTSJsonByProgramAndSD from "@salesforce/apex/L4LTimeSeries.generateD3COTSJsonByProgramAndSD";
+import getProgramSetFromCO from "@salesforce/apex/L4LSessionStatsController.getProgramSetFromCO";
+import getSDSetFromCO from "@salesforce/apex/L4LSessionStatsController.getSDSetFromCO";
+
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3HorizontalLollipopChart";
 const TAG = "L4L-Session-Statistics-D3HorizontalLollipopChart";
+const SCENARIO = "D3 Plot Client Objectives";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
@@ -19,16 +22,23 @@ export default class D3HorizontalLollipopChart extends LightningElement {
   @track result = [];
   mode = "All";
   yAxisScale = 100;
+  yAxisMax;
+  yAxisMin;
+  programval = "All"; //default
+  sdval = "All";
+  statusval = "All";
+  progSet = [];
+  sdSet = [];
 
-  // @wire(getD3YAxisScale, { clientId: "$recordId" })
-  // wiredYaxis({ error, data }) {
-  //   if (data) {
-  //     console.log(`yAxisScale= ${data}`);
-  //     this.yAxisScale = Math.ceil(data / 50) * 50;
-  //   } else if (error) {
-  //     console.log("error");
-  //   }
-  // }
+  // arrays to contain the generated content for the pull down filters
+  programoptions = [];
+  sdoptions = [];
+
+  statusoptions = [
+    { label: "All", value: "All", isChecked: true },
+    { label: "ACQ", value: "ACQ" },
+    { label: "CIP", value: "CIP" }
+  ];
 
   connectedCallback() {
     console.log("in connectedCallback recordId=" + this.recordId);
@@ -38,7 +48,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -49,9 +59,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
           `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -63,26 +71,60 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     }
     this.d3Initialized = true;
     console.log("in  renderedCallback");
-    loadScript(this, D3 + "/d3.v5.min.js")
-      .then(() => {
-        console.log("calling apex");
 
+    loadScript(this, D3 + "/d3.v5.min.js")
+      .then(async () => {
         logDebug(
           this.recordId,
-          `${COMPONENT}.renderedCallback(): calling generateD3COTimeSeriesJson, status=All`,
-          `${COMPONENT}.renderedCallback(): calling generateD3COTimeSeriesJson, status=All`,
+          `${COMPONENT}.renderedCallback(): calling getProgramSetFromCO`,
+          `${SCENARIO}`,
           `${TAG}`
         );
-        return generateD3COTimeSeriesJson({
+        let _result = (this.progSet = await getProgramSetFromCO({
+          clientId: this.recordId
+        }));
+        this.programoptions = [{ label: "All", value: "All", isChecked: true }];
+
+        for (var i = 0; i < _result.length; i++) {
+          let s = _result[i];
+          this.programoptions.push({ label: s, value: s });
+        }
+      })
+      .then(async () => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): calling getSDSetFromCO`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+        let _result = (this.sdSet = await getSDSetFromCO({
+          clientId: this.recordId
+        }));
+        this.sdoptions = [{ label: "All", value: "All", isChecked: true }];
+        for (var i = 0; i < _result.length; i++) {
+          let s = _result[i];
+          this.sdoptions.push({ label: s, value: s });
+        }
+      })
+      .then(() => {
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.renderedCallback(): initial data - calling generateD3COTSJsonByProgramAndSD, program=All, SD=All,status=All`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+        return generateD3COTSJsonByProgramAndSD({
           clientId: this.recordId,
+          program: "All",
+          sd: "All",
           status: "All"
         });
       })
       .then((response) => {
         logDebug(
           this.recordId,
-          `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesJson returned ${response}`,
-          `${COMPONENT}.renderedCallback(): generateD3COTimeSeriesJson returned ${response}`,
+          `${COMPONENT}.renderedCallback(): generateD3COTSJsonByProgramAndSD returned ${response}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -92,7 +134,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
-          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -107,19 +149,24 @@ export default class D3HorizontalLollipopChart extends LightningElement {
   }
 
   renderLineChart(response) {
-    // let data = JSON.parse(
-    //   '[{"rundate":"2022-11-26","val":60},{"rundate":"2022-12-19","val":64}]'
+    //  response is in format:
+    //  [{"rundate":"2022-11-26","val":2},{"rundate":"2022-12-19","val":1}]
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.renderLineChart(): parameter is response=${response})`,
-      `${COMPONENT}.renderLineChart(): in renderLineChart(response), logged parameter`,
+      `${COMPONENT}.renderLineChart(): parameter is response=${response}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
     let datatmp = JSON.parse(response);
     let data = datatmp.map(myfunction);
-
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderLineChart(): calulating the min an max axis values`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
     function findMinMax(key) {
       const datas = datatmp.map((node) => node[key]);
 
@@ -128,10 +175,20 @@ export default class D3HorizontalLollipopChart extends LightningElement {
         max: Math.max(...datas)
       };
     }
-    console.log(findMinMax("val").max);
-    console.log(findMinMax("val").min);
 
-    this.yAxisScale = findMinMax("val").max + 5;
+    let _min = findMinMax("val").min;
+    let _max = findMinMax("val").max;
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.renderLineChart(): min=${_min} max=${_max}`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
+
+    this.yAxisScale = Math.ceil(_max * 2);
+    this.yAxisMax = Math.ceil(_max * 1.2);
+    this.yAxisMin = Math.floor(_min * 0.8);
 
     function myfunction(d) {
       return { rundate: d3.timeParse("%Y-%m-%d")(d.rundate), val: d.val };
@@ -144,12 +201,12 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       return d3.axisBottom(x).ticks(10);
     }
 
-    console.log("data " + JSON.stringify(data));
+    //console.log("data " + JSON.stringify(data));
 
     logDebug(
       this.recordId,
       `${COMPONENT}.renderLineChart(): data=${JSON.stringify(data)}`,
-      `${COMPONENT}.renderLineChart(): preparing to draw a line chart, data logged`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -160,12 +217,10 @@ export default class D3HorizontalLollipopChart extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.renderLineChart(): width=${width} height=${height} margin=${JSON.stringify(
+      `${COMPONENT}.renderLineChart(): Dimensions==> width=${width} height=${height} margin=${JSON.stringify(
         margin
       )}`,
-      `${COMPONENT}.renderLineChart(): width=${width} height=${height} margin=${JSON.stringify(
-        margin
-      )}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
     console.log("cleaning  up  svg");
@@ -175,9 +230,9 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     svg.selectAll("*").remove();
 
     // append the svg object to the body of the page
-    console.log(
-      `setting up svg yAxisScale= ${JSON.stringify(this.yAxisScale)})`
-    );
+    // console.log(
+    //   `setting up svg yAxisScale= ${JSON.stringify(this.yAxisScale)})`
+    // );
 
     svg = d3
       .select(this.template.querySelector(".horizontal-lollipop-chart"))
@@ -212,7 +267,10 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .call(make_x_gridlines().tickSize(-height).tickFormat(""));
 
     // Add Y axis
-    var y = d3.scaleLinear().domain([0, this.yAxisScale]).range([height, 0]);
+    var y = d3
+      .scaleLinear()
+      .domain([this.yAxisMin, this.yAxisMax])
+      .range([height, 0]);
 
     svg.append("g").call(d3.axisLeft(y));
 
@@ -266,7 +324,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .style("font-size", "18px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text(`EXPERIMENTAL - Plotting ${this.mode} Client Objectives`);
+      .text(`EXPERIMENTAL - Plotting Client Objectives`);
 
     svg
       .append("text")
@@ -277,63 +335,126 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       .style("fill", "grey")
       .style("max-width", 400)
       .text("Client Objective Time Series, auto refreshed Sunday 10pm");
-
-    // Parse the Data
-    // Add X axis
-
-    // svg
-    //   .selectAll("mybar")
-    //   .data(data)
-    //   .enter()
-    //   .append("rect")
-    //   .attr("x", function (d) {
-    //     return x(d.week);
-    //   })
-    //   .attr("y", function (d) {
-    //     return y(d.val);
-    //   })
-    //   .attr("width", x.bandwidth())
-    //   .attr("height", function (d) {
-    //     return height - y(d.val);
-    //   })
-    //   .attr("fill", "#69b3a2");
   }
-
-  // handleClickMax(event) {
-  //   this.clickedButtonLabel = event.target.label;
-  //   this.renderHorizontalLollipopChart(this.mydata, "MaxEmployees");
-  // }
-  // handleClickAvg(event) {
-  //   this.clickedButtonLabel = event.target.label;
-  //   this.renderHorizontalLollipopChart(this.mydata, "AvgEmployees");
-  // }
 
   handleClick(event) {
     this.mode = event.target.label;
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3COTimeSeriesJson`,
-      `Clicked ${this.mode}, calling generateD3COTimeSeriesJson `,
+      `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3COTSJsonByProgramAndSD`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
-    generateD3COTimeSeriesJson({
+    generateD3COTSJsonByProgramAndSD({
       clientId: this.recordId,
+      program: "All",
+      sd: "All",
       status: this.mode
     }).then((response) => {
       logDebug(
         this.recordId,
-        `${COMPONENT}.handleClick(): Apex returned reponse ${response}`,
-        `${COMPONENT}.handleClick(): Apex response returned and logged, calling this.renderLineChart(response)`,
+        `${COMPONENT}.handleClick(): Apex generateD3COTSJsonByProgramAndSD returned reponse ${response}`,
+        `${SCENARIO}`,
         `${TAG}`
-      );
-
-      console.log(
-        "calling generateD3COTimeSeriesJson,response=" +
-          JSON.stringify(response)
       );
       this.renderLineChart(response);
     });
+  }
+
+  handleSDChange(event) {
+    console.log("in handleSDChange " + event.detail.value);
+    const selectedOption = event.detail.value;
+    this.sdoptions = this.sdoptions.map((row) => {
+      return { ...row, isChecked: row.label === selectedOption };
+    });
+    console.log("in handleSDChange " + JSON.stringify(this.sdoptions));
+
+    this.composeOptions();
+  }
+
+  handleStatusChange(event) {
+    console.log("in handleSDChange " + event.detail.value);
+    const selectedOption = event.detail.value;
+    this.statusoptions = this.statusoptions.map((row) => {
+      return { ...row, isChecked: row.label === selectedOption };
+    });
+    console.log("in handleStatusChange " + JSON.stringify(this.statusoptions));
+
+    this.composeOptions();
+  }
+
+  //the Status change handler
+  handleProgramChange(event) {
+    console.log("in handleProgramChange " + event.detail.value);
+
+    const selectedOption = event.detail.value;
+    this.programoptions = this.programoptions.map((row) => {
+      return { ...row, isChecked: row.value === selectedOption };
+    });
+    console.log(
+      "in handleProgramChange " + JSON.stringify(this.programoptions)
+    );
+    this.composeOptions();
+  }
+
+  composeOptions() {
+    console.log("in composeOptions");
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): entering `,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
+
+    //find the curent Program
+    let programoptionJson = this.programoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let programStr = programoptionJson.label;
+
+    //find the curent SD
+    let sdoptionJson = this.sdoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let sdStr = sdoptionJson.label;
+    console.log("programStr=" + programStr + " sdStr=" + sdStr);
+
+    let statusoptionJson = this.statusoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let statusStr = statusoptionJson.value;
+    console.log("statusStr=" + statusStr);
+
+    logDebug(
+      this.recordId,
+      `${COMPONENT}.composeOptions(): calling Apex generateD3COTSJsonByProgramAndSD, clientId=${this.recordId}, statusStr=${statusStr}, programStr=${programStr}, sdStr=${sdStr}`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
+
+    generateD3COTSJsonByProgramAndSD({
+      clientId: this.recordId,
+      program: programStr,
+      sd: sdStr,
+      status: statusStr
+    })
+      .then((response) => {
+        console.log(response);
+        this.renderLineChart(response);
+      })
+      .catch((error) => {
+        this.error = error;
+        logError(
+          this.recordId,
+          `${COMPONENT}.composeOptions(): Apex call returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+      });
   }
 }

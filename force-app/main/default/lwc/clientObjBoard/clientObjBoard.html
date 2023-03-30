@@ -1,132 +1,149 @@
 <!-- sldsValidatorIgnore -->
 <!--The Picklist Filters at the top of the component-->
 <template>
-  <lightning-layout> 
+  <lightning-layout>
     <lightning-layout-item size="3">
-    <lightning-combobox
-    name="stageFilter"
-    label="Select a stage"
-    value={stageFilter}
-    options={stageOptions}
-    onchange={handleFilterChange}
-  ></lightning-combobox>
-</lightning-layout-item>
-<lightning-layout-item size="3">
-  <lightning-combobox
-    name="statusFilter"
-    label="Select a status"
-    value={statusFilter}
-    options={statusOptions}
-    onchange={handleObjStatusChange}
-  ></lightning-combobox>
-</lightning-layout-item>
-<lightning-layout-item size="3">
-  <lightning-combobox
-  name="programFilter"
-  label="Select a Program"
-  value={programFilter}
-  options={programOptions}
-  onchange={handleProgramChange}
-></lightning-combobox>
-</lightning-layout-item>
-<lightning-layout-item size="3">
-<lightning-button
-            label="Refresh"
-            title="Refresh"
-            onclick={handleRefresh}
-            class="slds-var-m-left_x-small"
-          ></lightning-button>
-        </lightning-layout-item>
-        </lightning-layout>
-<!--Displaying the Tiles on a board with the value of the record.field chnaging the css class-->
+      <lightning-combobox
+        name="stageFilter"
+        label="Select a stage"
+        value={stageFilter}
+        options={stageOptions}
+        onchange={handleFilterChange}
+      ></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item size="3">
+      <lightning-combobox
+        name="statusFilter"
+        label="Select a status"
+        value={statusFilter}
+        options={statusOptions}
+        onchange={handleObjStatusChange}
+      ></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item size="3">
+      <lightning-combobox
+        name="programFilter"
+        label="Select a Program"
+        value={programFilter}
+        options={programOptions}
+        onchange={handleProgramChange}
+      ></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item size="3">
+      <lightning-button
+        label="Refresh"
+        title="Refresh"
+        onclick={handleRefresh}
+        class="slds-var-m-left_x-small"
+      ></lightning-button>
+    </lightning-layout-item>
+  </lightning-layout>
+  <!--Displaying the Tiles on a board with the value of the record.field chnaging the css class-->
   <lightning-layout>
     <div class="board">
-  <template if:true={fobjectives}>
-      <template for:each={fobjectives} for:item="record">
+      <template if:true={fobjectives}>
+        <template for:each={fobjectives} for:item="record">
+          <div class="tile" key={record.Id}>
+            <div class={record.Status__c}>
+              {record.Objective_Name__c}--{record.Status__c}
+            </div>
 
-        <div class="tile" 
-        key={record.Id}>
-        
-        
-        <div class={record.Status__c}>{record.Objective_Name__c}--{record.Status__c}</div>
-       
-      
-        <div class="tile__body">
-          
-          <p><b>Program:</b>{record.Program_Name__c}</p>
-          <p><b>SD:</b>{record.SD_Name__c}</p>
-        <br/>
-         <div><p><b>Notes:</b> {record.Client_Objective_Notes__c}</p></div> 
-         <br/>
-          <lightning-button-icon
-                   label="Edit"
-                    variant="border-filled"
-                    icon-name="utility:edit"
-                    onclick={openModal}
-                    data-id={record.Id}
-                    class="edit-button"
-                ></lightning-button-icon>
-        </div>
+            <div class="tile__body">
+              <p><b>Program:</b>{record.Program_Name__c}</p>
+              <p><b>SD:</b>{record.SD_Name__c}</p>
+              <br />
+              <div>
+                <p><b>Notes:</b> {record.Client_Objective_Notes__c}</p>
+              </div>
+              <br />
+              <lightning-button-icon
+                label="Edit"
+                variant="border-filled"
+                icon-name="utility:edit"
+                onclick={openModal}
+                data-id={record.Id}
+                class="edit-button"
+              ></lightning-button-icon>
+            </div>
           </div>
+        </template>
       </template>
-  </template>
-  <template if:true={error}>
-      <p>{error}</p>
-  </template>
+      <template if:true={error}>
+        <p>{error}</p>
+      </template>
 
-
-
-<!--Use template if:true to display/hide popup based on isModalOpen value--> 
-<template if:true={isModalOpen}>
-  <!-- Modal/Popup Box LWC starts here -->
-  <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open custom-modal">
-      <div class="slds-modal__container">
-
-          <!-- Modal/Popup Box LWC header here -->
-          <header class="slds-modal__header">
-              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
-                  <lightning-icon icon-name="utility:close"
-                      alternative-text="close"
-                      variant="inverse"
-                      size="small" ></lightning-icon>
-                  <span class="slds-assistive-text">Close</span>
+      <!--Use template if:true to display/hide popup based on isModalOpen value-->
+      <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section
+          role="dialog"
+          tabindex="-1"
+          aria-labelledby="modal-heading-01"
+          aria-modal="true"
+          aria-describedby="modal-content-id-1"
+          class="slds-modal slds-fade-in-open custom-modal"
+        >
+          <div class="slds-modal__container">
+            <!-- Modal/Popup Box LWC header here -->
+            <header class="slds-modal__header">
+              <button
+                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                title="Close"
+                onclick={closeModal}
+              >
+                <lightning-icon
+                  icon-name="utility:close"
+                  alternative-text="close"
+                  variant="inverse"
+                  size="small"
+                ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
               </button>
-              
-          </header>
-          <!-- Modal/Popup Box LWC body starts here 
+            </header>
+            <!-- Modal/Popup Box LWC body starts here 
             Call Flow passing attributes from Tile via the Button -->
-          
-       
-         <!-- Some Text Content to display on Modal Screen  -->
-          
-          <div class="slds-modal__content slds-p-around_medium" >
-            <!-- 
+
+            <!-- Some Text Content to display on Modal Screen  -->
+
+            <div class="slds-modal__content slds-p-around_medium">
+              <!-- 
             <p><b>This where the record form will display  
               </b></p>
               <p>The items are filtered so only items not in the Client Objective list display.
               </p>
               <p>Current Record {currentRecord}</p>   -->
-          
-          
-            <lightning-record-form
+
+              <lightning-record-form
                 record-id={currentRecord}
                 object-api-name="Client_Objective__c"
                 columns="2"
                 mode="edit"
-                layout-type="Compact">
-            </lightning-record-form>
-          </div> 
+                layout-type="Compact"
+              >
+              </lightning-record-form>
+            </div>
 
-          <!-- Modal/Popup Box LWC footer starts here -->
-          <footer class="slds-modal__footer">
-              <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
-              <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button> 
-             
-          </footer>  
-      </div>
-  </section>
- <!-- <div class="slds-backdrop slds-backdrop_open"></div> -->
-</template>
-</div>
+            <!-- Modal/Popup Box LWC footer starts here -->
+            <footer class="slds-modal__footer">
+              <button
+                class="slds-button slds-button_neutral"
+                onclick={closeModal}
+                title="Cancel"
+              >
+                Cancel
+              </button>
+              <button
+                class="slds-button slds-button_brand"
+                onclick={submitDetails}
+                title="OK"
+              >
+                OK
+              </button>
+            </footer>
+          </div>
+        </section>
+        <!-- <div class="slds-backdrop slds-backdrop_open"></div> -->
+      </template>
+    </div>
   </lightning-layout>
 </template>

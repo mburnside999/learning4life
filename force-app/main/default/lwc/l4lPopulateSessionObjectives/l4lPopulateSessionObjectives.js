@@ -8,11 +8,12 @@ import { CurrentPageReference } from "lightning/navigation";
 // Lightning Message Service
 import { publish, MessageContext } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
-import { logDebug, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
 const COMPONENT = "l4lPopulateSessionObjectives";
 const TAG = "L4L-Populate-Session-Objectives";
+const SCENARIO = "Score the Session Objectives for a client";
 
 const COLOR = "color:olive"; //for console log formatting
 
@@ -75,19 +76,19 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
           `${TAG}`
         );
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): colummns=${this.columns}`,
-          `${COMPONENT}.connectedCallback(): colummns=${this.columns}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
-        logDebug(
+        logInfo(
           this.recordId,
-          `${COMPONENT}.connectedCallback() calling initial refresh `,
-          `${COMPONENT}.connectedCallback() calling initial refresh`,
+          `${COMPONENT}.connectedCallback(): all good, calling initial refresh `,
+          `${SCENARIO}`,
           `${TAG}`
         );
         this.refresh();
@@ -98,9 +99,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -110,11 +109,10 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   refresh() {
     console.info(`%crefresh(): entering`, COLOR);
     console.debug(`%crefresh(): calling getClientObjectivesForSession`, COLOR);
-
     logDebug(
       this.recordId,
       `${COMPONENT}.refresh(): calling Apex getClientObjectivesForSession`,
-      `${COMPONENT}.refresh(): refreshing assigned client objectives, calling Apex getClientObjectivesForSession`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -127,7 +125,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.refresh(): Apex getClientObjectivesForSession returned ${result.length} records`,
-          `${COMPONENT}.refresh(): returned ${result.length} client objective records`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -136,14 +134,14 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           `${COMPONENT}.refresh(): Apex getSessionObjectives result= ${JSON.stringify(
             result
           )}`,
-          `${COMPONENT}.refresh(): logged result records`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
         logDebug(
           this.recordId,
           `${COMPONENT}.refresh(): setting this.filterableObjectives = result `,
-          `${COMPONENT}.refresh(): setting this.filterableObjectives = result `,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -155,7 +153,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.refresh(): error=${JSON.stringify(error)}`,
-          `client objectives refresh failed`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -169,7 +167,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       `${COMPONENT}.getSelectedName() this.selectedRows=${JSON.stringify(
         myselectedRows
       )}`,
-      `${COMPONENT}.getSelectedName(): check boxed a client objective row, logged selectedRows`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -184,7 +182,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.getSelectedName() this.breadcrumb=${this.breadcrumb}`,
-        `${COMPONENT}.getSelectedName(): this.breadcrumb=${this.breadcrumb}`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -193,7 +191,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         `${COMPONENT}.getSelectedName() this.selectedRows=${JSON.stringify(
           this.selectedRows
         )}`,
-        `${COMPONENT}.getSelectedName(): setting myselectedRows=this.selectedRows`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -203,7 +201,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.getSelectedName() selectCount=${this.selectCount}`,
-        `${COMPONENT}.getSelectedName(): this.selectCount=${this.selectCount} rows`,
+        `${SCENARIO}`,
         `${TAG}`
       );
     }
@@ -213,7 +211,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleIncrCorrect(): clicked Correct`,
-      `${COMPONENT}.handleIncrCorrect(): clicked Correct`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -226,7 +224,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         `${COMPONENT}.handleIncrCorrect() this.skillstring=${JSON.stringify(
           this.skillstring
         )} this.results=${JSON.stringify(this.results)}`,
-        `${COMPONENT}.handleIncrCorrect(): pushing C to results and { skill : C } to skillstring -- all logged`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -235,7 +233,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.handleIncrCorrect(): this.correctCount=${this.correctCount}`,
-        `${COMPONENT}.handleIncrCorrect(): this.correctCount=${this.correctCount}`,
+        `${SCENARIO}`,
         `${TAG}`
       );
     }
@@ -245,7 +243,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.resetCounters(): reset all counters `,
-      `${COMPONENT}.resetCounters(): Clicked Reset, resetting all counters`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -262,7 +260,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleIncrIncorrect()`,
-      `${COMPONENT}.handleIncrIncorrect(): Clicked Incorrect`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -275,7 +273,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         `${COMPONENT}.handleIncrIncorrect() this.skillstring=${JSON.stringify(
           this.skillstring
         )} this.results=${JSON.stringify(this.results)}`,
-        `${COMPONENT}.handleIncrIncorrect(): pushing I to results and { skill : I } to skillstring -- all logged`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -284,7 +282,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.handleIncrIncorrect(): this.incorrectCount=${this.incorrectCount}`,
-        `${COMPONENT}.handleIncrIncorrect(): this.incorrectCount=${this.incorrectCount}`,
+        `${SCENARIO}`,
         `${TAG}`
       );
     }
@@ -294,7 +292,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleIncrNonResponsive()`,
-      `${COMPONENT}.handleIncrNonResponsive(): Clicked Non-Responsive`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -307,7 +305,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         `${COMPONENT}.handleIncrNonResponsive() this.skillstring=${JSON.stringify(
           this.skillstring
         )} this.results=${JSON.stringify(this.results)}`,
-        `${COMPONENT}.handleIncrNonResponsive(): pushing N to results and { skill : N } to skillstring -- all logged`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -315,7 +313,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.handleIncrNonResponsive(): this.nonResponsiveCount=${this.nonResponsiveCount}`,
-        `${COMPONENT}.handleIncrNonResponsive(): this.nonResponsiveCount=${this.nonResponsiveCount}`,
+        `${SCENARIO}`,
         `${TAG}`
       );
     }
@@ -325,7 +323,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleIncrPrompted()`,
-      `${COMPONENT}.handleIncrPrompted(): Clicked Prompted`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -338,7 +336,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         `${COMPONENT}.handleIncrPrompted() this.skillstring=${JSON.stringify(
           this.skillstring
         )} this.results=${JSON.stringify(this.results)}`,
-        `${COMPONENT}.handleIncrPrompted(): pushing P to results and { skill : P } to skillstring -- all logged`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -347,7 +345,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.handleIncrPrompted(): this.promptedCount=${this.promptedCount}`,
-        `${COMPONENT}.handleIncrPrompted(): this.promptedCount=${this.promptedCount}`,
+        `${SCENARIO}`,
         `${TAG}`
       );
     }
@@ -367,7 +365,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickArray(): entering`,
-      `${COMPONENT}.handleClickArray(): pressed Record Assessment`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -377,14 +375,14 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         `${COMPONENT}.handleClickArray(): this.selectedRows=${JSON.stringify(
           this.selectedRows
         )}`,
-        `${COMPONENT}.handleClickArray():this.selectedRows logged`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
       logDebug(
         this.recordId,
         `${COMPONENT}.handleClickArray(): calling Apex createSessionObjectivesByArrayWithOrderedResults()`,
-        `${COMPONENT}.handleClickArray(): creating session objectives via Apex`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 
@@ -395,7 +393,8 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         )},sess=${this.recordId},skillstring=${JSON.stringify(
           this.skillstring
         )} `,
-        `${COMPONENT}.handleClickArray(): Apex parameters logged`
+        `${SCENARIO}`,
+        `${TAG}`
       );
 
       createSessionObjectivesByArrayWithOrderedResults({
@@ -410,7 +409,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
             `${COMPONENT}.handleClickArray(): Apex returned result: ${JSON.stringify(
               result
             )}`,
-            `${COMPONENT}.handleClickArray(): Apex call to create session objectives returned, all good, record payload logged`,
+            `${SCENARIO}`,
             `${TAG}`
           );
         })
@@ -432,7 +431,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           logDebug(
             this.recordId,
             `${COMPONENT}.handleClickArray(): resetting counters, calling this.resetCounters()`,
-            `${COMPONENT}.handleClickArray(): resetting counters, calling this.resetCounters()`,
+            `${SCENARIO}`,
             `${TAG}`
           );
           this.resetCounters();
@@ -443,7 +442,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           logError(
             this.recordId,
             `${COMPONENT}.handleClickArray(): error=${JSON.stringify(error)}`,
-            `${COMPONENT}.handleClickArray(): error=${JSON.stringify(error)}`,
+            `${SCENARIO}`,
             `${TAG}`
           );
         })
@@ -460,9 +459,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
             `${COMPONENT}.handleClickArray(): publishing message via L4LMC, message=${JSON.stringify(
               message
             )}`,
-            `${COMPONENT}.handleClickArray(): publishing message to L4LMC, message=${JSON.stringify(
-              message
-            )}`,
+            `${SCENARIO}`,
             `${TAG}`
           );
           publish(this.messageContext, L4LMC, message);
@@ -476,7 +473,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSearchKeyInput(): searchKey=${searchKey}`,
-      `${COMPONENT}.handleSearchKeyInput(): oninput() event called on search input field, searchKey=${searchKey}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -494,7 +491,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       `${COMPONENT}.handleSearchKeyInput(): this.objectives=${JSON.stringify(
         this.objectives
       )}`,
-      `${COMPONENT}.handleSearchKeyInput(): this.objectives logged, size=${this.objectives.length}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
   }
@@ -512,7 +509,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickCancel(): dispatching close() CustomEvent`,
-      `${COMPONENT}.handleClickCancel(): dispatching close() CustomEvent `,
+      `${SCENARIO}`,
       `${TAG}`
     );
 

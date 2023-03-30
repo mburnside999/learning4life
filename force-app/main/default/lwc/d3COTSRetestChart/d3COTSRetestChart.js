@@ -5,10 +5,11 @@ import D3 from "@salesforce/resourceUrl/d3";
 import generateD3CORetestTimeSeriesJson from "@salesforce/apex/L4LTimeSeries.generateD3CORetestTimeSeriesJson";
 import getD3YAxisScale from "@salesforce/apex/L4LSessionStatsController.getD3RetestYAxisScale";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3COTSRetestChart";
 const TAG = "L4L-Session-Statistics-D3COTSRetestChart";
+const SCENARIO = "Viewing the D3 Re-Test line chart";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
@@ -35,10 +36,10 @@ export default class D3COTSRetestChart extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
-        logDebug(
+        logInfo(
           this.recordId,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -49,9 +50,7 @@ export default class D3COTSRetestChart extends LightningElement {
           `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
             error
           )}`,
-          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
-            error
-          )}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -70,7 +69,7 @@ export default class D3COTSRetestChart extends LightningElement {
         logDebug(
           this.recordId,
           `${COMPONENT}.renderedCallback(): calling generateD3CORetestTimeSeriesJson, status=All`,
-          `${COMPONENT}.renderedCallback(): calling generateD3CORetestTimeSeriesJson, status=All`,
+          `${SCENARIO}`,
           `${TAG}`
         );
         return generateD3CORetestTimeSeriesJson({
@@ -83,7 +82,7 @@ export default class D3COTSRetestChart extends LightningElement {
           this.recordId,
           `${COMPONENT}.renderedCallback(): generateD3CORetestTimeSeriesJson returned ${response}
           }`,
-          `${COMPONENT}.renderedCallback(): response received and logged, calling this.renderLineChart`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -93,7 +92,7 @@ export default class D3COTSRetestChart extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
-          `${COMPONENT}.renderedCallback(): error: ${JSON.stringify(error)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
 
@@ -111,10 +110,17 @@ export default class D3COTSRetestChart extends LightningElement {
     // let data = JSON.parse(
     //   '[{"rundate":"2022-11-26","val":60},{"rundate":"2022-12-19","val":64}]'
 
+    logInfo(
+      this.recordId,
+      `${COMPONENT}.renderLineChart(): wrangling data and drawing D3 Line chart`,
+      `${SCENARIO}`,
+      `${TAG}`
+    );
+
     logDebug(
       this.recordId,
       `${COMPONENT}.renderLineChart(): parameter is response=${response})`,
-      `${COMPONENT}.renderLineChart(): in renderLineChart(response), logged parameter`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -138,7 +144,7 @@ export default class D3COTSRetestChart extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.renderLineChart: data=${JSON.stringify(data)}`,
-      `${COMPONENT}.renderLineChart: preparing to draw a line chart, data logged`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -152,9 +158,7 @@ export default class D3COTSRetestChart extends LightningElement {
       `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
         margin
       )}`,
-      `${COMPONENT}.renderLineChart: width=${width} height=${height} margin=${JSON.stringify(
-        margin
-      )}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
     console.log("cleaning  up  svg");
@@ -304,7 +308,7 @@ export default class D3COTSRetestChart extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClick(): this.mode=${this.mode}, calling generateD3CORetestTimeSeriesJson`,
-      `Clicked ${this.mode}, calling generateD3CORetestTimeSeriesJson `,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -315,7 +319,7 @@ export default class D3COTSRetestChart extends LightningElement {
       logDebug(
         this.recordId,
         `${COMPONENT}.handleClick(): Apex returned reponse ${response}`,
-        `${COMPONENT}.handleClick(): Apex response returned and logged, calling this.renderLineChart(response)`,
+        `${SCENARIO}`,
         `${TAG}`
       );
 

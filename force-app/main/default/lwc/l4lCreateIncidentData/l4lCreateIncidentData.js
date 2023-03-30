@@ -1,12 +1,13 @@
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 //debugging
 const COMPONENT = "l4lCreateIncidentData";
 const TAG = "L4L-Manage-Session-Incidents";
 const COLOR = "color:purple"; //for console log formatting
+const SCENARIO = "Record session incidents"; //for console log formatting
 
 export default class L4lCreateIncidentData extends LightningElement {
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing
@@ -22,10 +23,10 @@ export default class L4lCreateIncidentData extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
-        logDebug(
+        logInfo(
           this.recordId,
           `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
-          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
           `${TAG}`
         );
       })
@@ -34,7 +35,7 @@ export default class L4lCreateIncidentData extends LightningElement {
         logError(
           this.recordId,
           `${COMPONENT}.connectedCallback(): error: ${JSON.stringify(error)} `,
-          `${COMPONENT}.connectedCallback(): error: ${JSON.stringify(error)}`,
+          `${SCENARIO}`,
           `${TAG}`
         );
       });
@@ -79,12 +80,7 @@ export default class L4lCreateIncidentData extends LightningElement {
   }
 
   start(event) {
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.start()`,
-      `${COMPONENT}.start()`,
-      `${TAG}`
-    );
+    logDebug(this.recordId, `${COMPONENT}.start()`, `${SCENARIO}`, `${TAG}`);
 
     this.showStartBtn = false;
     var parentThis = this;
@@ -115,23 +111,13 @@ export default class L4lCreateIncidentData extends LightningElement {
   }
 
   stop(event) {
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.stop()`,
-      `${COMPONENT}.stop()`,
-      `${TAG}`
-    );
+    logDebug(this.recordId, `${COMPONENT}.stop()`, `${SCENARIO}`, `${TAG}`);
     this.showStartBtn = true;
     clearInterval(this.timeIntervalInstance);
   }
 
   reset(event) {
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.reset()`,
-      `${COMPONENT}.reset()`,
-      `${TAG}`
-    );
+    logDebug(this.recordId, `${COMPONENT}.reset()`, `${SCENARIO}`, `${TAG}`);
     console.info(`%creset(): entering`, COLOR);
     this.showStartBtn = true;
     this.timeVal = "00:00:00";
@@ -159,7 +145,7 @@ export default class L4lCreateIncidentData extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSuccess() - successfully saved incident`,
-      `${COMPONENT}.handleSuccess() - successfully saved incident`,
+      `${SCENARIO}`,
       `${TAG}`
     );
     const evt = new ShowToastEvent({
