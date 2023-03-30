@@ -27,7 +27,7 @@ public with sharing class L4LNebulaComponentController {
     String tag
   ) {
     Logger.setScenario(scenario);
-    Logger.info(message);
+    Logger.info(message).setRecordId(recordId).addTag(tag);
     saveNebulaLog();
   }
 
@@ -39,7 +39,7 @@ public with sharing class L4LNebulaComponentController {
     String tag
   ) {
     Logger.setScenario(scenario);
-    Logger.fine(message);
+    Logger.fine(message).setRecordId(recordId).addTag(tag);
     saveNebulaLog();
   }
 
