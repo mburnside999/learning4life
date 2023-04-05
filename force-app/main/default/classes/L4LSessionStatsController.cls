@@ -1,4 +1,26 @@
+/**************************************************************
+ * @author	Mike Burnside
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description	main session stats generator.
+ *
+ */
+
 public with sharing class L4LSessionStatsController {
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
+
   @AuraEnabled(cacheable=true)
   public static LFL_Stats_Boundary__mdt getHighAndLowBoundaries() {
     L4LNebulaComponentController.setupCache();
@@ -23,6 +45,19 @@ public with sharing class L4LSessionStatsController {
 
     return lflStatsBoundaries;
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
 
   @AuraEnabled(cacheable=true)
   public static List<session_statistics__c> getD3SessionStatsHistogramData(
@@ -52,6 +87,19 @@ public with sharing class L4LSessionStatsController {
     System.debug(results);
     return results;
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
 
   @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getSessionStats(String searchKey) {
@@ -96,6 +144,20 @@ public with sharing class L4LSessionStatsController {
 
     return results;
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
+
   @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getD3Stats(
     String clientId,
@@ -111,39 +173,6 @@ public with sharing class L4LSessionStatsController {
       'L4LSessionStatsController.getD3Stats()',
       'next-gen-nebula-apex'
     );
-
-    // List<Session_Statistics__c> results = new List<Session_Statistics__c>();
-    // if (showAcquired) {
-    //   results = [
-    //     SELECT
-    //       session__r.name,
-    //       session__r.client__c,
-    //       session__r.client__r.name,
-    //       program_name__c,
-    //       objective__r.name,
-    //       session__r.Date__c,
-    //       previous_status__c,
-    //       Percent_Correct__c
-    //     FROM Session_Statistics__c
-    //     WHERE session__r.client__c = :clientId AND previous_status__c = 'ACQ'
-    //   ];
-    // } else {
-    //   results = [
-    //     SELECT
-    //       session__r.name,
-    //       session__r.client__c,
-    //       session__r.client__r.name,
-    //       program_name__c,
-    //       objective__r.name,
-    //       session__r.Date__c,
-    //       previous_status__c,
-    //       Percent_Correct__c
-    //     FROM Session_Statistics__c
-    //     WHERE session__r.client__c = :clientId
-    //   ];
-    // }
-
-    // return results;
 
     String querySessionStatsString =
       'SELECT session__r.name, session__r.client__c, session__r.client__r.name, program_name__c, ' +
@@ -176,6 +205,19 @@ public with sharing class L4LSessionStatsController {
 
     return results;
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
 
   @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getD3StatsByProgram(
@@ -229,6 +271,19 @@ public with sharing class L4LSessionStatsController {
     return results;
   }
 
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
+
   @AuraEnabled(cacheable=true)
   public static List<AggregateResult> getClientObjectivesByProgram(
     String clientId
@@ -261,6 +316,19 @@ public with sharing class L4LSessionStatsController {
     );
     return results;
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3YAxisScale(String clientId) {
@@ -361,6 +429,19 @@ public with sharing class L4LSessionStatsController {
   }
 
   //
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3RetestYAxisScale(String clientId) {
@@ -466,6 +547,19 @@ public with sharing class L4LSessionStatsController {
     return result;
   }
 
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
+
   @AuraEnabled(cacheable=true)
   public static Integer getD3StatusYAxisScale(String clientId) {
     L4LNebulaComponentController.setupCache();
@@ -525,6 +619,19 @@ public with sharing class L4LSessionStatsController {
 
     return result;
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
 
   @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getD3StatsByProgramAndSD(
@@ -608,6 +715,20 @@ public with sharing class L4LSessionStatsController {
 
     return results;
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
+
   @AuraEnabled(Cacheable=true)
   public static List<Program__c> getProgramsAndSds(String stageStr) {
     L4LNebulaComponentController.setupCache();
@@ -651,6 +772,19 @@ public with sharing class L4LSessionStatsController {
     return results;
   }
 
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
+
   @AuraEnabled(Cacheable=true)
   public static List<AggregateResult> getClientObjectivesSDCount(
     String clientId
@@ -675,6 +809,19 @@ public with sharing class L4LSessionStatsController {
       ORDER BY count(id)
     ];
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
 
   @AuraEnabled(cacheable=true)
   public static String generateD3ProgramAreaSDJson(
@@ -892,7 +1039,19 @@ public with sharing class L4LSessionStatsController {
     return jsonstr;
   }
 
-  // experimental
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
+
   @AuraEnabled(cacheable=true)
   public static String generateD3AreaSDJson(String clientId, String stageStr) {
     L4LNebulaComponentController.setupCache();
@@ -1055,6 +1214,19 @@ public with sharing class L4LSessionStatsController {
 
     return jsonstr;
   }
+
+  /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
 
   @AuraEnabled(cacheable=true)
   public static List<String> getProgramSetFromCO(String clientId) {
