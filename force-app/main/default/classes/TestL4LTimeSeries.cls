@@ -94,4 +94,26 @@ class TestL4LTimeSeries {
     String str = L4LTimeSeries.generateD3COTimeSeriesByStatusJson(clientId);
     System.assert(str.length() > 0, 'Expected a return string');
   }
+
+  @isTest
+  static void testGenD3COTSThresholdJson() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    L4LTimeSeries tstest = new L4LTimeSeries();
+    Integer i = tstest.loadCOTimeSeries();
+    // for (client_objective_timeseries__c c : [
+    //   SELECT id, ts_load_datetime__c
+    //   FROM client_objective_timeseries__c
+    // ]) {
+    //   DateTime newdt = DateTime.now();
+    //c.ts_load_datetime__c = newdt.addDays(7);
+    // update c;
+    //}
+    Test.stopTest();
+
+    L4LTimeSeries ts = new L4LTimeSeries();
+    String str = L4LTimeSeries.generateD3COTSThresholdJson(clientId, 100, 200);
+    System.assert(str.length() > 0, 'Expected a return string');
+  }
 }

@@ -78,7 +78,7 @@ export default class D3DTDRates extends LightningElement {
         );
         return getDTDRateArray({
           clientId: this.recordId,
-          iters: "12"
+          iters: "26"
         });
       })
       .then((response) => {
@@ -129,7 +129,16 @@ export default class D3DTDRates extends LightningElement {
       `${TAG}`
     );
 
-    let datatmp = JSON.parse(response);
+    let parsedResponse = JSON.parse(response);
+    console.log("Session duration = " + parsedResponse.duration);
+    let datatmp = parsedResponse.data;
+
+    // datatmp.sort(function (a, b) {
+    //   if (a.endd < b.endd) {
+    //     return -1;
+    //   }
+    // });
+
     function findMinMax(key) {
       const datas = datatmp.map((node) => node[key]);
 

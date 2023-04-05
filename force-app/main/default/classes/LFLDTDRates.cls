@@ -13,9 +13,13 @@ public with sharing class LFLDTDRates {
 
     DateTime endpoint = Datetime.now().addMonths(retro_start_months);
     list<aggregateresult> limitDatesList = [
-      SELECT min(createddate), max(createddate), min(runid__c), max(runid__c)
+      SELECT
+        min(TS_load_DateTime__c),
+        max(TS_load_DateTime__c),
+        min(runid__c),
+        max(runid__c)
       FROM client_objective_timeseries__c
-      WHERE client__c = :clientId AND createddate >= :endpoint
+      WHERE client__c = :clientId AND TS_load_DateTime__c >= :endpoint
     ];
 
     jsonStr = buildJson(clientId, limitDatesList);
@@ -41,9 +45,16 @@ public with sharing class LFLDTDRates {
     }
 
     list<aggregateresult> limitDatesList = [
-      SELECT min(createddate), max(createddate), min(runid__c), max(runid__c)
+      SELECT
+        min(TS_load_DateTime__c),
+        max(TS_load_DateTime__c),
+        min(runid__c),
+        max(runid__c)
       FROM client_objective_timeseries__c
-      WHERE client__c = :clientId AND createddate > :dt1 AND createddate <= :dt2
+      WHERE
+        client__c = :clientId
+        AND TS_load_DateTime__c > :dt1
+        AND TS_load_DateTime__c <= :dt2
     ];
 
     jsonStr = buildJson(clientId, limitDatesList);
@@ -69,6 +80,7 @@ public with sharing class LFLDTDRates {
       jsonStr += ',"sessionCount":' + 0;
       jsonStr += ',"weeks":' + 0;
       jsonStr += ',"acquiredPerSession":' + 0;
+      jsonStr += ',"totalSessionDurationHrs":' + 0;
       jsonStr += '}';
       return jsonStr;
     }
@@ -77,12 +89,13 @@ public with sharing class LFLDTDRates {
     DateTime enddt = (DateTime) limitDates.get('expr1');
     String startRunId = (String) limitDates.get('expr2');
     String endRunId = (String) limitDates.get('expr3');
+    System.debug('startRunId=' + startRunId + ' , endRunId=' + endRunid);
 
     //coerce DateTimes to Dates for elapsed calcs
     Date startd = startdt.date();
     Date endd = enddt.date();
 
-    // work out the number of acquired skills at the start
+   // work out the number of acquired skills at the start
     list<aggregateresult> startingACQCountList = [
       SELECT count(id)
       FROM client_objective_timeseries__c
@@ -94,13 +107,21 @@ public with sharing class LFLDTDRates {
 
     Integer startAcquiredCount = (Integer) startingACQCountList[0].get('expr0');
 
-    // work out the number of acquired skills at the end
+    //work out the number of acquired skills at the end
     list<aggregateresult> endingACQCountList = [
       SELECT count(id)
       FROM client_objective_timeseries__c
       WHERE client__c = :clientId AND status__c = 'ACQ' AND runid__c = :endRunId
     ];
+
     Integer endAcquiredCount = (Integer) endingACQCountList[0].get('expr0');
+
+    System.debug(
+      'startAcquiredCount = ' +
+        startAcquiredCount +
+        ' endAcquiredCount=' +
+        endAcquiredCount
+    );
 
     // work out the elapsed days
     Integer elapsed = startd.daysBetween(endd);
@@ -118,12 +139,18 @@ public with sharing class LFLDTDRates {
 
     // work out the number of sessions
     list<aggregateresult> sessionCountList = [
-      SELECT count(id)
+      SELECT count(id), sum(session_length__c)
       FROM session__c
       WHERE client__c = :clientId AND Date__c > :startd AND date__c <= :endd
     ];
 
     Integer sessionCount = (Integer) sessionCountList[0].get('expr0');
+
+    Decimal totalSessionDurationHrs = (Decimal) sessionCountList[0]
+      .get('expr1');
+
+    if (totalSessionDurationHrs == null)
+      totalSessionDurationHrs = 1.0;
 
     Decimal acquiredPerSession;
     if (sessionCount != 0) {
@@ -158,6 +185,8 @@ public with sharing class LFLDTDRates {
     jsonStr += ',"sessionCount":' + sessionCount;
     jsonStr += ',"weeks":' + weeks.setScale(2);
     jsonStr += ',"acquiredPerSession":' + acquiredPerSession.setScale(2);
+    jsonStr +=
+      ',"totalSessionDurationHrs":' + totalSessionDurationHrs.setScale(2);
 
     jsonStr += '}';
 

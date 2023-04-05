@@ -1,6 +1,23 @@
+/**************************************************************
+ * @author	Mike Burnside
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description	main LWC controller class.
+ *
+ */
+
 public with sharing class L4LController {
-  // Please Note: As of January 17, 2022 this is the controller for all L4L lwcs
-  //
+  /*******************************************************************************************************
+   * @description returns the status of a given session
+   * @param recordId the Session ID
+   *
+   * @return session status as String
+   *
+   * @example
+   * String status=L4LController.getSessionStatus(recordId);
+   */
+
   @AuraEnabled(cacheable=false)
   public static String getSessionStatus(String recordId) {
     L4LNebulaComponentController.setupCache();
@@ -28,6 +45,17 @@ public with sharing class L4LController {
 
     return sessionStatus;
   }
+
+  /*******************************************************************************************************
+   * @description returns a list of 50 popular Client Objectives, ignoring those that
+   * have been already allocated to the client.
+   *
+   * @param clientId the client Id
+   * @return list of popular Client Objectives
+   *
+   * @example
+   * List<client_objective__c> coList = L4LController.getPopularObjectives(clientId)
+   */
 
   @AuraEnabled(cacheable=false)
   public static List<Objective__c> getPopularObjectives(String clientId) {
@@ -85,6 +113,16 @@ public with sharing class L4LController {
     return objList;
   }
 
+  /*******************************************************************************************************
+   * @description returns a list session objectives for a session.
+   *
+   * @param sess, the session Id
+   * @return the list of session objectives
+   *
+   * @example
+   * List<session_obj__c> soList = L4LController.getSessionObjectives(sess)
+   */
+
   @AuraEnabled(cacheable=false)
   public static List<Session_obj__c> getSessionObjectives(String sess) {
     L4LNebulaComponentController.setupCache();
@@ -137,6 +175,19 @@ public with sharing class L4LController {
 
     return retlist;
   }
+
+  /*******************************************************************************************************
+   * @description returns a list of ACTIVE Client Objectives for a sesssion ordered by
+   * Program Name
+   *
+   * TODO fix parameter name
+   *
+   * @param searchKey, the session Id
+   * @return list of Client Objectives
+   *
+   * @example
+   * List<client_objective__c> coList = L4LController.getClientObjectivesForSession(sessionId)
+   */
 
   @AuraEnabled
   public static List<Client_Objective__c> getClientObjectivesForSession(
@@ -200,6 +251,18 @@ public with sharing class L4LController {
     return retlist;
   }
 
+  /*******************************************************************************************************
+   * @description returns a list of Client Objectives for a client, ordered by Program Name, Name
+   *
+   * TODO fix parameter name
+   *
+   * @param clientId, the client Id
+   * @return list of Client Objectives
+   *
+   * @example
+   * List<client_objective__c> coList = L4LController.getClientObjectives(clientId)
+   */
+
   @AuraEnabled(cacheable=false)
   public static List<Client_Objective__c> getClientObjectives(String clientId) {
     L4LNebulaComponentController.setupCache();
@@ -261,6 +324,17 @@ public with sharing class L4LController {
     return retlist;
   }
 
+  /*******************************************************************************************************
+   * @description returns a list of all, or active only Client Objectives for a client, ordered by Program Name, Name
+   *
+   * @param clientId the client Id
+   * @param showActiveOnly a flag to indicate whether to show the ACTIVE objectives only
+   * @return list of Client Objectives
+   *
+   * @example
+   * List<client_objective__c> coList = L4LController.getClientObjectivesFilteredOnActive(clientId,true)
+   */
+
   @AuraEnabled(cacheable=false)
   public static List<Client_Objective__c> getClientObjectivesFilteredOnActive(
     String clientId,
@@ -316,6 +390,18 @@ public with sharing class L4LController {
 
     return retlist;
   }
+
+  /*******************************************************************************************************
+   * @description returns a JSON  string summarising ACTIVE, INACTIVE and TOTAL
+   * Client Objectives for a client
+   *
+   * @param clientId, the client Id
+   * @return JSON string summary of statuses
+   *
+   * @example
+   * String aggStr = L4LController.getCOActivationSummary(clientId)
+   * ..returns {"active":20, "inactive":5,"total",25}
+   */
 
   @AuraEnabled(cacheable=false)
   public static String getCOActivationSummary(String clientId) {
@@ -375,6 +461,15 @@ public with sharing class L4LController {
     return retstr;
   }
 
+  /*******************************************************************************************************
+   * @description deactivates a Client Objective
+   * @param clientId the Client Objective Id
+   * @return the deactivated client objective
+   *
+   * @example
+   * List<client_objective__c> coList = L4LController.deactivateClientObjective(clientObjectiveId)
+   */
+
   @AuraEnabled(cacheable=false)
   public static Client_Objective__c deactivateClientObjective(
     String clientObjectiveId
@@ -397,6 +492,15 @@ public with sharing class L4LController {
 
     return co;
   }
+
+  /*******************************************************************************************************
+   * @description returns a list of all active objectives not yet assigned to a client
+   * @param clientId the Client Objective Id
+   * @return list of client objectives not assigned to client
+   *
+   * @example
+   * List<objective__c> coList = L4LController.getUnusedObjectives(clientObjectiveId)
+   */
 
   @AuraEnabled
   public static List<Objective__c> getUnusedObjectives(String clientId) {
@@ -448,6 +552,19 @@ public with sharing class L4LController {
 
     return retlist;
   }
+
+  /*******************************************************************************************************
+   * @description returns a list of all active objectives not yet assigned to this client 
+   * that have a Name like %searchString%
+   * 
+   * @param clientId the Client Objective Id
+   * @param searchstring the search string for the name
+
+   * @return list of client objectives not assigned to client
+   *
+   * @example
+   * List<objective__c> coList = L4LController.getUnusedObjectivesBySearch(clientId,'Banana')
+   */
 
   @AuraEnabled
   public static List<Objective__c> getUnusedObjectivesBySearch(
@@ -512,6 +629,18 @@ public with sharing class L4LController {
     return retlist;
   }
 
+  /*******************************************************************************************************
+   * @description delete all session objectives for the session 
+   * that have a Name like %searchString%
+   * 
+   * @param sessionId the Session Id
+
+   * @return void
+   *
+   * @example
+   * L4LController.deleteSessionObjectives(sessionId)
+   */
+
   @AuraEnabled
   public static void deleteSessionObjectives(String sessionid) {
     L4LNebulaComponentController.setupCache();
@@ -524,6 +653,20 @@ public with sharing class L4LController {
 
     delete [SELECT id FROM Session_Obj__c WHERE session__c = :sessionid];
   }
+
+  /*******************************************************************************************************
+   * @description for a given session, for each client objective in a list create session objectives
+   * from its list of DTD scores
+   *
+   * @param jsonStr a JSON string containing a list of client objectives
+   * @param sess the session Id
+   * @param skillstring a JSON string containing a list of DTD scores
+   *
+   * @return the number of session objectives added
+   *
+   * @example
+   * Integer noOfCreatedSessionObjs = L4LController.createSessionObjectivesByArrayWithOrderedResults(jsonStr,sess,skillstring)
+   */
 
   @AuraEnabled
   public static Integer createSessionObjectivesByArrayWithOrderedResults(
@@ -634,6 +777,18 @@ public with sharing class L4LController {
     return soList.size();
   }
 
+  /*******************************************************************************************************
+   * @description create client objectives from a JSON list of objectives
+   *
+   * @param jsonStr a JSON string containing a list of objectives
+   * @param sess the session Id
+   *
+   * @return the number of session objectives added
+   *
+   * @example
+   * Integer noOfCreatedClientObjs = L4LController.createClientObjectivesByArray(jsonStr,sess)
+   */
+
   @AuraEnabled
   public static Integer createClientObjectivesByArray(
     String jsonstr,
@@ -670,6 +825,18 @@ public with sharing class L4LController {
 
     return objDeserialized.size();
   }
+
+  /*******************************************************************************************************
+   * @description update session objective scores from a JSON list
+   *
+   * @param jsonStr a JSON string containing a list of session objectives to update
+   * @param val the score - "Correct" or "Incorrect" ...etc
+   *
+   * @return the number of session objectives updated
+   *
+   * @example
+   * Integer noOfSessionObjsUpdated = L4LController.setSessionObjectivesByArray(jsonStr,'Correct')
+   */
 
   @AuraEnabled
   public static Integer setSessionObjectivesByArray(
@@ -734,6 +901,20 @@ public with sharing class L4LController {
 
     return soDeserialized.size();
   }
+
+  /*******************************************************************************************************
+   * @description for a list of client objectives, update to a common status or activate/deactivate
+   *
+   * @param jsonStr a JSON string containing a list of client objectives to update
+   * @param val the "ACQ" or "OBJ" or "Activate" or "Deactivate"
+   *
+   * @return the number of client objectives updated
+   *
+   * @example
+   * Integer noOfClientObjsUpdated = L4LController.setClientObjectivesByArray(jsonStr,'ACQ')
+   * Integer noOfClientObjsActivated = L4LController.setClientObjectivesByArray(jsonStr,'Activater')
+
+   */
 
   @AuraEnabled
   public static Integer setClientObjectivesByArray(String jsonstr, String val) {

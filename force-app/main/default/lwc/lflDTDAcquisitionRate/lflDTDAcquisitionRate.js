@@ -17,6 +17,7 @@ export default class LflDTDAcquisitionRate extends LightningElement {
   sessionCount;
   weeks;
   acquiredPerSession;
+  totalduration;
   sd = sd;
   ed = ed;
 

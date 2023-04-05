@@ -302,7 +302,7 @@ String str=LFLDTDRates.getAcquisitionRateByDates('0018t000002vfSfAAI',s,e);
 sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionClientObjectiveMissing
 
 sfdx force:source:deploy -m "ApexClass:L4LDTDRateMaster, ApexClass:TestL4LDTDRateMaster" -u LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LDTDRateMaster
-LFLDTDRateMaster.getDTDRateArray('0018t000002vfSfAAI',3);
+LFLDTDRateMaster.getDTDRateArray('0018t000002vfSfAAI',99);
 
 
 
@@ -323,6 +323,169 @@ SELECT SELECT DurableId, QualifiedApiName, Label, DataType, ValueTypeId, Publish
     ORDER BY Label ASC NULLS FIRST
 
 
+SELECT
+        min(TS_load_DateTime__c),
+        max(TS_load_DateTime__c)
+      FROM client_objective_timeseries__c
+      WHERE
+        client__c = '0018t000002vfSfAAI'
+        AND TS_load_DateTime__c > 2023-02-20T00:00:00Z
+        AND TS_load_DateTime__c <= 2023-03-06T00:00:00Z
+
+      SELECT RunID__c
+      FROM client_objective_timeseries__c
+      WHERE TS_load_DateTime__c <= 2023-02-26T11:00:00.000+0000 limit 1
+        
+
 
 
 sfdx force:data:soql:query --query "SELECT SELECT DurableId, QualifiedApiName, Label, DataType, ValueTypeId, PublisherId, Length, Precision, Scale, EntityDefinitionId, RelationshipName"  --usetoolingapi
+
+
+
+DateTime starting = [select date__c from session__c where client__c='0018t000003DbqmAAC' limit 1].date__C;
+System.debug(starting);
+
+ //DateTime thismoment = DateTime.now();
+    for (Integer i = 0; i < 1000; i++) {
+      DateTime e = starting.addDays(1 * 7 * i);
+      DateTime s = starting.addDays(1 * ((7 * i) + 14));
+      if (e>DateTime.now()) return;
+      //   dtdRateArray.add(
+      //     LFLDTDRates.getAcquisitionRateByDates('0018t000002vfSfAAI', s, e)
+      //   );
+      System.debug(e);
+      
+    }
+
+    st<aggregateresult> acqCountList = [
+      SELECT runid__c, count(id) acqcount
+      FROM client_objective_timeseries__c
+      WHERE
+        client__c = '0018t000002vfSfAAI'
+        AND status__c = 'xxx'
+        AND runid__c IN ('TSL-2023-01-000014')
+      GROUP BY runid__c
+      ORDER BY runid__c
+
+Integer THRESHOLD1=1;
+Integer THRESHOLD2=2;
+Decimal valueAtThreshold1,valueAtThreshold2,totalSessionLength=0;
+Date d1=Date.today();
+Date d2=Date.today();
+String runId1,runId2;
+
+Boolean reachedThreshold1=false;
+Boolean reachedThreshold2=false;
+String jsonStr='{"reserved1":1,"reserved2":2';
+for (Session__c s:[select date__c,session_length__C from session__c where client__c='0018t000002vfSfAAI' order by date__c] ){     
+        totalSessionLength+=s.session_length__c;
+        System.debug('date='+s.date__c+' length='+s.session_length__c+' ,totalSessionLength='+totalSessionLength); 
+         
+         if (totalSessionLength>=THRESHOLD1 && !reachedThreshold1) {
+         System.debug('reached '+THRESHOLD1);
+         reachedThreshold1=true;
+         valueAtThreshold1=totalSessionLength;
+         d1=s.date__c;
+         System.debug('date reached threshold1='+d1);
+         System.debug('valueAtThreshold1='+valueAtThreshold1);
+         }
+
+if (!reachedThreshold1) valueAtThreshold1=totalSessionLength;
+
+          if (totalSessionLength>=THRESHOLD2 && !reachedThreshold2) {
+         System.debug('reached '+THRESHOLD2);
+         reachedThreshold2=true;
+         valueAtThreshold2=totalSessionLength;
+         d2=s.date__c;
+         System.debug('date reached threshold2='+d2);
+        System.debug('valueAtThreshold2='+valueAtThreshold2);
+
+         }
+
+if (!reachedThreshold2) valueAtThreshold2=totalSessionLength;
+
+         
+
+}
+System.debug('d1'+d1+' '+'d2'+d2);
+System.debug('reachedThreshold1'+reachedThreshold1+' '+'reachedThreshold2'+reachedThreshold2);
+System.debug('valueAtThreshold1'+valueAtThreshold1+' '+'valueAtThreshold2'+valueAtThreshold2);
+    
+            jsonStr+=',"sessiondata":[';
+          List<AggregateResult> lar1= [select client__c,max(runid__c) from client_objective_timeseries__c where client__c='0018t000002vfSfAAI' and ts_load_datetime__c < :d1 group by client__c ];
+          runId1 = (String) lar1[0].get('expr0');
+          
+jsonStr+='{"threshold":'+THRESHOLD1+',"reached":'+reachedThreshold1+',"valueAtThreshold":'+valueAtThreshold1+',"runId":"'+runId1+'","dateAtThreshold":"'+d1+'"';
+
+          
+          System.debug(jsonStr);
+
+ List<AggregateResult> lar2= [select client__c,max(runid__c) from client_objective_timeseries__c where client__c='0018t000002vfSfAAI' and ts_load_datetime__c < :d2 group by client__c ];
+          runId2 = (String) lar2[0].get('expr0');
+
+     System.debug('totalSessionLength='+totalSessionLength);
+         
+
+          
+
+Integer acqAtT1=0;
+jsonStr+=',"data":[';
+      for (AggregateResult ar: [select Objective__r.SD__r.Program__r.Name,count(id) from client_objective_timeseries__c where client__c='0018t000002vfSfAAI' and runid__c=
+      :runId1 and status__c='ACQ' group by Objective__r.SD__r.Program__r.Name ]) {
+      
+      acqAtT1+=(Integer)ar.get('expr0');
+jsonStr+='{"progam":"'+ar.get('Name')+'",';
+jsonStr+='"acquired":'+ar.get('expr0')+'},';
+
+      System.debug('Threshold1====>'+ar.get('Name')+' '+ar.get('expr0'));
+
+      }
+
+     jsonStr+='],"acquiredTotal":'+ acqAtT1+'},' ;
+      jsonStr+='{"threshold":'+THRESHOLD2+',"reached":'+reachedThreshold2+',"valueAtThreshold":'+valueAtThreshold2+',"runId":"'+runId2+'","dateAtThreshold":"'+d2+'"';
+
+
+
+
+
+
+      System.debug('Total Acq at T1='+acqAtT1);
+Integer acqAtT2=0;
+jsonStr+=',"data":[';
+
+          for (AggregateResult ar: [select Objective__r.SD__r.Program__r.Name,count(id) from client_objective_timeseries__c where client__c='0018t000002vfSfAAI' and runid__c=
+      :runId2 and status__c='ACQ' group by Objective__r.SD__r.Program__r.Name ]) {
+           acqAtT2+=(Integer)ar.get('expr0');
+jsonStr+='{"progam":"'+ar.get('Name')+'",';
+jsonStr+='"acquired":'+ar.get('expr0')+'},';
+      System.debug('Threshold2====>'+ar.get('Name')+' '+ar.get('expr0'));
+
+      }
+                 jsonStr+='],"acquiredTotal":'+ acqAtT2+'},' ;
+
+
+
+            jsonStr+=']}';
+      System.debug(jsonStr);
+      String jsontmp=jsonStr;
+
+String target = ',]';
+        String replacement = ']';
+        jsonstr = jsontmp.replace(target, replacement);
+         System.debug(jsonstr);
+
+            System.debug(jsonStr);
+
+            System.debug('Total Acq at T2='+acqAtT2);
+
+
+
+
+
+          
+
+     
+
+     String s = L4LTimeSeries.generateD3COTSThresholdJson('0018t000002vfSfAAI', 10, 200);
+     System.debug(s);
