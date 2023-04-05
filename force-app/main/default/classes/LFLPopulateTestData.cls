@@ -114,7 +114,9 @@ public with sharing class LFLPopulateTestData {
     //create a session for our client
     Session__c session = new Session__c();
     session.Client__c = newAccount.Id;
-    session.date__c = Date.today();
+    Date d = Date.today();
+
+    session.date__c = d.addDays(-3);
     session.session_length__c = 1;
     session.session_location__c = 'Other';
     insert session;

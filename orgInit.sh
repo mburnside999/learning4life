@@ -17,5 +17,5 @@ sfdx force:data:soql:query -q 'SELECT ApexClassOrTriggerId,ApexClassOrTrigger.Na
 #sfdx force:user:create --setalias qa-user --definitionfile config/user-def.json
 #sfdx shane:user:password:set -p sfdx1234 -g Mike -l DeHennin
 #sfdx force:apex:execute -f ./config/apex/load.apex
-#sfdx texei:data:import --inputdir ./sfdx-out --targetusername L4Lscratch4
-#sfdx texei:data:export --outputdir ./sfdx-out --targetusername LFLHyperPARTIAL --objects Session__c,Program__c,Objective__c,sd__c
+sfdx texei:data:import --inputdir ./ts-out --targetusername L4Lscratch4
+sfdx texei:data:export --outputdir ./ts-out --targetusername LFLHyper --objects Client_Objective_TimeSeries__c
