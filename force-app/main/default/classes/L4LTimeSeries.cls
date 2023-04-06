@@ -183,7 +183,8 @@ public class L4LTimeSeries {
     String clientId,
     String program,
     String sd,
-    String status
+    String status,
+    String periodStr
   ) {
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logDebug(
@@ -206,10 +207,19 @@ public class L4LTimeSeries {
       queryCOTSString += ' and sd_name__c=:sd ';
     }
 
-    if (status == 'All') {
+    if (status == 'Both') {
       queryCOTSString += ' and status__c in (\'ACQ\',\'CIP\') ';
     } else {
       queryCOTSString += ' and status__c = :status ';
+    }
+
+    if (periodStr == 'All') {
+    } else {
+      queryCOTSString +=
+        ' AND TS_Load_DateTime__c = LAST_N_DAYS' +
+        ':' +
+        periodStr +
+        ' ';
     }
 
     queryCOTSString += ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c) order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c)';

@@ -47,16 +47,18 @@ class TestL4LTimeSeries {
     L4LTimeSeries ts = new L4LTimeSeries();
     String str = L4LTimeSeries.generateD3COTSJsonByProgramAndSD(
       clientId,
-      'All',
-      'All',
-      'All'
+      'All', //Prog
+      'All', //SD
+      'Both', //status
+      'All' //period
     );
     System.assert(str.length() > 0, 'Expected a return string');
     str = L4LTimeSeries.generateD3COTSJsonByProgramAndSD(
       clientId,
       co.Program_Name__c,
       co.SD_Name__c,
-      'ACQ'
+      'ACQ',
+      '60'
     );
     System.assert(str.length() > 0, 'Expected a return string');
   }
