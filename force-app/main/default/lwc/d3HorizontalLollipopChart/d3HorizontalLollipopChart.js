@@ -26,7 +26,8 @@ export default class D3HorizontalLollipopChart extends LightningElement {
   yAxisMin;
   programval = "All"; //default
   sdval = "All";
-  statusval = "All";
+  statusval = "Both";
+  periodval = "All";
   progSet = [];
   sdSet = [];
 
@@ -35,9 +36,19 @@ export default class D3HorizontalLollipopChart extends LightningElement {
   sdoptions = [];
 
   statusoptions = [
-    { label: "All", value: "All", isChecked: true },
+    { label: "Both", value: "Both", isChecked: true },
     { label: "ACQ", value: "ACQ" },
     { label: "CIP", value: "CIP" }
+  ];
+
+  periodoptions = [
+    { label: "All", value: "All", isChecked: true },
+    { label: "7 Days", value: "7" },
+    { label: "14 Days", value: "14" },
+    { label: "30 Days", value: "30" },
+    { label: "60 Days", value: "60" },
+    { label: "90 Days", value: "90" },
+    { label: "180 Days", value: "180" }
   ];
 
   connectedCallback() {
@@ -117,7 +128,8 @@ export default class D3HorizontalLollipopChart extends LightningElement {
           clientId: this.recordId,
           program: "All",
           sd: "All",
-          status: "All"
+          status: "Both",
+          periodStr: "All"
         });
       })
       .then((response) => {
@@ -351,7 +363,8 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       clientId: this.recordId,
       program: "All",
       sd: "All",
-      status: this.mode
+      status: this.mode,
+      periodStr: "All"
     }).then((response) => {
       logDebug(
         this.recordId,
@@ -399,6 +412,18 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     this.composeOptions();
   }
 
+  //the Program change handler
+  handlePeriodChange(event) {
+    console.log("in handlePeriodChange " + event.detail.value);
+
+    const selectedOption = event.detail.value;
+    this.periodoptions = this.periodoptions.map((row) => {
+      return { ...row, isChecked: row.value === selectedOption };
+    });
+    console.log("in handlePeriodChange " + JSON.stringify(this.periodoptions));
+    this.composeOptions();
+  }
+
   composeOptions() {
     console.log("in composeOptions");
 
@@ -428,6 +453,12 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     let statusStr = statusoptionJson.value;
     console.log("statusStr=" + statusStr);
 
+    let periodoptionJson = this.periodoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let periodStr = periodoptionJson.value;
+    console.log("periodStr=" + periodStr);
+
     logDebug(
       this.recordId,
       `${COMPONENT}.composeOptions(): calling Apex generateD3COTSJsonByProgramAndSD, clientId=${this.recordId}, statusStr=${statusStr}, programStr=${programStr}, sdStr=${sdStr}`,
@@ -439,7 +470,8 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       clientId: this.recordId,
       program: programStr,
       sd: sdStr,
-      status: statusStr
+      status: statusStr,
+      periodStr: periodStr
     })
       .then((response) => {
         console.log(response);

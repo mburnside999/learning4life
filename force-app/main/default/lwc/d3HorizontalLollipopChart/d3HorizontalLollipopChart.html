@@ -9,7 +9,7 @@
           >
             <lightning-combobox
               name="status"
-              label="Status"
+              label="ACQ / CIP"
               value={statusval}
               options={statusoptions}
               onchange={handleStatusChange}
@@ -41,6 +41,20 @@
               placeholder="Select SD"
               options={sdoptions}
               onchange={handleSDChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="period"
+              label="Period"
+              value={periodval}
+              placeholder="Select Period"
+              options={periodoptions}
+              onchange={handlePeriodChange}
             ></lightning-combobox>
           </div>
         </lightning-layout-item>

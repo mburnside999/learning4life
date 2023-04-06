@@ -487,5 +487,5 @@ String target = ',]';
 
      
 
-     String s = L4LTimeSeries.generateD3COTSThresholdJson('0018t000002vfSfAAI', 10, 200);
+     String s = L4LTimeSeries.generateD3COTSThresholdJson('0018t000002vfSfAAI', 1000, 2000);
      System.debug(s);
