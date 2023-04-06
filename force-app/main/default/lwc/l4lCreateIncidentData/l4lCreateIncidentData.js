@@ -1,3 +1,12 @@
+/**************************************************************
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	....
+ *
+ */
+
 import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
@@ -40,34 +49,6 @@ export default class L4lCreateIncidentData extends LightningElement {
         );
       });
   }
-
-  // logit(level, message, tag, context = null) {
-  //   console.log("in logger");
-  //   let logger = this.template.querySelector("c-logger");
-  //   logger.setScenario(`${COMPONENT}`);
-  //   switch (level) {
-  //     case INFO:
-  //       logger.info(message).setRecordId(context).addTag("logit()").addTag(tag);
-  //       break;
-  //     case DEBUG:
-  //       logger
-  //         .debug(message)
-  //         .setRecordId(context)
-  //         .addTag("logit()")
-  //         .addTag(tag);
-  //       break;
-  //     case ERROR:
-  //       logger
-  //         .error(message)
-  //         .setRecordId(context)
-  //         .addTag("logit()")
-  //         .addTag(tag);
-  //       break;
-  //     default:
-  //   }
-
-  //   logger.saveLog();
-  // }
 
   get hrs() {
     return parseInt(this.timeVal.substring(0, 2));

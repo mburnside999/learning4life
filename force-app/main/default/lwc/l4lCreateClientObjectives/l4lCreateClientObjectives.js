@@ -1,12 +1,22 @@
-import { LightningElement, api, wire, track } from "lwc";
+/**************************************************************
+ * @name l4lCreateClientObjectives
+ * @author Mike Burnside
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description	LWC to create client objectives.
+ * Used typically as a modal from a button on the ClientObjectives record page.
+ * Provides filtering, searching and a list of "popular" objectives (those in use by other clients)
+ * Uses the Nebula logging framework, and the Lightning Message Service
+ */
 
+import { LightningElement, api, wire, track } from "lwc";
 import getUnusedObjectives from "@salesforce/apex/L4LController.getUnusedObjectives";
 import getUnusedObjectivesBySearch from "@salesforce/apex/L4LController.getUnusedObjectivesBySearch";
 import createClientObjectivesByArray from "@salesforce/apex/L4LController.createClientObjectivesByArray";
 import getPopularObjectives from "@salesforce/apex/L4LController.getPopularObjectives";
 import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { CurrentPageReference } from "lightning/navigation";
 
@@ -39,6 +49,15 @@ export default class L4lCreateClientObjectives extends LightningElement {
   showPopular = true;
   disableButton = false;
 
+  /*******************************************************************************************************
+   * @name ConnectedCallback
+   * @description Set up logging
+   * Do the initial query for popular objectives using local function getPopularClientObjectives()
+   *
+   * @param
+   * @return
+   */
+
   connectedCallback() {
     setNewSession()
       .then((returnVal) => {
@@ -56,7 +75,14 @@ export default class L4lCreateClientObjectives extends LightningElement {
       });
   }
 
-  //tailored result message on UI, depending on whether we are showing popular records or search results
+  /*******************************************************************************************************
+   * @name resultmessage
+   * @description a custom getter - constructs a text string for display on the UI as {resultmessage}
+   *
+   * @param
+   * @return
+   */
+
   get resultmessage() {
     logDebug(
       this.recordId,
@@ -74,6 +100,15 @@ export default class L4lCreateClientObjectives extends LightningElement {
         : "";
     }
   }
+
+  /*******************************************************************************************************
+   * @name refresh
+   * @description main refresh method.
+   * Finds unused client objectives via callout to Apex getUnusedbjectivesBySearch passing this.searchValue
+   * @param
+   * @return
+   *
+   */
 
   refresh() {
     this.isLoading = true;
@@ -126,6 +161,14 @@ export default class L4lCreateClientObjectives extends LightningElement {
     this.isLoading = false;
   }
 
+  /*******************************************************************************************************
+   * @name handleRefreshPopular
+   * @description onclick handler for the Refresh Popular button
+   * @param
+   * @return
+   *
+   */
+
   handleRefreshPopular(event) {
     logDebug(
       this.recordId,
@@ -135,6 +178,14 @@ export default class L4lCreateClientObjectives extends LightningElement {
     );
     this.getPopularClientObjectives();
   }
+
+  /*******************************************************************************************************
+   * @name getSelectedName
+   * @description handler for lightning-datatable onrowselection
+   * @param event, the event sent from the datatable
+   * @return
+   *
+   */
 
   getSelectedName(event) {
     logDebug(
@@ -155,6 +206,18 @@ export default class L4lCreateClientObjectives extends LightningElement {
       "next-gen-LWC-nebula"
     );
   }
+
+  /*******************************************************************************************************
+   * @name handleClickArray
+   * @description handler for the Create Client Objectives button.
+   * Creates Client Objectives  via call to Apex createClientObjectivesByArray, passing a JSON array of selected records.
+   * Calls refresh() after creating the Client Objectives which effectively makes them disappear as they are
+   * now assigned.  Also conditionally refreshes the "popular" list.
+   * Publishes to the L4LMC MessageChannel
+   * @param event, the event sent from the button
+   * @return
+   *
+   */
 
   handleClickArray(event) {
     this.disableButton = true;
@@ -296,6 +359,14 @@ export default class L4lCreateClientObjectives extends LightningElement {
     }
   }
 
+  /*******************************************************************************************************
+   * @name handleFilterKeyInput
+   * @description Filters the list of objectives on Name,Program and SD
+   * @param event, the event sent from oninput on the filter input HTML element
+   * @return
+   *
+   */
+
   handleFilterKeyInput(event) {
     logDebug(
       this.recordId,
@@ -322,6 +393,15 @@ export default class L4lCreateClientObjectives extends LightningElement {
     );
   }
 
+  /*******************************************************************************************************
+   * @name showNotification
+   * @description helper to fire Toast notifications
+   * @param t, the title
+   * @param m, the message
+   * @param v, variant
+   *
+   */
+
   showNotification(t, m, v) {
     logDebug(
       this.recordId,
@@ -337,20 +417,42 @@ export default class L4lCreateClientObjectives extends LightningElement {
     this.dispatchEvent(evt);
   }
 
-  handleClickCancel(event) {
+  /*******************************************************************************************************
+   * @name handleClickClose
+   * @description handler for the Cancel button on the UI
+   * @param event
+   *
+   */
+
+  handleClickClose(event) {
     logDebug(
       this.recordId,
-      `${COMPONENT}.handleClickCancel(): dispatching CustomEvent(close)`,
+      `${COMPONENT}.handleClickClose(): dispatching CustomEvent(close)`,
       `${SCENARIO}`,
       "next-gen-LWC-nebula"
     );
     this.dispatchEvent(new CustomEvent("close"));
   }
 
-  searchKeyword(event) {
+  /*******************************************************************************************************
+   * @name handleSearchValueChange
+   * @description bound to the onchange event for the lightning-input search field on the UI
+   * Updates this.searchValue with the text typed into the input field
+   * @param event
+   *
+   */
+
+  handleSearchValueChange(event) {
     this.searchValue = event.target.value;
   }
 
+  /*******************************************************************************************************
+   * @name handleSearchKeyword
+   * @description handler for the onchange event for the Search button on the UI.c/clientObjBoard
+   * Finds unused client objectives via callout to Apex getUnusedbjectivesBySearch passing this.searchValue
+   * @param
+   *
+   */
   handleSearchKeyword() {
     this.isLoading = true;
     logDebug(
@@ -411,6 +513,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
     this.isLoading = false;
   }
 
+  /*******************************************************************************************************
+   * @name getPopularClientObjectives
+   * @description calls Apex getPopularObjectives to find client objectives used for other clients
+   * @param
+   *
+   */
+
   getPopularClientObjectives() {
     this.isLoading = true;
     this.searchValue = "";
@@ -445,7 +554,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
       })
       .catch((error) => {
         this.error = error;
-        console.log(`ERROR XXXXXXXX '+${JSON.stringify(error)}`);
+        console.log(`ERROR: '+${JSON.stringify(error)}`);
         logError(
           this.recordId,
           `${COMPONENT}.getPopularClientObjectives(): getPopularObjectives errored: ${JSON.stringify(
