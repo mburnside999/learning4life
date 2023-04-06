@@ -1,4 +1,15 @@
-/* eslint-disable no-console */
+/**************************************************************
+ * @name l4lFastEditSessionCOStatus
+ * @author Mike Burnside
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @TODO April 2023, this lwc was cloned to be a quick solution to user requests and definitely needs some serious trimming
+ *
+ * @description	LWC to support fast but limited editing of CO status fields
+ *
+ */
+
 import { LightningElement, api, wire, track } from "lwc";
 import getClientObjectivesForSession from "@salesforce/apex/L4LController.getClientObjectivesForSession";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
@@ -64,6 +75,13 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
   @track skillstring = [];
   rendered = false;
 
+  /*******************************************************************************************************
+   * @name ConnectedCallback
+   * @description Set up logging, call the initial refresh
+   *
+   * @param
+   * @return
+   */
   connectedCallback() {
     console.info(`in connectedCallback`, COLOR);
     setNewSession()
@@ -98,6 +116,12 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
       });
   }
 
+  /*******************************************************************************************************
+   * @name handleSave
+   * @description uses updateRecord service, refreshes UI on completion
+   * @param event
+   * @return
+   */
   async handleSave(event) {
     logDebug(
       this.recordId,
@@ -168,6 +192,12 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
     }
   }
 
+  /*******************************************************************************************************
+   * @name refresh
+   * @description main refresh, uses apex getClientObjectivesForSession to display a datatable of client objectives
+   * @param
+   * @return
+   */
   refresh() {
     console.info(`%crefresh(): entering`, COLOR);
     console.debug(`%crefresh(): calling getClientObjectivesForSession`, COLOR);
@@ -215,6 +245,13 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
       });
   }
 
+  /*******************************************************************************************************
+   * @name handleSearchKeyInput
+   * @description  oninput handler for the filtering input field, provides real time client side filtering across fields
+   * @param
+   * @return
+   */
+
   handleSearchKeyInput(event) {
     logDebug(
       this.recordId,
@@ -241,6 +278,15 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
     );
   }
 
+  /*******************************************************************************************************
+   * @name showNotification
+   * @description helper to fire Toast notifications
+   * @param t, the title
+   * @param m, the message
+   * @param v, variant
+   *
+   */
+
   showNotification(t, m, v) {
     const evt = new ShowToastEvent({
       title: t,
@@ -250,6 +296,12 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
     this.dispatchEvent(evt);
   }
 
+  /*******************************************************************************************************
+   * @name handleClickCancel
+   * @description onclick handler for close button, dispatches customevent
+   * @param
+   * @return
+   */
   handleClickCancel(event) {
     logDebug(
       this.recordId,

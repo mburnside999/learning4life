@@ -1,10 +1,11 @@
 /**************************************************************
- * @author	Mike Burnside
- * @date	2023
+ * @name l4lCreateIncidentData
+ * @author Mike Burnside
+ * @date	2022
  * @group Learning For Life
  *
- * @description	....
- *
+ * @description	LWC to manage session incidents
+ * Uses the Nebula logging framework
  */
 
 import { LightningElement, api, track } from "lwc";
@@ -28,6 +29,15 @@ export default class L4lCreateIncidentData extends LightningElement {
 
   renderedCallback() {}
 
+  /*******************************************************************************************************
+   * @name ConnectedCallback
+   * @description
+   * Sets up logging
+   *
+   *
+   * @param
+   * @return
+   */
   connectedCallback() {
     setNewSession()
       .then((returnVal) => {
@@ -50,15 +60,48 @@ export default class L4lCreateIncidentData extends LightningElement {
       });
   }
 
+  /*******************************************************************************************************
+   * @name hrs
+   * @description getter, returns hours part of timeVal
+   *
+   * @param
+   * @return  integer, hours part of timeVal
+   */
+
   get hrs() {
     return parseInt(this.timeVal.substring(0, 2));
   }
+
+  /*******************************************************************************************************
+   * @name hrs
+   * @description getter, returns minutes part of timeVal
+   *
+   * @param
+   * @return  integer, minutes part of timeVal
+   */
+
   get mins() {
     return parseInt(this.timeVal.substring(3, 5));
   }
+
+  /*******************************************************************************************************
+   * @name secs
+   * @description getter, returns seconds part of timeVal
+   *
+   * @param
+   * @return  integer, seconds part of timeVal
+   */
   get secs() {
     return parseInt(this.timeVal.substring(6, 8));
   }
+
+  /*******************************************************************************************************
+   * @name start
+   * @description onclick handler for Start button
+   * Starts timer
+   * @param event
+   * @return
+   */
 
   start(event) {
     logDebug(this.recordId, `${COMPONENT}.start()`, `${SCENARIO}`, `${TAG}`);
@@ -91,12 +134,26 @@ export default class L4lCreateIncidentData extends LightningElement {
     }, 1000);
   }
 
+  /*******************************************************************************************************
+   * @name stop
+   * @description onclick handler for Stop button
+   * Stops timer
+   * @param event
+   * @return
+   */
   stop(event) {
     logDebug(this.recordId, `${COMPONENT}.stop()`, `${SCENARIO}`, `${TAG}`);
     this.showStartBtn = true;
     clearInterval(this.timeIntervalInstance);
   }
 
+  /*******************************************************************************************************
+   * @name reset
+   * @description onclick handler for Reset button
+   * Resets timer
+   * @param event
+   * @return
+   */
   reset(event) {
     logDebug(this.recordId, `${COMPONENT}.reset()`, `${SCENARIO}`, `${TAG}`);
     console.info(`%creset(): entering`, COLOR);
@@ -105,6 +162,14 @@ export default class L4lCreateIncidentData extends LightningElement {
     this.totalMilliseconds = 0;
     clearInterval(this.timeIntervalInstance);
   }
+
+  /*******************************************************************************************************
+   * @name pad
+   * @description pads single digit time elements with as leading zero
+   *
+   * @param val
+   * @return  padded time element
+   */
 
   pad(val) {
     var valString = val + "";
@@ -115,14 +180,15 @@ export default class L4lCreateIncidentData extends LightningElement {
     }
   }
 
-  handleSuccess(event) {
-    // this.logit(
-    //   INFO,
-    //   `${COMPONENT}.handleSuccess(): in handleSuccess()`,
-    //   `${COMPONENT}.handleSuccess()`,
-    //   this.recordId
-    // );
+  /*******************************************************************************************************
+   * @name handleSuccess
+   * @description onsuccess handler for the lightning-record-edit-form
+   *
+   * @param event
+   * @return
+   */
 
+  handleSuccess(event) {
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSuccess() - successfully saved incident`,
@@ -137,7 +203,14 @@ export default class L4lCreateIncidentData extends LightningElement {
     this.dispatchEvent(evt);
   }
 
-  handleClickCancel(event) {
+  /*******************************************************************************************************
+   * @name handleClickClose
+   * @description onclick handler for the Close button
+   *
+   * @param event
+   * @return
+   */
+  handleClickClose(event) {
     this.dispatchEvent(new CustomEvent("close"));
   }
 }
