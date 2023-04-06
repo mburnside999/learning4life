@@ -489,3 +489,14 @@ String target = ',]';
 
      String s = L4LTimeSeries.generateD3COTSThresholdJson('0018t000002vfSfAAI', 1000, 2000);
      System.debug(s);
+
+
+
+     String str = L4LTimeSeries.generateD3COTSJsonByProgramAndSD(
+      '0018t000002vfSfAAI',
+      'All',
+      'All',
+      'All',
+      '2'
+    );
+    System.debug(str);

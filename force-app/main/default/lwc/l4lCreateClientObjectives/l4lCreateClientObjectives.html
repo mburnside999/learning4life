@@ -8,7 +8,7 @@
         type="text"
         placeholder="Search across our library of 6000+ Programs, SDs and Objectives, or browse Popular objectives below"
         value={searchValue}
-        onchange={searchKeyword}
+        onchange={handleSearchValueChange}
       ></lightning-input>
     </div>
 
@@ -44,7 +44,7 @@
       >
       </lightning-button>
 
-      <lightning-button label="Close" title="Close" onclick={handleClickCancel}>
+      <lightning-button label="Close" title="Close" onclick={handleClickClose}>
       </lightning-button>
     </lightning-button-group>
     <div class="spinner">

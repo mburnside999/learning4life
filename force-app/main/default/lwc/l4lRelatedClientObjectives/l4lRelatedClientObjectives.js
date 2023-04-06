@@ -1,5 +1,13 @@
-/* eslint-disable no-console */
-/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+/**************************************************************
+ * @name l4lRelatedClientObjectives
+ * @author Mike Burnside
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description	LWC to list and manage client objectives.
+ * Uses the Nebula logging framework and the Lightning Message Service
+ */
+
 import { LightningElement, track, wire, api } from "lwc";
 //import getClientObjectives from "@salesforce/apex/L4LController.getClientObjectives";
 import getClientObjectivesFilteredOnActive from "@salesforce/apex/L4LController.getClientObjectivesFilteredOnActive";
@@ -108,7 +116,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   filterableObjectives = {};
   @wire(CurrentPageReference) pageRef;
   @track draftValues = [];
-  @track areDetailsVisible = false;
+  @track isModalEditFormVisible = false;
   //@wire(getClientObjectives, { clientId: '$recordId' }) clientobjectives;
   subscription = null;
   @wire(MessageContext) messageContext;
@@ -117,8 +125,19 @@ export default class L4lRelatedClientObjectives extends LightningElement {
   inactiveCOCount;
   activeCOCount;
   totalCOCount;
-
   showActiveOnly = true;
+
+  /*******************************************************************************************************
+   * @name ConnectedCallback
+   * @description
+   * sets up logging
+   * sets up subscription handle for Messaging Service
+   * performs initial call to refresh()
+   *
+   * @param
+   * @return
+   */
+
   connectedCallback() {
     setNewSession()
       .then((returnVal) => {
@@ -173,12 +192,27 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       });
   }
 
-  renderedCallback() {}
-
+  /*******************************************************************************************************
+   * @name recs
+   * @description getter, returns this.clientobjectives.length to the UI as {recs}
+   *
+   * @param
+   * @return
+   */
   get recs() {
     if (this.clientobjectives != null) return this.clientobjectives.length;
   }
 
+  /*******************************************************************************************************
+   * @name btnConfirmation
+   * @description the onclick handler for the Mark ACQ, Mark OBJ, Activate and De-Activate buttons.
+   * Intercedes to provides a confirmation message for the proposed action before delegatiung the actual
+   * work to handleClickArray.
+   *
+   *
+   * @param event from the button click
+   * @return
+   */
   async btnConfirmation(event) {
     console.log("btnConfirmation");
 
@@ -220,6 +254,17 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       }
     }
   }
+
+  /*******************************************************************************************************
+   * @name confirmation
+   * @description the onrowaction handler for the lightning-datatable.
+   * Provides a confirmation message for the proposed action before delegatiung the actual
+   * work to handleRowAction.
+   *
+   *
+   * @param event from the onrowaction on the datatable record
+   * @return
+   */
 
   async confirmation(event) {
     let _actionName = event.detail.action.name;
@@ -325,6 +370,20 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${TAG}`
     );
   }
+
+  /*******************************************************************************************************
+   * @name handleRowAction
+   * @description Determines the action required.c/clientObjBoard
+   * Uses the uiRecordApi.deleteRecord service for deletes.
+   * Uses call to Apex deactivateClientObjective for de-activate.
+   * When edit requested sets this.isModalEditFormVisible flag to true to show the modal edit form
+   * Refreshes the UI via refresh()
+   *
+   *
+   * @param actionName from the button click - "deactivate","delete","edit_details"
+   * @param row, the row of the datatable associated with the action
+   * @return
+   */
 
   handleRowAction(actionName, row) {
     logDebug(
@@ -434,12 +493,20 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${TAG}`
         );
 
-        this.areDetailsVisible = true;
+        this.isModalEditFormVisible = true;
         break;
       default:
     }
   }
 
+  /*******************************************************************************************************
+   * @name handleSuccess
+   * @description the onsuccess handler for the modal lightning-record-form
+   *
+   *
+   * @param event
+   * @return
+   */
   handleSuccess(event) {
     const evt = new ShowToastEvent({
       title: "Success",
@@ -460,12 +527,21 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${SCENARIO}`,
       `${TAG}`
     );
-    this.areDetailsVisible = false;
+    this.isModalEditFormVisible = false;
 
     let inp = this.template.querySelector("input");
     inp.value = "";
     this.refresh();
   }
+
+  /*******************************************************************************************************
+   * @name refresh
+   * @description the main refresh method.
+   * Calls Apex getCOActivationSummary to get the activation summaries - activeCOCount, inactiveCOCount, totalCOCount
+   * Calls getClientObjectivesFilteredOnActive to list the CO records with a filter, this.showActiveOnly
+   * @param event
+   * @return
+   */
 
   refresh() {
     logDebug(
@@ -546,10 +622,29 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       });
   }
 
+  /*******************************************************************************************************
+   * @name handleCancel
+   * @description the handler for the Cancel on modal edit form.
+   * Closes the modal via by this.isModalEditFormVisible = false
+   *
+   * @param event
+   * @return
+   */
+
   handleCancel(event) {
     console.info(`%chandleCancel(): entering`, COLOR);
-    this.areDetailsVisible = false;
+    this.isModalEditFormVisible = false;
   }
+
+  /*******************************************************************************************************
+   * @name handleSave
+   * @description the handler for the Save on modal edit form.
+   * Uses UpdateRecord service from lightning/uiRecordApi
+   * Refreshes the UI via refresh()
+   *
+   * @param event, the event from save
+   * @return
+   */
 
   handleSave(event) {
     logDebug(
@@ -602,6 +697,22 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         );
       });
   }
+
+  /*******************************************************************************************************
+   * @name handleClickArray
+   * @description mixed mode update of Client Objectives
+   * called from confirmation() step, calls Apex to update a collection of COs  with a "mode" of ACQ, OBJ, Activate or De-Activate
+   * ACQ/OBJ will update the client_objective__c.status__c field on the records
+   * Activate/De-Acticvate will update the client_objective__c.active__c field on the records
+   *
+   * Sets all selected rows to the same mode value.
+   *
+   * Builds a JSON array to pass to Apex setClientObjectivesByArray that processes the UPDATE of the status or active values.
+   * On completion refreshes the UI via refresh() and pops up toast.
+   *
+   * @param label, identifies the button pressed e.g. Mark ACQ, Activate etc.
+   * @return
+   */
 
   handleClickArray(label) {
     let mode = "";
@@ -710,23 +821,16 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       });
   }
 
-  handleClick(event) {
-    // this.logit(
-    //   DEBUG,
-    //   `handleClick(): entering method`,
-    //   `handleClick()`,
-    //   this.recordId
-    // );
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.handleClick: refresh button clicked, refreshing Client Objectives`,
-      `${SCENARIO}`,
-      `${TAG}`
-    );
-    this.refresh();
-  }
+  /*******************************************************************************************************
+   * @name handleActiveCheckboxChange
+   * @description handler for the onchange event for the show-active-only checkbox on the UI
+   * Toggles this.showActiveOnly flag, which us used in the UI refresh()
+   *
+   * @param event
+   * @return
+   */
 
-  handleChange(event) {
+  handleActiveCheckboxChange(event) {
     this.showActiveOnly = !this.showActiveOnly;
     console.log("this.showActiveOnly=" + this.showActiveOnly);
     let inp = this.template.querySelector("input");
@@ -734,16 +838,25 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     this.refresh();
   }
 
+  /*******************************************************************************************************
+   * @name handleClose
+   * @description onclick handler for the Close button on the modal lightning-record-form
+   * @param event
+   * @return
+   */
   handleClose(event) {
-    this.areDetailsVisible = false;
+    this.isModalEditFormVisible = false;
     //experimental
     this.refresh();
   }
-  // disconnectedCallback() {
-  //     // unsubscribe from inputChangeEvent event
-  //     unregisterAllListeners(this);
-  // }
 
+  /*******************************************************************************************************
+   * @name handleSearchKeyInput
+   * @description oninput handler for the Filter field.
+   * Provides real time filtering by reducing this.clientobjectives which is bound to the UI datatable.
+   * @param event
+   * @return
+   */
   handleSearchKeyInput(event) {
     logDebug(
       this.recordId,
@@ -785,6 +898,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     );
   }
 
+  /*******************************************************************************************************
+   * @name handleLMS
+   * @description message service handler for subscriptions.
+   * On receipt of published message refreshes the UI via refresh()
+   * @param message
+   * @return
+   */
+
   handleLMS(message) {
     logDebug(
       this.recordId,
@@ -804,72 +925,16 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${TAG}`
     );
     this.refresh();
-
-    // logDebug(
-    //   this.recordId,
-    //   `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,
-    //   `${COMPONENT}.handleLMS(): calling Apex getClientObjectivesFilteredOnActive this.showActiveOnly=${this.showActiveOnly}`,
-    //   `${TAG}`
-    // );
-
-    // getClientObjectivesFilteredOnActive({
-    //   clientId: this.recordId,
-    //   showActiveOnly: this.showActiveOnly
-    // })
-    //   .then((result) => {
-    //     this.clientobjectives = result;
-    //     this.filterableObjectives = result;
-    //     logDebug(
-    //       this.recordId,
-    //       `${COMPONENT}.handleLMS(): Apex getClientObjectivesFilteredOnActive returned result: ${JSON.stringify(
-    //         result
-    //       )}`,
-    //       `${COMPONENT}.handleLMS(): Apex getClientObjectivesFilteredOnActive returned result`,
-    //       `${TAG}`
-    //     );
-    //   })
-    //   .catch((error) => {
-    //     this.error = error;
-    //     logError(
-    //       this.recordId,
-    //       `${COMPONENT}.handleLMS(): error=${JSON.stringify(error)}`,
-    //       `${COMPONENT}.handleLMS(): error=${JSON.stringify(error)}`,
-    //       `${TAG}`
-    //     );
-    //   });
-
-    // getCOActivationSummary({ clientId: this.recordId })
-    //   .then((result) => {
-    //     let tmp = JSON.parse(result);
-    //     logDebug(
-    //       this.recordId,
-    //       `${COMPONENT}.refresh(): calling LFLController.refresh() getCOActivationSummary returned ${JSON.stringify(
-    //         tmp
-    //       )}`,
-    //       `${COMPONENT}.refresh(): calling LFLController.refresh() getCOActivationSummary returned ${JSON.stringify(
-    //         tmp
-    //       )}`,
-    //       `${TAG}`
-    //     );
-    //     this.inactiveCOCount = tmp.inactive;
-    //     this.activeCOCount = tmp.active;
-    //     this.totalCOCount = tmp.total;
-    //     //this.activeString = result;
-    //   })
-    //   .catch((error) => {
-    //     this.error = error;
-    //     logError(
-    //       this.recordId,
-    //       `${COMPONENT}.refresh(): Apex call to getCOActivationSummary returned error: ${JSON.stringify(
-    //         error
-    //       )}`,
-    //       `${COMPONENT}.refresh(): Apex call to getCOActivationSummary returned error: ${JSON.stringify(
-    //         error
-    //       )}`,
-    //       `${TAG}`
-    //     );
-    //   });
   }
+
+  /*******************************************************************************************************
+   * @name showNotification
+   * @description helper to fire Toast notifications
+   * @param t, the title
+   * @param m, the message
+   * @param v, variant
+   *
+   */
 
   showNotification(t, m, v) {
     console.info(`showNotification(): entering`, COLOR);

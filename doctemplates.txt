@@ -1,0 +1,42 @@
+/**************************************************************
+ * @author	Mike Burnside
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description	....
+ *
+ */
+
+
+  /*******************************************************************************************************
+   * @description returns the status of a given session
+   * @param ... the ...
+   * @param ... the ...
+   *
+   * @return ...
+   *
+   * @example
+   * String res=...
+   */
+
+    /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   * aliquip ex ea commodo consequat.
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   *
+   * @example
+   * List<a> coList = MyClass.thisMethod(param1,param2)
+   */
+
+ /*******************************************************************************************************
+   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+   * labore et dolore magna aliqua. 
+   *
+   * @param param1 the param1
+   * @param param2 the param2
+   * @return ... what is returned
+   */
