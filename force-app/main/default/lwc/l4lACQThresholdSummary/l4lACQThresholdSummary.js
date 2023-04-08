@@ -11,8 +11,8 @@ const TAG = "L4L-Analyse-ACQ-Thresholds";
 //const COLOR = "color:green"; //for console log formatting
 const SCENARIO = "Analyse ACQ by total session times ";
 const columns = [
-  { label: "Program", fieldName: "programName" },
-  { label: "Acquired", fieldName: "acquiredCount" }
+  { label: "Program Name", fieldName: "programName" },
+  { label: "# of ACQ skills", fieldName: "acquiredCount" }
 ];
 export default class L4lACQThresholdSummary extends LightningElement {
   @api recordId = "0018t000002vfSfAAI"; //Andy
@@ -53,6 +53,12 @@ export default class L4lACQThresholdSummary extends LightningElement {
   //       this.error = error;
   //     }
   //}
+
+  get t1DateStr() {
+    return this.threshold1.dateAtThreshold == null
+      ? null
+      : this.threshold1.dateAtThreshold.substring(0, 10);
+  }
 
   connectedCallback() {
     setNewSession()
