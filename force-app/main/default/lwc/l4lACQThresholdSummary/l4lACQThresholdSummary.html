@@ -6,12 +6,14 @@
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
+            Threshold 1
             <lightning-combobox
               name="t1"
               label="Threshold-1 (Hrs)"
               value={t1val}
               options={t1options}
               onchange={handleT1Change}
+              variant="label-hidden"
             ></lightning-combobox>
           </div>
         </lightning-layout-item>
@@ -20,12 +22,51 @@
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
+            Threshold 2
             <lightning-combobox
               name="t1"
               label="Threshold-2 (Hrs)"
               value={t2val}
               options={t2options}
+              variant="label-hidden"
             ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            Acquired Skills
+            <div class="slds-text-color_default">
+              {threshold1.acquiredTotal}
+            </div>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            Actual Hrs.
+            <div class="slds-text-color_default">
+              {threshold1.actualHrsAtThreshold}
+            </div>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            T1 Status
+            <template if:true={reachedt1}>
+              <div class="slds-text-color_success">Reached.</div></template
+            >
+
+            <template if:false={reachedt1}>
+              <div class="slds-text-color_error">
+                Not Reached Yet.
+              </div></template
+            >
           </div>
         </lightning-layout-item>
 
@@ -34,53 +75,37 @@
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
             <template if:true={reachedt1}>
-              <div class="slds-text-color_success">
-                Threshold-1 Reached.
-              </div></template
+              T1 Date Achieved
+              <div class="slds-text-color_success">{t1DateStr}</div></template
             >
 
             <template if:false={reachedt1}>
-              <div class="slds-text-color_error">
-                Threshold Not Reached.
-              </div></template
+              Latest Session
+              <div class="slds-text-color_error">{t1DateStr}</div></template
             >
           </div>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small">
-          <div
-            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
-          >
-            Actual: {threshold1.actualHrsAtThreshold} hrs.
-          </div>
-        </lightning-layout-item>
 
         <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
-            Reach/Latest Date: {threshold1.dateAtThreshold}
+            TimeSeries ID
+            <div class="slds-text-color_default">{threshold1.runId}</div>
           </div>
         </lightning-layout-item>
-
         <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
-            RunId: {threshold1.runId}
-          </div>
-        </lightning-layout-item>
-
-        <lightning-layout-item padding="around-small">
-          <div
-            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
-          >
-            Acquired: {threshold1.acquiredTotal}<br />
+            TimeSeries Run Date
+            <div class="slds-text-color_default">{threshold1.runDate}</div>
           </div>
         </lightning-layout-item>
       </lightning-layout>
     </div>
   </lightning-card>
-  <lightning-card title="Threshold-1 ACQ Skills">
+  <lightning-card title="ACQ Skills As At Threshold 1">
     <div style="height: 300px">
       <lightning-datatable
         hide-checkbox-column

@@ -522,8 +522,10 @@ public class L4LTimeSeries {
         System.debug('valueAtThreshold1=' + valueAtThreshold1);
       }
 
-      if (!reachedThreshold1)
+      if (!reachedThreshold1) {
         valueAtThreshold1 = totalSessionLength;
+        d1 = s.date__c;
+      }
 
       if (totalSessionLength >= threshold2 && !reachedThreshold2) {
         System.debug('reached ' + threshold2);
@@ -534,8 +536,10 @@ public class L4LTimeSeries {
         System.debug('valueAtThreshold2=' + valueAtThreshold2);
       }
 
-      if (!reachedThreshold2)
+      if (!reachedThreshold2) {
         valueAtThreshold2 = totalSessionLength;
+        d2 = s.date__c;
+      }
     }
     System.debug('d1' + d1 + ' ' + 'd2' + d2);
     System.debug(
@@ -568,6 +572,16 @@ public class L4LTimeSeries {
       runId1 = (String) lar1[0].get('expr0');
     }
 
+    DateTime run1DT = [
+      SELECT ts_load_datetime__c
+      FROM client_objective_timeseries__c
+      WHERE runid__c = :runId1
+      LIMIT 1
+    ]
+    .ts_load_datetime__c;
+
+    String formattedRun1DT = run1DT.formatGMT('yyyy-MM-dd');
+
     jsonStr +=
       '{"thresholdHrs":' +
       threshold1 +
@@ -577,6 +591,8 @@ public class L4LTimeSeries {
       valueAtThreshold1 +
       ',"runId":"' +
       runId1 +
+      '","runDate":"' +
+      formattedRun1DT +
       '","dateAtThreshold":"' +
       d1 +
       '"';
