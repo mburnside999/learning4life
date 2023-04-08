@@ -1,6 +1,29 @@
+/**************************************************************
+ * @name LFLPopulateTestData
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	main class for populating test data
+ *
+ */
+
 public with sharing class LFLPopulateTestData {
+ 
   public LFLPopulateTestData() {
   }
+
+  /*******************************************************************************************************
+   * @name load
+   * @description loads test data
+   *
+   * @param void
+   * @return 
+   * @example
+   * LFLPopulateTestData.load();
+   */
+
+
   public static void load() {
     delete [SELECT id FROM Account WHERE FirstName = 'Test FName'];
     delete [SELECT id FROM Account WHERE FirstName = 'TestFN'];

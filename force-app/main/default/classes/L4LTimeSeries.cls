@@ -1,7 +1,31 @@
+/**************************************************************
+ * @name L4LTimeSeries
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	methods for creating and querying Client_Objective_TimeSeries__c records 
+ *
+ */
+
 public class L4LTimeSeries {
+
+  /*******************************************************************************************************
+   * @name loadCOTimeSeries
+   * @description creates a timeseries by copying all client_objectives__c at a point in time. 
+   * Timeseries table is client_objectives_timeseries__c
+   * Logging for the run is recorded in TimeSeries_Log__c.
+   *
+   *
+   * @param void
+   * @return the number of records inserted into client_objectives_timeseries__c
+   *
+   * @example
+   * Integer recs = L4LTimeSeries.loadCOTimeSeries();
+   */
+
   public Integer loadCOTimeSeries() {
     System.debug('in loadCOTimeSeries()');
-
     System.debug('in loadCOTimeSeries(): logging START to TimeSeries_Log__c()');
 
     TimeSeries_Log__c log = new TimeSeries_Log__c();
@@ -82,6 +106,21 @@ public class L4LTimeSeries {
     return tslist.size();
   }
 
+
+ /*******************************************************************************************************
+   * @name generateD3COTimeSeriesJson
+   * @description generate a JSON string for use by D3
+   *
+   *
+   * @param clientId,
+   * @param status, "All" (actually ACQ & CIP) | status__c
+
+   * @return the number of records inserted into client_objectives_timeseries__c
+   * @TODO example of format returned
+   * @example
+   * String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesJson(clientId, 'All');
+   */
+
   @AuraEnabled(cacheable=true)
   public static String generateD3COTimeSeriesJson(
     String clientId,
@@ -112,8 +151,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesJson, queryCOTSString=' +
       queryCOTSString,
-      'L4LTimeSeries.generateD3COTimeSeriesJson, queryCOTSString=' +
-      queryCOTSString,
+      'LWC D3 Apex',
       'next-gen-nebula-apex'
     );
 
@@ -145,38 +183,33 @@ public class L4LTimeSeries {
 
     System.debug('json str=' + jsonstr);
 
-    // //trim the extraneous characters
-    // String target = ',]';
-    // String replacement = ']';
-    // String jsonstr = jsontmp.replace(target, replacement);
-
-    // System.debug('Final json=' + jsonstr);
-    // Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
-    //   .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
-    //   .addTag('logit()');
-    // Logger.saveLog();
-
-    // Boolean isValidJSON = false;
-    // String message = jsonstr;
-    // try {
-    //   Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(
-    //     message
-    //   );
-    //   isValidJSON = true;
-    // } catch (JSONException e) {
-    //   System.debug(e.getMessage());
-    // }
-    // System.debug('isValidJSON=' + isValidJSON);
-
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesJson, returning jsonstr=' + jsonstr,
-      'L4LTimeSeries.generateD3COTimeSeriesJson, returning jsonstr=' + jsonstr,
+      'LWC D3 Apex',
       'next-gen-nebula-apex'
     );
 
     return jsonstr;
   }
+
+
+ /*******************************************************************************************************
+   * @name generateD3COTSJsonByProgramAndSD
+   * @description generate a JSON string for use by D3
+   *
+   *
+   * @param clientId, the client Id
+   * @param program, "All" | program_name__c
+   * @param sd, "All" | sd_name__c
+   * @param status, "Both" (ACQ|CIP) | client_objective_timeseries__c.status__c
+   * @param periodStr, "All" | 30,60,90 days etc -- LAST N Days
+
+   * @return a JSON string
+   * @TODO example of format returned
+   * @example
+   * String jsonstr  = L4LTimeSeries.generateD3COTSJsonByProgramAndSD(clientId, programName,sdName,'Both',60);
+   */
 
   @AuraEnabled(cacheable=true)
   public static String generateD3COTSJsonByProgramAndSD(
@@ -190,7 +223,7 @@ public class L4LTimeSeries {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3COTSJsonByProgramAndSD',
-      'L4LTimeSeries.generateD3COTSJsonByProgramAndSD',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -228,8 +261,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3COTSJsonByProgramAndSD, queryCOTSString=' +
       queryCOTSString,
-      'L4LTimeSeries.generateD3COTSJsonByProgramAndSD, queryCOTSString=' +
-      queryCOTSString,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -261,38 +293,29 @@ public class L4LTimeSeries {
 
     System.debug('json str=' + jsonstr);
 
-    // //trim the extraneous characters
-    // String target = ',]';
-    // String replacement = ']';
-    // String jsonstr = jsontmp.replace(target, replacement);
-
-    // System.debug('Final json=' + jsonstr);
-    // Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
-    //   .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
-    //   .addTag('logit()');
-    // Logger.saveLog();
-
-    // Boolean isValidJSON = false;
-    // String message = jsonstr;
-    // try {
-    //   Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(
-    //     message
-    //   );
-    //   isValidJSON = true;
-    // } catch (JSONException e) {
-    //   System.debug(e.getMessage());
-    // }
-    // System.debug('isValidJSON=' + isValidJSON);
 
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesJson, returning jsonstr=' + jsonstr,
-      'L4LTimeSeries.generateD3COTimeSeriesJson, returning jsonstr=' + jsonstr,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
     return jsonstr;
   }
+
+
+ /*******************************************************************************************************
+   * @name generateD3COTimeSeriesByStatusJson
+   * @description generate a JSON string for use by D3
+   *
+   *
+   * @param clientId, the client Id
+   * @return a JSON string
+   * @TODO example of format returned
+   * @example
+   * String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesByStatusJson(clientId);
+   */
 
   @AuraEnabled(cacheable=true)
   public static String generateD3COTimeSeriesByStatusJson(String clientId) {
@@ -300,7 +323,7 @@ public class L4LTimeSeries {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesByStatusJson',
-      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -312,8 +335,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, queryCOTSString=' +
       queryCOTSString,
-      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, queryCOTSString=' +
-      queryCOTSString,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -345,39 +367,29 @@ public class L4LTimeSeries {
 
     System.debug('json str=' + jsonstr);
 
-    // //trim the extraneous characters
-    // String target = ',]';
-    // String replacement = ']';
-    // String jsonstr = jsontmp.replace(target, replacement);
-
-    // System.debug('Final json=' + jsonstr);
-    // Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
-    //   .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
-    //   .addTag('logit()');
-    // Logger.saveLog();
-
-    // Boolean isValidJSON = false;
-    // String message = jsonstr;
-    // try {
-    //   Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(
-    //     message
-    //   );
-    //   isValidJSON = true;
-    // } catch (JSONException e) {
-    //   System.debug(e.getMessage());
-    // }
-    // System.debug('isValidJSON=' + isValidJSON);
-
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, returning jsonstr=' +
       jsonstr,
-      'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, returning jsonstr=' +
-      jsonstr,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
     return jsonstr;
   }
+
+
+ /*******************************************************************************************************
+   * @name generateD3CORetestTimeSeriesJson
+   * @description generate a JSON string for use by D3
+   *
+   *
+   * @param clientId, the client Id
+   * @param status, "All" | client_objective_timeseries__c.status__c
+   * @return a JSON string
+   * @TODO example of format returned
+   * @example
+   * String jsonstr  = L4LTimeSeries.generateD3CORetestTimeSeriesJson(clientId,'ACQ');
+   */
 
   @AuraEnabled(cacheable=true)
   public static String generateD3CORetestTimeSeriesJson(
@@ -388,7 +400,7 @@ public class L4LTimeSeries {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3CORetestTimeSeriesJson',
-      'L4LTimeSeries.generateD3CORetestTimeSeriesJson',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -407,8 +419,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3CORetestTimeSeriesJson, queryCOTSString=' +
       queryCOTSString,
-      'L4LTimeSeries.generateD3CORetestTimeSeriesJson, queryCOTSString=' +
-      queryCOTSString,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -440,40 +451,32 @@ public class L4LTimeSeries {
 
     System.debug('json str=' + jsonstr);
 
-    // //trim the extraneous characters
-    // String target = ',]';
-    // String replacement = ']';
-    // String jsonstr = jsontmp.replace(target, replacement);
-
-    // System.debug('Final json=' + jsonstr);
-    // Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
-    //   .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
-    //   .addTag('logit()');
-    // Logger.saveLog();
-
-    // Boolean isValidJSON = false;
-    // String message = jsonstr;
-    // try {
-    //   Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(
-    //     message
-    //   );
-    //   isValidJSON = true;
-    // } catch (JSONException e) {
-    //   System.debug(e.getMessage());
-    // }
-    // System.debug('isValidJSON=' + isValidJSON);
 
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3CORetestTimeSeriesJson, returning jsonstr=' +
       jsonstr,
-      'L4LTimeSeries.generateD3CORetestTimeSeriesJson, returning jsonstr=' +
-      jsonstr,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
     return jsonstr;
   }
 
+
+ /*******************************************************************************************************
+   * @name generateD3COTSThresholdJson
+   * @description generate a JSON string for use by D3
+   *
+   *
+   * @param clientId, the client Id
+   * @param threshold1, Integer hours of therapy, the first threshold
+   * @param threshold2, Integer hours of therapy, the second threshold
+
+   * @return a JSON string
+   * @TODO logging
+   * @example
+   * String jsonstr  = L4LTimeSeries.generateD3COTSThresholdJson(clientId,100,200);
+   */
   @AuraEnabled(cacheable=true)
   public static String generateD3COTSThresholdJson(
     String clientId,

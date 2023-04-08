@@ -1,4 +1,29 @@
+/**************************************************************
+ * @name LFLInvocableSessionStatistics
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	
+ *
+ */
+
 public with sharing class LFLInvocableSessionStatistics {
+
+  /*******************************************************************************************************
+   * @name computeSessionStats
+   * @description computes statistics for a session.
+   * Inserts session_statistics__c records.
+   * This method is an InvocableMethod and is called from Flow when a Session is closed.
+   * Flow uses the returned String to update the session with a rich text summary.
+   *
+   *
+   * @param sessions, a list of Ids
+   * @return a list of responses List<Response> (i.e. a single String response to Flow)
+   *
+   * @example
+   */
+
   @InvocableMethod
   public static List<Response> computeSessionStats(List<Id> sessions) {
     Logger.setScenario('LFLInvocableSessionStatistics');

@@ -1,3 +1,13 @@
+/**************************************************************
+ * @name LFLTimeSeriesBatchScheduler
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	
+ *
+ */
+
 global class LFLTimeSeriesBatchScheduler implements Schedulable {
   global void execute(SchedulableContext SC) {
     TimeSeries_Log__c log = new TimeSeries_Log__c();

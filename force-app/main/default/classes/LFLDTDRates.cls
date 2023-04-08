@@ -1,4 +1,29 @@
+/**************************************************************
+ * @name LFLDTDRates
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	the Rate calculations
+ *
+ */
+
 public with sharing class LFLDTDRates {
+  
+  /*******************************************************************************************************
+   * @name getAcquisitionRate
+   * @description sets up a retrospective set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
+   * combined JSON string 
+   *
+   *
+   * @param clientId, the clientId
+   * @param retro 
+   * @return JSON string
+   * @TODO is this deprecated?
+   * @example
+   * String jsonStr = LFLDTDRateMaster.getDTDRateArray(clientId, 4);
+   */
+
   @AuraEnabled(cacheable=true)
   public static String getAcquisitionRate(String clientId, Integer retro) {
     //get date and runid limits
@@ -25,6 +50,21 @@ public with sharing class LFLDTDRates {
     jsonStr = buildJson(clientId, limitDatesList);
     return jsonStr;
   }
+
+
+  /*******************************************************************************************************
+   * @name getAcquisitionRateByDates
+   * @description sets up a retrospecitve set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
+   * combined JSON string 
+   *
+   *
+   * @param clientId, the clientId
+   * @param dt1, the starting datetime
+   * @param dt2, the ending datetime
+   * @return JSON string
+   * @example
+   * String jsonStr = LFLDTDRates.getAcquisitionRateByDates(clientId,s,e);
+   */
 
   /* get rates between starting and ending dates*/
   @AuraEnabled(cacheable=true)
@@ -61,6 +101,19 @@ public with sharing class LFLDTDRates {
     return jsonStr;
   }
 
+
+  /*******************************************************************************************************
+   * @name buildJson
+   * @description helper to do the grunt work of building JSON
+   *
+   *
+   * @param clientId, the clientId
+   * @param dt1, the starting datetime
+   * @param dt2, the ending datetime
+   * @return JSON string
+   * @example
+   * String jsonStr = LFLDTDRates.getAcquisitionRateByDates(clientId,s,e);
+   */
   private static String buildJson(
     String clientId,
     list<aggregateresult> limitDatesList
