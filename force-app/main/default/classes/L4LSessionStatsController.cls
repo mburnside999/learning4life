@@ -9,16 +9,15 @@
 
 public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getHighAndLowBoundaries
+   * @description queries lfl_stats_boundary instance of LFL_Stats_Boundary__mdt metadata to obtain the High/Low parameters to 
+   control Red/Yellow UI traffic light colours
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param 
+   * @return custom metadata record, lfl_stats_boundary
    *
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
+   * LFL_Stats_Boundary__mdt highsandlows = L4LSessionStatsController.getHighAndLowBoundaries()
    */
 
   @AuraEnabled(cacheable=true)
@@ -27,7 +26,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       null,
       'L4LSessionStatsController.getHighAndLowBoundaries()',
-      'L4LSessionStatsController.getHighAndLowBoundaries()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -39,7 +38,7 @@ public with sharing class L4LSessionStatsController {
       null,
       'L4LSessionStatsController.getHighAndLowBoundaries, returning lflStatsBoundaries=' +
       lflStatsBoundaries,
-      'L4LSessionStatsController.getHighAndLowBoundaries()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -47,16 +46,14 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getD3SessionStatsHistogramData
+   * @description returns the session statistics for a client
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param clientId, the client ID
+   * @return a list of session statistics, List<session_statistics__c>
    *
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
+   * List<session_statistics__c> > ssList = L4LSessionStatsController.getD3SessionStatsHistogramData(clientId)
    */
 
   @AuraEnabled(cacheable=true)
@@ -68,7 +65,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getD3SessionStatsHistogramData() clientId=' +
       clientId,
-      'L4LSessionStatsController.getD3SessionStatsHistogramData()',
+      'LWC D3 Apex',
       'next-gen-nebula-apex'
     );
 
@@ -81,7 +78,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getD3SessionStatsHistogramData() returning results=' +
       results,
-      'L4LSessionStatsController.getD3SessionStatsHistogramData()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
     System.debug(results);
@@ -89,25 +86,26 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getSessionStats
+   * @description
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param searchKey, the session ID
    *
+   * @return a list of Session_Statistics__c
+   *
+   * @TODO fix the parameter naming
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
+   * List<session_statistics__c> > ssList = L4LSessionStatsController.getSessionStats(clientId)
    */
 
   @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getSessionStats(String searchKey) {
     L4LNebulaComponentController.setupCache();
+
     L4LNebulaComponentController.logDebug(
       searchKey,
       'L4LSessionStatsController.getSessionStats() searchKey=' + searchKey,
-      'L4LSessionStatsController.getSessionStats()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -138,7 +136,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       searchKey,
       'L4LSessionStatsController.getSessionStats() results=' + results,
-      'L4LSessionStatsController.getSessionStats()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -146,16 +144,14 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getD3Stats
+   * @description uses SOQL to return a session statistics for a client.
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
-   *
+   * @param clientId, the client
+   * @param showAcquired, a Boolean, should we restrict to previous_status of ACQ
+   * @return a list of session statistics
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
+   * List<session_statistics__c> > ssList = L4LSessionStatsController.getD3Stats(clientId,true|false)
    */
 
   @AuraEnabled(cacheable=true)
@@ -170,7 +166,7 @@ public with sharing class L4LSessionStatsController {
         clientId +
         ' showAcquired=' +
         showAcquired,
-      'L4LSessionStatsController.getD3Stats()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -189,7 +185,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getD3Stats() querySessionStatsString=' +
       querySessionStatsString,
-      'L4LSessionStatsController.getD3Stats()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -199,7 +195,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3Stats() returning results=' + results,
-      'L4LSessionStatsController.getD3Stats()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -207,16 +203,16 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getD3StatsByProgram
+   * @description uses SOQL to return a list of session statistics filtered on program name, and optionally previous status
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param clientId client ID
+   * @param programStr, the Program Name
+   * @param showAcquired, a Boolean, should we restrict to previous status of ACQ
+   * @return a list of session statistics
    *
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
+   * List<session_statistics__c> > ssList = L4LSessionStatsController.getD3StatsByProgram(clientId,programStr,true|false)
    */
 
   @AuraEnabled(cacheable=true)
@@ -234,7 +230,7 @@ public with sharing class L4LSessionStatsController {
         programStr +
         ' showAcquired=' +
         showAcquired,
-      'L4LSessionStatsController.getD3StatsByProgram()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -253,7 +249,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getD3StatsByProgram() querySessionStatsString=' +
       querySessionStatsString,
-      'L4LSessionStatsController.getD3StatsByProgram()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -264,7 +260,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getD3StatsByProgram() returning results=' +
       results,
-      'L4LSessionStatsController.getD3StatsByProgram()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -272,16 +268,14 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getClientObjectivesByProgram
+   * @description uses SOQL to return a COUNT of objectives from Client_Objectives__c GROUPed BY the program name
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param clientId the client Id
+   * @return a list of aggregate results, List<AggregateResult>
    *
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
+   * List<AggregateResult>  arl = L4LSessionStatsController.getClientObjectivesByProgram(clientId)
    */
 
   @AuraEnabled(cacheable=true)
@@ -293,7 +287,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getClientObjectivesByProgram() clientId=' +
       clientId,
-      'L4LSessionStatsController.getClientObjectivesByProgram()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -311,23 +305,22 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getClientObjectivesByProgram() returning results=' +
       results,
-      'L4LSessionStatsController.getClientObjectivesByProgram()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
     return results;
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getD3YAxisScale
+   * @description a helper for D3 charting to establish the scale required for the Y Axis.
+   * Uses SOQL to count the # of ACTIVE client_objectives, and # of client_objective_timeseries records for a client
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param clientId
    *
+   * @return an Integer, the higher of the two counts
+   * @TODO look at the requirement for ACTIVE only
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
    */
 
   @AuraEnabled(cacheable=true)
@@ -336,7 +329,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() clientId=' + clientId,
-      'L4LSessionStatsController.getD3YAxisScale()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -349,9 +342,7 @@ public with sharing class L4LSessionStatsController {
       'L4LSessionStatsController.getD3YAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
         clientId +
         ' and active__c=true',
-      'L4LSessionStatsController.getD3YAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
-        clientId +
-        ' and active__c=true',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -373,13 +364,7 @@ public with sharing class L4LSessionStatsController {
         ' GROUP BY runId__c ' +
         ' ORDER BY count(id) DESC ' +
         ' LIMIT 1',
-      'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
-        ' WHERE client__c = ' +
-        clientId +
-        ' and active__c=true ' +
-        ' GROUP BY runId__c ' +
-        ' ORDER BY count(id) DESC ' +
-        ' LIMIT 1',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -416,12 +401,7 @@ public with sharing class L4LSessionStatsController {
         ts_max +
         ', returning result = ' +
         result,
-      'curr_max=' +
-        curr_max +
-        ', ts_max=' +
-        ts_max +
-        ', returning result = ' +
-        result,
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -431,16 +411,15 @@ public with sharing class L4LSessionStatsController {
   //
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getD3RetestYAxisScale
+   * @description a helper for D3 charting to establish the scale required for the Retest Y Axis.
+   * Uses SOQL to count the # of ACTIVE and Re_Test_Recommended client_objectives and client_objective_timeseries records for a client
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param clientId
    *
+   * @return an Integer, the higher of the two counts
+   * @TODO look at the requirement for ACTIVE only
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
    */
 
   @AuraEnabled(cacheable=true)
@@ -449,7 +428,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3RetestYAxisScale() clientId=' + clientId,
-      'L4LSessionStatsController.getD3RetestYAxisScale()',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -462,9 +441,7 @@ public with sharing class L4LSessionStatsController {
       'L4LSessionStatsController.getD3RetestYAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
         clientId +
         ' and re_test_recommended__c=true',
-      'L4LSessionStatsController.getD3RetestYAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
-        clientId +
-        ' and re_test_recommended__c=true',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -489,13 +466,7 @@ public with sharing class L4LSessionStatsController {
         ' GROUP BY runId__c ' +
         ' ORDER BY count(id) DESC ' +
         ' LIMIT 1',
-      'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
-        ' WHERE client__c = ' +
-        clientId +
-        +' and active__c=true and re_test_recommended__c=true' +
-        ' GROUP BY runId__c ' +
-        ' ORDER BY count(id) DESC ' +
-        ' LIMIT 1',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -535,12 +506,7 @@ public with sharing class L4LSessionStatsController {
         ts_max +
         ', returning result = ' +
         result,
-      'curr_max=' +
-        curr_max +
-        ', ts_max=' +
-        ts_max +
-        ', returning result = ' +
-        result,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -548,16 +514,14 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getD3StatusYAxisScale
+   * @description a helper for D3 charting to establish the scale for the Y Axis.
+   * Uses SOQL to return the maximum count for any status for all runs of client_objective_timeseries records for a client
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param clientId
    *
+   * @return an Integer - maximum status count for any run for the client
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
    */
 
   @AuraEnabled(cacheable=true)
@@ -566,7 +530,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3StatusYAxisScale() clientId=' + clientId,
-      'L4LSessionStatsController.getD3StatusYAxisScale() clientId=' + clientId,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -613,7 +577,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'returning result = ' + result,
-      'returning result = ' + result,
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -621,16 +585,18 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getD3StatsByProgramAndSD
+   * @description use SOQL to create a list of session_statistics__c for a client according to filter parameters
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param clientId, the client Id
+   * @param programStr, "All" | program_name__c
+   * @param sdStr, "All" | sd_name__c
+   * @param showAcquired, true | false, restrict to ACQ only or not
+   * @param periodStr, "All" | 30,60,90 days etc
+   * @param stageStr, "All" | objective__r.sd__r.Stage__c
    *
+   * @return a list of session_Statistics__c
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
    */
 
   @AuraEnabled(cacheable=true)
@@ -657,7 +623,7 @@ public with sharing class L4LSessionStatsController {
         periodStr +
         'stageStr= ' +
         stageStr,
-      'L4LSessionStatsController.getD3StatsByProgramAndSD()',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -699,7 +665,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getD3StatsByProgramAndSD() querySessionStatsString=' +
       querySessionStatsString,
-      'L4LSessionStatsController.getD3StatsByProgramAndSD()',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -709,25 +675,12 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3StatsByProgramAndSD() results=' + results,
-      'L4LSessionStatsController.getD3StatsByProgramAndSD()',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
     return results;
   }
-
-  /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
-   *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
-   *
-   * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
-   */
 
   @AuraEnabled(Cacheable=true)
   public static List<Program__c> getProgramsAndSds(String stageStr) {
@@ -735,7 +688,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       null,
       'L4LSessionStatsController.getProgramsAndSds() stageStr=' + stageStr,
-      'L4LSessionStatsController.getProgramsAndSds()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -755,7 +708,7 @@ public with sharing class L4LSessionStatsController {
       null,
       'L4LSessionStatsController.getProgramsAndSds() querySessionStatsString=' +
       querySessionStatsString,
-      'L4LSessionStatsController.getProgramsAndSds()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -765,7 +718,7 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       null,
       'L4LSessionStatsController.getProgramsAndSds() results=' + results,
-      'L4LSessionStatsController.getProgramsAndSds()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -773,16 +726,12 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name getClientObjectivesSDCount
+   * @description returns as a List<AggregateResult> the count of client_objectives__c for a client, grouped by program, sd
+   * @param clientId
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
-   *
+   * @return an AggregateResult list
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
    */
 
   @AuraEnabled(Cacheable=true)
@@ -794,7 +743,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.getClientObjectivesSDCount() clientId=' +
       clientId,
-      'L4LSessionStatsController.getClientObjectivesSDCount() filering Active=true',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -811,16 +760,14 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name generateD3ProgramAreaSDJson
+   * @description generates a JSON string  for use by D3 charting
+   * @param clientId, the client Id
+   * @param stageStr, "All" | sd__c.stage__c
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
-   *
+   * @return a JSON string
+   * @TODO work on the explanation and provide an example
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
    */
 
   @AuraEnabled(cacheable=true)
@@ -835,7 +782,7 @@ public with sharing class L4LSessionStatsController {
         clientId +
         ' stageStr=' +
         stageStr,
-      'L4LSessionStatsController.generateD3ProgramAreaSDJson()',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -1032,7 +979,7 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.generateD3ProgramAreaSDJson() returning jsonstr=' +
       jsonstr,
-      'L4LSessionStatsController.generateD3ProgramAreaSDJson()',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -1040,16 +987,14 @@ public with sharing class L4LSessionStatsController {
   }
 
   /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+   * @name generateD3AreaSDJson
+   * @description generates a JSON string  for use by D3 charting
+   * @param clientId, the client Id
+   * @param stageStr, "All" | sd__c.stage__c
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
-   *
+   * @return a JSON string
+   * @TODO work on the explanation and provide an example
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
    */
 
   @AuraEnabled(cacheable=true)
@@ -1061,7 +1006,7 @@ public with sharing class L4LSessionStatsController {
         clientId +
         ' stageStr=' +
         stageStr,
-      'L4LSessionStatsController.generateD3AreaSDJson()',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
@@ -1077,18 +1022,6 @@ public with sharing class L4LSessionStatsController {
     List<sd__c> sdAllAreaList = Database.query(queryAreaString);
 
     for (sd__c sd : sdAllAreaList) {
-      // if (sdAllAreaMap.get(sd.area__c) == null) {
-      //   //List<sd__c> temp = new List<sd__c>();
-      //   List<LFLSDWrapper> temp = new List<LFLSDWrapper>();
-      //   temp.add(new LFLSDWrapper(sd));
-      //   sdAllAreaMap.put(sd.area__c, temp);
-      // } else {
-      //   //List<sd__c> temp2 = sdAllAreaMap.get(sd.area__c);
-      //   List<LFLSDWrapper> temp2 = sdAllAreaMap.get(sd.area__c);
-      //   temp2.add(new LFLSDWrapper(sd));
-      //   sdAllAreaMap.put(sd.area__c, temp2);
-      // }
-
       if (!sdAllAreaMap.containsKey(sd.area__c)) {
         //List<sd__c> temp = new List<sd__c>();
         List<LFLSDWrapper> temp = new List<LFLSDWrapper>();
@@ -1186,12 +1119,6 @@ public with sharing class L4LSessionStatsController {
     String replacement = ']';
     String jsonstr = jsontmp.replace(target, replacement);
 
-    System.debug('Final json=' + jsonstr);
-    Logger.debug('Apex:generateD3ProgramAreaSDJson jsonstr=' + jsonstr)
-      .addTag('L4LSessionStatsController.generateD3ProgramAreaSDJson()')
-      .addTag('logit()');
-    Logger.saveLog();
-
     Boolean isValidJSON = false;
     String message = jsonstr;
     try {
@@ -1208,25 +1135,26 @@ public with sharing class L4LSessionStatsController {
       clientId,
       'L4LSessionStatsController.generateD3AreaSDJson() returning jsonstr=' +
       jsonstr,
-      'L4LSessionStatsController.generateD3AreaSDJson()',
+      'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
 
     return jsonstr;
   }
 
-  /*******************************************************************************************************
-   * @description Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-   * labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-   * aliquip ex ea commodo consequat.
+
+ /*******************************************************************************************************
+   * @name getProgramSetFromCO
+   * @description generates a set (well actually a Set coerced into a List because LWC can't accept Sets) of Programs currently used in this client's client objectives.
+  Used in pull down filters on D3 charts
    *
-   * @param param1 the param1
-   * @param param2 the param2
-   * @return ... what is returned
+   * @param clientId, the client Id
    *
+   * @return a set of Program names as List<String>
+   * @TODO logging
    * @example
-   * List<a> coList = MyClass.thisMethod(param1,param2)
    */
+
 
   @AuraEnabled(cacheable=true)
   public static List<String> getProgramSetFromCO(String clientId) {
@@ -1243,6 +1171,20 @@ public with sharing class L4LSessionStatsController {
     System.debug(pSet);
     return pSet;
   }
+
+
+ /*******************************************************************************************************
+   * @name getSDSetFromCO
+   * @description generates a set (well actually a Set coerced into a List because LWC can't accept Sets) of SDs currently used in this client's client objectives.
+  Used in pull down filters on D3 charts
+   *
+   * @param clientId, the client Id
+   *
+   * @return a set of SD names as  List<String>
+   * @TODO logging
+   * @example
+   */
+
 
   @AuraEnabled(cacheable=true)
   public static List<String> getSDSetFromCO(String clientId) {

@@ -1,10 +1,34 @@
+/**************************************************************
+ * @name LFLClientObjectiveHelper
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	helper methods for Report Wizard
+ *
+ */
+
 public class LFLClientObjectiveHelper {
+
+
+  /*******************************************************************************************************
+   * @name getStatusCountsBetweenDates
+   * @description helper method for the Report Wizard returns a formatted string for insertion into a long text area
+  * ..., amd inserts the string into NDIS_Report__c.NDIS_Report__c;
+   * 
+   * @param starttime
+   * @param endtime
+   * @param Id, the client id
+   * @return a string used by the Report Wizard Flow
+   * @TODO improve explanation 
+   * @example
+   * String str = LFLClientObjectiveHelper.getStatusCountsBetweenDates(starttime, endtime, clientId);
+   */
   public static String getStatusCountsBetweenDates(
     DateTime starttime,
     DateTime endtime,
     Id clientid
   ) {
-    // initialise our list of results
 
     String str = '<p></p>';
 
@@ -23,7 +47,7 @@ public class LFLClientObjectiveHelper {
 
     System.debug(groupedResults);
 
-    //hack to dedup progream names
+    //hack to dedup program names
     Set<String> programSet = new Set<String>();
     for (AggregateResult ar : groupedResults) {
       programSet.add((String) ar.get('Name'));

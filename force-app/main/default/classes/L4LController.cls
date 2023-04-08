@@ -1,5 +1,6 @@
 /**************************************************************
  * @author	Mike Burnside
+ * @name L4LController
  * @date	2022
  * @group Learning For Life
  *
@@ -24,7 +25,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       recordId,
       'in L4LController.getSessionStatus()',
-      'L4LController.getSessionStatus()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -39,7 +40,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       recordId,
       'returning sessionStatus= ' + sessionStatus,
-      'L4LController.getSessionStatus()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -64,7 +65,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getPopularObjectives()',
-      'L4LController.getPopularObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -81,7 +82,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getPopularObjectives() popularObjectives=' +
       popularObjectives,
-      'L4LController.getPopularObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -106,7 +107,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getPopularObjectives() returning objList=' + objList,
-      'L4LController.getPopularObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -129,7 +130,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       sess,
       'L4LController.getSessionObjectives()',
-      'L4LController.getSessionObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -141,7 +142,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       sess,
       'L4LController.getSessionObjectives() soql=' + debugsoql,
-      'L4LController.getSessionObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -169,7 +170,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       sess,
       'L4LController.getSessionObjectives() returning retlist=' + retlist,
-      'L4LController.getSessionObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -197,7 +198,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       searchKey,
       'L4LController.getClientObjectivesForSession()',
-      'L4LController.getClientObjectivesForSession()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -210,7 +211,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       searchKey,
       'L4LController.getClientObjectivesForSession() debugsoql=' + debugsoql,
-      'L4LController.getClientObjectivesForSession()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -244,7 +245,7 @@ public with sharing class L4LController {
       searchKey,
       'L4LController.getClientObjectivesForSession() returning retlist=' +
       retlist,
-      'L4LController.getClientObjectivesForSession()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -269,7 +270,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getClientObjectives()',
-      'L4LController.getClientObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -281,7 +282,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getClientObjectives() debugsoql=' + debugsoql,
-      'L4LController.getClientObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -310,14 +311,14 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getClientObjectives() returning retlist.size()=' +
       retlist.size(),
-      'L4LController.getClientObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getClientObjectives() returning retlist=' + retlist,
-      'L4LController.getClientObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -344,7 +345,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getClientObjectivesFilteredOnActive()',
-      'L4LController.getClientObjectivesFilteredOnActive()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -364,8 +365,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getClientObjectivesFilteredOnActive() queryCOString=' +
       queryCOString,
-      'L4LController.getClientObjectivesFilteredOnActive() queryCOString=' +
-      queryCOString,
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -375,8 +375,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getClientObjectivesFilteredOnActive()() returning retlist.size()=' +
       retlist.size(),
-      'L4LController.getClientObjectivesFilteredOnActive()() returning retlist.size()=' +
-      retlist.size(),
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -384,7 +383,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getClientObjectivesFilteredOnActive()() returning retlist=' +
       retlist,
-      'L4LController.getClientObjectivesFilteredOnActive()() retlist logged',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -409,7 +408,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getCOActivationSummary()',
-      'L4LController.getCOActivationSummary()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -454,7 +453,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getCOActivationSummary() retstr=' + retstr,
-      'L4LController.getCOActivationSummary() retstr=' + retstr,
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -478,7 +477,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientObjectiveId,
       'L4LController.deactivateClientObjective()',
-      'L4LController.deactivateClientObjective()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -508,7 +507,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getUnusedObjectives()',
-      'L4LController.getUnusedObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -546,7 +545,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getUnusedObjectives() returning retlist=' + retlist,
-      'L4LController.getUnusedObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -576,7 +575,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getUnusedObjectivesBySearch() searchString=' +
       searchString,
-      'L4LController.getUnusedObjectivesBySearch()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -622,7 +621,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getUnusedObjectivesBySearch() returning retlist=' +
       retlist,
-      'L4LController.getUnusedObjectivesBySearch()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -647,7 +646,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       sessionId,
       'L4LController.deleteSessionObjectives() sessionId=' + sessionId,
-      'L4LController.deleteSessionObjectives()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -683,7 +682,7 @@ public with sharing class L4LController {
         sess +
         'skillstring=' +
         skillstring,
-      'L4LController.createSessionObjectivesByArrayWithOrderedResults()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -702,7 +701,7 @@ public with sharing class L4LController {
       sess,
       'L4LController.createSessionObjectivesByArrayWithOrderedResults() objDeserialized==' +
       objDeserialized,
-      'L4LController.createSessionObjectivesByArrayWithOrderedResults()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -715,7 +714,7 @@ public with sharing class L4LController {
       sess,
       'L4LController.createSessionObjectivesByArrayWithOrderedResults() sessionresults==' +
       sessionresults,
-      'L4LController.createSessionObjectivesByArrayWithOrderedResults()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -768,7 +767,7 @@ public with sharing class L4LController {
       sess,
       'L4LController.createSessionObjectivesByArrayWithOrderedResults() soList=' +
       soList,
-      'L4LController.createSessionObjectivesByArrayWithOrderedResults()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -798,7 +797,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       sess,
       'L4LController.createClientObjectivesByArray() jsonstr=' + jsonstr,
-      'L4LController.createClientObjectivesByArray()',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -850,7 +849,7 @@ public with sharing class L4LController {
         jsonstr +
         ' val=' +
         val,
-      'L4LController.setSessionObjectivesByArray',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 
@@ -925,7 +924,7 @@ public with sharing class L4LController {
         jsonstr +
         ' val=' +
         val,
-      'L4LController.setClientObjectivesByArray',
+      'LWC Apex',
       'next-gen-nebula-apex'
     );
 

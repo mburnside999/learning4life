@@ -1,5 +1,25 @@
+/**************************************************************
+ * @name public with sharing class LFLUtil 
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	
+ *
+ */
+
 public with sharing class LFLUtil {
-  //Utility method to parse and validate JSON
+  
+  /*******************************************************************************************************
+   * @name isValidJSON
+   * @description Utility method to parse and validate JSON
+   *
+   * @param String, a JSON string to be validated
+   * @return Boolean, whether the string is valid JSON or not
+   * @example
+   * Boolean isValid=LFLUtil.isValidJSON(jsonStr);
+   */
+
   public static Boolean isValidJSON(String jsonstr) {
     Boolean isValid = false;
     String message = jsonstr;

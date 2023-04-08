@@ -1,5 +1,22 @@
+/**************************************************************
+ * @author	Mike Burnside
+ * @name L4LInvocableReportWizard
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description	  As of January 19, 2022 this is the controller for MDH's Report Wizard flow
+ *
+ */
+
 global with sharing class L4LInvocableReportWizard {
-  // As of January 19, 2022 this is the controller for MDH's Report Wizard flow
+  /*******************************************************************************************************
+   * @description returns the status of a given session
+   * @param requests, List<Request>
+   *
+   * @return result, List<String>
+   *
+   * @example
+   */
 
   @InvocableMethod(
     label='L4L Invocable Report Wizard'
@@ -14,7 +31,7 @@ global with sharing class L4LInvocableReportWizard {
     L4LNebulaComponentController.logDebug(
       null,
       'L4LInvocableReportWizard.getStatusCountsBetweenDates() note filtered client objective active__c =true',
-      'L4LInvocableReportWizard.getStatusCountsBetweenDates() note filtered client objective active__c =true',
+      'Flow invoked Apex',
       'next-gen-nebula-apex'
     );
 
@@ -223,6 +240,15 @@ global with sharing class L4LInvocableReportWizard {
         AND lastmodifieddate < :endtime
     ];
   }
+
+  /**************************************************************
+   * @author	Mike Burnside
+   * @name L4LInvocableReportWizard.Requests
+   * @date	2022
+   * @group Learning For Life
+   *
+   * @description
+   */
 
   global class Requests {
     @InvocableVariable
