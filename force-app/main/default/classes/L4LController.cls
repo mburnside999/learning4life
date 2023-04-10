@@ -117,7 +117,7 @@ public with sharing class L4LController {
   /*******************************************************************************************************
    * @description returns a list session objectives for a session.
    *
-   * @param sess, the session Id
+   * @param sess the session Id
    * @return the list of session objectives
    *
    * @example
@@ -183,7 +183,7 @@ public with sharing class L4LController {
    *
    * TODO fix parameter name
    *
-   * @param searchKey, the session Id
+   * @param searchKey the session Id
    * @return list of Client Objectives
    *
    * @example
@@ -257,7 +257,7 @@ public with sharing class L4LController {
    *
    * TODO fix parameter name
    *
-   * @param clientId, the client Id
+   * @param clientId the client Id
    * @return list of Client Objectives
    *
    * @example
@@ -394,7 +394,7 @@ public with sharing class L4LController {
    * @description returns a JSON  string summarising ACTIVE, INACTIVE and TOTAL
    * Client Objectives for a client
    *
-   * @param clientId, the client Id
+   * @param clientId the client Id
    * @return JSON string summary of statuses
    *
    * @example

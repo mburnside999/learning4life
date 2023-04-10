@@ -112,8 +112,8 @@ public class L4LTimeSeries {
    * @description generate a JSON string for use by D3
    *
    *
-   * @param clientId,
-   * @param status, "All" (actually ACQ & CIP) | status__c
+   * @param clientId
+   * @param status All (actually ACQ & CIP) | status__c
 
    * @return the number of records inserted into client_objectives_timeseries__c
    * @TODO example of format returned
@@ -199,11 +199,11 @@ public class L4LTimeSeries {
    * @description generate a JSON string for use by D3
    *
    *
-   * @param clientId, the client Id
-   * @param program, "All" | program_name__c
-   * @param sd, "All" | sd_name__c
-   * @param status, "Both" (ACQ|CIP) | client_objective_timeseries__c.status__c
-   * @param periodStr, "All" | 30,60,90 days etc -- LAST N Days
+   * @param clientId the client Id
+   * @param program "All" | program_name__c
+   * @param sd "All" | sd_name__c
+   * @param status "Both" (ACQ|CIP) | client_objective_timeseries__c.status__c
+   * @param periodStr "All" | 30,60,90 days etc -- LAST N Days
 
    * @return a JSON string
    * @TODO example of format returned
@@ -310,7 +310,7 @@ public class L4LTimeSeries {
    * @description generate a JSON string for use by D3
    *
    *
-   * @param clientId, the client Id
+   * @param clientId the client Id
    * @return a JSON string
    * @TODO example of format returned
    * @example
@@ -383,8 +383,8 @@ public class L4LTimeSeries {
    * @description generate a JSON string for use by D3
    *
    *
-   * @param clientId, the client Id
-   * @param status, "All" | client_objective_timeseries__c.status__c
+   * @param clientId the client Id
+   * @param status "All" | client_objective_timeseries__c.status__c
    * @return a JSON string
    * @TODO example of format returned
    * @example
@@ -468,9 +468,9 @@ public class L4LTimeSeries {
    * @description generate a JSON string for use by D3
    *
    *
-   * @param clientId, the client Id
-   * @param threshold1, Integer hours of therapy, the first threshold
-   * @param threshold2, Integer hours of therapy, the second threshold
+   * @param clientId the client Id
+   * @param threshold1 Integer hours of therapy -the first threshold
+   * @param threshold2 Integer hours of therapy -the second threshold
 
    * @return a JSON string
    * @TODO logging

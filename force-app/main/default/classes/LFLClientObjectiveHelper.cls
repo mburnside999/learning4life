@@ -18,7 +18,7 @@ public class LFLClientObjectiveHelper {
    * 
    * @param starttime
    * @param endtime
-   * @param Id, the client id
+   * @param Id the client id
    * @return a string used by the Report Wizard Flow
    * @TODO improve explanation 
    * @example

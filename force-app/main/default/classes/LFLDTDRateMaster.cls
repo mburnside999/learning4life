@@ -3,7 +3,7 @@
  * @author	Mike Burnside
  * @date	2023
  * @group Learning For Life
- *
+ * @see LFLDTDRates
  * @description	methods to support the Rate calculations
  *
  */
@@ -17,8 +17,8 @@ public with sharing class LFLDTDRateMaster {
    * combined JSON string 
    *
    *
-   * @param clientId, the clientId
-   * @param iters, the integer number of iterations (weeks) - so "4" means 4 weeks up until now
+   * @param clientId the clientId
+   * @param iters the integer number of iterations (weeks) - so "4" means 4 weeks up until now
 
    * @return JSON string
    *
