@@ -3,7 +3,7 @@
  * @author	Mike Burnside
  * @date	2023
  * @group Learning For Life
- *
+ * @see LFLDTDRateMaster
  * @description	the Rate calculations
  *
  */
@@ -16,7 +16,7 @@ public with sharing class LFLDTDRates {
    * combined JSON string 
    *
    *
-   * @param clientId, the clientId
+   * @param clientId the clientId
    * @param retro 
    * @return JSON string
    * @TODO is this deprecated?
@@ -58,9 +58,9 @@ public with sharing class LFLDTDRates {
    * combined JSON string 
    *
    *
-   * @param clientId, the clientId
-   * @param dt1, the starting datetime
-   * @param dt2, the ending datetime
+   * @param clientId the clientId
+   * @param dt1 the starting datetime
+   * @param dt2 the ending datetime
    * @return JSON string
    * @example
    * String jsonStr = LFLDTDRates.getAcquisitionRateByDates(clientId,s,e);
@@ -107,9 +107,8 @@ public with sharing class LFLDTDRates {
    * @description helper to do the grunt work of building JSON
    *
    *
-   * @param clientId, the clientId
-   * @param dt1, the starting datetime
-   * @param dt2, the ending datetime
+   * @param clientId the clientId
+   * @param limitDatesList List<AggregateResult>
    * @return JSON string
    * @example
    * String jsonStr = LFLDTDRates.getAcquisitionRateByDates(clientId,s,e);

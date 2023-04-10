@@ -49,7 +49,7 @@ public with sharing class L4LSessionStatsController {
    * @name getD3SessionStatsHistogramData
    * @description returns the session statistics for a client
    *
-   * @param clientId, the client ID
+   * @param clientId the client ID
    * @return a list of session statistics, List<session_statistics__c>
    *
    * @example
@@ -89,7 +89,7 @@ public with sharing class L4LSessionStatsController {
    * @name getSessionStats
    * @description
    *
-   * @param searchKey, the session ID
+   * @param searchKey the session ID
    *
    * @return a list of Session_Statistics__c
    *
@@ -147,8 +147,8 @@ public with sharing class L4LSessionStatsController {
    * @name getD3Stats
    * @description uses SOQL to return a session statistics for a client.
    *
-   * @param clientId, the client
-   * @param showAcquired, a Boolean, should we restrict to previous_status of ACQ
+   * @param clientId the client
+   * @param showAcquired a Boolean, should we restrict to previous_status of ACQ
    * @return a list of session statistics
    * @example
    * List<session_statistics__c> > ssList = L4LSessionStatsController.getD3Stats(clientId,true|false)
@@ -207,8 +207,8 @@ public with sharing class L4LSessionStatsController {
    * @description uses SOQL to return a list of session statistics filtered on program name, and optionally previous status
    *
    * @param clientId client ID
-   * @param programStr, the Program Name
-   * @param showAcquired, a Boolean, should we restrict to previous status of ACQ
+   * @param programStr the Program Name
+   * @param showAcquired a Boolean, should we restrict to previous status of ACQ
    * @return a list of session statistics
    *
    * @example
@@ -408,7 +408,6 @@ public with sharing class L4LSessionStatsController {
     return result;
   }
 
-  //
 
   /*******************************************************************************************************
    * @name getD3RetestYAxisScale
@@ -588,12 +587,12 @@ public with sharing class L4LSessionStatsController {
    * @name getD3StatsByProgramAndSD
    * @description use SOQL to create a list of session_statistics__c for a client according to filter parameters
    *
-   * @param clientId, the client Id
-   * @param programStr, "All" | program_name__c
-   * @param sdStr, "All" | sd_name__c
-   * @param showAcquired, true | false, restrict to ACQ only or not
-   * @param periodStr, "All" | 30,60,90 days etc
-   * @param stageStr, "All" | objective__r.sd__r.Stage__c
+   * @param clientId the client Id
+   * @param programStr "All" | program_name__c
+   * @param sdStr "All"  sd_name__c
+   * @param showAcquired true | false, restrict to ACQ only or not
+   * @param periodStr "All" | 30,60,90 days etc
+   * @param stageStr "All" | objective__r.sd__r.Stage__c
    *
    * @return a list of session_Statistics__c
    * @example
@@ -762,8 +761,8 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name generateD3ProgramAreaSDJson
    * @description generates a JSON string  for use by D3 charting
-   * @param clientId, the client Id
-   * @param stageStr, "All" | sd__c.stage__c
+   * @param clientId the client Id
+   * @param stageSt "All" | sd__c.stage__c
    *
    * @return a JSON string
    * @TODO work on the explanation and provide an example
@@ -989,8 +988,8 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name generateD3AreaSDJson
    * @description generates a JSON string  for use by D3 charting
-   * @param clientId, the client Id
-   * @param stageStr, "All" | sd__c.stage__c
+   * @param clientId the client Id
+   * @param stageStr "All" | sd__c.stage__c
    *
    * @return a JSON string
    * @TODO work on the explanation and provide an example
@@ -1148,7 +1147,7 @@ public with sharing class L4LSessionStatsController {
    * @description generates a set (well actually a Set coerced into a List because LWC can't accept Sets) of Programs currently used in this client's client objectives.
   Used in pull down filters on D3 charts
    *
-   * @param clientId, the client Id
+   * @param clientId the client Id
    *
    * @return a set of Program names as List<String>
    * @TODO logging
@@ -1178,7 +1177,7 @@ public with sharing class L4LSessionStatsController {
    * @description generates a set (well actually a Set coerced into a List because LWC can't accept Sets) of SDs currently used in this client's client objectives.
   Used in pull down filters on D3 charts
    *
-   * @param clientId, the client Id
+   * @param clientId the client Id
    *
    * @return a set of SD names as  List<String>
    * @TODO logging

@@ -11,9 +11,9 @@
 global with sharing class L4LInvocableReportWizard {
   /*******************************************************************************************************
    * @description returns the status of a given session
-   * @param requests, List<Request>
+   * @param requests List<Request>
    *
-   * @return result, List<String>
+   * @return result List<String>
    *
    * @example
    */
