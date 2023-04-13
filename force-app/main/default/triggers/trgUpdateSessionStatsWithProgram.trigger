@@ -25,9 +25,9 @@ trigger trgUpdateSessionStatsWithProgram on session_statistics__c(
     new_ss_record.program_name__c = prog;
     Logger.debug(
         'trgUpdateSessionStatsWithProgram associated program name=' +
-          prog +
-          ' ,record=' +
-          new_ss_record
+        prog +
+        ' ,record=' +
+        new_ss_record
       )
       .addTag('trgUpdateSessionStatsWithProgram')
       .addTag('logit()');

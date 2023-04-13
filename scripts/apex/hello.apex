@@ -487,7 +487,7 @@ String target = ',]';
 
      
 
-     String s = L4LTimeSeries.generateD3COTSThresholdJson('0018t000002vfSfAAI', 1000, 2000);
+     String s = L4LTimeSeries.generateD3COTSThresholdJson('0018t000002vfSfAAI', 100, 200);
      System.debug(s);
 
 
@@ -500,3 +500,28 @@ String target = ',]';
       '2'
     );
     System.debug(str);
+
+
+
+    String aggStr = L4LController.getCOActivationSummary('0018t000002vfSfAAI');
+    System.debug(aggStr);
+
+String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesJson('0018t000002vfSfAAI', 'All');
+System.debug(jsonstr);
+
+String jsonstr  = L4LTimeSeries.generateD3COTSJsonByProgramAndSD('0018t000002vfSfAAI', 'All','All','Both','60');
+System.debug(jsonstr);
+
+String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesByStatusJson('0018t000002vfSfAAI');
+
+String jsonstr  = L4LTimeSeries.generateD3CORetestTimeSeriesJson('0018t000002vfSfAAI','ACQ');
+System.debug(jsonStr);
+
+String jsonstr  = L4LTimeSeries.generateD3COTSThresholdJson('0018t000002vfSfAAI',10,20);
+System.debug(jsonStr);
+
+String s = L4LController.updateSessionObjectiveWithLG('a058t000000IUErAAO');
+System.debug(s);
+
+select id,objective__c,lastmodifieddate from client_objective__c where id ='a058t000000IUErAAO'
+

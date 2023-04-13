@@ -199,6 +199,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
    * @param
    * @return
    */
+
   get recs() {
     if (this.clientobjectives != null) return this.clientobjectives.length;
   }
@@ -213,6 +214,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
    * @param event from the button click
    * @return
    */
+
   async btnConfirmation(event) {
     console.log("btnConfirmation");
 

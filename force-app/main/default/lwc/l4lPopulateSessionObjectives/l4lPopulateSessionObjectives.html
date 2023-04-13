@@ -14,7 +14,9 @@
         <lightning-layout-item padding="around-small" size="12">
           <lightning-layout>
             <lightning-layout-item padding="around-small" size="6">
-              <div class="slds-text-heading_medium">Assessment</div>
+              <div class="slds-text-heading_medium">
+                Assessment - New! now with LG
+              </div>
               <br />
               <!-- <lightning-button  label="+C" onclick={handleIncrCorrect}></lightning-button>-->
               <!--<lightning-button  label="+I" onclick={handleIncrIncorrect}></lightning-button>-->
@@ -75,7 +77,16 @@
                   label="Record Assessment"
                   disabled={buttonDisabled}
                   title="Create Session Objective Assessment"
+                  variant="Brand"
                   onclick={handleClickArray}
+                >
+                </lightning-button>
+                <lightning-button
+                  label="LG"
+                  disabled={lgbuttondisabled}
+                  title="LG"
+                  variant="Brand"
+                  onclick={handleClickLG}
                 >
                 </lightning-button>
                 <lightning-button

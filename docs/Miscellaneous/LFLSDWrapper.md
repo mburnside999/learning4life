@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+
 # LFLSDWrapper
 
 **Implemented types**
@@ -8,14 +9,19 @@ layout: default
 [Comparable](Comparable)
 
 ## Constructors
+
 ### `LFLSDWrapper(sd__c sdin)`
+
 ---
+
 ## Fields
 
 ### `sd` → `sd__c`
 
-
 ---
+
 ## Methods
+
 ### `compareTo(Object compareTo)`
+
 ---

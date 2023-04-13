@@ -1,7 +1,7 @@
 @isTest
 private class TestLFLPopulateTestData {
   @isTest
-  static void test1() {
+  static void testLoad() {
     Test.startTest();
     LFLPopulateTestData.load();
     Test.stopTest();

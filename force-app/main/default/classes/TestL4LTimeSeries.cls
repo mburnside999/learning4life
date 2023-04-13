@@ -1,7 +1,7 @@
 @isTest
 class TestL4LTimeSeries {
   @isTest
-  static void Test() {
+  static void testLoadCOTimeSeries() {
     Test.startTest();
     LFLPopulateTestData.load();
     Test.stopTest();
@@ -13,7 +13,7 @@ class TestL4LTimeSeries {
   }
 
   @isTest
-  static void Test2() {
+  static void tesGenerateD3COTimeSeriesJson() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
@@ -64,7 +64,7 @@ class TestL4LTimeSeries {
   }
 
   @isTest
-  static void TestRetest() {
+  static void TestGenerateD3CORetestTimeSeriesJson() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
@@ -84,7 +84,7 @@ class TestL4LTimeSeries {
   }
 
   @isTest
-  static void Test3() {
+  static void TestGenerateD3COTimeSeriesByStatusJson() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
@@ -98,20 +98,13 @@ class TestL4LTimeSeries {
   }
 
   @isTest
-  static void testGenD3COTSThresholdJson() {
+  static void testGenerateD3COTSThresholdJson() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
     L4LTimeSeries tstest = new L4LTimeSeries();
     Integer i = tstest.loadCOTimeSeries();
-    // for (client_objective_timeseries__c c : [
-    //   SELECT id, ts_load_datetime__c
-    //   FROM client_objective_timeseries__c
-    // ]) {
-    //   DateTime newdt = DateTime.now();
-    //c.ts_load_datetime__c = newdt.addDays(7);
-    // update c;
-    //}
+
     Test.stopTest();
 
     L4LTimeSeries ts = new L4LTimeSeries();

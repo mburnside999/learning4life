@@ -1,22 +1,26 @@
 ---
 layout: default
 ---
+
 # L4LInvocableReportWizard
+
 ## Classes
+
 ### Requests
+
 #### Fields
 
 ##### `clientId` → `Id`
 
-`INVOCABLEVARIABLE` 
+`INVOCABLEVARIABLE`
 
 ##### `endtime` → `DateTime`
 
-`INVOCABLEVARIABLE` 
+`INVOCABLEVARIABLE`
 
 ##### `starttime` → `DateTime`
 
-`INVOCABLEVARIABLE` 
+`INVOCABLEVARIABLE`
 
 ---
 

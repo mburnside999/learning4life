@@ -209,3 +209,7 @@ select min(createddate),max(createddate) from client_objective_timeseries__c whe
 
 select client__c,objective_name__c,count(id) from client_objective__c where client__c='0018t000003DbqmAAC' group by client__c,objective_name__c
 
+select min(runid__c) from client_objective_timeseries__c
+
+
+select date(ts_load_datetime__c) from client_objective_timeseries__c   where runid__c = 'TSL-2022-11-000000'

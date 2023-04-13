@@ -4,12 +4,11 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description	
+ * @description
  *
  */
 
 public with sharing class LFLInvocableSessionStatistics {
-
   /*******************************************************************************************************
    * @name computeSessionStats
    * @description computes statistics for a session.
@@ -156,13 +155,13 @@ public with sharing class LFLInvocableSessionStatistics {
 
     Logger.debug(
         'Apex:computeSessionStats() correctMap=' +
-          correctMap +
-          ' nonResponsiveMap=' +
-          nonResponsiveMap +
-          ' incorrectMap=' +
-          incorrectMap +
-          ' promptedMap=' +
-          promptedMap
+        correctMap +
+        ' nonResponsiveMap=' +
+        nonResponsiveMap +
+        ' incorrectMap=' +
+        incorrectMap +
+        ' promptedMap=' +
+        promptedMap
       )
       .setRecordId(sessions[0])
       .addTag('LFLInvocableSessionStatistics.computeSessionStats()')

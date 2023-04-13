@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+
 # L4LTimeSeriesScheduler
 
 **Implemented types**
@@ -8,5 +9,7 @@ layout: default
 [Schedulable](Schedulable)
 
 ## Methods
+
 ### `execute(SchedulableContext SC)`
+
 ---

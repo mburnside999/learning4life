@@ -36,7 +36,7 @@ private class TestL4LSessionStatsController {
   }
 
   @isTest
-  static void testgenerateD3ProgramAreaSDJson2() {
+  static void test2generateD3ProgramAreaSDJson() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;

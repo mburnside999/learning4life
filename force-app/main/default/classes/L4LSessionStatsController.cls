@@ -14,7 +14,7 @@ public with sharing class L4LSessionStatsController {
    control Red/Yellow UI traffic light colours
    *
    * @param 
-   * @return custom metadata record, lfl_stats_boundary
+   * @return Custom metadata record, lfl_stats_boundary
    *
    * @example
    * LFL_Stats_Boundary__mdt highsandlows = L4LSessionStatsController.getHighAndLowBoundaries()
@@ -49,8 +49,8 @@ public with sharing class L4LSessionStatsController {
    * @name getD3SessionStatsHistogramData
    * @description returns the session statistics for a client
    *
-   * @param clientId the client ID
-   * @return a list of session statistics, List<session_statistics__c>
+   * @param clientId The client ID
+   * @return A list of session statistics, List<session_statistics__c>
    *
    * @example
    * List<session_statistics__c> > ssList = L4LSessionStatsController.getD3SessionStatsHistogramData(clientId)
@@ -89,9 +89,9 @@ public with sharing class L4LSessionStatsController {
    * @name getSessionStats
    * @description
    *
-   * @param searchKey the session ID
+   * @param searchKey The session ID
    *
-   * @return a list of Session_Statistics__c
+   * @return A list of Session_Statistics__c
    *
    * @TODO fix the parameter naming
    * @example
@@ -147,8 +147,8 @@ public with sharing class L4LSessionStatsController {
    * @name getD3Stats
    * @description uses SOQL to return a session statistics for a client.
    *
-   * @param clientId the client
-   * @param showAcquired a Boolean, should we restrict to previous_status of ACQ
+   * @param clientId The client
+   * @param showAcquired A Boolean, should we restrict to previous_status of ACQ
    * @return a list of session statistics
    * @example
    * List<session_statistics__c> > ssList = L4LSessionStatsController.getD3Stats(clientId,true|false)
@@ -163,9 +163,9 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3Stats() clientId=' +
-        clientId +
-        ' showAcquired=' +
-        showAcquired,
+      clientId +
+      ' showAcquired=' +
+      showAcquired,
       'LWC Apex',
       'next-gen-nebula-apex'
     );
@@ -206,9 +206,9 @@ public with sharing class L4LSessionStatsController {
    * @name getD3StatsByProgram
    * @description uses SOQL to return a list of session statistics filtered on program name, and optionally previous status
    *
-   * @param clientId client ID
-   * @param programStr the Program Name
-   * @param showAcquired a Boolean, should we restrict to previous status of ACQ
+   * @param clientId Client ID
+   * @param programStr The Program Name
+   * @param showAcquired A Boolean, should we restrict to previous status of ACQ
    * @return a list of session statistics
    *
    * @example
@@ -225,11 +225,11 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3StatsByProgram() clientId=' +
-        clientId +
-        ' programStr=' +
-        programStr +
-        ' showAcquired=' +
-        showAcquired,
+      clientId +
+      ' programStr=' +
+      programStr +
+      ' showAcquired=' +
+      showAcquired,
       'LWC Apex',
       'next-gen-nebula-apex'
     );
@@ -271,8 +271,8 @@ public with sharing class L4LSessionStatsController {
    * @name getClientObjectivesByProgram
    * @description uses SOQL to return a COUNT of objectives from Client_Objectives__c GROUPed BY the program name
    *
-   * @param clientId the client Id
-   * @return a list of aggregate results, List<AggregateResult>
+   * @param clientId The client Id
+   * @return A list of aggregate results, List<AggregateResult>
    *
    * @example
    * List<AggregateResult>  arl = L4LSessionStatsController.getClientObjectivesByProgram(clientId)
@@ -316,7 +316,7 @@ public with sharing class L4LSessionStatsController {
    * @description a helper for D3 charting to establish the scale required for the Y Axis.
    * Uses SOQL to count the # of ACTIVE client_objectives, and # of client_objective_timeseries records for a client
    *
-   * @param clientId
+   * @param clientId The Client ID
    *
    * @return an Integer, the higher of the two counts
    * @TODO look at the requirement for ACTIVE only
@@ -340,8 +340,8 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
-        clientId +
-        ' and active__c=true',
+      clientId +
+      ' and active__c=true',
       'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
@@ -358,12 +358,12 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
-        ' WHERE client__c = ' +
-        clientId +
-        ' and active__c=true ' +
-        ' GROUP BY runId__c ' +
-        ' ORDER BY count(id) DESC ' +
-        ' LIMIT 1',
+      ' WHERE client__c = ' +
+      clientId +
+      ' and active__c=true ' +
+      ' GROUP BY runId__c ' +
+      ' ORDER BY count(id) DESC ' +
+      ' LIMIT 1',
       'LWC Apex',
       'next-gen-nebula-apex'
     );
@@ -390,17 +390,22 @@ public with sharing class L4LSessionStatsController {
       result = ts_max;
 
     System.debug(
-      'curr_max=' + curr_max + ', ts_max=' + ts_max + ', result = ' + result
+      'curr_max=' +
+      curr_max +
+      ', ts_max=' +
+      ts_max +
+      ', result = ' +
+      result
     );
 
     L4LNebulaComponentController.logDebug(
       clientId,
       'curr_max=' +
-        curr_max +
-        ', ts_max=' +
-        ts_max +
-        ', returning result = ' +
-        result,
+      curr_max +
+      ', ts_max=' +
+      ts_max +
+      ', returning result = ' +
+      result,
       'LWC Apex',
       'next-gen-nebula-apex'
     );
@@ -408,13 +413,12 @@ public with sharing class L4LSessionStatsController {
     return result;
   }
 
-
   /*******************************************************************************************************
    * @name getD3RetestYAxisScale
    * @description a helper for D3 charting to establish the scale required for the Retest Y Axis.
    * Uses SOQL to count the # of ACTIVE and Re_Test_Recommended client_objectives and client_objective_timeseries records for a client
    *
-   * @param clientId
+   * @param clientId The Client ID
    *
    * @return an Integer, the higher of the two counts
    * @TODO look at the requirement for ACTIVE only
@@ -438,8 +442,8 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3RetestYAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
-        clientId +
-        ' and re_test_recommended__c=true',
+      clientId +
+      ' and re_test_recommended__c=true',
       'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
@@ -459,12 +463,12 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
-        ' WHERE client__c = ' +
-        clientId +
-        ' AND active__c=true and re_test_recommended__c=true ' +
-        ' GROUP BY runId__c ' +
-        ' ORDER BY count(id) DESC ' +
-        ' LIMIT 1',
+      ' WHERE client__c = ' +
+      clientId +
+      ' AND active__c=true and re_test_recommended__c=true ' +
+      ' GROUP BY runId__c ' +
+      ' ORDER BY count(id) DESC ' +
+      ' LIMIT 1',
       'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
@@ -494,17 +498,22 @@ public with sharing class L4LSessionStatsController {
       result = ts_max;
 
     System.debug(
-      'curr_max=' + curr_max + ', ts_max=' + ts_max + ', result = ' + result
+      'curr_max=' +
+      curr_max +
+      ', ts_max=' +
+      ts_max +
+      ', result = ' +
+      result
     );
 
     L4LNebulaComponentController.logDebug(
       clientId,
       'curr_max=' +
-        curr_max +
-        ', ts_max=' +
-        ts_max +
-        ', returning result = ' +
-        result,
+      curr_max +
+      ', ts_max=' +
+      ts_max +
+      ', returning result = ' +
+      result,
       'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
@@ -517,7 +526,7 @@ public with sharing class L4LSessionStatsController {
    * @description a helper for D3 charting to establish the scale for the Y Axis.
    * Uses SOQL to return the maximum count for any status for all runs of client_objective_timeseries records for a client
    *
-   * @param clientId
+   * @param clientId The client ID
    *
    * @return an Integer - maximum status count for any run for the client
    * @example
@@ -539,19 +548,19 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT runid__c,status__c,count(id) c FROM client_objective_timeseries__c ' +
-        ' WHERE client__c = ' +
-        clientId +
-        ' AND active__c = TRUE' +
-        ' GROUP BY runid__c,Status__c ' +
-        ' ORDER BY count(id) DESC ' +
-        ' LIMIT 1',
+      ' WHERE client__c = ' +
+      clientId +
+      ' AND active__c = TRUE' +
+      ' GROUP BY runid__c,Status__c ' +
+      ' ORDER BY count(id) DESC ' +
+      ' LIMIT 1',
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT runid__c,status__c,count(id) c FROM client_objective_timeseries__c ' +
-        ' WHERE client__c = ' +
-        clientId +
-        ' AND active__c = TRUE' +
-        ' GROUP BY Status__c ' +
-        ' ORDER BY count(id) DESC ' +
-        ' LIMIT 1',
+      ' WHERE client__c = ' +
+      clientId +
+      ' AND active__c = TRUE' +
+      ' GROUP BY Status__c ' +
+      ' ORDER BY count(id) DESC ' +
+      ' LIMIT 1',
       'next-gen-nebula-apex'
     );
 
@@ -587,10 +596,10 @@ public with sharing class L4LSessionStatsController {
    * @name getD3StatsByProgramAndSD
    * @description use SOQL to create a list of session_statistics__c for a client according to filter parameters
    *
-   * @param clientId the client Id
+   * @param clientId The client Id
    * @param programStr "All" | program_name__c
    * @param sdStr "All"  sd_name__c
-   * @param showAcquired true | false, restrict to ACQ only or not
+   * @param showAcquired True | False, restrict to ACQ only or not
    * @param periodStr "All" | 30,60,90 days etc
    * @param stageStr "All" | objective__r.sd__r.Stage__c
    *
@@ -611,17 +620,17 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3StatsByProgramAndSD() clientId=' +
-        clientId +
-        ' programStr=' +
-        programStr +
-        ' sdStr=' +
-        sdStr +
-        ' showAcquired=' +
-        showAcquired +
-        ' persiodStr=' +
-        periodStr +
-        'stageStr= ' +
-        stageStr,
+      clientId +
+      ' programStr=' +
+      programStr +
+      ' sdStr=' +
+      sdStr +
+      ' showAcquired=' +
+      showAcquired +
+      ' persiodStr=' +
+      periodStr +
+      'stageStr= ' +
+      stageStr,
       'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
@@ -727,9 +736,9 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getClientObjectivesSDCount
    * @description returns as a List<AggregateResult> the count of client_objectives__c for a client, grouped by program, sd
-   * @param clientId
+   * @param clientId The client ID
    *
-   * @return an AggregateResult list
+   * @return An AggregateResult list
    * @example
    */
 
@@ -761,7 +770,7 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name generateD3ProgramAreaSDJson
    * @description generates a JSON string  for use by D3 charting
-   * @param clientId the client Id
+   * @param clientId The client Id
    * @param stageSt "All" | sd__c.stage__c
    *
    * @return a JSON string
@@ -778,9 +787,9 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.generateD3ProgramAreaSDJson() clientId=' +
-        clientId +
-        ' stageStr=' +
-        stageStr,
+      clientId +
+      ' stageStr=' +
+      stageStr,
       'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
@@ -988,7 +997,7 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name generateD3AreaSDJson
    * @description generates a JSON string  for use by D3 charting
-   * @param clientId the client Id
+   * @param clientId The client Id
    * @param stageStr "All" | sd__c.stage__c
    *
    * @return a JSON string
@@ -1002,9 +1011,9 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.generateD3AreaSDJson() clientId=' +
-        clientId +
-        ' stageStr=' +
-        stageStr,
+      clientId +
+      ' stageStr=' +
+      stageStr,
       'LWC Apex D3 Charting',
       'next-gen-nebula-apex'
     );
@@ -1141,19 +1150,17 @@ public with sharing class L4LSessionStatsController {
     return jsonstr;
   }
 
-
- /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name getProgramSetFromCO
    * @description generates a set (well actually a Set coerced into a List because LWC can't accept Sets) of Programs currently used in this client's client objectives.
   Used in pull down filters on D3 charts
    *
-   * @param clientId the client Id
+   * @param clientId The client Id
    *
-   * @return a set of Program names as List<String>
+   * @return A set of Program names as List<String>
    * @TODO logging
    * @example
    */
-
 
   @AuraEnabled(cacheable=true)
   public static List<String> getProgramSetFromCO(String clientId) {
@@ -1171,8 +1178,7 @@ public with sharing class L4LSessionStatsController {
     return pSet;
   }
 
-
- /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name getSDSetFromCO
    * @description generates a set (well actually a Set coerced into a List because LWC can't accept Sets) of SDs currently used in this client's client objectives.
   Used in pull down filters on D3 charts
@@ -1183,7 +1189,6 @@ public with sharing class L4LSessionStatsController {
    * @TODO logging
    * @example
    */
-
 
   @AuraEnabled(cacheable=true)
   public static List<String> getSDSetFromCO(String clientId) {

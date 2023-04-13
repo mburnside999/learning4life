@@ -7,16 +7,16 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
   public Database.querylocator start(Database.BatchableContext BC) {
     return Database.getQueryLocator(query);
   }
-/**************************************************************
- * @name LFLTimeSeriesBatch
- * @author	Mike Burnside
- * @date	2023
- * @group Learning For Life
- *
- * @description	
- *
- */
- 
+  /**************************************************************
+   * @name LFLTimeSeriesBatch
+   * @author	Mike Burnside
+   * @date	2023
+   * @group Learning For Life
+   *
+   * @description
+   *
+   */
+
   public void execute(Database.BatchableContext BC, List<sObject> scope) {
     List<Client_Objective_TimeSeries__c> tslist = new List<Client_Objective_TimeSeries__c>();
 
@@ -66,8 +66,8 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
 
     mail.setPlainTextBody(
       'LFLTimeSeriesBatch completed successfully: ' +
-        recs +
-        ' Client Objective TimeSeries records created.'
+      recs +
+      ' Client Objective TimeSeries records created.'
     );
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });

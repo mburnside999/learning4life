@@ -8,10 +8,8 @@
  *
  */
 
-
 public with sharing class LFLDTDRateMaster {
-
-   /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name getDTDRateArray
    * @description sets up a retrospective set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
    * combined JSON string 
@@ -32,7 +30,7 @@ public with sharing class LFLDTDRateMaster {
 
     List<String> dtdRateArray = new List<String>();
     DateTime thismoment = DateTime.now();
-   
+
     jsonStr = '[';
     for (Integer i = 0; i < iters; i++) {
       DateTime e = thismoment.addDays(-1 * 7 * i);
@@ -52,12 +50,10 @@ public with sharing class LFLDTDRateMaster {
       List<LFLDTDRateMaster.RateStats>.class
     );
 
-
     Decimal totalHours = 0;
     Integer numberAcquiredInPeriod = 0;
 
     for (LFLDTDRateMaster.RateStats r : rateStatResults) {
-     
       totalHours += r.totalSessionDurationHrs;
       numberAcquiredInPeriod += r.numberAcquiredInPeriod;
     }
@@ -68,16 +64,15 @@ public with sharing class LFLDTDRateMaster {
     return jsonStr;
   }
 
-
-/**************************************************************
- * @name LFLDTDSRateMAster.RateStats
- * @author	Mike Burnside
- * @date	2023
- * @group Learning For Life
- *
- * @description	inner class to represent the structure of the returned JSON
- *
- */
+  /**************************************************************
+   * @name LFLDTDSRateMAster.RateStats
+   * @author	Mike Burnside
+   * @date	2023
+   * @group Learning For Life
+   *
+   * @description	inner class to represent the structure of the returned JSON
+   *
+   */
   public class RateStats {
     public Decimal rate { get; set; }
     public Date startd { get; set; }

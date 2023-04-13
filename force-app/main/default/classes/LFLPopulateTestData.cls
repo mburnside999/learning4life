@@ -9,7 +9,6 @@
  */
 
 public with sharing class LFLPopulateTestData {
- 
   public LFLPopulateTestData() {
   }
 
@@ -18,11 +17,10 @@ public with sharing class LFLPopulateTestData {
    * @description loads test data
    *
    * @param void
-   * @return 
+   * @return
    * @example
    * LFLPopulateTestData.load();
    */
-
 
   public static void load() {
     delete [SELECT id FROM Account WHERE FirstName = 'Test FName'];

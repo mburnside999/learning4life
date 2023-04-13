@@ -1,7 +1,7 @@
 @isTest
 private class TestLFLDTDRates {
   @isTest
-  static void Test1() {
+  static void testGetAcquisitionRate() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
@@ -56,7 +56,7 @@ private class TestLFLDTDRates {
   }
 
   @isTest
-  static void Test2() {
+  static void testGetAcquisitionRateByDates() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;

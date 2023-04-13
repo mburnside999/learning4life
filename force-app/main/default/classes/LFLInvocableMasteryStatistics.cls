@@ -93,13 +93,13 @@ public with sharing class LFLInvocableMasteryStatistics {
 
     Logger.debug(
         'Apex:computeMasteryStats() correctMap=' +
-          correctMap +
-          ' nonResponsiveMap=' +
-          nonResponsiveMap +
-          ' incorrectMap=' +
-          incorrectMap +
-          ' promptedMap=' +
-          promptedMap
+        correctMap +
+        ' nonResponsiveMap=' +
+        nonResponsiveMap +
+        ' incorrectMap=' +
+        incorrectMap +
+        ' promptedMap=' +
+        promptedMap
       )
       .setRecordId(sessions[0])
       .addTag('LFLInvocableSessionStatistics.computeMasteryStats()')

@@ -51,6 +51,11 @@
                 <default>false</default>
                 <label>DNC</label>
             </value>
+            <value>
+                <fullName>CAB</fullName>
+                <default>false</default>
+                <label>CAB</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
