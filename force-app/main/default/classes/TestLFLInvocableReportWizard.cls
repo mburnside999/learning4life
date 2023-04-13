@@ -1,7 +1,7 @@
 @isTest
 private class TestLFLInvocableReportWizard {
   @isTest
-  static void test1() {
+  static void testGetStatusCountsBetweenDates() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;

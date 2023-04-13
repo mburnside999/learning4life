@@ -1,20 +1,33 @@
 /* eslint-disable no-console */
+
+/**************************************************************
+ * @author	Mike Burnside
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description	Assess and populate Session objective records. Designed to be a modal.
+ *
+ */
+
 import { LightningElement, api, wire, track } from "lwc";
 import getClientObjectivesForSession from "@salesforce/apex/L4LController.getClientObjectivesForSession";
 import createSessionObjectivesByArrayWithOrderedResults from "@salesforce/apex/L4LController.createSessionObjectivesByArrayWithOrderedResults";
+import updateSessionObjectiveWithLG from "@salesforce/apex/L4LController.updateSessionObjectiveWithLG";
+
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { CurrentPageReference } from "lightning/navigation";
 
 // Lightning Message Service
 import { publish, MessageContext } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
+
+// Nebula
 import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
 const COMPONENT = "l4lPopulateSessionObjectives";
 const TAG = "L4L-Populate-Session-Objectives";
 const SCENARIO = "Score the Session Objectives for a client";
-
 const COLOR = "color:olive"; //for console log formatting
 
 const columns = [
@@ -66,14 +79,22 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   @track results = [];
   @track sessionresults = [];
   @track skillstring = [];
+
   rendered = false;
+  lgbuttondisabled = true;
+
+  /*******************************************************************************************************
+   * @description initialise logging, do the initial refresh
+   *
+   * @param void
+   */
 
   connectedCallback() {
     console.info(`in connectedCallback`, COLOR);
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
-        logDebug(
+        logInfo(
           this.recordId,
           `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
           `${SCENARIO}`,
@@ -106,6 +127,11 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   }
   renderedCallback() {}
 
+  /*******************************************************************************************************
+   * @description main refresh method, calls Apex getClientObjectivesForSession
+   *
+   * @param void
+   */
   refresh() {
     console.info(`%crefresh(): entering`, COLOR);
     console.debug(`%crefresh(): calling getClientObjectivesForSession`, COLOR);
@@ -158,8 +184,14 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         );
       });
   }
+  /*******************************************************************************************************
+   * @description bound to onrowselection on the datatable, creates the breadcrumbs
+   *
+   * @param event
+   */
 
   getSelectedName(event) {
+    this.lgbuttondisabled = true;
     let myselectedRows = event.detail.selectedRows;
 
     logDebug(
@@ -207,6 +239,12 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     }
   }
 
+  /*******************************************************************************************************
+   * @description bound to onclick for the +C (correct) button, pushes {"skill":"C"} on to the skillstring array
+   *
+   * @param event
+   */
+
   handleIncrCorrect(event) {
     logDebug(
       this.recordId,
@@ -239,6 +277,46 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     }
   }
 
+  handleClickLG(event) {
+    console.log("=======>" + this.selectedRows[0].Id);
+
+    let coid = this.selectedRows[0].Id;
+    console.log(`Calling updateSessionObjectiveWithLG ${coid}`);
+    updateSessionObjectiveWithLG({
+      cobjid: coid
+    })
+      .then((result) => {
+        console.log("returned");
+        console.log("updateSessionObjectiveWithLG returned: " + result);
+      })
+      .then(() => {
+        this.showNotification("Success", `LG recorded`, "success");
+        this.sessionresults.push("---- LG ----");
+      })
+      .catch((error) => {
+        console.log("ERROR " + JSON.stringify(error));
+      })
+      .finally(() => {
+        this.lgbuttondisabled = true;
+        const message = {
+          recordId: "",
+          message: "message from l4lPopulateSessionObjectives",
+          source: "LWC",
+          recordData: {}
+        };
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleClickArray(): publishing message via L4LMC, message=${JSON.stringify(
+            message
+          )}`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+        publish(this.messageContext, L4LMC, message);
+      });
+  }
+
   resetCounters() {
     logDebug(
       this.recordId,
@@ -256,6 +334,11 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     //this.breadcrumb = "";
   }
 
+  /*******************************************************************************************************
+   * @description bound to onclick for the +I (incorrect) button, pushes {"skill":"I"} on to the skillstring array
+   *
+   * @param event
+   */
   handleIncrIncorrect(event) {
     logDebug(
       this.recordId,
@@ -288,6 +371,12 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     }
   }
 
+  /*******************************************************************************************************
+   * @description bound to onclick for the +N (nonresponsive) button, pushes {"skill":"N"} on to the skillstring array
+   *
+   * @param event
+   */
+
   handleIncrNonResponsive(event) {
     logDebug(
       this.recordId,
@@ -319,6 +408,11 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     }
   }
 
+  /*******************************************************************************************************
+   * @description bound to onclick for the +P (prompted) button, pushes {"skill":"P"} on to the skillstring array
+   *
+   * @param event
+   */
   handleIncrPrompted(event) {
     logDebug(
       this.recordId,
@@ -351,6 +445,12 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     }
   }
 
+  /*******************************************************************************************************
+   * @description getter to determine whether the Record Assessment button should light up
+   *
+   * @param event
+   */
+
   get buttonDisabled() {
     return (
       parseInt(this.correctCount) +
@@ -360,6 +460,12 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       0
     );
   }
+
+  /*******************************************************************************************************
+   * @description bound to onclick for the Record Assessment button. Calls Apex createSessionObjectivesByArrayWithOrderedResults
+   *
+   * @param event
+   */
 
   handleClickArray(event) {
     logDebug(
@@ -396,6 +502,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         `${SCENARIO}`,
         `${TAG}`
       );
+      console.log("=========>" + JSON.stringify(this.selectedRows));
 
       createSessionObjectivesByArrayWithOrderedResults({
         jsonstr: JSON.stringify(this.selectedRows),
@@ -463,9 +570,16 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
             `${TAG}`
           );
           publish(this.messageContext, L4LMC, message);
+          this.lgbuttondisabled = false;
         });
     }
   }
+
+  /*******************************************************************************************************
+   * @description bound to oninput for the filtering field. Filtering is client side Javascript.
+   *
+   * @param event
+   */
 
   handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
@@ -496,6 +610,14 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     );
   }
 
+  /*******************************************************************************************************
+   * @description helper for showing toast. bound to oninput for the filtering field. Filtering is client side Javascript.
+   *
+   * @param t Title
+   * @param m Message
+   * @param v Variant
+   */
+
   showNotification(t, m, v) {
     const evt = new ShowToastEvent({
       title: t,
@@ -504,6 +626,11 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     });
     this.dispatchEvent(evt);
   }
+
+  /*******************************************************************************************************
+   * @description bound to onclick for the Close button. Dispatches a custom event to initiate the tear doewn of the modal.
+   * @param event
+   */
 
   handleClickCancel(event) {
     logDebug(

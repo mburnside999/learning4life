@@ -3,7 +3,7 @@
 @isTest
 private class TestLFLInvocableMasteryStatistics {
   @isTest
-  static void test1() {
+  static void testComputeMasteryStats() {
     Test.startTest();
     LFLPopulateTestData.load();
     Test.stopTest();

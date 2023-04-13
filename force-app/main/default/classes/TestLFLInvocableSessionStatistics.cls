@@ -1,7 +1,7 @@
 @isTest
 private class TestLFLInvocableSessionStatistics {
   @isTest
-  static void test1() {
+  static void testComputeSessionStats() {
     Test.startTest();
     LFLPopulateTestData.load();
     Test.stopTest();

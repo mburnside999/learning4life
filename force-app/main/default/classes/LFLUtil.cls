@@ -1,15 +1,14 @@
 /**************************************************************
- * @name public with sharing class LFLUtil 
+ * @name public with sharing class LFLUtil
  * @author	Mike Burnside
  * @date	2023
  * @group Learning For Life
  *
- * @description	
+ * @description
  *
  */
 
 public with sharing class LFLUtil {
-  
   /*******************************************************************************************************
    * @name isValidJSON
    * @description Utility method to parse and validate JSON

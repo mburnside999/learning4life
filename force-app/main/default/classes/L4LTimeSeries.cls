@@ -4,15 +4,14 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description	methods for creating and querying Client_Objective_TimeSeries__c records 
+ * @description	methods for creating and querying Client_Objective_TimeSeries__c records
  *
  */
 
 public class L4LTimeSeries {
-
   /*******************************************************************************************************
    * @name loadCOTimeSeries
-   * @description creates a timeseries by copying all client_objectives__c at a point in time. 
+   * @description creates a timeseries by copying all client_objectives__c at a point in time.
    * Timeseries table is client_objectives_timeseries__c
    * Logging for the run is recorded in TimeSeries_Log__c.
    *
@@ -106,8 +105,7 @@ public class L4LTimeSeries {
     return tslist.size();
   }
 
-
- /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name generateD3COTimeSeriesJson
    * @description generate a JSON string for use by D3
    *
@@ -119,6 +117,8 @@ public class L4LTimeSeries {
    * @TODO example of format returned
    * @example
    * String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesJson(clientId, 'All');
+   * 
+   * jsonStr example: [{"rundate":"2022-11-27","val":2},{"rundate":"2022-12-4","val":2}]
    */
 
   @AuraEnabled(cacheable=true)
@@ -193,8 +193,7 @@ public class L4LTimeSeries {
     return jsonstr;
   }
 
-
- /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name generateD3COTSJsonByProgramAndSD
    * @description generate a JSON string for use by D3
    *
@@ -208,9 +207,10 @@ public class L4LTimeSeries {
    * @return a JSON string
    * @TODO example of format returned
    * @example
-   * String jsonstr  = L4LTimeSeries.generateD3COTSJsonByProgramAndSD(clientId, programName,sdName,'Both',60);
-   */
-
+   * String jsonstr  = L4LTimeSeries.generateD3COTSJsonByProgramAndSD(clientId, programName,sdName,'Both','60');
+   * 
+   * jsonStr example: [{"rundate":"2023-2-12","val":8},{"rundate":"2023-2-19","val":9},...]
+*/
   @AuraEnabled(cacheable=true)
   public static String generateD3COTSJsonByProgramAndSD(
     String clientId,
@@ -293,7 +293,6 @@ public class L4LTimeSeries {
 
     System.debug('json str=' + jsonstr);
 
-
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesJson, returning jsonstr=' + jsonstr,
@@ -304,8 +303,7 @@ public class L4LTimeSeries {
     return jsonstr;
   }
 
-
- /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name generateD3COTimeSeriesByStatusJson
    * @description generate a JSON string for use by D3
    *
@@ -315,6 +313,11 @@ public class L4LTimeSeries {
    * @TODO example of format returned
    * @example
    * String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesByStatusJson(clientId);
+   *
+   * jsonStr example: [{"rundate":"2022-12-25","val":3,"status":"CIP"},
+   * {"rundate":"2023-1-1","val":3,"status":"CIP"},{"rundate":"2023-1-8","val":3,"status":"CIP"},
+   * {"rundate":"2023-1-15","val":6,"status":"ACQ"},{"rundate":"2023-1-22","val":4,"status":"ACQ"}
+   * ...]
    */
 
   @AuraEnabled(cacheable=true)
@@ -377,8 +380,7 @@ public class L4LTimeSeries {
     return jsonstr;
   }
 
-
- /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name generateD3CORetestTimeSeriesJson
    * @description generate a JSON string for use by D3
    *
@@ -389,6 +391,12 @@ public class L4LTimeSeries {
    * @TODO example of format returned
    * @example
    * String jsonstr  = L4LTimeSeries.generateD3CORetestTimeSeriesJson(clientId,'ACQ');
+   *
+   * jsonStr example: [{"rundate":"2023-1-15","val":2},{"rundate":"2023-1-29","val":1},{"rundate":"2023-2-12","val":2},
+   * {"rundate":"2023-2-19","val":1},{"rundate":"2023-2-26","val":3},{"rundate":"2023-3-5","val":4},
+   * ...]
+   *
+   *
    */
 
   @AuraEnabled(cacheable=true)
@@ -451,7 +459,6 @@ public class L4LTimeSeries {
 
     System.debug('json str=' + jsonstr);
 
-
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3CORetestTimeSeriesJson, returning jsonstr=' +
@@ -462,8 +469,7 @@ public class L4LTimeSeries {
     return jsonstr;
   }
 
-
- /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name generateD3COTSThresholdJson
    * @description generate a JSON string for use by D3
    *
@@ -476,6 +482,12 @@ public class L4LTimeSeries {
    * @TODO logging
    * @example
    * String jsonstr  = L4LTimeSeries.generateD3COTSThresholdJson(clientId,100,200);
+   *
+   * jsonStr example: {"reserved1":1,"reserved2":2,"sessiondata":
+   * [{"thresholdHrs":10,"thresholdReached":true,"actualHrsAtThreshold":11.0,"runId":"TSL-2022-11-000000",
+   "runDate":"2022-11-27","dateAtThreshold":"2022-10-07 00:00:00","data":[],"acquiredTotal":0},
+   * {"thresholdHrs":20,"thresholdReached":true,"actualHrsAtThreshold":20.0,"runId":"TSL-2022-11-000000",
+   * "dateAtThreshold":"2022-10-27 00:00:00","data":[],"acquiredTotal":0}]}
    */
   @AuraEnabled(cacheable=true)
   public static String generateD3COTSThresholdJson(
@@ -509,11 +521,11 @@ public class L4LTimeSeries {
       totalSessionLength += s.session_length__c;
       System.debug(
         'date=' +
-          s.date__c +
-          ' length=' +
-          s.session_length__c +
-          ' ,totalSessionLength=' +
-          totalSessionLength
+        s.date__c +
+        ' length=' +
+        s.session_length__c +
+        ' ,totalSessionLength=' +
+        totalSessionLength
       );
 
       if (totalSessionLength >= threshold1 && !reachedThreshold1) {
@@ -547,17 +559,17 @@ public class L4LTimeSeries {
     System.debug('d1' + d1 + ' ' + 'd2' + d2);
     System.debug(
       'reachedThreshold1' +
-        reachedThreshold1 +
-        ' ' +
-        'reachedThreshold2' +
-        reachedThreshold2
+      reachedThreshold1 +
+      ' ' +
+      'reachedThreshold2' +
+      reachedThreshold2
     );
     System.debug(
       'valueAtThreshold1' +
-        valueAtThreshold1 +
-        ' ' +
-        'valueAtThreshold2' +
-        valueAtThreshold2
+      valueAtThreshold1 +
+      ' ' +
+      'valueAtThreshold2' +
+      valueAtThreshold2
     );
 
     jsonStr += ',"sessiondata":[';

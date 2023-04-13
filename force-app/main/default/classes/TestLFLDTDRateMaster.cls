@@ -1,7 +1,7 @@
 @isTest
 private class TestLFLDTDRateMaster {
   @isTest
-  static void Test1() {
+  static void testGetDTDRateArray() {
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
 

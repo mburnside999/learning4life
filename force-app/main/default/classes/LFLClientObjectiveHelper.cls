@@ -9,18 +9,16 @@
  */
 
 public class LFLClientObjectiveHelper {
-
-
   /*******************************************************************************************************
    * @name getStatusCountsBetweenDates
    * @description helper method for the Report Wizard returns a formatted string for insertion into a long text area
-  * ..., amd inserts the string into NDIS_Report__c.NDIS_Report__c;
-   * 
+   * ..., amd inserts the string into NDIS_Report__c.NDIS_Report__c;
+   *
    * @param starttime
    * @param endtime
    * @param Id the client id
    * @return a string used by the Report Wizard Flow
-   * @TODO improve explanation 
+   * @TODO improve explanation
    * @example
    * String str = LFLClientObjectiveHelper.getStatusCountsBetweenDates(starttime, endtime, clientId);
    */
@@ -29,7 +27,6 @@ public class LFLClientObjectiveHelper {
     DateTime endtime,
     Id clientid
   ) {
-
     String str = '<p></p>';
 
     // execute a SOQL aggregate query

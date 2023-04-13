@@ -11,9 +11,9 @@
 public with sharing class L4LController {
   /*******************************************************************************************************
    * @description returns the status of a given session
-   * @param recordId the Session ID
+   * @param recordId The Session ID
    *
-   * @return session status as String
+   * @return Session status
    *
    * @example
    * String status=L4LController.getSessionStatus(recordId);
@@ -51,8 +51,8 @@ public with sharing class L4LController {
    * @description returns a list of 50 popular Client Objectives, ignoring those that
    * have been already allocated to the client.
    *
-   * @param clientId the client Id
-   * @return list of popular Client Objectives
+   * @param clientId The client Id
+   * @return List of popular Client Objectives
    *
    * @example
    * List<client_objective__c> coList = L4LController.getPopularObjectives(clientId)
@@ -117,8 +117,8 @@ public with sharing class L4LController {
   /*******************************************************************************************************
    * @description returns a list session objectives for a session.
    *
-   * @param sess the session Id
-   * @return the list of session objectives
+   * @param sess The session Id
+   * @return List of session objectives
    *
    * @example
    * List<session_obj__c> soList = L4LController.getSessionObjectives(sess)
@@ -183,8 +183,8 @@ public with sharing class L4LController {
    *
    * TODO fix parameter name
    *
-   * @param searchKey the session Id
-   * @return list of Client Objectives
+   * @param searchKey The session Id
+   * @return List of Client Objectives
    *
    * @example
    * List<client_objective__c> coList = L4LController.getClientObjectivesForSession(sessionId)
@@ -257,8 +257,8 @@ public with sharing class L4LController {
    *
    * TODO fix parameter name
    *
-   * @param clientId the client Id
-   * @return list of Client Objectives
+   * @param clientId The client Id
+   * @return List of Client Objectives
    *
    * @example
    * List<client_objective__c> coList = L4LController.getClientObjectives(clientId)
@@ -328,8 +328,8 @@ public with sharing class L4LController {
   /*******************************************************************************************************
    * @description returns a list of all, or active only Client Objectives for a client, ordered by Program Name, Name
    *
-   * @param clientId the client Id
-   * @param showActiveOnly a flag to indicate whether to show the ACTIVE objectives only
+   * @param clientId The client Id
+   * @param showActiveOnly Flag to indicate whether to show the ACTIVE objectives only
    * @return list of Client Objectives
    *
    * @example
@@ -394,12 +394,12 @@ public with sharing class L4LController {
    * @description returns a JSON  string summarising ACTIVE, INACTIVE and TOTAL
    * Client Objectives for a client
    *
-   * @param clientId the client Id
+   * @param clientId The client Id
    * @return JSON string summary of statuses
    *
    * @example
    * String aggStr = L4LController.getCOActivationSummary(clientId)
-   * ..returns {"active":20, "inactive":5,"total",25}
+   * aggStr contains JSON string: {"active":20, "inactive":5,"total",25}
    */
 
   @AuraEnabled(cacheable=false)
@@ -462,8 +462,8 @@ public with sharing class L4LController {
 
   /*******************************************************************************************************
    * @description deactivates a Client Objective
-   * @param clientId the Client Objective Id
-   * @return the deactivated client objective
+   * @param clientId The Client Objective Id
+   * @return The deactivated client objective
    *
    * @example
    * List<client_objective__c> coList = L4LController.deactivateClientObjective(clientObjectiveId)
@@ -494,8 +494,8 @@ public with sharing class L4LController {
 
   /*******************************************************************************************************
    * @description returns a list of all active objectives not yet assigned to a client
-   * @param clientId the Client Objective Id
-   * @return list of client objectives not assigned to client
+   * @param clientId The Client Objective Id
+   * @return List of client objectives not assigned to client
    *
    * @example
    * List<objective__c> coList = L4LController.getUnusedObjectives(clientObjectiveId)
@@ -514,12 +514,12 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController:getUnusedObjectives(): SELECT Id, Name, Program__c, SD_Name__c ' +
-        ' FROM Objective__c ' +
-        ' WHERE Id NOT IN ( ' +
-        ' SELECT Objective__c ' +
-        ' FROM Client_Objective__c ' +
-        ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
-        ' AND status__c="Active"',
+      ' FROM Objective__c ' +
+      ' WHERE Id NOT IN ( ' +
+      ' SELECT Objective__c ' +
+      ' FROM Client_Objective__c ' +
+      ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
+      ' AND status__c="Active"',
       'L4LController.getUnusedObjectives()',
       'next-gen-nebula-apex'
     );
@@ -556,8 +556,8 @@ public with sharing class L4LController {
    * @description returns a list of all active objectives not yet assigned to this client 
    * that have a Name like %searchString%
    * 
-   * @param clientId the Client Objective Id
-   * @param searchstring the search string for the name
+   * @param clientId The Client Objective Id
+   * @param searchstring The search string for the name
 
    * @return list of client objectives not assigned to client
    *
@@ -582,12 +582,12 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'getUnusedObjectivesBySearch(): SELECT Id, Name, Program__c, SD_Name__c ' +
-        ' FROM Objective__c ' +
-        ' WHERE Id NOT IN ( ' +
-        ' SELECT Objective__c ' +
-        ' FROM Client_Objective__c ' +
-        ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
-        ' AND status__c="Active" and Name like...',
+      ' FROM Objective__c ' +
+      ' WHERE Id NOT IN ( ' +
+      ' SELECT Objective__c ' +
+      ' FROM Client_Objective__c ' +
+      ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
+      ' AND status__c="Active" and Name like...',
       'L4LController.getUnusedObjectivesBySearch()',
       'next-gen-nebula-apex'
     );
@@ -632,7 +632,7 @@ public with sharing class L4LController {
    * @description delete all session objectives for the session 
    * that have a Name like %searchString%
    * 
-   * @param sessionId the Session Id
+   * @param sessionId The Session Id
 
    * @return void
    *
@@ -657,9 +657,9 @@ public with sharing class L4LController {
    * @description for a given session, for each client objective in a list create session objectives
    * from its list of DTD scores
    *
-   * @param jsonStr a JSON string containing a list of client objectives
-   * @param sess the session Id
-   * @param skillstring a JSON string containing a list of DTD scores
+   * @param jsonStr A JSON string containing a list of client objectives
+   * @param sess The session Id
+   * @param skillstring A JSON string containing a list of DTD scores
    *
    * @return the number of session objectives added
    *
@@ -677,11 +677,11 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       sess,
       'L4LController.createSessionObjectivesByArrayWithOrderedResults() jsonstr=' +
-        jsonstr +
-        ' sess=' +
-        sess +
-        'skillstring=' +
-        skillstring,
+      jsonstr +
+      ' sess=' +
+      sess +
+      'skillstring=' +
+      skillstring,
       'LWC Apex',
       'next-gen-nebula-apex'
     );
@@ -773,16 +773,25 @@ public with sharing class L4LController {
 
     insert soList;
 
+    Integer lastInList;
+    if (soList.size() > 0) {
+      lastInList = soList.size() - 1;
+      String ps = soList[lastInList].previous_status__c;
+      Session_Obj__c soLast = soList[lastInList];
+      soLast.previous_status__c = ps;
+      update soLast;
+    }
+
     return soList.size();
   }
 
   /*******************************************************************************************************
    * @description create client objectives from a JSON list of objectives
    *
-   * @param jsonStr a JSON string containing a list of objectives
-   * @param sess the session Id
+   * @param jsonStr A JSON string containing a list of objectives
+   * @param sess The session Id
    *
-   * @return the number of session objectives added
+   * @return The number of session objectives added
    *
    * @example
    * Integer noOfCreatedClientObjs = L4LController.createClientObjectivesByArray(jsonStr,sess)
@@ -828,10 +837,10 @@ public with sharing class L4LController {
   /*******************************************************************************************************
    * @description update session objective scores from a JSON list
    *
-   * @param jsonStr a JSON string containing a list of session objectives to update
-   * @param val the score - "Correct" or "Incorrect" ...etc
+   * @param jsonStr A JSON string containing a list of session objectives to update
+   * @param Val The score - "Correct" or "Incorrect" ...etc
    *
-   * @return the number of session objectives updated
+   * @return The number of session objectives updated
    *
    * @example
    * Integer noOfSessionObjsUpdated = L4LController.setSessionObjectivesByArray(jsonStr,'Correct')
@@ -846,9 +855,9 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       null,
       'L4LController.setSessionObjectivesByArray jsonstr=' +
-        jsonstr +
-        ' val=' +
-        val,
+      jsonstr +
+      ' val=' +
+      val,
       'LWC Apex',
       'next-gen-nebula-apex'
     );
@@ -904,10 +913,10 @@ public with sharing class L4LController {
   /*******************************************************************************************************
    * @description for a list of client objectives, update to a common status or activate/deactivate
    *
-   * @param jsonStr a JSON string containing a list of client objectives to update
-   * @param val the "ACQ" or "OBJ" or "Activate" or "Deactivate"
+   * @param jsonStr A JSON string containing a list of client objectives to update
+   * @param val "ACQ" or "OBJ" or "Activate" or "Deactivate"
    *
-   * @return the number of client objectives updated
+   * @return The number of client objectives updated
    *
    * @example
    * Integer noOfClientObjsUpdated = L4LController.setClientObjectivesByArray(jsonStr,'ACQ')
@@ -921,9 +930,9 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       null,
       'L4LController.setClientObjectivesByArray jsonstr=' +
-        jsonstr +
-        ' val=' +
-        val,
+      jsonstr +
+      ' val=' +
+      val,
       'LWC Apex',
       'next-gen-nebula-apex'
     );
@@ -973,6 +982,60 @@ public with sharing class L4LController {
     }
 
     return updCOList.size();
+  }
+
+  /*******************************************************************************************************
+   * @description finds the latest related Session Objective and updates the comment with "LG"
+   *
+   * @param cobjid Client Objective id
+   *
+   * @return Summary of change to Session Objective
+   *
+   * @example
+   * String str = L4LController.updateSessionObjectiveWithLG(jsonStr,'ACQ')
+   *
+   */
+
+  @AuraEnabled(cacheable=false)
+  public static String updateSessionObjectiveWithLG(String cobjid) {
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logDebug(
+      null,
+      'L4LController.updateSessionObjectiveWithLG',
+      'LWC Apex',
+      'next-gen-nebula-apex'
+    );
+    System.debug('==========' + cobjid);
+
+    final string LGCOMMENT = 'LG';
+
+    Id oid = [
+      SELECT id, objective__c
+      FROM client_objective__c
+      WHERE id = :cobjid
+      LIMIT 1
+    ]
+    .objective__c;
+    System.debug('==========' + oid);
+    List<Session_Obj__c> solist = [
+      SELECT id, comment__c, lastmodifieddate
+      FROM session_obj__c
+      WHERE objective__c = :oid
+      ORDER BY lastmodifieddate DESC
+    ];
+
+    /******
+     * Yuk. In order to be able to correctly identify and reference the
+     * last SO updated (specifically for the LG button functionality) make a deliberate
+     * noop change to the last array member, thus deliberately bumping the lastmodified date -- this is needed because of the lack of
+     * millisecond precision on DateTime fields, meaning the lastmodified field cant guarantee order
+     * , otherwise could just do a query
+     */
+
+    Session_Obj__c so = soList[0];
+    so.comment__c = LGCOMMENT;
+    update so;
+    return 'so.Id= ' + solist[0].id + ', comment=' + solist[0].comment__c;
   }
 
   public class SessionResult {

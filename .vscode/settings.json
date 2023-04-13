@@ -4,5 +4,8 @@
     "**/bower_components": true,
     "**/.sfdx": true
   },
-  "salesforcedx-vscode-core.show-cli-success-msg": false
+  "salesforcedx-vscode-core.show-cli-success-msg": false,
+  "editor.formatOnSave": true,
+  "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/jdk-11.0.17.jdk/Contents/Home",
+  "prettier.enableDebugLogs": true
 }

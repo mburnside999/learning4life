@@ -1,7 +1,7 @@
 @isTest
 private class TestClientObjectiveList {
   @isTest
-  static void testGetsessionObjectives() {
+  static void testGetClientObjectives() {
     Test.startTest();
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;

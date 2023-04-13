@@ -9,15 +9,14 @@
  */
 
 public with sharing class LFLDTDRates {
-  
   /*******************************************************************************************************
    * @name getAcquisitionRate
    * @description sets up a retrospective set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
-   * combined JSON string 
+   * combined JSON string
    *
    *
    * @param clientId the clientId
-   * @param retro 
+   * @param retro
    * @return JSON string
    * @TODO is this deprecated?
    * @example
@@ -51,11 +50,10 @@ public with sharing class LFLDTDRates {
     return jsonStr;
   }
 
-
   /*******************************************************************************************************
    * @name getAcquisitionRateByDates
    * @description sets up a retrospecitve set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
-   * combined JSON string 
+   * combined JSON string
    *
    *
    * @param clientId the clientId
@@ -100,7 +98,6 @@ public with sharing class LFLDTDRates {
     jsonStr = buildJson(clientId, limitDatesList);
     return jsonStr;
   }
-
 
   /*******************************************************************************************************
    * @name buildJson
@@ -147,7 +144,7 @@ public with sharing class LFLDTDRates {
     Date startd = startdt.date();
     Date endd = enddt.date();
 
-   // work out the number of acquired skills at the start
+    // work out the number of acquired skills at the start
     list<aggregateresult> startingACQCountList = [
       SELECT count(id)
       FROM client_objective_timeseries__c
@@ -170,9 +167,9 @@ public with sharing class LFLDTDRates {
 
     System.debug(
       'startAcquiredCount = ' +
-        startAcquiredCount +
-        ' endAcquiredCount=' +
-        endAcquiredCount
+      startAcquiredCount +
+      ' endAcquiredCount=' +
+      endAcquiredCount
     );
 
     // work out the elapsed days
