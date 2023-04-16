@@ -525,3 +525,7 @@ System.debug(s);
 
 select id,objective__c,lastmodifieddate from client_objective__c where id ='a058t000000IUErAAO'
 
+0018t000002vfSfAAI
+
+String l = L4LStagesByArea.getSDUsage('0018t000002vfSfAAI');
+System.debug('=====>'+l);

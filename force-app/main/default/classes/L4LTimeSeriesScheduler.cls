@@ -7,6 +7,7 @@
  * @description	implements Schedulable the class scheduled to create the TimeSeries
  *
  */
+
 global class L4LTimeSeriesScheduler implements Schedulable {
   global void execute(SchedulableContext SC) {
     L4LTimeSeries l = new L4LTimeSeries();

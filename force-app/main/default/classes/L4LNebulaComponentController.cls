@@ -1,12 +1,43 @@
+/**************************************************************
+ * @author	Mike Burnside
+ * @name L4LNebulaComponentController
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description
+ *
+ */
+
 public with sharing class L4LNebulaComponentController {
   private static String nebulaId;
 
+  /*******************************************************************************************************
+   * @description set up caching
+   * @param recordId The Session ID
+   *
+   * @return Session status
+   *
+   * @example
+   * String status=L4LController.getSessionStatus(recordId);
+   */
   @AuraEnabled
   public static void setupCache() {
     if (!Cache.Session.contains('IsNewLoad')) {
       Cache.Session.put('IsNewLoad', true);
     }
   }
+
+  /*******************************************************************************************************
+   * @description helper for logging Warnings
+   * @param recordId The related record
+   * @param message The message text
+   * @param scenario The logging scanario
+   * @param tag The logging tag
+   *
+   * @return void
+   *
+   * @example
+   */
 
   @AuraEnabled
   public static void logWarning(
@@ -19,6 +50,19 @@ public with sharing class L4LNebulaComponentController {
     Logger.warn(message + ' record=' + recordId).setRecordId(recordId);
     saveNebulaLog();
   }
+
+  /*******************************************************************************************************
+   * @description helper for logging Info
+   * @param recordId The related record
+   * @param message The message text
+   * @param scenario The logging scanario
+   * @param tag The logging tag
+   *
+   * @return void
+   *
+   * @example
+   */
+
   @AuraEnabled
   public static void logInfo(
     String recordId,
@@ -30,6 +74,18 @@ public with sharing class L4LNebulaComponentController {
     Logger.info(message).setRecordId(recordId).addTag(tag);
     saveNebulaLog();
   }
+
+  /*******************************************************************************************************
+   * @description helper for logging Fine
+   * @param recordId The related record
+   * @param message The message text
+   * @param scenario The logging scanario
+   * @param tag The logging tag
+   *
+   * @return void
+   *
+   * @example
+   */
 
   @AuraEnabled
   public static void logFine(
@@ -43,6 +99,18 @@ public with sharing class L4LNebulaComponentController {
     saveNebulaLog();
   }
 
+  /*******************************************************************************************************
+   * @description helper for logging Errors
+   * @param recordId The related record
+   * @param message The message text
+   * @param scenario The logging scanario
+   * @param tag The logging tag
+   *
+   * @return void
+   *
+   * @example
+   */
+
   @AuraEnabled
   public static void logError(
     String recordId,
@@ -55,6 +123,18 @@ public with sharing class L4LNebulaComponentController {
     saveNebulaLog();
   }
 
+  /*******************************************************************************************************
+   * @description helper for logging Debug
+   * @param recordId The related record
+   * @param message The message text
+   * @param scenario The logging scanario
+   * @param tag The logging tag
+   *
+   * @return void
+   *
+   * @example
+   */
+
   @AuraEnabled
   public static void logDebug(
     String recordId,
@@ -66,6 +146,14 @@ public with sharing class L4LNebulaComponentController {
     Logger.debug(message).setRecordId(recordId).addTag(tag);
     saveNebulaLog();
   }
+
+  /*******************************************************************************************************
+   * @description save Nebula log
+   *
+   * @return void
+   *
+   * @example
+   */
 
   private static void saveNebulaLog() {
     Boolean isNewLoad = (Boolean) Cache.Session.get('IsNewLoad');

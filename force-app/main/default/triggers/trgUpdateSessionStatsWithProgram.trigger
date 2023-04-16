@@ -1,3 +1,13 @@
+/**************************************************************
+ * @name trgUpdateSessionStatsWithProgram
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description
+ *
+ */
+
 trigger trgUpdateSessionStatsWithProgram on session_statistics__c(
   before insert
 ) {

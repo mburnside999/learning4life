@@ -1,4 +1,22 @@
+/**************************************************************
+ * @name LFLProgramStatusCascadeUtil
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ * @description	methods to support the Rate calculations
+ *
+ */
+
 public class LFLProgramStatusCascadeUtil {
+  /*******************************************************************************************************
+   * @name updateSDStatusByMap
+   * @description loads test data
+   *
+   * @param statusMap
+   * @return void
+   * @example
+   */
+
   public static void updateSDStatusByMap(Map<id, string> statusMap) {
     Logger.debug('Apex:LFLProgramStatusCascadeUtil')
       .addTag('LFLProgramStatusCascadeUtil.updateSDStatusByMap()')
@@ -28,6 +46,14 @@ public class LFLProgramStatusCascadeUtil {
     update sdupdatelist;
   }
 
+  /*******************************************************************************************************
+   * @name updateObjectiveStatusByMap
+   * @description loads test data
+   *
+   * @param statusMap
+   * @return void
+   * @example
+   */
   public static void updateObjectiveStatusByMap(Map<id, string> statusMap) {
     Logger.debug('Apex:LFLProgramStatusCascadeUtil')
       .addTag('LFLProgramStatusCascadeUtil.updateObjectiveStatusByMap()')

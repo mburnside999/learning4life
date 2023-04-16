@@ -1,35 +1,15 @@
-/**************************************************************
- * @author	Mike Burnside
- * @name L4LSDStageMap
- * @date	2023
- * @group Learning For Life
- *
- * @description
- *
- */
-
-public with sharing class L4LSDStageMap {
-  /*******************************************************************************************************
-   * @description
-   * @param clientId The Client ID
-   *
-   * @return A list of SDs
-   *
-   * @example
-   */
-
-  @AuraEnabled(cacheable=true)
-  public static List<SD__c> removeDuplicates(String clientId) {
+public with sharing class L4LStagesByArea {
+  @AuraEnabled(cacheable=false)
+  public static String getSDUsage(String clientId) {
     // Query for a list of Client_Objective__c and SD__c objects
     List<Client_Objective__c> clientObjectives = [
-      SELECT Id, SD_Name__c, Name, SDId__c
+      SELECT Id, SD_Name__c, Name, SDId__c, Status__c
       FROM Client_Objective__c
       WHERE Client__c = :clientId
     ];
     List<SD__c> sdRecords = [
       SELECT
         Id,
-        InUse__c,
         Name,
         Stage__c,
         Area__c,
@@ -42,15 +22,19 @@ public with sharing class L4LSDStageMap {
     ];
 
     // Create a map to store the unique SD__c records
-    Map<Id, SD__c> uniqueSDRecords = new Map<Id, SD__c>();
+    Map<Id, XSD> xuniqueSDRecords = new Map<Id, XSD>();
 
     // Create a map to store the match count for each SD__c record
-    Map<Id, Integer> sdMatchCount = new Map<Id, Integer>();
+    Map<Id, Integer> xsdMatchCount = new Map<Id, Integer>();
 
     // Iterate through the list of SD__c records
     for (SD__c sd : sdRecords) {
+      XSD xsd = new XSD();
+      xsd.sd = sd;
+
       // Set a flag to track whether the SD__c record has been matched to a Client_Objective__c record
       Boolean matchFound = false;
+      Boolean CABfound = false;
 
       // Iterate through the list of Client_Objective__c records
       for (Client_Objective__c co : clientObjectives) {
@@ -60,37 +44,49 @@ public with sharing class L4LSDStageMap {
           matchFound = true;
 
           // Increment the match count for the SD__c record
-          if (sdMatchCount.containsKey(sd.Id)) {
-            sdMatchCount.put(sd.Id, sdMatchCount.get(sd.Id) + 1);
+          if (xsdMatchCount.containsKey(xsd.sd.Id)) {
+            xsdMatchCount.put(xsd.sd.Id, xsdMatchCount.get(xsd.sd.Id) + 1);
           } else {
-            sdMatchCount.put(sd.Id, 1);
+            xsdMatchCount.put(xsd.sd.Id, 1);
+          }
+          // Check if the Status__c of the Client_Objective__c record is 'CAB', and set the CABfound flag
+          if (co.Status__c == 'CAB') {
+            CABfound = true;
           }
         }
       }
 
       // If the flag is still false (i.e. no match was found), add the SD__c record to the map
       if (!matchFound) {
-        uniqueSDRecords.put(sd.Id, sd);
-        sdMatchCount.put(sd.Id, 0);
+        xuniqueSDRecords.put(xsd.sd.Id, xsd);
+        xsdMatchCount.put(xsd.sd.Id, 0);
+        xsd.CABStatus = 'false';
       }
-
       // If the flag is true (i.e. match with ClientObj was found), update the InUse Flag and add the SD__c record to the map
       if (matchFound) {
-        sd.InUse__c = true;
-        uniqueSDRecords.put(sd.Id, sd);
+        xsd.CABStatus = 'true';
+        xuniqueSDRecords.put(xsd.sd.Id, xsd);
+
+        if (CABfound) {
+          xsd.CABStatus = 'CorrectatBaseline';
+        } else {
+          xsd.CABStatus = 'true';
+        }
       }
     }
 
     // Convert the map of unique SD__c records back into a list
-    List<SD__c> uniqueSDList = new List<SD__c>(uniqueSDRecords.values());
+    List<XSD> xuniqueSDList = new List<XSD>(xuniqueSDRecords.values());
 
-    // Set the match count for each SD__c record in the list
-    for (SD__c sd : uniqueSDList) {
-      sd.Match_Count__c = sdMatchCount.get(sd.Id);
+    for (XSD xsd : xuniqueSDList) {
+      xsd.sd.Match_Count__c = xsdMatchCount.get(xsd.sd.Id);
     }
-    // Do something with the list of unique SD__c records
-    System.debug(uniqueSDList);
 
-    return uniqueSDList;
+    return JSON.serialize(xuniqueSDList);
+  }
+
+  public class XSD {
+    public SD__C sd { get; set; }
+    public String CABStatus { get; set; }
   }
 }

@@ -9,7 +9,7 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 const COMPONENT = "l4lACQThresholdSummary";
 const TAG = "L4L-Analyse-ACQ-Thresholds";
 //const COLOR = "color:green"; //for console log formatting
-const SCENARIO = "Analyse ACQ by total session times ";
+const SCENARIO = "Analyse ACQ by total session times and thresholds ";
 const columns = [
   { label: "Program Name", fieldName: "programName" },
   { label: "# of ACQ skills", fieldName: "acquiredCount" }

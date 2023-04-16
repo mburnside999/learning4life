@@ -1,3 +1,13 @@
+/**************************************************************
+ * @name trgUpdateDateSinceCorrect
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description
+ *
+ */
+
 trigger trgUpdateDateSinceCorrect on Session_Obj__c(
   before update,
   after insert
