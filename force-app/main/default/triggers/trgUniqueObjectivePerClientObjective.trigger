@@ -1,3 +1,13 @@
+/**************************************************************
+ * @name trgUniqueObjectivePerClientObjective
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description
+ *
+ */
+
 trigger trgUniqueObjectivePerClientObjective on client_objective__c(
   before insert
 ) {

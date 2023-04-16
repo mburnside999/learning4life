@@ -1,3 +1,13 @@
+/**************************************************************
+ * @name trgCascadeSDStatus
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description
+ *
+ */
+
 trigger trgCascadeSDStatus on SD__c(after update) {
   Map<Id, String> statusMap = new Map<Id, String>();
 

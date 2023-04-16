@@ -1,4 +1,24 @@
+/**************************************************************
+ * @author	Mike Burnside
+ * @name
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description
+ *
+ */
+
 public class L4LInvocableListUnusedObj {
+  /*******************************************************************************************************
+   * @description
+   * @param inputVariables List of Input Variables
+   *
+   * @return
+   *
+   * @example
+   * String status=L4LController.getSessionStatus(recordId);
+   */
+
   @InvocableMethod(label='Remove Records')
   public static List<List<Objective__c>> RemoveRecords(
     List<InputVariables> inputVariables

@@ -1,22 +1,26 @@
+/**************************************************************
+ * @name ClientObjectiveList
+ * @author
+ *
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description
+ *
+ */
+
 public with sharing class ClientObjectiveList {
+  /*******************************************************************************************************
+   * @description
+   * @param clientId The Client ID
+   *
+   * @return List of Client Objectives
+   *
+   * @example
+   */
+
   @AuraEnabled(cacheable=true)
   public static List<Client_Objective__c> getClientObjectives(string clientId) {
-    List<Client_Objective__c> tmpList = [
-      SELECT
-        Objective_Name__c,
-        active__c,
-        Objective__c,
-        SD_Name__c,
-        Program_Name__c,
-        Status__c,
-        Client_Objective_Notes__c,
-        Stage__c,
-        Area__c
-      FROM Client_Objective__c
-      LIMIT 10
-    ];
-    System.debug('xxxxx' + tmpList);
-
     return [
       SELECT
         active__c,

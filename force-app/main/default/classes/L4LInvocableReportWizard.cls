@@ -4,7 +4,7 @@
  * @date	2022
  * @group Learning For Life
  *
- * @description	  As of January 19, 2022 this is the controller for MDH's Report Wizard flow
+ * @description	As of January 19, 2022 this is the controller for MDH's Report Wizard flow
  *
  */
 

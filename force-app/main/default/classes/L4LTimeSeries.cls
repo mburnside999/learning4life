@@ -108,7 +108,7 @@ public class L4LTimeSeries {
   /*******************************************************************************************************
    * @name generateD3COTimeSeriesJson
    * @description generate a JSON string for use by D3
-   *
+   * @deprecated
    *
    * @param clientId
    * @param status All (actually ACQ & CIP) | status__c
@@ -331,7 +331,7 @@ public class L4LTimeSeries {
     );
 
     String queryCOTSString = 'SELECT calendar_Year(TS_Load_DateTime__c) year,calendar_Month(TS_Load_DateTime__c) month,day_in_Month(TS_Load_DateTime__c) day, status__c, count(id) val  FROM client_objective_timeseries__c ';
-    queryCOTSString += ' where active__c=true and client__c=:clientId and status__c in (\'ACQ\',\'CIP\')';
+    queryCOTSString += ' where client__c=:clientId and status__c in (\'ACQ\',\'CIP\')';
     queryCOTSString += ' group by calendar_Year(TS_Load_DateTime__c),calendar_Month(TS_Load_DateTime__c),day_in_Month(TS_Load_DateTime__c),status__c order by calendar_Year(TS_Load_DateTime__c),calendar_month(TS_Load_DateTime__c),day_in_month(TS_Load_DateTime__c),status__c';
 
     L4LNebulaComponentController.logDebug(

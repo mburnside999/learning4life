@@ -1,15 +1,3 @@
-/**************************************************************
- * @name l4lCreateClientObjectives
- * @author Mike Burnside
- * @date	2022
- * @group Learning For Life
- *
- * @description	LWC to create client objectives.
- * Used typically as a modal from a button on the ClientObjectives record page.
- * Provides filtering, searching and a list of "popular" objectives (those in use by other clients)
- * Uses the Nebula logging framework, and the Lightning Message Service
- */
-
 import { LightningElement, api, wire, track } from "lwc";
 import getUnusedObjectives from "@salesforce/apex/L4LController.getUnusedObjectives";
 import getUnusedObjectivesBySearch from "@salesforce/apex/L4LController.getUnusedObjectivesBySearch";
@@ -35,6 +23,19 @@ const columns = [
   { label: "SD", fieldName: "SD_Name__c", type: "text" },
   { label: "Objective", fieldName: "Name", type: "text" }
 ];
+
+/**************************************************************
+ * @name l4lCreateClientObjectives
+ * @author Mike Burnside
+ * @date	2022
+ * @group Learning For Life
+ * @extends LightningElement
+ *
+ * @description	LWC to create client objectives.
+ * Used typically as a modal from a button on the ClientObjectives record page.
+ * Provides filtering, searching and a list of "popular" objectives (those in use by other clients)
+ * Uses the Nebula logging framework, and the Lightning Message Service
+ */
 
 export default class L4lCreateClientObjectives extends LightningElement {
   @wire(MessageContext) messageContext;

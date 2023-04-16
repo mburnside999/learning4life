@@ -1,3 +1,13 @@
+/**************************************************************
+ * @name LFLSDWrapper
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description
+ *
+ */
+
 public class LFLSDWrapper implements Comparable {
   public sd__c sd;
 
