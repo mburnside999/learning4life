@@ -1,4 +1,27 @@
+/**************************************************************
+ * @name L4LStagesByArea
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	methods for creating and querying Client_Objective_TimeSeries__c records
+ *
+ */
+
 public with sharing class L4LStagesByArea {
+  
+    /*******************************************************************************************************
+   * @name getSDUsage
+   * @description providea data for Stages2 LWC
+   *
+   *
+   * @param clientID the Client ID
+   * @return JSON string
+   *
+   * @example
+   * Integer recs = L4LTimeSeries.loadCOTimeSeries();
+   */
+
   @AuraEnabled(cacheable=false)
   public static String getSDUsage(String clientId) {
     // Query for a list of Client_Objective__c and SD__c objects

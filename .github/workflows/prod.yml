@@ -80,7 +80,7 @@ jobs:
       - name: "Deploy LWC"
         run: sfdx force:source:deploy -m "LightningComponentBundle" -u LFLHyper
 
-      # Run Apex tests in scratch org
+      # Run Apex tests
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
         run: sfdx force:apex:test:run -l RunSpecifiedTests -t TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionRateCalculation,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClientObjective,TestLFLTimeSeriesBatch,TestLFLTimeSeriesBatchScheduler,TestLFLDTDRates,TestLFLDTDRateMaster,TestLFLInvocableListUnusedObj,TestL4LStagesByArea -u LFLHyper -c -r human -d ./tests/apex -w 20
 

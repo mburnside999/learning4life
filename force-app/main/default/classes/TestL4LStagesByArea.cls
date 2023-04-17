@@ -2,7 +2,9 @@
 private class TestL4LStagesByArea {
   @isTest
   static void testGetSDUsage() {
+    
     Test.startTest();
+    //populate data
     LFLPopulateTestData.load();
     Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
     Test.stopTest();
