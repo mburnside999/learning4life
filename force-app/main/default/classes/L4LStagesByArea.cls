@@ -61,10 +61,12 @@ public with sharing class L4LStagesByArea {
         xuniqueSDRecords.put(xsd.sd.Id, xsd);
         xsdMatchCount.put(xsd.sd.Id, 0);
         xsd.CABStatus = 'false';
+        xsd.NotUsed = true;
       }
       // If the flag is true (i.e. match with ClientObj was found), update the InUse Flag and add the SD__c record to the map
       if (matchFound) {
         xsd.CABStatus = 'true';
+        xsd.NotUsed = false;
         xuniqueSDRecords.put(xsd.sd.Id, xsd);
 
         if (CABfound) {
@@ -88,5 +90,6 @@ public with sharing class L4LStagesByArea {
   public class XSD {
     public SD__C sd { get; set; }
     public String CABStatus { get; set; }
+    public Boolean NotUsed { get; set; }
   }
 }

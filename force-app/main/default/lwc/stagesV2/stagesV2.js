@@ -113,6 +113,7 @@ export default class L4LStagesByArea extends LightningElement {
       // Loop through the filtered SD__c records and group them by Area__c
       this.sdRecords.forEach((record) => {
         record.sd.CABStatus = record.CABStatus;
+        record.sd.NotUsed = record.NotUsed;
         if (record.sd.Area__c) {
           // only process records where Area__c is defined
           if (!this.gfsdRecords[record.sd.Area__c]) {
