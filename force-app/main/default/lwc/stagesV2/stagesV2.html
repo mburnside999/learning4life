@@ -12,7 +12,7 @@
   <br />
   <lightning-layout>
     <div class="board">
-      <template if:true={agfsdRecords}>
+      <template lwc:if={agfsdRecords}>
         <template for:each={agfsdRecords} for:item="group">
           <div class="tile" key={group.area}>
             <div class="tile__header">{group.area}</div>
@@ -20,16 +20,17 @@
             <template for:each={group.records} for:item="record">
               <div class="tile__items" key={record.Id}>
                 <div class={record.CABStatus}>
+                  <div class="item__bold">
                   <p>{record.Program_Name__c}</p>
-
+                </div>
                   <p>{record.Name}</p>
-
+                  <br />
                   <p>
                     Using {record.Match_Count__c} of:
                     {record.Objective_Active_Count__c} Objectives
                   </p>
                   <br />
-                  <br />
+                 
                   <lightning-button
                     label="+"
                     variant="base"
@@ -38,6 +39,8 @@
                     data-id={record.Id}
                   >
                   </lightning-button>
+
+                  <template lwc:if={record.NotUsed}> 
                   <lightning-button
                     label="CAB"
                     variant="base"
@@ -46,6 +49,7 @@
                     data-id={record.Id}
                   >
                   </lightning-button>
+                </template>
                   <!--Use template if:true to display/hide popup based on isModalOpen value for the Add Objective Flow -->
                   <template if:true={isModalOpen}>
                     <!-- Modal/Popup Box LWC starts here -->
