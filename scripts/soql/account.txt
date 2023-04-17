@@ -213,3 +213,8 @@ select min(runid__c) from client_objective_timeseries__c
 
 
 select date(ts_load_datetime__c) from client_objective_timeseries__c   where runid__c = 'TSL-2022-11-000000'
+
+
+
+
+select scenario__c,count(id),loggedbyusername__c from log__c where LoggedByUsername__c	not in ('mike@lfl.prod','mikeb@lfl.hyper') group by scenario__c,loggedbyusername__c order by scenario__c,count(id) desc,loggedbyusername__c 
