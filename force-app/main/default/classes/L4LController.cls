@@ -668,7 +668,7 @@ public with sharing class L4LController {
    */
 
   @AuraEnabled
-  public static Integer createSessionObjectivesByArrayWithOrderedResults(
+  public static List<Session_Obj__c> createSessionObjectivesByArrayWithOrderedResults(
     String jsonstr,
     String sess,
     String skillstring
@@ -773,16 +773,16 @@ public with sharing class L4LController {
 
     insert soList;
 
-    Integer lastInList;
-    if (soList.size() > 0) {
-      lastInList = soList.size() - 1;
-      String ps = soList[lastInList].previous_status__c;
-      Session_Obj__c soLast = soList[lastInList];
-      soLast.previous_status__c = ps;
-      update soLast;
-    }
-
-    return soList.size();
+    // Integer lastInList;
+    // if (soList.size() > 0) {
+    //   lastInList = soList.size() - 1;
+    //   String ps = soList[lastInList].previous_status__c;
+    //   Session_Obj__c soLast = soList[lastInList];
+    //   soLast.previous_status__c = ps;
+    //   update soLast;
+    // }
+return soList;
+    //return soList.size();
   }
 
   /*******************************************************************************************************
@@ -985,19 +985,19 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description finds the latest related Session Objective and updates the comment with "LG"
+   * @description updates Session Objective comment to "LG"
    *
-   * @param cobjid Client Objective id
+   * @param sessObjId Session Objective id
    *
    * @return Summary of change to Session Objective
    *
    * @example
-   * String str = L4LController.updateSessionObjectiveWithLG(jsonStr,'ACQ')
+   * String str = L4LController.updateSessionObjectiveWithLG(sessObjId)
    *
    */
 
   @AuraEnabled(cacheable=false)
-  public static String updateSessionObjectiveWithLG(String cobjid) {
+  public static String updateSessionObjectiveWithLG(String sessObjId) {
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logDebug(
       null,
@@ -1005,37 +1005,12 @@ public with sharing class L4LController {
       'LWC Apex',
       'next-gen-nebula-apex'
     );
-    System.debug('==========' + cobjid);
 
     final string LGCOMMENT = 'LG';
-
-    Id oid = [
-      SELECT id, objective__c
-      FROM client_objective__c
-      WHERE id = :cobjid
-      LIMIT 1
-    ]
-    .objective__c;
-    System.debug('==========' + oid);
-    List<Session_Obj__c> solist = [
-      SELECT id, comment__c, lastmodifieddate
-      FROM session_obj__c
-      WHERE objective__c = :oid
-      ORDER BY lastmodifieddate DESC
-    ];
-
-    /******
-     * Yuk. In order to be able to correctly identify and reference the
-     * last SO updated (specifically for the LG button functionality) make a deliberate
-     * noop change to the last array member, thus deliberately bumping the lastmodified date -- this is needed because of the lack of
-     * millisecond precision on DateTime fields, meaning the lastmodified field cant guarantee order
-     * , otherwise could just do a query
-     */
-
-    Session_Obj__c so = soList[0];
+    Session_Obj__c so=[select id,comment__c from session_obj__c where id=:sessObjId limit 1];
     so.comment__c = LGCOMMENT;
     update so;
-    return 'so.Id= ' + solist[0].id + ', comment=' + solist[0].comment__c;
+    return 'so.Id= '+so.Id+', comment='+so.comment__c;
   }
 
   public class SessionResult {
