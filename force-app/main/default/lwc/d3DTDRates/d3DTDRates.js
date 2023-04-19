@@ -112,7 +112,7 @@ export default class D3DTDRates extends LightningElement {
     // let data = JSON.parse(
     //   '[{"rundate":"2022-11-26","val":60},{"rundate":"2022-12-19","val":64}]'
 
-    logInfo(
+    logDebug(
       this.recordId,
       `${COMPONENT}.renderLineChart(): wrangling data and drawing the Line chart`,
       `${SCENARIO}`,

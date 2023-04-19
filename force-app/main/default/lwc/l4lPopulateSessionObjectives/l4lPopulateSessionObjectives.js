@@ -97,7 +97,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
-        logInfo(
+        logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
           `${SCENARIO}`,
@@ -516,7 +516,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           //TODO fix this later
           this.soArray = result;
           console.log("++++++++" + JSON.stringify(this.soArray));
-          
+
           this.recordsProcessed = result.length;
           this.lastSOID = result[this.recordsProcessed - 1].Id;
           console.log("------this.lastSOId----" + this.lastSOID);

@@ -163,7 +163,7 @@ export default class D3HeatMap extends LightningElement {
   }
 
   initializeD3() {
-    logInfo(
+    logDebug(
       this.recordId,
       `${COMPONENT}.initializeD3(): wranglng data and drawing the HeatMap chart `,
       `${SCENARIO}`,

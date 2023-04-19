@@ -220,7 +220,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
     let _label = event.target.label;
 
-    logInfo(
+    logDebug(
       this.recordId,
       `${COMPONENT}.btnConfirmation(): ${_label} action chosen on ${this.selectedRows.length} datatable rows, `,
       `${SCENARIO}`,
@@ -282,7 +282,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     );
 
     if (_actionName == "delete") {
-      logInfo(
+      logDebug(
         this.recordId,
         `${COMPONENT}.confirmation(): deleting client objectives`,
         `${SCENARIO}`,
@@ -316,7 +316,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
         }
       });
     } else if (_actionName == "deactivate") {
-      logInfo(
+      logDebug(
         this.recordId,
         `${COMPONENT}.confirmation(): deactivating client objective`,
         `${SCENARIO}`,

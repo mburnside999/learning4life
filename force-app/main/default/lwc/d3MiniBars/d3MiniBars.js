@@ -109,7 +109,7 @@ export default class D3MiniBars extends LightningElement {
     //   '[{"rundate":"2022-11-26","val":60,"status":ACQ},{"rundate":"2022-12-19","val":64,"status":"ACQ"}]'
     // );
 
-    logInfo(
+    logDebug(
       this.recordId,
       `${COMPONENT}.renderLineChart(): wrangling data and drawing mini line charts`,
       `${SCENARIO}`,
