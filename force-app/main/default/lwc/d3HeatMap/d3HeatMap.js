@@ -59,9 +59,10 @@ export default class D3HeatMap extends LightningElement {
   ];
 
   periodoptions = [
-    { label: "All", value: "All", isChecked: true },
+    { label: "All", value: "All" },
     { label: "1 Day", value: "1" },
     { label: "7 Days", value: "7" },
+    { label: "14 Days", value: "14", isChecked: true },
     { label: "30 Days", value: "30" },
     { label: "60 Days", value: "60" },
     { label: "90 Days", value: "90" },
@@ -72,7 +73,7 @@ export default class D3HeatMap extends LightningElement {
   optionval = "All"; //default
   sdoptionval = "All";
   stageoptionval = "All";
-  periodval = "All";
+  periodval = "14";
   statusval = "false";
 
   //the clientId from UI
@@ -139,7 +140,7 @@ export default class D3HeatMap extends LightningElement {
           clientId: this.recordId,
           programStr: "All",
           sdStr: "All",
-          periodStr: "All",
+          periodStr: "14",
           stageStr: "All",
           showAcquired: this.isSelected
         }));
