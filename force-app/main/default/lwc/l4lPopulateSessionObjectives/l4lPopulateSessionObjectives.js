@@ -80,8 +80,11 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   @track sessionresults = [];
   @track skillstring = [];
 
+  @track soArray = [];
   rendered = false;
   lgbuttondisabled = true;
+
+  lastSOID;
 
   /*******************************************************************************************************
    * @description initialise logging, do the initial refresh
@@ -283,7 +286,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     let coid = this.selectedRows[0].Id;
     console.log(`Calling updateSessionObjectiveWithLG ${coid}`);
     updateSessionObjectiveWithLG({
-      cobjid: coid
+      sessObjId: this.lastSOID
     })
       .then((result) => {
         console.log("returned");
@@ -510,7 +513,13 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         skillstring: JSON.stringify(this.skillstring)
       })
         .then((result) => {
-          this.recordsProcessed = result;
+          //TODO fix this later
+          this.soArray = result;
+          console.log("++++++++" + JSON.stringify(this.soArray));
+          
+          this.recordsProcessed = result.length;
+          this.lastSOID = result[this.recordsProcessed - 1].Id;
+          console.log("------this.lastSOId----" + this.lastSOID);
           logDebug(
             this.recordId,
             `${COMPONENT}.handleClickArray(): Apex returned result: ${JSON.stringify(

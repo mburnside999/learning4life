@@ -220,13 +220,15 @@ private class TestL4LController {
 
     String skillstr = JSON.serialize(lsr);
 
-    Integer noOfSOsCreated = L4LController.createSessionObjectivesByArrayWithOrderedResults(
+    List<Session_Obj__c> sosCreatedList = L4LController.createSessionObjectivesByArrayWithOrderedResults(
       jsonstr,
       sessionId,
       skillstr
     );
+    Integer listSize=sosCreatedList.size();
+    Session_Obj__c myso=sosCreatedList[listSize-1];
 
-    String lgstr = L4LController.updateSessionObjectiveWithLG(col[0].Id);
+    String lgstr = L4LController.updateSessionObjectiveWithLG(myso.Id);
 
     System.assert(
       lgstr != null,
@@ -270,14 +272,14 @@ private class TestL4LController {
 
     String skillstr = JSON.serialize(lsr);
 
-    Integer noOfSOsCreated = L4LController.createSessionObjectivesByArrayWithOrderedResults(
+    List<session_obj__c> mysolist = L4LController.createSessionObjectivesByArrayWithOrderedResults(
       jsonstr,
       sessionId,
       skillstr
     );
 
     System.assert(
-      noOfSOsCreated == 3,
+      mysolist.size() == 3,
       'Expected three session_obj records created'
     );
   }
