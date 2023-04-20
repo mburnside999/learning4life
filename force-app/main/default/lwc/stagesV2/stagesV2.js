@@ -1,4 +1,4 @@
-import { LightningElement, api, track } from "lwc";
+import { LightningElement, api, wire, track } from "lwc";
 import getSDUsage from "@salesforce/apex/L4LStagesByArea.getSDUsage";
 
 export default class L4LStagesByArea extends LightningElement {
@@ -89,12 +89,11 @@ export default class L4LStagesByArea extends LightningElement {
 
   getUsage() {
     getSDUsage({ clientId: this.recordId })
-      .then((data) => {
-        if (data) this.processUsageData(data);
-      })
-      .catch((error) => {
+      .then(data => {
+        if(data) this.processUsageData(data);
+      }).catch(error => {
         console.log(error.message);
-      });
+      })
   }
 
   processUsageData(data) {
@@ -104,37 +103,37 @@ export default class L4LStagesByArea extends LightningElement {
     this.gfsdRecords = [];
 
     // If the Apex method returns successfully, store the unique SD__c records in the list then filter to display the default stage
-    let d = JSON.parse(data);
+      let d = JSON.parse(data);
 
-    //this.sdRecords = data;
-    this.sdRecords = d;
-    console.log("sdRecords:", this.sdRecords);
-    this.stageFilter = "Stage One";
+      //this.sdRecords = data;
+      this.sdRecords = d;
+      console.log("sdRecords:", this.sdRecords);
+      this.stageFilter = "Stage One";
 
-    // Loop through the filtered SD__c records and group them by Area__c
-    this.sdRecords.forEach((record) => {
-      record.sd.CABStatus = record.CABStatus;
-      record.sd.NotUsed = record.NotUsed;
-      if (record.sd.Area__c) {
-        // only process records where Area__c is defined
-        if (!this.gfsdRecords[record.sd.Area__c]) {
-          this.gfsdRecords[record.sd.Area__c] = [];
+      // Loop through the filtered SD__c records and group them by Area__c
+      this.sdRecords.forEach((record) => {
+        record.sd.CABStatus = record.CABStatus;
+        record.sd.NotUsed = record.NotUsed;
+        if (record.sd.Area__c) {
+          // only process records where Area__c is defined
+          if (!this.gfsdRecords[record.sd.Area__c]) {
+            this.gfsdRecords[record.sd.Area__c] = [];
+          }
+          this.gfsdRecords[record.sd.Area__c].push(record.sd);
         }
-        this.gfsdRecords[record.sd.Area__c].push(record.sd);
-      }
-    });
-    // Convert the Object gfsdRecords into the Array agfsdRecords
-    this.agfsdRecords = Object.entries(this.gfsdRecords)
-      .map(([area, records]) => ({
-        area,
-        records
-      }))
-      .filter((obj) => {
-        return obj.records.some(
-          (record) => record.Stage__c === this.stageFilter
-        );
       });
-    console.log("agfsdRecords:", JSON.stringify(this.agfsdRecords));
+      // Convert the Object gfsdRecords into the Array agfsdRecords
+      this.agfsdRecords = Object.entries(this.gfsdRecords)
+        .map(([area, records]) => ({
+          area,
+          records
+        }))
+        .filter((obj) => {
+          return obj.records.some(
+            (record) => record.Stage__c === this.stageFilter
+          );
+        });
+      console.log("agfsdRecords:", JSON.stringify(this.agfsdRecords));
   }
 
   /*
