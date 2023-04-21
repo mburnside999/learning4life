@@ -28,10 +28,10 @@ global with sharing class L4LInvocableReportWizard {
     // initialise our list of results
 
     L4LNebulaComponentController.setupCache();
-    L4LNebulaComponentController.logDebug(
+    L4LNebulaComponentController.logInfo(
       null,
-      'L4LInvocableReportWizard.getStatusCountsBetweenDates() note filtered client objective active__c =true',
-      'Flow invoked Apex',
+      'L4LInvocableReportWizard.getStatusCountsBetweenDates()',
+      'Report Wizard - get status counts (active and inactive) between dates',
       'next-gen-nebula-apex'
     );
 
@@ -114,7 +114,6 @@ global with sharing class L4LInvocableReportWizard {
       FROM Client_Objective__c
       WHERE
         client__c = :clientId
-        AND active__c = TRUE
         AND status__c IN ('ACQ', 'HLD', 'ABS', 'OBJ')
         AND lastmodifieddate >= :starttime
         AND lastmodifieddate < :endtime
@@ -208,7 +207,6 @@ global with sharing class L4LInvocableReportWizard {
       FROM Client_Objective__c
       WHERE
         client__c = :clientId
-        AND active__c = TRUE
         AND Objective__r.SD__r.Program__r.Name = :pname
         AND status__c = 'ACQ'
       GROUP BY Objective__r.SD__r.Program__r.Name
@@ -233,7 +231,6 @@ global with sharing class L4LInvocableReportWizard {
       FROM Client_Objective__c
       WHERE
         client__c = :clientId
-        AND active__c = TRUE
         AND status__c = :status
         AND Objective__r.SD__r.Program__r.Name = :pname
         AND lastmodifieddate >= :starttime

@@ -3,14 +3,14 @@
  * @author	Mike Burnside
  * @date	2023
  * @group Learning For Life
- * @description	methods to support the Rate calculations
+ * @description	
  *
  */
 
 public class LFLProgramStatusCascadeUtil {
   /*******************************************************************************************************
    * @name updateSDStatusByMap
-   * @description loads test data
+   * @description 
    *
    * @param statusMap
    * @return void
@@ -48,7 +48,7 @@ public class LFLProgramStatusCascadeUtil {
 
   /*******************************************************************************************************
    * @name updateObjectiveStatusByMap
-   * @description loads test data
+   * @description 
    *
    * @param statusMap
    * @return void
