@@ -4,11 +4,19 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description
+ * @description Batch scheduling for Tineseries
  *
  */
 
 global class LFLTimeSeriesBatchScheduler implements Schedulable {
+  /*******************************************************************************************************
+   * @name execute
+   * @description Start
+   *
+   * @param SCBC
+   * @return
+   */
+
   global void execute(SchedulableContext SC) {
     TimeSeries_Log__c log = new TimeSeries_Log__c();
     log.comments__c = 'Started client objective timeseries run';

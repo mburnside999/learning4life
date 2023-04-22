@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLSessionStatsTrg
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLSessionStatsTrg
+ *
+ */
+
 private class TestLFLSessionStatsTrg {
+  /*******************************************************************************************************
+   * @description Test trigger
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLSessionStatsTrg.testTrg();
+   */
+
   @isTest
   static void testTrg() {
     Test.startTest();

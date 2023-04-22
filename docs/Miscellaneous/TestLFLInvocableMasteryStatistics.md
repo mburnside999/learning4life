@@ -1,13 +1,11 @@
 ---
 layout: default
 ---
-
 # TestLFLInvocableMasteryStatistics
 
 `ISTEST`
-
 ## Methods
+### `static testComputeMasteryStats()`
 
-### `static test1()`
-
-## `ISTEST`
+`ISTEST`
+---

@@ -4,14 +4,14 @@
  * @date	2023
  * @group Learning For Life
  * @see LFLDTDRateMaster
- * @description	the Rate calculations
+ * @description	The main skill acquisition Rate calcs
  *
  */
 
 public with sharing class LFLDTDRates {
   /*******************************************************************************************************
    * @name getAcquisitionRate
-   * @description sets up a retrospective set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
+   * @description Sets up a retrospective set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
    * combined JSON string
    *
    *
@@ -52,7 +52,7 @@ public with sharing class LFLDTDRates {
 
   /*******************************************************************************************************
    * @name getAcquisitionRateByDates
-   * @description sets up a retrospecitve set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
+   * @description Sets up a retrospecitve set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
    * combined JSON string
    *
    *
@@ -101,7 +101,7 @@ public with sharing class LFLDTDRates {
 
   /*******************************************************************************************************
    * @name buildJson
-   * @description helper to do the grunt work of building JSON
+   * @description Helper to do the grunt work of building JSON
    *
    *
    * @param clientId the clientId

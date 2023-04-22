@@ -1,4 +1,14 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestCascadeProgramStatusTrg
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Tests for trigger CascadeProgramStatusTrg
+ *
+ */
+
 private class TestCascadeProgramStatusTrg {
   @isTest
   static void testTrg() {

@@ -1,5 +1,23 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestL4LSessionStatsController
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for L4LSessionStatsController
+ *
+ */
+
 private class TestL4LSessionStatsController {
+  /*******************************************************************************************************
+   * @description Test generateD3ProgramAreaSDJson method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson();
+   */
   @isTest
   static void testgenerateD3ProgramAreaSDJson() {
     Test.startTest();
@@ -16,6 +34,15 @@ private class TestL4LSessionStatsController {
 
     System.assert(isValidJSON, 'Expected valid json');
   }
+
+  /*******************************************************************************************************
+   * @description Test generateD3AreaSDJson method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgenerateD3AreaSDJson();
+   */
 
   @isTest
   static void testgenerateD3AreaSDJson() {
@@ -35,6 +62,15 @@ private class TestL4LSessionStatsController {
     System.assert(isValidJSON, 'Expected valid json');
   }
 
+  /*******************************************************************************************************
+   * @description Test generateD3ProgramAreaSDJson method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.test2generateD3ProgramAreaSDJson();
+   */
+
   @isTest
   static void test2generateD3ProgramAreaSDJson() {
     Test.startTest();
@@ -52,6 +88,15 @@ private class TestL4LSessionStatsController {
     System.assert(isValidJSON, 'Expected valid json');
   }
 
+  /*******************************************************************************************************
+   * @description Test getD3SessionStatsHistogramData method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetD3SessionStatsHistogramData();
+   */
+
   @isTest
   static void testgetD3SessionStatsHistogramData() {
     Test.startTest();
@@ -63,6 +108,15 @@ private class TestL4LSessionStatsController {
 
     System.assert(ss.size() > 0, 'Expected stats histogram data to return');
   }
+
+  /*******************************************************************************************************
+   * @description Test getD3YAxisScale method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetD3YAxisScale();
+   */
 
   @isTest
   static void testgetD3YAxisScale() {
@@ -76,6 +130,15 @@ private class TestL4LSessionStatsController {
     System.assert(c >= 0, 'Expected a valid count');
   }
 
+  /*******************************************************************************************************
+   * @description Test getD3RetestYAxisScale method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetD3RetestYAxisScale();
+   */
+
   @isTest
   static void testgetD3RetestYAxisScale() {
     Test.startTest();
@@ -88,6 +151,15 @@ private class TestL4LSessionStatsController {
     System.assert(c >= 0, 'Expected a valid count');
   }
 
+  /*******************************************************************************************************
+   * @description Test getD3StatusYAxisScale method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetD3StatusYAxisScale();
+   */
+
   @isTest
   static void testgetD3StatusYAxisScale() {
     Test.startTest();
@@ -99,6 +171,15 @@ private class TestL4LSessionStatsController {
 
     System.assert(c >= 0, 'Expected a valid count');
   }
+
+  /*******************************************************************************************************
+   * @description Test getHighAndLowBoundaries method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetD3StatusYAxisScale();
+   */
 
   @isTest
   static void testGetHighAndLowBoundaries() {
@@ -119,6 +200,15 @@ private class TestL4LSessionStatsController {
     );
   }
 
+  /*******************************************************************************************************
+   * @description Test getsessionObjectives method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testGetsessionObjectives();
+   */
+
   @isTest
   static void testGetsessionObjectives() {
     Test.startTest();
@@ -135,6 +225,15 @@ private class TestL4LSessionStatsController {
     );
   }
 
+  /*******************************************************************************************************
+   * @description Test getClientObjectivesByProgram method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testGetClientObjectivesByProgram();
+   */
+
   @isTest
   static void testGetClientObjectivesByProgram() {
     Test.startTest();
@@ -147,6 +246,15 @@ private class TestL4LSessionStatsController {
     );
     System.assert(ar.size() > 0, 'Expected at least one ag result.');
   }
+
+  /*******************************************************************************************************
+   * @description Test getD3Stats method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testGetD3Stats();
+   */
 
   @isTest
   static void testGetD3Stats() {
@@ -169,6 +277,15 @@ private class TestL4LSessionStatsController {
       'Expected at least one session_statistics__c record retrieved.'
     );
   }
+
+  /*******************************************************************************************************
+   * @description Test getD3StatsByProgram method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testGetD3StatsByProgram();
+   */
 
   @isTest
   static void testGetD3StatsByProgram() {
@@ -196,6 +313,15 @@ private class TestL4LSessionStatsController {
       '??Expected at least one session_statistics__c record retrieved.'
     );
   }
+
+  /*******************************************************************************************************
+   * @description Test getD3StatsByProgramAndSD method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testGetD3StatsByProgramAndSD();
+   */
 
   @isTest
   static void testGetD3StatsByProgramAndSD() {
@@ -227,6 +353,15 @@ private class TestL4LSessionStatsController {
     );
   }
 
+  /*******************************************************************************************************
+   * @description Test getProgramsAndSds method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetProgramsAndSds();
+   */
+
   @isTest
   static void testgetProgramsAndSds() {
     Test.startTest();
@@ -240,6 +375,15 @@ private class TestL4LSessionStatsController {
       '??Expected at least one session_statistics__c record retrieved.'
     );
   }
+
+  /*******************************************************************************************************
+   * @description Test getClientObjectivesSDCount method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetClientObjectivesSDCount();
+   */
 
   @isTest
   static void testgetClientObjectivesSDCount() {
@@ -257,6 +401,15 @@ private class TestL4LSessionStatsController {
     );
   }
 
+  /*******************************************************************************************************
+   * @description Test getSDSetFromCO method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetSDSetFromCO();
+   */
+
   @isTest
   static void testgetSDSetFromCO() {
     Test.startTest();
@@ -267,6 +420,15 @@ private class TestL4LSessionStatsController {
     List<String> s = L4LSessionStatsController.getSDSetFromCO(clientId);
     System.assert(s.size() > 0, 'expected a set of SD names');
   }
+
+  /*******************************************************************************************************
+   * @description Test getProgramSetFromCO method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LSessionStatsController.testgetProgramSetFromCO();
+   */
 
   @isTest
   static void testgetProgramSetFromCO() {

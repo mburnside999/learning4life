@@ -1,18 +1,18 @@
 /**************************************************************
  * @name L4LStagesByArea
  * @author	Mike Burnside
+ * @description Provides data for the Stages2 LWC
  * @date	2023
  * @group Learning For Life
  *
- * @description	
+ * @description
  *
  */
 
 public with sharing class L4LStagesByArea {
-  
-    /*******************************************************************************************************
+  /*******************************************************************************************************
    * @name getSDUsage
-   * @description providea data for Stages2 LWC
+   * @description Provide data for Stages2 LWC
    *
    *
    * @param clientID the Client ID

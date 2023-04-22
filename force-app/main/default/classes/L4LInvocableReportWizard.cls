@@ -1,6 +1,7 @@
 /**************************************************************
  * @author	Mike Burnside
  * @name L4LInvocableReportWizard
+ * #description Invocable methods used by the Report Wizard flow
  * @date	2022
  * @group Learning For Life
  *

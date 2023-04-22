@@ -1,24 +1,19 @@
 ---
 layout: default
 ---
-
 # LFLInvocableMasteryStatistics
-
 ## Methods
-
 ### `static computeMasteryStats(List<Id> sessions)`
 
-## `INVOCABLEMETHOD`
-
+`INVOCABLEMETHOD`
+---
 ## Classes
-
 ### Response
-
 #### Fields
 
 ##### `outputString` → `String`
 
-`INVOCABLEVARIABLE`
+`INVOCABLEVARIABLE` 
 
 ---
 

@@ -4,14 +4,14 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description	methods for creating and querying Client_Objective_TimeSeries__c records
+ * @description	Methods for creating and querying Client_Objective_TimeSeries__c records
  *
  */
 
 public class L4LTimeSeries {
   /*******************************************************************************************************
    * @name loadCOTimeSeries
-   * @description creates a timeseries by copying all client_objectives__c at a point in time.
+   * @description Creates a timeseries by copying all client_objectives__c at a point in time.
    * Timeseries table is client_objectives_timeseries__c
    * Logging for the run is recorded in TimeSeries_Log__c.
    *
@@ -107,7 +107,7 @@ public class L4LTimeSeries {
 
   /*******************************************************************************************************
    * @name generateD3COTimeSeriesJson
-   * @description generate a JSON string for use by D3
+   * @description Generate a JSON string for use by D3
    * @deprecated
    *
    * @param clientId
@@ -117,8 +117,8 @@ public class L4LTimeSeries {
    * @TODO example of format returned
    * @example
    * String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesJson(clientId, 'All');
-   * 
-   * jsonStr example: [{"rundate":"2022-11-27","val":2},{"rundate":"2022-12-4","val":2}]
+   *     
+   * [{"rundate":"2022-11-27","val":2},{"rundate":"2022-12-4","val":2}]
    */
 
   @AuraEnabled(cacheable=true)
@@ -130,7 +130,7 @@ public class L4LTimeSeries {
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesJson',
-'CO TimeSeries - generate a JSON string for D3',
+      'CO TimeSeries - generate a JSON string for D3',
       'next-gen-nebula-apex'
     );
 
@@ -195,7 +195,7 @@ public class L4LTimeSeries {
 
   /*******************************************************************************************************
    * @name generateD3COTSJsonByProgramAndSD
-   * @description generate a JSON string for use by D3
+   * @description Generate a JSON string for use by D3
    *
    *
    * @param clientId the client Id
@@ -305,7 +305,7 @@ public class L4LTimeSeries {
 
   /*******************************************************************************************************
    * @name generateD3COTimeSeriesByStatusJson
-   * @description generate a JSON string for use by D3
+   * @description Generate a JSON string for use by D3
    *
    *
    * @param clientId the client Id
@@ -382,7 +382,7 @@ public class L4LTimeSeries {
 
   /*******************************************************************************************************
    * @name generateD3CORetestTimeSeriesJson
-   * @description generate a JSON string for use by D3
+   * @description Generate a JSON string for use by D3
    *
    *
    * @param clientId the client Id
@@ -471,7 +471,7 @@ public class L4LTimeSeries {
 
   /*******************************************************************************************************
    * @name generateD3COTSThresholdJson
-   * @description generate a JSON string for use by D3
+   * @description Generate a JSON string for use by D3
    *
    *
    * @param clientId the client Id
@@ -495,7 +495,6 @@ public class L4LTimeSeries {
     Integer threshold1,
     Integer threshold2
   ) {
-
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
@@ -503,8 +502,6 @@ public class L4LTimeSeries {
       'CO TimeSeries - Threshold - generate a JSON string for D3',
       'next-gen-nebula-apex'
     );
-
-
 
     Decimal valueAtThreshold1, valueAtThreshold2, totalSessionLength = 0;
     Date d1 = Date.today();
@@ -514,7 +511,6 @@ public class L4LTimeSeries {
     Boolean reachedThreshold1 = false;
     Boolean reachedThreshold2 = false;
     String jsonStr = '{"reserved1":1,"reserved2":2';
-
 
     String maxRunId = [
       SELECT runid__c
@@ -707,7 +703,7 @@ public class L4LTimeSeries {
 
     L4LNebulaComponentController.logDebug(
       clientId,
-      'L4LTimeSeries.generateD3COTSThresholdJson, jsonStr='+jsonStr,
+      'L4LTimeSeries.generateD3COTSThresholdJson, jsonStr=' + jsonStr,
       'CO TimeSeries - Threshold - generate a JSON string for D3',
       'next-gen-nebula-apex'
     );

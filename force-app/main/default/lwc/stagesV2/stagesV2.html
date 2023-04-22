@@ -21,8 +21,8 @@
               <div class="tile__items" key={record.Id}>
                 <div class={record.CABStatus}>
                   <div class="item__bold">
-                  <p>{record.Program_Name__c}</p>
-                </div>
+                    <p>{record.Program_Name__c}</p>
+                  </div>
                   <p>{record.Name}</p>
                   <br />
                   <p>
@@ -30,7 +30,7 @@
                     {record.Objective_Active_Count__c} Objectives
                   </p>
                   <br />
-                 
+
                   <lightning-button
                     label="+"
                     variant="base"
@@ -40,16 +40,16 @@
                   >
                   </lightning-button>
 
-                  <template lwc:if={record.NotUsed}> 
-                  <lightning-button
-                    label="CAB"
-                    variant="base"
-                    class="cab-button slds-var-m-left_x-small"
-                    onclick={openCABModal}
-                    data-id={record.Id}
-                  >
-                  </lightning-button>
-                </template>
+                  <template lwc:if={record.NotUsed}>
+                    <lightning-button
+                      label="CAB"
+                      variant="base"
+                      class="cab-button slds-var-m-left_x-small"
+                      onclick={openCABModal}
+                      data-id={record.Id}
+                    >
+                    </lightning-button>
+                  </template>
                   <!--Use template if:true to display/hide popup based on isModalOpen value for the Add Objective Flow -->
                   <template if:true={isModalOpen}>
                     <!-- Modal/Popup Box LWC starts here -->

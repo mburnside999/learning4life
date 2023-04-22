@@ -4,14 +4,14 @@
  * @date	2023
  * @group Learning For Life
  * @see LFLDTDRates
- * @description	methods to support the Rate calculations
+ * @description	Methods to support the acquisition Rate calculations
  *
  */
 
 public with sharing class LFLDTDRateMaster {
   /*******************************************************************************************************
    * @name getDTDRateArray
-   * @description sets up a retrospective set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
+   * @description Sets up a retrospective set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
    * combined JSON string 
    *
    *

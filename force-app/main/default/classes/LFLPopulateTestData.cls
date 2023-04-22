@@ -4,7 +4,7 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description	main class for populating test data
+ * @description	Main class for populating test data, used in almost all tests
  *
  */
 
@@ -14,7 +14,7 @@ public with sharing class LFLPopulateTestData {
 
   /*******************************************************************************************************
    * @name load
-   * @description loads test data
+   * @description Loads representative test data
    *
    * @param void
    * @return

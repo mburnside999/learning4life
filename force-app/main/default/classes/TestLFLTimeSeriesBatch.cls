@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLTimeSeriesBatch
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLTimeSeriesBatch
+ *
+ */
+
 private class TestLFLTimeSeriesBatch {
+  /*******************************************************************************************************
+   * @description Test executeBatch
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLTimeSeriesBatch.testbatch();
+   */
+
   @isTest
   static void testbatch() {
     Test.startTest();

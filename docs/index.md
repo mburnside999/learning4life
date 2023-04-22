@@ -1,129 +1,304 @@
 ---
 layout: default
 ---
-
 # Classes
-
-## Miscellaneous
-
-### [ClientObjectiveList](./Miscellaneous/ClientObjectiveList.md)
-
-### [L4LInvocableListUnusedObj](./Miscellaneous/L4LInvocableListUnusedObj.md)
-
-### [L4LNebulaComponentController](./Miscellaneous/L4LNebulaComponentController.md)
-
-### [L4LSDStageMap](./Miscellaneous/L4LSDStageMap.md)
-
-### [LFLInvocableMasteryStatistics](./Miscellaneous/LFLInvocableMasteryStatistics.md)
-
-### [LFLProgramStatusCascadeUtil](./Miscellaneous/LFLProgramStatusCascadeUtil.md)
-
-### [LFLSDWrapper](./Miscellaneous/LFLSDWrapper.md)
-
-### [LFLTimeSeriesBatch](./Miscellaneous/LFLTimeSeriesBatch.md)
-
-### [TestCascadeProgramStatusTrg](./Miscellaneous/TestCascadeProgramStatusTrg.md)
-
-### [TestCascadeSDStatusTrg](./Miscellaneous/TestCascadeSDStatusTrg.md)
-
-### [TestClientObjectiveList](./Miscellaneous/TestClientObjectiveList.md)
-
-### [TestDaysSinceUpdatedTrg](./Miscellaneous/TestDaysSinceUpdatedTrg.md)
-
-### [TestL4LController](./Miscellaneous/TestL4LController.md)
-
-### [TestL4LExceptionClientObjectiveMissing](./Miscellaneous/TestL4LExceptionClientObjectiveMissing.md)
-
-### [TestL4LExceptionRateCalculation](./Miscellaneous/TestL4LExceptionRateCalculation.md)
-
-### [TestL4LNebulaComponentController](./Miscellaneous/TestL4LNebulaComponentController.md)
-
-### [TestL4LSDStageMap](./Miscellaneous/TestL4LSDStageMap.md)
-
-### [TestL4LSessionStatsController](./Miscellaneous/TestL4LSessionStatsController.md)
-
-### [TestL4LTimeSeries](./Miscellaneous/TestL4LTimeSeries.md)
-
-### [TestL4LTimeSeriesScheduler](./Miscellaneous/TestL4LTimeSeriesScheduler.md)
-
-### [TestLFLClientObjectiveHelper](./Miscellaneous/TestLFLClientObjectiveHelper.md)
-
-### [TestLFLDTDRateMaster](./Miscellaneous/TestLFLDTDRateMaster.md)
-
-### [TestLFLDTDRates](./Miscellaneous/TestLFLDTDRates.md)
-
-### [TestLFLInvocableListUnusedObj](./Miscellaneous/TestLFLInvocableListUnusedObj.md)
-
-### [TestLFLInvocableMasteryStatistics](./Miscellaneous/TestLFLInvocableMasteryStatistics.md)
-
-### [TestLFLInvocableReportWizard](./Miscellaneous/TestLFLInvocableReportWizard.md)
-
-### [TestLFLInvocableSessionStatistics](./Miscellaneous/TestLFLInvocableSessionStatistics.md)
-
-### [TestLFLPopulateTestData](./Miscellaneous/TestLFLPopulateTestData.md)
-
-### [TestLFLProgramStatusCascadeUtil](./Miscellaneous/TestLFLProgramStatusCascadeUtil.md)
-
-### [TestLFLSDWrapper](./Miscellaneous/TestLFLSDWrapper.md)
-
-### [TestLFLSessionStatsTrg](./Miscellaneous/TestLFLSessionStatsTrg.md)
-
-### [TestLFLTimeSeriesBatch](./Miscellaneous/TestLFLTimeSeriesBatch.md)
-
-### [TestLFLTimeSeriesBatchScheduler](./Miscellaneous/TestLFLTimeSeriesBatchScheduler.md)
-
-### [TestLFLUtil](./Miscellaneous/TestLFLUtil.md)
-
-### [TestTrgUniqueObjectivePerClientObjective](./Miscellaneous/TestTrgUniqueObjectivePerClientObjective.md)
-
 ## Learning For Life
+
+### [ClientObjectiveList](./Learning-For-Life/ClientObjectiveList.md)
+
+Client Objective operations
+
+
 
 ### [L4LClientObjectiveMissingException](./Learning-For-Life/L4LClientObjectiveMissingException.md)
 
 Custom exception
 
+
+
 ### [L4LController](./Learning-For-Life/L4LController.md)
 
-main LWC controller class.
+Main LWC controller class.
+
+
+
+### [L4LInvocableListUnusedObj](./Learning-For-Life/L4LInvocableListUnusedObj.md)
+
+Invocable methods used by Flow to list unused objectives
+
+
 
 ### [L4LInvocableReportWizard](./Learning-For-Life/L4LInvocableReportWizard.md)
 
 As of January 19, 2022 this is the controller for MDH's Report Wizard flow
 
+
+
+### [L4LNebulaComponentController](./Learning-For-Life/L4LNebulaComponentController.md)
+
+Utility class for Nebula logger
+
+
+
 ### [L4LRateCalculationException](./Learning-For-Life/L4LRateCalculationException.md)
 
-custom exception for Rate Calculation exceptions.
+Custom exception for Rate Calculation exceptions.
+
+
+
+### [L4LSDStageMap](./Learning-For-Life/L4LSDStageMap.md)
+
+
+
 
 ### [L4LSessionStatsController](./Learning-For-Life/L4LSessionStatsController.md)
 
-main session stats generator.
+Main session stats generator.
+
+
+
+### [L4LStagesByArea](./Learning-For-Life/L4LStagesByArea.md)
+
+Provides data for the Stages2 LWC
+
+
 
 ### [L4LTimeSeries](./Learning-For-Life/L4LTimeSeries.md)
 
-methods for creating and querying Client_Objective_TimeSeries\_\_c records
+Methods for creating and querying Client_Objective_TimeSeries__c records
+
+
 
 ### [L4LTimeSeriesScheduler](./Learning-For-Life/L4LTimeSeriesScheduler.md)
 
-implements Schedulable the class scheduled to create the TimeSeries
+Implements Schedulable, invokes the class to create the TimeSeries
+
+
 
 ### [LFLClientObjectiveHelper](./Learning-For-Life/LFLClientObjectiveHelper.md)
 
-helper methods for Report Wizard
+Helper methods for Report Wizard
+
+
 
 ### [LFLDTDRateMaster](./Learning-For-Life/LFLDTDRateMaster.md)
 
-methods to support the Rate calculations
+Methods to support the acquisition Rate calculations
+
+
 
 ### [LFLDTDRates](./Learning-For-Life/LFLDTDRates.md)
 
-the Rate calculations
+The main skill acquisition Rate calcs
+
+
 
 ### [LFLInvocableSessionStatistics](./Learning-For-Life/LFLInvocableSessionStatistics.md)
 
+Invocable methods, called from Flow to support session closure
+
+
+
 ### [LFLPopulateTestData](./Learning-For-Life/LFLPopulateTestData.md)
 
-main class for populating test data
+Main class for populating test data, used in almost all tests
+
+
+
+### [LFLProgramStatusCascadeUtil](./Learning-For-Life/LFLProgramStatusCascadeUtil.md)
+
+
+
+
+### [LFLSDWrapper](./Learning-For-Life/LFLSDWrapper.md)
+
+
+
+
+### [LFLTimeSeriesBatch](./Learning-For-Life/LFLTimeSeriesBatch.md)
+
+Batchable class for running the CO timeseries
+
+
 
 ### [LFLTimeSeriesBatchScheduler](./Learning-For-Life/LFLTimeSeriesBatchScheduler.md)
 
+Batch scheduling for Tineseries
+
+
+
 ### [LFLUtil](./Learning-For-Life/LFLUtil.md)
+
+Utility
+
+
+## Miscellaneous
+
+### [LFLInvocableMasteryStatistics](./Miscellaneous/LFLInvocableMasteryStatistics.md)
+
+
+### [TestLFLInvocableMasteryStatistics](./Miscellaneous/TestLFLInvocableMasteryStatistics.md)
+
+## Learning For Life Testing
+
+### [TestCascadeProgramStatusTrg](./Learning-For-Life-Testing/TestCascadeProgramStatusTrg.md)
+
+Tests for trigger CascadeProgramStatusTrg
+
+
+
+### [TestCascadeSDStatusTrg](./Learning-For-Life-Testing/TestCascadeSDStatusTrg.md)
+
+Tests for trigger CascadeSDStatusTrg
+
+
+
+### [TestClientObjectiveList](./Learning-For-Life-Testing/TestClientObjectiveList.md)
+
+Test methods for clientObjectiveList
+
+
+
+### [TestDaysSinceUpdatedTrg](./Learning-For-Life-Testing/TestDaysSinceUpdatedTrg.md)
+
+Tests for trigger DaysSinceUpdatedTrg
+
+
+
+### [TestL4LController](./Learning-For-Life-Testing/TestL4LController.md)
+
+Test methods for L4LController
+
+
+
+### [TestL4LExceptionClientObjectiveMissing](./Learning-For-Life-Testing/TestL4LExceptionClientObjectiveMissing.md)
+
+Test methods for L4LClientObjectiveMissingException
+
+
+
+### [TestL4LExceptionRateCalculation](./Learning-For-Life-Testing/TestL4LExceptionRateCalculation.md)
+
+Test methods for L4LRateCalculationException
+
+
+
+### [TestL4LNebulaComponentController](./Learning-For-Life-Testing/TestL4LNebulaComponentController.md)
+
+Test methods for L4LNebulaComponentController
+
+
+
+### [TestL4LSDStageMap](./Learning-For-Life-Testing/TestL4LSDStageMap.md)
+
+Test methods for L4LSDStageMap
+
+
+
+### [TestL4LSessionStatsController](./Learning-For-Life-Testing/TestL4LSessionStatsController.md)
+
+Test methods for L4LSessionStatsController
+
+
+
+### [TestL4LStagesByArea](./Learning-For-Life-Testing/TestL4LStagesByArea.md)
+
+Test methods for L4LStagesByArea
+
+
+
+### [TestL4LTimeSeries](./Learning-For-Life-Testing/TestL4LTimeSeries.md)
+
+Test methods for L4LTimeSeries
+
+
+
+### [TestL4LTimeSeriesScheduler](./Learning-For-Life-Testing/TestL4LTimeSeriesScheduler.md)
+
+Test methods for L4LTimeSeriesScheduler
+
+
+
+### [TestLFLClientObjectiveHelper](./Learning-For-Life-Testing/TestLFLClientObjectiveHelper.md)
+
+Test methods for LFLClientObjectiveHelper
+
+
+
+### [TestLFLDTDRateMaster](./Learning-For-Life-Testing/TestLFLDTDRateMaster.md)
+
+Test methods for LFLDTDRateMaster
+
+
+
+### [TestLFLDTDRates](./Learning-For-Life-Testing/TestLFLDTDRates.md)
+
+Test methods for LFLDTDRates
+
+
+
+### [TestLFLInvocableListUnusedObj](./Learning-For-Life-Testing/TestLFLInvocableListUnusedObj.md)
+
+Test methods for LFLInvocableListUnusedObj
+
+
+
+### [TestLFLInvocableReportWizard](./Learning-For-Life-Testing/TestLFLInvocableReportWizard.md)
+
+Test methods for LFLInvocableReportWizard
+
+
+
+### [TestLFLInvocableSessionStatistics](./Learning-For-Life-Testing/TestLFLInvocableSessionStatistics.md)
+
+Test methods for LFLInvocableSessionStatistics
+
+
+
+### [TestLFLPopulateTestData](./Learning-For-Life-Testing/TestLFLPopulateTestData.md)
+
+Test methods for LFLPopulateTestData
+
+
+
+### [TestLFLProgramStatusCascadeUtil](./Learning-For-Life-Testing/TestLFLProgramStatusCascadeUtil.md)
+
+Test methods for LFLProgramStatusCascadeUtil
+
+
+
+### [TestLFLSDWrapper](./Learning-For-Life-Testing/TestLFLSDWrapper.md)
+
+Test methods for LFLSDWrapper
+
+
+
+### [TestLFLSessionStatsTrg](./Learning-For-Life-Testing/TestLFLSessionStatsTrg.md)
+
+Test methods for LFLSessionStatsTrg
+
+
+
+### [TestLFLTimeSeriesBatch](./Learning-For-Life-Testing/TestLFLTimeSeriesBatch.md)
+
+Test methods for LFLTimeSeriesBatch
+
+
+
+### [TestLFLTimeSeriesBatchScheduler](./Learning-For-Life-Testing/TestLFLTimeSeriesBatchScheduler.md)
+
+Test methods for LFLTimeSeriesBatchScheduler
+
+
+
+### [TestLFLUtil](./Learning-For-Life-Testing/TestLFLUtil.md)
+
+Test methods for LFLUtil
+
+
+
+### [TestTrgUniqueObjectivePerClientObjective](./Learning-For-Life-Testing/TestTrgUniqueObjectivePerClientObjective.md)
+
+Test trigger TrgUniqueObjectivePerClientObjective
+
+

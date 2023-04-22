@@ -1,5 +1,23 @@
 @isTest
-class TestL4LTimeSeries {
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestL4LTimeSeries
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for L4LTimeSeries
+ *
+ */
+private class TestL4LTimeSeries {
+  /*******************************************************************************************************
+   * @description Test loadCOTimeSeries method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LTimeSeries.testLoadCOTimeSeries();
+   */
+
   @isTest
   static void testLoadCOTimeSeries() {
     Test.startTest();
@@ -11,7 +29,14 @@ class TestL4LTimeSeries {
 
     System.assert(i > 0, 'Expected at least one TS records loaded.');
   }
-
+  /*******************************************************************************************************
+   * @description Test tesGenerateD3COTimeSeriesJson method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LTimeSeries.tesGenerateD3COTimeSeriesJson();
+   */
   @isTest
   static void tesGenerateD3COTimeSeriesJson() {
     Test.startTest();
@@ -28,6 +53,15 @@ class TestL4LTimeSeries {
     str = L4LTimeSeries.generateD3COTimeSeriesJson(clientId, 'ACQ');
     System.assert(str.length() > 0, 'Expected a return string');
   }
+
+  /*******************************************************************************************************
+   * @description Test generateD3COTSJsonByProgramAndSD method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LTimeSeries.testGenerateD3COTSJsonByProgramAndSD();
+   */
 
   @isTest
   static void testGenerateD3COTSJsonByProgramAndSD() {
@@ -63,6 +97,15 @@ class TestL4LTimeSeries {
     System.assert(str.length() > 0, 'Expected a return string');
   }
 
+  /*******************************************************************************************************
+   * @description Test generateD3CORetestTimeSeriesJson method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LTimeSeries.TestGenerateD3CORetestTimeSeriesJson();
+   */
+
   @isTest
   static void TestGenerateD3CORetestTimeSeriesJson() {
     Test.startTest();
@@ -83,6 +126,15 @@ class TestL4LTimeSeries {
     System.assert(str.length() >= 0, 'Expected a return string');
   }
 
+  /*******************************************************************************************************
+   * @description Test generateD3COTimeSeriesByStatusJson method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LTimeSeries.TestGenerateD3COTimeSeriesByStatusJson();
+   */
+
   @isTest
   static void TestGenerateD3COTimeSeriesByStatusJson() {
     Test.startTest();
@@ -96,6 +148,15 @@ class TestL4LTimeSeries {
     String str = L4LTimeSeries.generateD3COTimeSeriesByStatusJson(clientId);
     System.assert(str.length() > 0, 'Expected a return string');
   }
+
+  /*******************************************************************************************************
+   * @description Test generateD3COTSThresholdJson method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LTimeSeries.testGenerateD3COTSThresholdJson();
+   */
 
   @isTest
   static void testGenerateD3COTSThresholdJson() {

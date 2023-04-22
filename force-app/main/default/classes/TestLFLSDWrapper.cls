@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLSDWrapper
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLSDWrapper
+ *
+ */
+
 private class TestLFLSDWrapper {
+  /*******************************************************************************************************
+   * @description Test comparison
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLSDWrapper.testcomparison();
+   */
+
   @isTest
   static void testcomparison() {
     Test.startTest();

@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLClientObjectiveHelper
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLClientObjectiveHelper
+ *
+ */
+
 private class TestLFLClientObjectiveHelper {
+  /*******************************************************************************************************
+   * @description Test getStatusCountsBetweenDates method
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLClientObjectiveHelper.testGetStatusCountsBetweenDates();
+   */
+
   @isTest
   static void testGetStatusCountsBetweenDates() {
     Test.startTest();

@@ -1,11 +1,11 @@
 /**************************************************************
  * @name ClientObjectiveList
- * @author
+ * @author Mike De Hennin
  *
  * @date	2022
  * @group Learning For Life
  *
- * @description
+ * @description Client Objective operations
  *
  */
 

@@ -4,14 +4,14 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description
+ * @description Utility
  *
  */
 
 public with sharing class LFLUtil {
   /*******************************************************************************************************
    * @name isValidJSON
-   * @description Utility method to parse and validate JSON
+   * @description Parse and validate JSON
    *
    * @param String, a JSON string to be validated
    * @return Boolean, whether the string is valid JSON or not

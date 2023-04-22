@@ -1,5 +1,23 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestL4LNebulaComponentController
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for L4LNebulaComponentController
+ *
+ */
 private class TestL4LNebulaComponentController {
+  /*******************************************************************************************************
+   * @description Test L4LNebulaComponentController
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LNebulaComponentController.testnebula();
+   */
+
   @isTest
   static void testnebula() {
     Test.startTest();

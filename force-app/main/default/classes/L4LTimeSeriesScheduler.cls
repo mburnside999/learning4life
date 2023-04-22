@@ -4,11 +4,19 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description	implements Schedulable the class scheduled to create the TimeSeries
+ * @description	Implements Schedulable, invokes the class to create the TimeSeries
  *
  */
 
 global class L4LTimeSeriesScheduler implements Schedulable {
+  /*******************************************************************************************************
+   * @name execute
+   * @description Execute method
+   * @param SC
+   *
+   * @param void
+   */
+
   global void execute(SchedulableContext SC) {
     L4LTimeSeries l = new L4LTimeSeries();
     Integer x = l.loadCOTimeSeries();

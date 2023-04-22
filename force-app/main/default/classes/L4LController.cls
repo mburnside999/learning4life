@@ -4,13 +4,13 @@
  * @date	2022
  * @group Learning For Life
  *
- * @description	main LWC controller class.
+ * @description	Main LWC controller class.
  *
  */
 
 public with sharing class L4LController {
   /*******************************************************************************************************
-   * @description returns the status of a given session
+   * @description Returns the status of a given session
    * @param recordId The Session ID
    *
    * @return Session status
@@ -48,7 +48,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description returns a list of 50 popular Client Objectives, ignoring those that
+   * @description Returns a list of 50 popular Client Objectives, ignoring those that
    * have been already allocated to the client.
    *
    * @param clientId The client Id
@@ -178,7 +178,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description returns a list of ACTIVE Client Objectives for a sesssion ordered by
+   * @description Returns a list of ACTIVE Client Objectives for a sesssion ordered by
    * Program Name
    *
    * TODO fix parameter name
@@ -253,7 +253,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description returns a list of Client Objectives for a client, ordered by Program Name, Name
+   * @description Returns a list of Client Objectives for a client, ordered by Program Name, Name
    *
    * TODO fix parameter name
    *
@@ -326,7 +326,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description returns a list of all, or active only Client Objectives for a client, ordered by Program Name, Name
+   * @description Returns a list of all, or active only Client Objectives for a client, ordered by Program Name, Name
    *
    * @param clientId The client Id
    * @param showActiveOnly Flag to indicate whether to show the ACTIVE objectives only
@@ -391,7 +391,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description returns a JSON  string summarising ACTIVE, INACTIVE and TOTAL
+   * @description Returns a JSON  string summarising ACTIVE, INACTIVE and TOTAL
    * Client Objectives for a client
    *
    * @param clientId The client Id
@@ -461,7 +461,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description deactivates a Client Objective
+   * @description Deactivates a Client Objective
    * @param clientId The Client Objective Id
    * @return The deactivated client objective
    *
@@ -493,7 +493,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description returns a list of all active objectives not yet assigned to a client
+   * @description Returns a list of all active objectives not yet assigned to a client
    * @param clientId The Client Objective Id
    * @return List of client objectives not assigned to client
    *
@@ -553,7 +553,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description returns a list of all active objectives not yet assigned to this client 
+   * @description Returns a list of all active objectives not yet assigned to this client 
    * that have a Name like %searchString%
    * 
    * @param clientId The Client Objective Id
@@ -629,7 +629,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description delete all session objectives for the session 
+   * @description Delete all session objectives for the session 
    * that have a Name like %searchString%
    * 
    * @param sessionId The Session Id
@@ -654,7 +654,7 @@ public with sharing class L4LController {
   }
 
   /*******************************************************************************************************
-   * @description for a given session, for each client objective in a list create session objectives
+   * @description For a given session, for each client objective in a list create session objectives
    * from its list of DTD scores
    *
    * @param jsonStr A JSON string containing a list of client objectives
@@ -772,12 +772,12 @@ public with sharing class L4LController {
     );
 
     insert soList;
-return soList;
+    return soList;
     //return soList.size();
   }
 
   /*******************************************************************************************************
-   * @description create client objectives from a JSON list of objectives
+   * @description Create client objectives from a JSON list of objectives
    *
    * @param jsonStr A JSON string containing a list of objectives
    * @param sess The session Id
@@ -826,7 +826,7 @@ return soList;
   }
 
   /*******************************************************************************************************
-   * @description update session objective scores from a JSON list
+   * @description Update session objective scores from a JSON list
    *
    * @param jsonStr A JSON string containing a list of session objectives to update
    * @param Val The score - "Correct" or "Incorrect" ...etc
@@ -902,7 +902,7 @@ return soList;
   }
 
   /*******************************************************************************************************
-   * @description for a list of client objectives, update to a common status or activate/deactivate
+   * @description For a list of client objectives, update to a common status or activate/deactivate
    *
    * @param jsonStr A JSON string containing a list of client objectives to update
    * @param val "ACQ" or "OBJ" or "Activate" or "Deactivate"
@@ -976,7 +976,7 @@ return soList;
   }
 
   /*******************************************************************************************************
-   * @description updates Session Objective comment to "LG"
+   * @description Updates Session Objective comment to "LG"
    *
    * @param sessObjId Session Objective id
    *
@@ -998,10 +998,15 @@ return soList;
     );
 
     final string LGCOMMENT = 'LG';
-    Session_Obj__c so=[select id,comment__c from session_obj__c where id=:sessObjId limit 1];
+    Session_Obj__c so = [
+      SELECT id, comment__c
+      FROM session_obj__c
+      WHERE id = :sessObjId
+      LIMIT 1
+    ];
     so.comment__c = LGCOMMENT;
     update so;
-    return 'so.Id= '+so.Id+', comment='+so.comment__c;
+    return 'so.Id= ' + so.Id + ', comment=' + so.comment__c;
   }
 
   public class SessionResult {

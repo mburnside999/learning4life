@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLInvocableReportWizard
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLInvocableReportWizard
+ *
+ */
+
 private class TestLFLInvocableReportWizard {
+  /*******************************************************************************************************
+   * @description Test getStatusCountsBetweenDates method
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLInvocableReportWizard.testGetStatusCountsBetweenDates();
+   */
+
   @isTest
   static void testGetStatusCountsBetweenDates() {
     Test.startTest();

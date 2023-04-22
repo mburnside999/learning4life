@@ -1,30 +1,29 @@
 ---
 layout: default
 ---
-
 # LFLPopulateTestData
 
-main class for populating test data
+Main class for populating test data, used in almost all tests
+
 
 **Name** LFLPopulateTestData
 
+
 **Author** Mike Burnside
 
+
 **Date** 2023
+
 
 **Group** Learning For Life
 
 ## Constructors
-
 ### `LFLPopulateTestData()`
-
 ---
-
 ## Methods
-
 ### `static load()`
 
-loads test data
+Loads representative test data
 
 #### Return
 
@@ -34,12 +33,15 @@ void
 
 **Description**
 
+
+
+
 **Name** load
 
 #### Example
-
 ```apex
 LFLPopulateTestData.load();
 ```
+
 
 ---

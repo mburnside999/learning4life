@@ -3,7 +3,7 @@
  * @date	2022
  * @group Learning For Life
  *
- * @description	custom exception for Rate Calculation exceptions.
+ * @description	Custom exception for Rate Calculation exceptions.
  *
  */
 

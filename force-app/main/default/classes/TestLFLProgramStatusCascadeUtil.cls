@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLProgramStatusCascadeUtil
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLProgramStatusCascadeUtil
+ *
+ */
+
 private class TestLFLProgramStatusCascadeUtil {
+  /*******************************************************************************************************
+   * @description Test updateSDStatus method
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLProgramStatusCascadeUtil.testUpdateSDStatus();
+   */
+
   @isTest
   static void testUpdateSDStatus() {
     Test.startTest();
@@ -27,6 +46,16 @@ private class TestLFLProgramStatusCascadeUtil {
 
     System.assert(sd.status__c == 'Inactive', 'expected Inactive status');
   }
+
+  /*******************************************************************************************************
+   * @description Test updateObjectiveStatus method
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLProgramStatusCascadeUtil.testUpdateObjectiveStatus();
+   */
+
   @isTest
   static void testUpdateObjectiveStatus() {
     Test.startTest();

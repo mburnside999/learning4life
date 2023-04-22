@@ -3,14 +3,14 @@
  * @author	Mike Burnside
  * @date	2023
  * @group Learning For Life
- * @description	
+ * @description
  *
  */
 
 public class LFLProgramStatusCascadeUtil {
   /*******************************************************************************************************
    * @name updateSDStatusByMap
-   * @description 
+   * @description
    *
    * @param statusMap
    * @return void
@@ -48,7 +48,7 @@ public class LFLProgramStatusCascadeUtil {
 
   /*******************************************************************************************************
    * @name updateObjectiveStatusByMap
-   * @description 
+   * @description
    *
    * @param statusMap
    * @return void

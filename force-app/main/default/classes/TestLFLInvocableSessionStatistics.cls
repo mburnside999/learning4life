@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLInvocableSessionStatistics
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLInvocableSessionStatistics
+ *
+ */
+
 private class TestLFLInvocableSessionStatistics {
+  /*******************************************************************************************************
+   * @description Test computeSessionStats method
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLInvocableSessionStatistics.testComputeSessionStats();
+   */
+
   @isTest
   static void testComputeSessionStats() {
     Test.startTest();

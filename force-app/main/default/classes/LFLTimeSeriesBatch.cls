@@ -1,22 +1,40 @@
+/**************************************************************
+ * @name LFLTimeSeriesBatch
+ * @author	Mike Burnside
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description Batchable class for running the CO timeseries
+ *
+ */
+
 public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database.Stateful {
   public String query;
   public String email = 'mburnside@salesforce.com';
   public String runId;
   public integer recs = 0;
 
+  /*******************************************************************************************************
+   * @name start
+   * @description Start
+   *
+   * @param BC
+   * @return
+   */
+
   public Database.querylocator start(Database.BatchableContext BC) {
     return Database.getQueryLocator(query);
   }
-  /**************************************************************
-   * @name LFLTimeSeriesBatch
-   * @author	Mike Burnside
-   * @date	2023
-   * @group Learning For Life
-   *
-   * @description
-   *
-   */
 
+  /*******************************************************************************************************
+   * @name execute
+   * @description Start
+   *
+   * @param BC
+   * @param scope
+
+   * @return
+   */
   public void execute(Database.BatchableContext BC, List<sObject> scope) {
     List<Client_Objective_TimeSeries__c> tslist = new List<Client_Objective_TimeSeries__c>();
 
@@ -49,6 +67,15 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
     insert tslist;
     recs += tslist.size();
   }
+
+  /*******************************************************************************************************
+   * @name finish
+   * @description Start
+   *
+   * @param BC
+   * @return
+   */
+
   public void finish(Database.BatchableContext BC) {
     TimeSeries_Log__c endlog = new TimeSeries_Log__c();
     endlog.comments__c =

@@ -4,7 +4,7 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description
+ * @description Invocable methods, called from Flow to support session closure
  *
  */
 

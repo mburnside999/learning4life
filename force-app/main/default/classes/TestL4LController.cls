@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestL4LController
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for L4LController
+ *
+ */
+
 private class TestL4LController {
+  /*******************************************************************************************************
+   * @description Test getSessionObjectives method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetsessionObjectives();
+   */
+
   @isTest
   static void testGetsessionObjectives() {
     Test.startTest();
@@ -13,6 +32,15 @@ private class TestL4LController {
       'Expected at least one session_obj__c record retrieved.'
     );
   }
+
+  /*******************************************************************************************************
+   * @description Test getClientObjectivesForSession method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetClientObjectivesForSession();
+   */
 
   @isTest
   static void testGetClientObjectivesForSession() {
@@ -29,6 +57,15 @@ private class TestL4LController {
     );
   }
 
+  /*******************************************************************************************************
+   * @description Test getClientObjectives method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetClientObjectives();
+   */
+
   @isTest
   static void testGetClientObjectives() {
     Test.startTest();
@@ -42,6 +79,15 @@ private class TestL4LController {
       'Expected at least one client_objective__c record retrieved'
     );
   }
+
+  /*******************************************************************************************************
+   * @description Test getClientObjectivesFilteredOnActive method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetClientObjectivesFilteredOnActive();
+   */
 
   @isTest
   static void testGetClientObjectivesFilteredOnActive() {
@@ -91,6 +137,14 @@ private class TestL4LController {
     );
   }
 
+  /*******************************************************************************************************
+   * @description Test deactivateClientObjective method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testDeactivateClientObjective();
+   */
   @isTest
   static void testDeactivateClientObjective() {
     Test.startTest();
@@ -132,6 +186,15 @@ private class TestL4LController {
     System.assertEquals(true, co.active__c, 'xxx');
   }
 
+  /*******************************************************************************************************
+   * @description Test getCOActivationSummary method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetCOActivationSummary();
+   */
+
   @isTest
   static void testGetCOActivationSummary() {
     Test.startTest();
@@ -143,6 +206,15 @@ private class TestL4LController {
     System.assert(summary != null, 'Expected a summary string');
   }
 
+  /*******************************************************************************************************
+   * @description Test getUnusedObjectives method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetUnusedObjectives();
+   */
+
   @isTest
   static void testGetUnusedObjectives() {
     Test.startTest();
@@ -153,6 +225,15 @@ private class TestL4LController {
     List<Objective__c> o = L4LController.getUnusedObjectives(clientId);
     System.assert(o.size() != 0, 'Expected non zero unused records.');
   }
+
+  /*******************************************************************************************************
+   * @description Test getUnusedObjectivesBySearch method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetUnusedObjectivesBySearch();
+   */
   @isTest
   static void testGetUnusedObjectivesBySearch() {
     Test.startTest();
@@ -166,6 +247,16 @@ private class TestL4LController {
     );
     System.assert(o.size() != 0, 'Expected non zero unused records.');
   }
+
+  /*******************************************************************************************************
+   * @description Test deleteSessionObjectives method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testDeleteSessionObjectives();
+   */
+
   @isTest
   static void testDeleteSessionObjectives() {
     Test.startTest();
@@ -184,6 +275,14 @@ private class TestL4LController {
     );
   }
 
+  /*******************************************************************************************************
+   * @description Test updateSessionObjectiveWithLG method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testUpdateSessionObjectiveWithLG();
+   */
   @isTest
   static void testUpdateSessionObjectiveWithLG() {
     Test.startTest();
@@ -225,8 +324,8 @@ private class TestL4LController {
       sessionId,
       skillstr
     );
-    Integer listSize=sosCreatedList.size();
-    Session_Obj__c myso=sosCreatedList[listSize-1];
+    Integer listSize = sosCreatedList.size();
+    Session_Obj__c myso = sosCreatedList[listSize - 1];
 
     String lgstr = L4LController.updateSessionObjectiveWithLG(myso.Id);
 
@@ -235,6 +334,15 @@ private class TestL4LController {
       'Expected a session ojective to be flagged as LG'
     );
   }
+
+  /*******************************************************************************************************
+   * @description Test createSessionObjectivesByArrayWithOrderedResults method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testCreateSessionObjectivesByArrayWithOrderedResults();
+   */
 
   @isTest
   static void testCreateSessionObjectivesByArrayWithOrderedResults() {
@@ -283,6 +391,15 @@ private class TestL4LController {
       'Expected three session_obj records created'
     );
   }
+
+  /*******************************************************************************************************
+   * @description Test createClientObjectivesByArray method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testCreateClientObjectivesByArray();
+   */
 
   @isTest
   static void testCreateClientObjectivesByArray() {
@@ -334,6 +451,15 @@ private class TestL4LController {
     );
   }
 
+  /*******************************************************************************************************
+   * @description Test setSessionObjectivesByArray method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testSetSessionObjectivesByArray();
+   */
+
   @isTest
   static void testSetSessionObjectivesByArray() {
     Test.startTest();
@@ -361,6 +487,15 @@ private class TestL4LController {
     );
     System.assert(noOfSOsSet == 1, 'Expected one SO to be set');
   }
+
+  /*******************************************************************************************************
+   * @description Test setClientObjectivesByArray method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testSetClientObjectivesByArray();
+   */
 
   @isTest
   static void testSetClientObjectivesByArray() {

@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestTrgUniqueObjectivePerClientObjective
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test trigger TrgUniqueObjectivePerClientObjective
+ *
+ */
+
 private class TestTrgUniqueObjectivePerClientObjective {
+  /*******************************************************************************************************
+   * @description Test DuplicateObjectivePrevention
+   * @param void
+   *
+   *
+   * @example
+   * TestTrgUniqueObjectivePerClientObjective.testDuplicateObjectivePrevention();
+   */
+
   @isTest
   static void testDuplicateObjectivePrevention() {
     Test.startTest();

@@ -4,14 +4,14 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description	helper methods for Report Wizard
+ * @description	Helper methods for Report Wizard
  *
  */
 
 public class LFLClientObjectiveHelper {
   /*******************************************************************************************************
    * @name getStatusCountsBetweenDates
-   * @description helper method for the Report Wizard returns a formatted string for insertion into a long text area
+   * @description Helper method for the Report Wizard returns a formatted string for insertion into a long text area
    * ..., amd inserts the string into NDIS_Report__c.NDIS_Report__c;
    *
    * @param starttime

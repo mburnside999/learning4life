@@ -1,6 +1,7 @@
 /**************************************************************
  * @author	Mike Burnside
  * @name L4LNebulaComponentController
+ * @description Utility class for Nebula logger
  * @date	2023
  * @group Learning For Life
  *
@@ -12,7 +13,7 @@ public with sharing class L4LNebulaComponentController {
   private static String nebulaId;
 
   /*******************************************************************************************************
-   * @description set up caching
+   * @description Set up caching
    * @param recordId The Session ID
    *
    * @return Session status
@@ -28,7 +29,7 @@ public with sharing class L4LNebulaComponentController {
   }
 
   /*******************************************************************************************************
-   * @description helper for logging Warnings
+   * @description Helper for logging Warnings
    * @param recordId The related record
    * @param message The message text
    * @param scenario The logging scanario
@@ -52,7 +53,7 @@ public with sharing class L4LNebulaComponentController {
   }
 
   /*******************************************************************************************************
-   * @description helper for logging Info
+   * @description Helper for logging Info
    * @param recordId The related record
    * @param message The message text
    * @param scenario The logging scanario
@@ -76,7 +77,7 @@ public with sharing class L4LNebulaComponentController {
   }
 
   /*******************************************************************************************************
-   * @description helper for logging Fine
+   * @description Helper for logging Fine
    * @param recordId The related record
    * @param message The message text
    * @param scenario The logging scanario
@@ -100,7 +101,7 @@ public with sharing class L4LNebulaComponentController {
   }
 
   /*******************************************************************************************************
-   * @description helper for logging Errors
+   * @description Helper for logging Errors
    * @param recordId The related record
    * @param message The message text
    * @param scenario The logging scanario
@@ -124,7 +125,7 @@ public with sharing class L4LNebulaComponentController {
   }
 
   /*******************************************************************************************************
-   * @description helper for logging Debug
+   * @description Helper for logging Debug
    * @param recordId The related record
    * @param message The message text
    * @param scenario The logging scanario
@@ -148,7 +149,7 @@ public with sharing class L4LNebulaComponentController {
   }
 
   /*******************************************************************************************************
-   * @description save Nebula log
+   * @description Save Nebula log
    *
    * @return void
    *

@@ -1,5 +1,24 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLDTDRates
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLDTDRates
+ *
+ */
+
 private class TestLFLDTDRates {
+  /*******************************************************************************************************
+   * @description Test getAcquisitionRate method
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLDTDRates.testGetAcquisitionRate();
+   */
+
   @isTest
   static void testGetAcquisitionRate() {
     Test.startTest();
@@ -54,6 +73,15 @@ private class TestLFLDTDRates {
 
     System.assert((s != null) && (t != null));
   }
+
+  /*******************************************************************************************************
+   * @description Test  getAcquisitionRateByDates method
+   * @param void
+   *
+   *
+   * @example
+   * TestLFLDTDRates.testGetAcquisitionRateByDates();
+   */
 
   @isTest
   static void testGetAcquisitionRateByDates() {

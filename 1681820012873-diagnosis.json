@@ -44,36 +44,18 @@
     ]
   },
   "sfdxEnvVars": [
-    [
-      "SFDX_REDIRECTED",
-      "1"
-    ],
-    [
-      "SFDX_BINPATH",
-      "/Users/mburnside/.local/share/sfdx/client/bin/sfdx"
-    ],
-    [
-      "SFDX_AUTOUPDATE_DISABLE",
-      "true"
-    ],
-    [
-      "SFDX_DISABLE_AUTOUPDATE",
-      "true"
-    ],
+    ["SFDX_REDIRECTED", "1"],
+    ["SFDX_BINPATH", "/Users/mburnside/.local/share/sfdx/client/bin/sfdx"],
+    ["SFDX_AUTOUPDATE_DISABLE", "true"],
+    ["SFDX_DISABLE_AUTOUPDATE", "true"],
     [
       "SFDX_UPDATE_INSTRUCTIONS",
       "Use \"npm update --global sfdx-cli\" to update npm-based installations."
     ]
   ],
   "sfEnvVars": [
-    [
-      "SF_AUTOUPDATE_DISABLE",
-      "true"
-    ],
-    [
-      "SF_DISABLE_AUTOUPDATE",
-      "true"
-    ]
+    ["SF_AUTOUPDATE_DISABLE", "true"],
+    ["SF_DISABLE_AUTOUPDATE", "true"]
   ],
   "cliConfig": {
     "_base": "@oclif/core@2.6.4",

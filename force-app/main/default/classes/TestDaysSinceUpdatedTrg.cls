@@ -1,4 +1,14 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestDaysSinceUpdatedTrg
+ * @date	2022
+ * @group Learning For Life Testing
+ *
+ * @description	Tests for trigger DaysSinceUpdatedTrg
+ *
+ */
+
 private class TestDaysSinceUpdatedTrg {
   @isTest
   static void testTrg() {

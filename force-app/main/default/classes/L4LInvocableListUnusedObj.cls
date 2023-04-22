@@ -4,13 +4,13 @@
  * @date	2022
  * @group Learning For Life
  *
- * @description
+ * @description Invocable methods used by Flow to list unused objectives
  *
  */
 
 public class L4LInvocableListUnusedObj {
   /*******************************************************************************************************
-   * @description
+   * @description Return unused objectives
    * @param inputVariables List of Input Variables
    *
    * @return
