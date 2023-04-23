@@ -1,25 +1,23 @@
 ---
 layout: default
 ---
+
 # TestL4LTimeSeries
 
 `ISTEST`
 
 Test methods for L4LTimeSeries
 
-
 **Author** Mike Burnside
-
 
 **Name** TestL4LTimeSeries
 
-
 **Date** 2022
-
 
 **Group** Learning For Life Testing
 
 ## Methods
+
 ### `static testLoadCOTimeSeries()`
 
 `ISTEST`
@@ -27,10 +25,10 @@ Test methods for L4LTimeSeries
 Test loadCOTimeSeries method
 
 #### Example
+
 ```apex
 TestL4LTimeSeries.testLoadCOTimeSeries();
 ```
-
 
 ### `static tesGenerateD3COTimeSeriesJson()`
 
@@ -39,10 +37,10 @@ TestL4LTimeSeries.testLoadCOTimeSeries();
 Test tesGenerateD3COTimeSeriesJson method
 
 #### Example
+
 ```apex
 TestL4LTimeSeries.tesGenerateD3COTimeSeriesJson();
 ```
-
 
 ### `static testGenerateD3COTSJsonByProgramAndSD()`
 
@@ -51,10 +49,10 @@ TestL4LTimeSeries.tesGenerateD3COTimeSeriesJson();
 Test generateD3COTSJsonByProgramAndSD method
 
 #### Example
+
 ```apex
 TestL4LTimeSeries.testGenerateD3COTSJsonByProgramAndSD();
 ```
-
 
 ### `static TestGenerateD3CORetestTimeSeriesJson()`
 
@@ -63,10 +61,10 @@ TestL4LTimeSeries.testGenerateD3COTSJsonByProgramAndSD();
 Test generateD3CORetestTimeSeriesJson method
 
 #### Example
+
 ```apex
 TestL4LTimeSeries.TestGenerateD3CORetestTimeSeriesJson();
 ```
-
 
 ### `static TestGenerateD3COTimeSeriesByStatusJson()`
 
@@ -75,10 +73,10 @@ TestL4LTimeSeries.TestGenerateD3CORetestTimeSeriesJson();
 Test generateD3COTimeSeriesByStatusJson method
 
 #### Example
+
 ```apex
 TestL4LTimeSeries.TestGenerateD3COTimeSeriesByStatusJson();
 ```
-
 
 ### `static testGenerateD3COTSThresholdJson()`
 
@@ -87,9 +85,9 @@ TestL4LTimeSeries.TestGenerateD3COTimeSeriesByStatusJson();
 Test generateD3COTSThresholdJson method
 
 #### Example
+
 ```apex
 TestL4LTimeSeries.testGenerateD3COTSThresholdJson();
 ```
-
 
 ---

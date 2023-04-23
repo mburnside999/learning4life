@@ -1015,7 +1015,7 @@ public with sharing class L4LSessionStatsController {
    * @see LFLSDWrapper
    * @TODO work on the explanation and provide an example
    * @example
-   * 
+   *
    */
 
   @AuraEnabled(cacheable=true)

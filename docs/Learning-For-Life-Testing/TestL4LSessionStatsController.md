@@ -1,25 +1,23 @@
 ---
 layout: default
 ---
+
 # TestL4LSessionStatsController
 
 `ISTEST`
 
 Test methods for L4LSessionStatsController
 
-
 **Author** Mike Burnside
-
 
 **Name** TestL4LSessionStatsController
 
-
 **Date** 2022
-
 
 **Group** Learning For Life Testing
 
 ## Methods
+
 ### `static testgenerateD3ProgramAreaSDJson()`
 
 `ISTEST`
@@ -27,10 +25,10 @@ Test methods for L4LSessionStatsController
 Test generateD3ProgramAreaSDJson method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson();
 ```
-
 
 ### `static testgenerateD3AreaSDJson()`
 
@@ -39,10 +37,10 @@ TestL4LSessionStatsController.testgenerateD3ProgramAreaSDJson();
 Test generateD3AreaSDJson method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgenerateD3AreaSDJson();
 ```
-
 
 ### `static test2generateD3ProgramAreaSDJson()`
 
@@ -51,10 +49,10 @@ TestL4LSessionStatsController.testgenerateD3AreaSDJson();
 Test generateD3ProgramAreaSDJson method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.test2generateD3ProgramAreaSDJson();
 ```
-
 
 ### `static testgetD3SessionStatsHistogramData()`
 
@@ -63,10 +61,10 @@ TestL4LSessionStatsController.test2generateD3ProgramAreaSDJson();
 Test getD3SessionStatsHistogramData method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetD3SessionStatsHistogramData();
 ```
-
 
 ### `static testgetD3YAxisScale()`
 
@@ -75,10 +73,10 @@ TestL4LSessionStatsController.testgetD3SessionStatsHistogramData();
 Test getD3YAxisScale method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetD3YAxisScale();
 ```
-
 
 ### `static testgetD3RetestYAxisScale()`
 
@@ -87,10 +85,10 @@ TestL4LSessionStatsController.testgetD3YAxisScale();
 Test getD3RetestYAxisScale method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetD3RetestYAxisScale();
 ```
-
 
 ### `static testgetD3StatusYAxisScale()`
 
@@ -99,10 +97,10 @@ TestL4LSessionStatsController.testgetD3RetestYAxisScale();
 Test getD3StatusYAxisScale method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetD3StatusYAxisScale();
 ```
-
 
 ### `static testGetHighAndLowBoundaries()`
 
@@ -111,10 +109,10 @@ TestL4LSessionStatsController.testgetD3StatusYAxisScale();
 Test getHighAndLowBoundaries method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetD3StatusYAxisScale();
 ```
-
 
 ### `static testGetsessionObjectives()`
 
@@ -123,10 +121,10 @@ TestL4LSessionStatsController.testgetD3StatusYAxisScale();
 Test getsessionObjectives method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testGetsessionObjectives();
 ```
-
 
 ### `static testGetClientObjectivesByProgram()`
 
@@ -135,10 +133,10 @@ TestL4LSessionStatsController.testGetsessionObjectives();
 Test getClientObjectivesByProgram method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testGetClientObjectivesByProgram();
 ```
-
 
 ### `static testGetD3Stats()`
 
@@ -147,10 +145,10 @@ TestL4LSessionStatsController.testGetClientObjectivesByProgram();
 Test getD3Stats method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testGetD3Stats();
 ```
-
 
 ### `static testGetD3StatsByProgram()`
 
@@ -159,10 +157,10 @@ TestL4LSessionStatsController.testGetD3Stats();
 Test getD3StatsByProgram method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testGetD3StatsByProgram();
 ```
-
 
 ### `static testGetD3StatsByProgramAndSD()`
 
@@ -171,10 +169,10 @@ TestL4LSessionStatsController.testGetD3StatsByProgram();
 Test getD3StatsByProgramAndSD method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testGetD3StatsByProgramAndSD();
 ```
-
 
 ### `static testgetProgramsAndSds()`
 
@@ -183,10 +181,10 @@ TestL4LSessionStatsController.testGetD3StatsByProgramAndSD();
 Test getProgramsAndSds method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetProgramsAndSds();
 ```
-
 
 ### `static testgetClientObjectivesSDCount()`
 
@@ -195,10 +193,10 @@ TestL4LSessionStatsController.testgetProgramsAndSds();
 Test getClientObjectivesSDCount method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetClientObjectivesSDCount();
 ```
-
 
 ### `static testgetSDSetFromCO()`
 
@@ -207,10 +205,10 @@ TestL4LSessionStatsController.testgetClientObjectivesSDCount();
 Test getSDSetFromCO method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetSDSetFromCO();
 ```
-
 
 ### `static testgetProgramSetFromCO()`
 
@@ -219,9 +217,9 @@ TestL4LSessionStatsController.testgetSDSetFromCO();
 Test getProgramSetFromCO method
 
 #### Example
+
 ```apex
 TestL4LSessionStatsController.testgetProgramSetFromCO();
 ```
-
 
 ---

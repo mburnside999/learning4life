@@ -483,12 +483,20 @@ public class L4LTimeSeries {
    * @example
    * String jsonstr  = L4LTimeSeries.generateD3COTSThresholdJson(clientId,100,200);
    *
-   * jsonStr example: {"reserved1":1,"reserved2":2,"sessiondata":
-   * [{"thresholdHrs":10,"thresholdReached":true,"actualHrsAtThreshold":11.0,"runId":"TSL-2022-11-000000",
-   "runDate":"2022-11-27","dateAtThreshold":"2022-10-07 00:00:00","data":[],"acquiredTotal":0},
-   * {"thresholdHrs":20,"thresholdReached":true,"actualHrsAtThreshold":20.0,"runId":"TSL-2022-11-000000",
-   * "dateAtThreshold":"2022-10-27 00:00:00","data":[],"acquiredTotal":0}]}
+   * {"reserved1":1,"reserved2":2,
+   * "sessiondata":[
+   * {"thresholdHrs":100,"thresholdReached":false,"actualHrsAtThreshold":69.5,"runId":"TSL-2023-04-000042","runDate":"2023-04-23","dateAtThreshold":"2023-04-21 00:00:00",
+   * "data":[
+   * {"key":0,"programName":"Arts and Crafts","acquiredCount":1},
+   * {"key":1,"programName":"Behaviour Vocabulary","acquiredCount":1},
+   * ...
+   * {"key":6,"programName":"Conversation","acquiredCount":2},
+   * ...
+   * {"key":16,"programName":"Why/because","acquiredCount":4}],
+   * "acquiredTotal":55}
+   * ]}
    */
+
   @AuraEnabled(cacheable=true)
   public static String generateD3COTSThresholdJson(
     String clientId,

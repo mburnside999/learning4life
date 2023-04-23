@@ -1,26 +1,22 @@
 ---
 layout: default
 ---
+
 # LFLTimeSeriesBatch
 
 Batchable class for running the CO timeseries
 
-
 **Implemented types**
 
-[Database.Batchable&lt;sObject&gt;](Database.Batchable&lt;sObject&gt;)
-, 
+[Database.Batchable&lt;sObject&gt;](Database.Batchable<sObject>)
+,
 [Database.Stateful](Database.Stateful)
-
 
 **Name** LFLTimeSeriesBatch
 
-
 **Author** Mike Burnside
 
-
 **Date** 2023
-
 
 **Group** Learning For Life
 
@@ -28,27 +24,25 @@ Batchable class for running the CO timeseries
 
 ### `email` → `String`
 
-
 ### `query` → `String`
-
 
 ### `recs` → `integer`
 
-
 ### `runId` → `String`
 
-
 ---
+
 ## Methods
+
 ### `start(Database BC)`
 
 Start
 
 #### Parameters
 
-|Param|Description|
-|---|---|
-|`BC`||
+| Param | Description |
+| ----- | ----------- |
+| `BC`  |             |
 
 #### Return
 
@@ -58,9 +52,6 @@ Database
 
 **Description**
 
-
-
-
 **Name** start
 
 ### `execute(Database BC, List<sObject> scope)`
@@ -69,10 +60,10 @@ Start
 
 #### Parameters
 
-|Param|Description|
-|---|---|
-|`BC`||
-|`scope`||
+| Param   | Description |
+| ------- | ----------- |
+| `BC`    |             |
+| `scope` |             |
 
 #### Return
 
@@ -81,9 +72,6 @@ Start
 void
 
 **Description**
-
-
-
 
 **Name** execute
 
@@ -93,9 +81,9 @@ Start
 
 #### Parameters
 
-|Param|Description|
-|---|---|
-|`BC`||
+| Param | Description |
+| ----- | ----------- |
+| `BC`  |             |
 
 #### Return
 
@@ -104,9 +92,6 @@ Start
 void
 
 **Description**
-
-
-
 
 **Name** finish
 

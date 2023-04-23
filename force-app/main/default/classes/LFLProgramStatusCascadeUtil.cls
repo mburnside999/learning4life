@@ -3,16 +3,16 @@
  * @author	Mike Burnside
  * @date	2023
  * @group Learning For Life
- * @description Util class.  
- * Methods for pushing of Status values down the hierarchy of Programs--< SD--< Objectives.  
+ * @description Util class.
+ * Methods for pushing of Status values down the hierarchy of Programs--< SD--< Objectives.
  * Status values are Active|Inactive|Draft
  */
 
 public class LFLProgramStatusCascadeUtil {
   /*******************************************************************************************************
    * @name updateSDStatusByMap
-   * @description Push changed Program status values to related SDs.  
-   * Invoked by Program__c trigger: trgCascadeProgramStatus.  
+   * @description Push changed Program status values to related SDs.
+   * Invoked by Program__c trigger: trgCascadeProgramStatus.
    * @return void
    * @param statusMap Map of changed Program status values
    * @example

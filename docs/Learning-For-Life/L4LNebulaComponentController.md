@@ -1,19 +1,16 @@
 ---
 layout: default
 ---
+
 # L4LNebulaComponentController
 
 Utility class for Nebula logger
 
-
 **Author** Mike Burnside
-
 
 **Name** L4LNebulaComponentController
 
-
 **Date** 2023
-
 
 **Group** Learning For Life
 
@@ -21,9 +18,10 @@ Utility class for Nebula logger
 
 ### `nebulaId` → `String`
 
-
 ---
+
 ## Methods
+
 ### `static setupCache()`
 
 `AURAENABLED`
@@ -41,10 +39,10 @@ void
 Session status
 
 #### Example
+
 ```apex
 String status=L4LController.getSessionStatus(recordId);
 ```
-
 
 ### `static logWarning(String recordId, String message, String scenario, String tag)`
 
@@ -54,12 +52,12 @@ Helper for logging Warnings
 
 #### Parameters
 
-|Param|Description|
-|---|---|
-|`recordId`|The related record|
-|`message`|The message text|
-|`scenario`|The logging scanario|
-|`tag`|The logging tag|
+| Param      | Description          |
+| ---------- | -------------------- |
+| `recordId` | The related record   |
+| `message`  | The message text     |
+| `scenario` | The logging scanario |
+| `tag`      | The logging tag      |
 
 #### Return
 
@@ -72,9 +70,10 @@ void
 void
 
 #### Example
-```apex
-```
 
+```apex
+
+```
 
 ### `static logInfo(String recordId, String message, String scenario, String tag)`
 
@@ -84,12 +83,12 @@ Helper for logging Info
 
 #### Parameters
 
-|Param|Description|
-|---|---|
-|`recordId`|The related record|
-|`message`|The message text|
-|`scenario`|The logging scanario|
-|`tag`|The logging tag|
+| Param      | Description          |
+| ---------- | -------------------- |
+| `recordId` | The related record   |
+| `message`  | The message text     |
+| `scenario` | The logging scanario |
+| `tag`      | The logging tag      |
 
 #### Return
 
@@ -102,9 +101,10 @@ void
 void
 
 #### Example
-```apex
-```
 
+```apex
+
+```
 
 ### `static logFine(String recordId, String message, String scenario, String tag)`
 
@@ -114,12 +114,12 @@ Helper for logging Fine
 
 #### Parameters
 
-|Param|Description|
-|---|---|
-|`recordId`|The related record|
-|`message`|The message text|
-|`scenario`|The logging scanario|
-|`tag`|The logging tag|
+| Param      | Description          |
+| ---------- | -------------------- |
+| `recordId` | The related record   |
+| `message`  | The message text     |
+| `scenario` | The logging scanario |
+| `tag`      | The logging tag      |
 
 #### Return
 
@@ -132,9 +132,10 @@ void
 void
 
 #### Example
-```apex
-```
 
+```apex
+
+```
 
 ### `static logError(String recordId, String message, String scenario, String tag)`
 
@@ -144,12 +145,12 @@ Helper for logging Errors
 
 #### Parameters
 
-|Param|Description|
-|---|---|
-|`recordId`|The related record|
-|`message`|The message text|
-|`scenario`|The logging scanario|
-|`tag`|The logging tag|
+| Param      | Description          |
+| ---------- | -------------------- |
+| `recordId` | The related record   |
+| `message`  | The message text     |
+| `scenario` | The logging scanario |
+| `tag`      | The logging tag      |
 
 #### Return
 
@@ -162,9 +163,10 @@ void
 void
 
 #### Example
-```apex
-```
 
+```apex
+
+```
 
 ### `static logDebug(String recordId, String message, String scenario, String tag)`
 
@@ -174,12 +176,12 @@ Helper for logging Debug
 
 #### Parameters
 
-|Param|Description|
-|---|---|
-|`recordId`|The related record|
-|`message`|The message text|
-|`scenario`|The logging scanario|
-|`tag`|The logging tag|
+| Param      | Description          |
+| ---------- | -------------------- |
+| `recordId` | The related record   |
+| `message`  | The message text     |
+| `scenario` | The logging scanario |
+| `tag`      | The logging tag      |
 
 #### Return
 
@@ -192,9 +194,10 @@ void
 void
 
 #### Example
-```apex
-```
 
+```apex
+
+```
 
 ### `static saveNebulaLog()`
 
@@ -211,8 +214,9 @@ void
 void
 
 #### Example
-```apex
-```
 
+```apex
+
+```
 
 ---

@@ -23,36 +23,19 @@ export default class L4lACQThresholdSummary extends LightningElement {
   columns = columns;
   reachedt1 = true;
   t1val = "100";
-  t2val = "200";
+  t2val = "500";
 
   t1options = [
     { label: "20", value: "20", isChecked: true },
     { label: "50", value: "50" },
     { label: "100", value: "100" },
-    { label: "150", value: "200" },
-    { label: "200", value: "300" }
+    { label: "150", value: "150" },
+    { label: "200", value: "200" },
+    { label: "250", value: "250" },
+    { label: "300", value: "300" }
   ];
 
-  t2options = [{ label: "200", value: "200", isChecked: true }];
-
-  //   @wire(generateD3COTSThresholdJson, {
-  //     clientId: "$recordId",
-  //     threshold1: 50,
-  //     threshold2: 900
-  //   })
-  //   thresholdJSON({ error, data }) {
-  //     if (data) {
-  //       console.log(data);
-  //       let _threshold = JSON.parse(data);
-  //       this.threshold1 = _threshold.sessiondata[0];
-  //       this.thresholdHrs = _threshold.sessiondata[0].thresholdHrs;
-  //       if (!_threshold.sessiondata[0].thresholdReached) this.reachedt1 = false;
-  //       this.t1data = _threshold.sessiondata[0].data;
-  //       console.log("=============" + JSON.stringify(this.threshold1));
-  //     } else {
-  //       this.error = error;
-  //     }
-  //}
+  t2options = [{ label: "500", value: "500", isChecked: true }];
 
   get t1DateStr() {
     return this.threshold1.dateAtThreshold == null
@@ -82,7 +65,7 @@ export default class L4lACQThresholdSummary extends LightningElement {
     generateD3COTSThresholdJson({
       clientId: this.recordId,
       threshold1: this.t1val,
-      threshold2: 900
+      threshold2: this.t2val
     })
       .then((data) => {
         let _threshold = JSON.parse(data);

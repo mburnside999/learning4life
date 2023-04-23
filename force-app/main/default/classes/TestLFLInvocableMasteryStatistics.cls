@@ -5,7 +5,7 @@
  * @deprecated
  * @group Learning For Life - DEPRECATED
  * @description	Deprecated on 30/1/2023.
- * 
+ *
  * @see LFLInvocableMasteryStatistics
  */
 
