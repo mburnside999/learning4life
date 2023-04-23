@@ -107,11 +107,15 @@ Main class for populating test data, used in almost all tests
 
 ### [LFLProgramStatusCascadeUtil](./Learning-For-Life/LFLProgramStatusCascadeUtil.md)
 
+Util class.
+Methods for pushing of Status values down the hierarchy of Programs--&lt; SD--&lt; Objectives.
+Status values are Active|Inactive|Draft
 
 
 
 ### [LFLSDWrapper](./Learning-For-Life/LFLSDWrapper.md)
 
+This is a custom sorter for a list of SD__c's - sorted by SD__c.Name
 
 
 
@@ -129,15 +133,22 @@ Batch scheduling for Tineseries
 
 ### [LFLUtil](./Learning-For-Life/LFLUtil.md)
 
-Utility
+Utility class for parsing JSON
 
 
-## Miscellaneous
+## Learning For Life - DEPRECATED
 
-### [LFLInvocableMasteryStatistics](./Miscellaneous/LFLInvocableMasteryStatistics.md)
+### [LFLInvocableMasteryStatistics](./Learning-For-Life---DEPRECATED/LFLInvocableMasteryStatistics.md)
+
+Deprecated on 30/1/2023.
+Roll up stats to the Program level.
 
 
-### [TestLFLInvocableMasteryStatistics](./Miscellaneous/TestLFLInvocableMasteryStatistics.md)
+
+### [TestLFLInvocableMasteryStatistics](./Learning-For-Life---DEPRECATED/TestLFLInvocableMasteryStatistics.md)
+
+Deprecated on 30/1/2023.
+
 
 ## Learning For Life Testing
 

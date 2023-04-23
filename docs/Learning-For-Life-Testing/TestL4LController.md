@@ -19,6 +19,9 @@ Test methods for L4LController
 
 **Group** Learning For Life Testing
 
+
+**See** [L4LController](../Learning-For-Life/L4LController.md)
+
 ## Methods
 ### `static testGetsessionObjectives()`
 

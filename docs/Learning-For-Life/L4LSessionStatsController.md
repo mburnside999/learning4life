@@ -430,7 +430,7 @@ a JSON string
 
 `AURAENABLED`
 
-Generates a JSON string  for use by D3 charting
+Generates a JSON string  for use by D3 charting. Sorts lisdt of SDs by Name using a custom sorter comparison method in LFLSDWrapper
 
 #### Parameters
 
@@ -451,6 +451,9 @@ a JSON string
 
 
 **Name** generateD3AreaSDJson
+
+
+**See** [LFLSDWrapper](./LFLSDWrapper.md)
 
 
 **TODO** work on the explanation and provide an example

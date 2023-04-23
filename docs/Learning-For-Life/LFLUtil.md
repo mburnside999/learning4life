@@ -3,7 +3,7 @@ layout: default
 ---
 # LFLUtil
 
-Utility
+Utility class for parsing JSON
 
 
 **Name** public with sharing class LFLUtil
@@ -26,7 +26,7 @@ Parse and validate JSON
 
 |Param|Description|
 |---|---|
-|`String`|, a JSON string to be validated|
+|`jsonStr`|JSON string to be validated|
 
 #### Return
 
@@ -36,10 +36,13 @@ Boolean
 
 **Description**
 
-Boolean, whether the string is valid JSON or not
+true|false Whether the string is valid JSON or not
 
 
 **Name** isValidJSON
+
+
+**See** [TestL4LSessionStatsController](../Learning-For-Life-Testing/TestL4LSessionStatsController.md)
 
 #### Example
 ```apex

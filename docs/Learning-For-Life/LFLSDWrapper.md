@@ -3,6 +3,7 @@ layout: default
 ---
 # LFLSDWrapper
 
+This is a custom sorter for a list of SD__c's - sorted by SD__c.Name
 
 
 **Implemented types**
@@ -20,6 +21,9 @@ layout: default
 
 
 **Group** Learning For Life
+
+
+**See** [L4LSessionStatsController](./L4LSessionStatsController.md)
 
 ## Constructors
 ### `LFLSDWrapper(sd__c sdin)`

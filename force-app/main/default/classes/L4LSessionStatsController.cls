@@ -1005,13 +1005,17 @@ public with sharing class L4LSessionStatsController {
 
   /*******************************************************************************************************
    * @name generateD3AreaSDJson
-   * @description Generates a JSON string  for use by D3 charting
+   * @description Generates a JSON string  for use by D3 charting.
+   * Sorts lisdt of SDs by Name using a custom sorter comparison method in LFLSDWrapper
+   *
    * @param clientId The client Id
    * @param stageStr "All" | sd__c.stage__c
    *
    * @return a JSON string
+   * @see LFLSDWrapper
    * @TODO work on the explanation and provide an example
    * @example
+   * 
    */
 
   @AuraEnabled(cacheable=true)

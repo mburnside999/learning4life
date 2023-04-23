@@ -1,7 +1,15 @@
-// this class was deprecated on 30/1/2023 - its  intention was to roll up stats to the Program level -- this is no longer needed
+/**************************************************************
+ * @name LFLDTDRates
+ * @author	Mike Burnside
+ * @date	2023
+ * @deprecated
+ * @group Learning For Life - DEPRECATED
+ * @description	Deprecated on 30/1/2023.
+ * Roll up stats to the Program level.  
+ *
+ */
 
 public with sharing class LFLInvocableMasteryStatistics {
-  //mastery
   @InvocableMethod
   public static List<Response> computeMasteryStats(List<Id> sessions) {
     Logger.setScenario('LFLInvocableSessionStatistics');

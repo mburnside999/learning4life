@@ -3,17 +3,18 @@
  * @author	Mike Burnside
  * @date	2023
  * @group Learning For Life
- * @description
- *
+ * @description Util class.  
+ * Methods for pushing of Status values down the hierarchy of Programs--< SD--< Objectives.  
+ * Status values are Active|Inactive|Draft
  */
 
 public class LFLProgramStatusCascadeUtil {
   /*******************************************************************************************************
    * @name updateSDStatusByMap
-   * @description
-   *
-   * @param statusMap
+   * @description Push changed Program status values to related SDs.  
+   * Invoked by Program__c trigger: trgCascadeProgramStatus.  
    * @return void
+   * @param statusMap Map of changed Program status values
    * @example
    */
 
@@ -48,12 +49,13 @@ public class LFLProgramStatusCascadeUtil {
 
   /*******************************************************************************************************
    * @name updateObjectiveStatusByMap
-   * @description
-   *
-   * @param statusMap
+   * @description Push changed SD status values to related Objectives
+   * Invoked by SD__c trigger: trgCascadeSDStatus
+   * @param statusMap Map of changed SD status values
    * @return void
    * @example
    */
+
   public static void updateObjectiveStatusByMap(Map<id, string> statusMap) {
     Logger.debug('Apex:LFLProgramStatusCascadeUtil')
       .addTag('LFLProgramStatusCascadeUtil.updateObjectiveStatusByMap()')

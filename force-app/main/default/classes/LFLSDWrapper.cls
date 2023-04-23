@@ -4,8 +4,8 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description
- *
+ * @description This is a custom sorter for a list of SD__c's - sorted by SD__c.Name
+ * @see L4LSessionStatsController
  */
 
 public class LFLSDWrapper implements Comparable {
