@@ -1,9 +1,10 @@
 import { LightningElement, api } from "lwc";
-
+import { loadScript } from "lightning/platformResourceLoader";
 import generateD3COTSThresholdJson from "@salesforce/apex/L4LTimeSeries.generateD3COTSThresholdJson";
 import { logInfo } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 //import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import D3 from "@salesforce/resourceUrl/d3";
 
 //debugging
 const COMPONENT = "l4lACQThresholdSummary";
@@ -11,8 +12,8 @@ const TAG = "L4L-Analyse-ACQ-Thresholds";
 //const COLOR = "color:green"; //for console log formatting
 const SCENARIO = "Analyse ACQ by total session times and thresholds ";
 const columns = [
-  { label: "Program Name", fieldName: "programName" },
-  { label: "# of ACQ skills", fieldName: "acquiredCount" }
+  { label: "Program Name", fieldName: "programName", initialWidth: 250 },
+  { label: "# of ACQ skills", fieldName: "acquiredCount", initialWidth: 150 }
 ];
 export default class L4lACQThresholdSummary extends LightningElement {
   @api recordId = "0018t000002vfSfAAI"; //Andy
@@ -24,6 +25,8 @@ export default class L4lACQThresholdSummary extends LightningElement {
   reachedt1 = true;
   t1val = "100";
   t2val = "500";
+  d3Initialized = false;
+  xAxisScale = 20;
 
   t1options = [
     { label: "20", value: "20", isChecked: true },
@@ -43,7 +46,17 @@ export default class L4lACQThresholdSummary extends LightningElement {
       : this.threshold1.dateAtThreshold.substring(0, 10);
   }
 
+  renderedCallback() {
+    console.log("renderedCallback()");
+    if (!this.d3Initialized) {
+      loadScript(this, D3 + "/d3.v5.min.js");
+      this.d3Initialized = true;
+    }
+  }
+
   connectedCallback() {
+    console.log("connectedCallback()");
+
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
@@ -74,6 +87,7 @@ export default class L4lACQThresholdSummary extends LightningElement {
         if (!_threshold.sessiondata[0].thresholdReached) this.reachedt1 = false;
         this.t1data = _threshold.sessiondata[0].data;
         console.log("=============" + JSON.stringify(this.threshold1));
+        this.renderHistogram(this.t1data);
       })
       .catch((error) => {});
   }
@@ -116,9 +130,111 @@ export default class L4lACQThresholdSummary extends LightningElement {
         if (!_threshold.sessiondata[0].thresholdReached) this.reachedt1 = false;
         this.t1data = _threshold.sessiondata[0].data;
         console.log("=============" + JSON.stringify(this.threshold1));
+        this.renderHistogram(this.t1data);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  renderHistogram(data) {
+    console.log("received " + JSON.stringify(data));
+
+    function findMinMax(key) {
+      const datas = data.map((node) => node[key]);
+
+      return {
+        min: Math.min(...datas),
+        max: Math.max(...datas)
+      };
+    }
+
+    //let _min = findMinMax("acquiredCount").min;
+    let _max = findMinMax("acquiredCount").max;
+    this.xAxisScale = Math.ceil(_max * 1.2);
+
+    // set the dimensions and margins of the graph
+    var margin = { top: 50, right: 30, bottom: 60, left: 200 },
+      width = 900 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
+
+    console.log("cleaning  up  svg");
+    let svg = d3.select(this.template.querySelector(".histo"));
+    svg.selectAll("*").remove();
+
+    // append the svg object to the body of the page
+    console.log("setting up svg");
+
+    svg = d3
+      .select(this.template.querySelector(".histo"))
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var x = d3.scaleLinear().domain([0, this.xAxisScale]).range([0, width]);
+    svg
+      .append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .attr("transform", "translate(-10,0)rotate(-45)")
+      .style("text-anchor", "end");
+
+    // Y axis
+    var y = d3
+      .scaleBand()
+      .range([0, height])
+      .domain(
+        data.map(function (d) {
+          return d.programName;
+        })
+      )
+      .padding(0.1);
+    svg.append("g").call(d3.axisLeft(y));
+
+    //Bars
+    svg
+      .selectAll("myRect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", x(0))
+      .attr("y", function (d) {
+        return y(d.programName);
+      })
+      .attr("width", function (d) {
+        return x(d.acquiredCount);
+      })
+      .attr("height", y.bandwidth())
+      .attr("fill", "#69b3a2");
+
+    // svg
+    //   .append("text")
+    //   .attr("x", (width - 12) / 2)
+    //   .attr("y", 0)
+    //   .attr("text-anchor", "left")
+    //   .style("font-size", "18px")
+    //   .style("fill", "grey")
+    //   .style("max-width", 400)
+    //   .text("EXPERIMENTAL - Threshold analysis");
+
+    // svg
+    //   .append("text")
+    //   .attr("x", (width - 60) / 2)
+    //   .attr("y", 20)
+    //   .attr("text-anchor", "left")
+    //   .style("font-size", "14px")
+    //   .style("fill", "grey")
+    //   .style("max-width", 400)
+    //   .text("Threshold Analysis");
+
+    svg
+      .append("text")
+      .attr("class", "x label")
+      .attr("text-anchor", "end")
+      .attr("x", (width - 25) / 2)
+      .attr("y", height + 40)
+      .text("Skills Acquired");
   }
 }
