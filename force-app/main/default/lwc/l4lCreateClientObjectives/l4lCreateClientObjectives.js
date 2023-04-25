@@ -16,7 +16,7 @@ import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
 const COMPONENT = "l4lCreateClientObjectives";
 const TAG = "L4L-Manage-Client-Objectives";
 const COLOR = "color:green"; //for console log formatting
-const SCENARIO = "Create Client Objectives";
+const SCENARIO = "Create Client Objectives - LWC";
 
 const columns = [
   { label: "Program", fieldName: "Program__c", type: "text" },

@@ -22,7 +22,7 @@ import {
 import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
 const TAG = "L4L-Manage-Session-Objectives";
-const SCENARIO = "Manage Session Objectives for a client";
+const SCENARIO = "Manage Session Objectives for a client - LWC";
 
 //debugging
 const COMPONENT = "l4lGetSetSessionObjectives";

@@ -17,7 +17,7 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "l4lCreateIncidentData";
 const TAG = "L4L-Manage-Session-Incidents";
 const COLOR = "color:purple"; //for console log formatting
-const SCENARIO = "Record session incidents"; //for console log formatting
+const SCENARIO = "Record session incidents - LWC"; //for console log formatting
 
 export default class L4lCreateIncidentData extends LightningElement {
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing

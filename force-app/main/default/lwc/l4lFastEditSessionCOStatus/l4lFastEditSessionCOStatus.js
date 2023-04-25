@@ -20,7 +20,7 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 
 const COMPONENT = "l4lFastEditSessionCOStatus";
 const TAG = "L4L-Fast-Edit-Client-Objectives";
-const SCENARIO = "Fast editing client objectives";
+const SCENARIO = "Fast editing client objectives - LWC";
 
 const COLOR = "color:olive"; //for console log formatting
 

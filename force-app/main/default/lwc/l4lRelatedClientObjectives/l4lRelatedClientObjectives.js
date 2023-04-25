@@ -35,7 +35,7 @@ import LightningConfirm from "lightning/confirm";
 //debugging
 const COMPONENT = "l4lRelatedClientObjectives";
 const TAG = "L4L-Manage-Client-Objectives";
-const SCENARIO = "View and Manage client Objectives";
+const SCENARIO = "View and Manage client Objectives - LWC";
 const COLOR = "color:red";
 
 const actions = [

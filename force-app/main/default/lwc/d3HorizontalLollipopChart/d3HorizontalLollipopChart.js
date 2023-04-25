@@ -11,7 +11,7 @@ import { logDebug, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3HorizontalLollipopChart";
 const TAG = "L4L-Session-Statistics-D3HorizontalLollipopChart";
-const SCENARIO = "D3 Plot Client Objectives";
+const SCENARIO = "D3 Plot Client Objectives - LWC";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html

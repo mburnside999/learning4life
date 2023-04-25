@@ -9,7 +9,7 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3DTDRates";
 const TAG = "L4L-Session-Statistics-D3DTDRatesChart";
-const SCENARIO = "View the D3 DTD Acquisition Rate chart";
+const SCENARIO = "View the D3 DTD Acquisition Rate chart - LWC";
 
 export default class D3DTDRates extends LightningElement {
   @api recordId;

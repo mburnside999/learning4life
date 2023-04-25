@@ -11,7 +11,7 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3HeatMap";
 const TAG = "L4L-Session-Statistics-D3HeatMap";
-const SCENARIO = "View Program Mastery D3HeatMap";
+const SCENARIO = "View Program Mastery D3HeatMap - LWC";
 
 export default class D3HeatMap extends LightningElement {
   low = 50;

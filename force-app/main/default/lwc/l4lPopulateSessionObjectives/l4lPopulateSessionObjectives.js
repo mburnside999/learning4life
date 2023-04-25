@@ -27,7 +27,7 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 
 const COMPONENT = "l4lPopulateSessionObjectives";
 const TAG = "L4L-Populate-Session-Objectives";
-const SCENARIO = "Score the Session Objectives for a client";
+const SCENARIO = "Score the Session Objectives for a client - LWC";
 const COLOR = "color:olive"; //for console log formatting
 
 const columns = [

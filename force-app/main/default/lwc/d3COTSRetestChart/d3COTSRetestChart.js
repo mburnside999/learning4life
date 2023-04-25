@@ -9,7 +9,7 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3COTSRetestChart";
 const TAG = "L4L-Session-Statistics-D3COTSRetestChart";
-const SCENARIO = "Viewing the D3 Re-Test line chart";
+const SCENARIO = "Viewing the D3 Re-Test line chart - LWC";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html

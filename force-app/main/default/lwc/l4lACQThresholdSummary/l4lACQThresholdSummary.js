@@ -10,7 +10,7 @@ import D3 from "@salesforce/resourceUrl/d3";
 const COMPONENT = "l4lACQThresholdSummary";
 const TAG = "L4L-Analyse-ACQ-Thresholds";
 //const COLOR = "color:green"; //for console log formatting
-const SCENARIO = "Analyse ACQ by total session times and thresholds ";
+const SCENARIO = "Analyse ACQ by total session times and thresholds - LWC";
 const columns = [
   { label: "Program Name", fieldName: "programName", initialWidth: 250 },
   { label: "# of ACQ skills", fieldName: "acquiredCount", initialWidth: 150 }

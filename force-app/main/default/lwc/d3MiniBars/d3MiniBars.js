@@ -9,7 +9,7 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3MiniBars";
 const TAG = "L4L-Session-Statistics-D3MiniBars";
-const SCENARIO = "Viewing D3 Client Objectiive mini line charts";
+const SCENARIO = "Viewing D3 Client Objectiive mini line charts - LWC";
 
 export default class D3MiniBars extends LightningElement {
   @api recordId;

@@ -21,11 +21,13 @@ public with sharing class L4LController {
 
   @AuraEnabled(cacheable=false)
   public static String getSessionStatus(String recordId) {
+    String SCENARIO = 'Manage Sessions - Get Session Status - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       recordId,
       'in L4LController.getSessionStatus()',
-      'Manage Sessions - Get Session Status',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -40,7 +42,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       recordId,
       'returning sessionStatus= ' + sessionStatus,
-      'LWC Apex - Get Session Status',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -60,12 +62,14 @@ public with sharing class L4LController {
 
   @AuraEnabled(cacheable=false)
   public static List<Objective__c> getPopularObjectives(String clientId) {
+    String SCENARIO = 'Manage Client Objectives - Get Popular COs - Apex';
+
     List<objective__c> objList = new List<Objective__c>();
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LController.getPopularObjectives()',
-      'Manage Client Objectives - Get Popular COs',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -82,7 +86,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getPopularObjectives() popularObjectives=' +
       popularObjectives,
-      'Manage Client Objectives - Get Popular COs',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -107,7 +111,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getPopularObjectives() returning objList=' + objList,
-      'Manage Client Objectives - Get Popular COs',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -126,11 +130,13 @@ public with sharing class L4LController {
 
   @AuraEnabled(cacheable=false)
   public static List<Session_obj__c> getSessionObjectives(String sess) {
+    String SCENARIO = 'Manage Session - Get Session Objectives - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       sess,
       'L4LController.getSessionObjectives()',
-      'Manage Session - Get Session Objectives',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -142,7 +148,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       sess,
       'L4LController.getSessionObjectives() soql=' + debugsoql,
-      'Manage Session - Get Session Objectives',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -170,7 +176,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       sess,
       'L4LController.getSessionObjectives() returning retlist=' + retlist,
-      'Manage Session - Get Session Objectives',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -194,11 +200,13 @@ public with sharing class L4LController {
   public static List<Client_Objective__c> getClientObjectivesForSession(
     String searchKey
   ) {
+    String SCENARIO = 'Manage Session - Get Client Objectives for a Session - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       searchKey,
       'L4LController.getClientObjectivesForSession()',
-      'Manage Session - Get Client Objectives for a Session',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -211,7 +219,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       searchKey,
       'L4LController.getClientObjectivesForSession() debugsoql=' + debugsoql,
-      'Manage Session - Get Client Objectives for a Session',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -245,7 +253,7 @@ public with sharing class L4LController {
       searchKey,
       'L4LController.getClientObjectivesForSession() returning retlist=' +
       retlist,
-      'Manage Session - Get Client Objectives for a Session',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -266,11 +274,13 @@ public with sharing class L4LController {
 
   @AuraEnabled(cacheable=false)
   public static List<Client_Objective__c> getClientObjectives(String clientId) {
+    String SCENARIO = 'Manage Client Objectives - Get Client Objectives for a Client - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LController.getClientObjectives()',
-      'Manage Client Objectives - Get Client Objectives for a Client',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -282,7 +292,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getClientObjectives() debugsoql=' + debugsoql,
-      'Manage Client Objectives - Get Client Objectives for a Client',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -311,14 +321,14 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getClientObjectives() returning retlist.size()=' +
       retlist.size(),
-      'Manage Client Objectives - Get Client Objectives for a Client',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getClientObjectives() returning retlist=' + retlist,
-      'Manage Client Objectives - Get Client Objectives for a Client',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -341,11 +351,13 @@ public with sharing class L4LController {
     String clientId,
     boolean showActiveOnly
   ) {
+    String SCENARIO = 'Manage Client Objectives - Get (Active) or all Client Objectives for a Client - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LController.getClientObjectivesFilteredOnActive()',
-      'Manage Client Objectives - Get (Active) or all Client Objectives for a Client',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -365,7 +377,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getClientObjectivesFilteredOnActive() queryCOString=' +
       queryCOString,
-      'Manage Client Objectives - Get (Active) or all Client Objectives for a Client',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -375,7 +387,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getClientObjectivesFilteredOnActive()() returning retlist.size()=' +
       retlist.size(),
-      'Manage Client Objectives - Get (Active) or all Client Objectives for a Client',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -383,7 +395,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getClientObjectivesFilteredOnActive()() returning retlist=' +
       retlist,
-      'Manage Client Objectives - Get (Active) or all Client Objectives for a Client',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -404,11 +416,13 @@ public with sharing class L4LController {
 
   @AuraEnabled(cacheable=false)
   public static String getCOActivationSummary(String clientId) {
+    String SCENARIO = 'D3 Charting - create a JSON activation summary - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LController.getCOActivationSummary()',
-      'D3 Charting - create a JSON activation summary',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -453,7 +467,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getCOActivationSummary() retstr=' + retstr,
-      'D3 Charting - create a JSON activation summary',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -473,11 +487,13 @@ public with sharing class L4LController {
   public static Client_Objective__c deactivateClientObjective(
     String clientObjectiveId
   ) {
+    String SCENARIO = 'Manage Client Objectives - deactivate a CO - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientObjectiveId,
       'L4LController.deactivateClientObjective()',
-      'Manage Client Objectives - deactivate a CO',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -503,11 +519,13 @@ public with sharing class L4LController {
 
   @AuraEnabled
   public static List<Objective__c> getUnusedObjectives(String clientId) {
+    String SCENARIO = 'Manage Client Objectives - return a list of candidate (unused) objectives - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LController.getUnusedObjectives()',
-      'Manage Client Objectives - return a list of candidate (unused) objectives',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -545,7 +563,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController.getUnusedObjectives() returning retlist=' + retlist,
-      'Manage Client Objectives - return a list of candidate (unused) objectives',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -570,12 +588,14 @@ public with sharing class L4LController {
     String clientId,
     String searchstring
   ) {
+    String SCENARIO = 'Manage Client Objectives - search for a list of candidate (unused) objectives  by keyword - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LController.getUnusedObjectivesBySearch() searchString=' +
       searchString,
-      'Manage Client Objectives - search for a list of candidate (unused) objectives  by keyword',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -621,7 +641,7 @@ public with sharing class L4LController {
       clientId,
       'L4LController.getUnusedObjectivesBySearch() returning retlist=' +
       retlist,
-      'Manage Client Objectives - search for a list of candidate (unused) objectives  by keyword',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -642,11 +662,13 @@ public with sharing class L4LController {
 
   @AuraEnabled
   public static void deleteSessionObjectives(String sessionid) {
+    String SCENARIO = 'Manage Session Objectives - delete all Session Objectives for a Session - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       sessionId,
       'L4LController.deleteSessionObjectives() sessionId=' + sessionId,
-      'Manage Session Objectives - delete all Session Objectives for a Session',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -673,6 +695,8 @@ public with sharing class L4LController {
     String sess,
     String skillstring
   ) {
+    String SCENARIO = 'Manage Session Objectives - create assessments C,I,N,P from a sequence - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       sess,
@@ -682,7 +706,7 @@ public with sharing class L4LController {
       sess +
       'skillstring=' +
       skillstring,
-      'Manage Session Objectives - create assessments C,I,N,P from a sequence',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -701,7 +725,7 @@ public with sharing class L4LController {
       sess,
       'L4LController.createSessionObjectivesByArrayWithOrderedResults() objDeserialized==' +
       objDeserialized,
-      'Manage Session Objectives - create assessments C,I,N,P from a sequence',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -714,7 +738,7 @@ public with sharing class L4LController {
       sess,
       'L4LController.createSessionObjectivesByArrayWithOrderedResults() sessionresults==' +
       sessionresults,
-      'Manage Session Objectives - create assessments C,I,N,P from a sequence',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -767,7 +791,7 @@ public with sharing class L4LController {
       sess,
       'L4LController.createSessionObjectivesByArrayWithOrderedResults() soList=' +
       soList,
-      'Manage Session Objectives - create assessments C,I,N,P from a sequence',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -793,11 +817,13 @@ public with sharing class L4LController {
     String jsonstr,
     String sess
   ) {
+    String SCENARIO = 'Manage Client Objectives - create Client Objectives from a JSON array - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       sess,
       'L4LController.createClientObjectivesByArray() jsonstr=' + jsonstr,
-      'Manage Client Objectives - create Client Objectives from a JSON array',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -842,6 +868,7 @@ public with sharing class L4LController {
     String jsonstr,
     String val
   ) {
+    String SCENARIO = 'Manage Session Objectives - update scores C,I,N,P from a JSON array - Apex';
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       null,
@@ -849,7 +876,7 @@ public with sharing class L4LController {
       jsonstr +
       ' val=' +
       val,
-      'Manage Session Objectives - update scores C,I,N,P from a JSON array',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -917,6 +944,8 @@ public with sharing class L4LController {
 
   @AuraEnabled
   public static Integer setClientObjectivesByArray(String jsonstr, String val) {
+    String SCENARIO = 'Manage Client Objectives - update a CO status to ACQ/OBJ, or active=true/false from a JSON array - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       null,
@@ -924,7 +953,7 @@ public with sharing class L4LController {
       jsonstr +
       ' val=' +
       val,
-      'Manage Client Objectives - update a CO status to ACQ/OBJ, or active=true/false from a JSON array',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -989,11 +1018,13 @@ public with sharing class L4LController {
 
   @AuraEnabled(cacheable=false)
   public static String updateSessionObjectiveWithLG(String sessObjId) {
+    String SCENARIO = 'Manage Session Objectives - update an SO as Let-Go (LG) - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       null,
       'L4LController.updateSessionObjectiveWithLG',
-      'Manage Session Objectives - update an SO as Let-Go (LG)',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
