@@ -1,6 +1,6 @@
 /**************************************************************
  * @author	Mike Burnside
- * @name
+ * @name L4LInvocableListUnusedObj
  * @date	2022
  * @group Learning For Life
  *
@@ -16,7 +16,6 @@ public class L4LInvocableListUnusedObj {
    * @return
    *
    * @example
-   * String status=L4LController.getSessionStatus(recordId);
    */
 
   @InvocableMethod(label='Remove Records')
@@ -24,6 +23,16 @@ public class L4LInvocableListUnusedObj {
     List<InputVariables> inputVariables
   ) {
     // Get Input Variables
+
+    String SCENARIO = 'L4LInvocableListUnusedObj - Apex';
+
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      null,
+      'L4LInvocableListUnusedObj.RemoveRecords()',
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
 
     List<Objective__c> passedInObjs = inputVariables.get(0).getSDObj;
     List<Client_Objective__c> passedInClientObjs = inputVariables.get(0)

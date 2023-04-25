@@ -1046,8 +1046,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static String generateD3AreaSDJson(String clientId, String stageStr) {
-   
-    String SCENARIO =       'Session Statistics - return a JSON string for D3 - Apex';
+    String SCENARIO = 'Session Statistics - return a JSON string for D3 - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -1056,7 +1055,8 @@ public with sharing class L4LSessionStatsController {
       clientId +
       ' stageStr=' +
       stageStr,
-SCENARIO,      'next-gen-nebula-apex'
+      SCENARIO,
+      'next-gen-nebula-apex'
     );
 
     Map<String, List<LFLSDWrapper>> sdAllAreaMap = new Map<String, List<LFLSDWrapper>>();

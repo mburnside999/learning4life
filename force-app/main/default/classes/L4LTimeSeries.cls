@@ -219,11 +219,13 @@ public class L4LTimeSeries {
     String status,
     String periodStr
   ) {
+    String SCENARIO = 'CO TimeSeries - generate a JSON string for D3 - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LTimeSeries.generateD3COTSJsonByProgramAndSD',
-      'CO TimeSeries - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -261,7 +263,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3COTSJsonByProgramAndSD, queryCOTSString=' +
       queryCOTSString,
-      'LWC Apex D3 Charting',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -296,7 +298,7 @@ public class L4LTimeSeries {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesJson, returning jsonstr=' + jsonstr,
-      'CO TimeSeries - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -322,11 +324,13 @@ public class L4LTimeSeries {
 
   @AuraEnabled(cacheable=true)
   public static String generateD3COTimeSeriesByStatusJson(String clientId) {
+    String SCENARIO = 'CO TimeSeries - generate a JSON string for D3 - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesByStatusJson',
-      'CO TimeSeries - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -338,7 +342,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, queryCOTSString=' +
       queryCOTSString,
-      'CO TimeSeries - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -374,7 +378,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3COTimeSeriesByStatusJson, returning jsonstr=' +
       jsonstr,
-      'CO TimeSeries - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
     return jsonstr;
@@ -404,11 +408,13 @@ public class L4LTimeSeries {
     String clientId,
     String status
   ) {
+    String SCENARIO = 'CO TimeSeries - generate a JSON string for D3 - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LTimeSeries.generateD3CORetestTimeSeriesJson',
-      'CO TimeSeries - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -427,7 +433,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3CORetestTimeSeriesJson, queryCOTSString=' +
       queryCOTSString,
-      'CO TimeSeries - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -463,7 +469,7 @@ public class L4LTimeSeries {
       clientId,
       'L4LTimeSeries.generateD3CORetestTimeSeriesJson, returning jsonstr=' +
       jsonstr,
-      'CO TimeSeries - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
     return jsonstr;
@@ -503,11 +509,13 @@ public class L4LTimeSeries {
     Integer threshold1,
     Integer threshold2
   ) {
+    String SCENARIO = 'CO TimeSeries - Threshold - generate a JSON string for D3 - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LTimeSeries.generateD3COTSThresholdJson',
-      'CO TimeSeries - Threshold - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -712,7 +720,7 @@ public class L4LTimeSeries {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LTimeSeries.generateD3COTSThresholdJson, jsonStr=' + jsonStr,
-      'CO TimeSeries - Threshold - generate a JSON string for D3',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 

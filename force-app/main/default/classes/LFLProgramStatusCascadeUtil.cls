@@ -19,13 +19,23 @@ public class LFLProgramStatusCascadeUtil {
    */
 
   public static void updateSDStatusByMap(Map<id, string> statusMap) {
-    Logger.debug('Apex:LFLProgramStatusCascadeUtil')
-      .addTag('LFLProgramStatusCascadeUtil.updateSDStatusByMap()')
-      .addTag('logit()');
+   
+    String SCENARIO = 'Manage Hierarchy - Update SD status - Apex';
 
-    Logger.fine('statusMap=' + statusMap).addTag('logit()');
-    Logger.saveLog();
-
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      null,
+      'updateSDStatusByMap()',
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+    L4LNebulaComponentController.logDebug(
+      null,
+      'updateSDStatusByMap() statusMap='+statusMap,
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+    
     List<sd__c> sdlist = new List<sd__c>();
     List<sd__c> sdupdatelist = new List<sd__c>();
 
@@ -35,9 +45,12 @@ public class LFLProgramStatusCascadeUtil {
       WHERE program__c IN :statusMap.keySet()
     ];
 
-    Logger.fine('Apex:LFLProgramStatusCascadeUtil sdlist=' + sdlist)
-      .addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.logDebug(
+      null,
+      'updateSDStatusByMap() sdList='+sdList,
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
 
     for (sd__c sd : sdlist) {
       String status = statusMap.get(sd.program__c);
@@ -57,12 +70,25 @@ public class LFLProgramStatusCascadeUtil {
    */
 
   public static void updateObjectiveStatusByMap(Map<id, string> statusMap) {
-    Logger.debug('Apex:LFLProgramStatusCascadeUtil')
-      .addTag('LFLProgramStatusCascadeUtil.updateObjectiveStatusByMap()')
-      .addTag('logit()');
+   
+    String SCENARIO = 'Manage Hierarchy - Update Objective status - Apex';
 
-    Logger.fine('statusMap=' + statusMap).addTag('logit()');
-    Logger.saveLog();
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      null,
+      'updateObjectiveStatusByMap()',
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+   
+    L4LNebulaComponentController.logDebug(
+      null,
+      'updateObjectiveStatusByMap() statusMap='+statusMap,
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
+  
 
     List<objective__c> olist = new List<objective__c>();
     List<objective__c> oupdatelist = new List<objective__c>();
@@ -72,9 +98,14 @@ public class LFLProgramStatusCascadeUtil {
       FROM objective__C
       WHERE sd__c IN :statusMap.keySet()
     ];
-    Logger.fine('Apex:LFLProgramStatusCascadeUtil olist=' + olist)
-      .addTag('logit()');
-    Logger.saveLog();
+   
+    L4LNebulaComponentController.logDebug(
+      null,
+      'updateSDStatusByMap() olist='+olist,
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
 
     for (objective__c o : olist) {
       String status = statusMap.get(o.sd__c);

@@ -11,16 +11,15 @@
 trigger trgUpdateSessionStatsWithProgram on session_statistics__c(
   before insert
 ) {
-  Logger.setScenario('trgUpdateSessionStatsWithProgram');
+  String SCENARIO = 'Trigger trgUpdateSessionStatsWithProgram - Apex';
 
-  Logger.debug(
-      'ApexTrigger (before insert on session_statistics): trgUpdateSessionStatsWithProgram trigger.new=' +
-      Trigger.New
-    )
-    .addTag('trgUpdateSessionStatsWithProgram')
-    .addTag('logit()');
-
-  Logger.saveLog();
+  L4LNebulaComponentController.setupCache();
+  L4LNebulaComponentController.logInfo(
+    null,
+    'ApexTrigger (before insert on session_statistics)',
+    SCENARIO,
+    'next-gen-nebula-apex'
+  );
 
   for (session_statistics__c new_ss_record : Trigger.New) {
     Id objId = new_ss_record.objective__c;
@@ -33,15 +32,16 @@ trigger trgUpdateSessionStatsWithProgram on session_statistics__c(
     ]
     .SD__r.Program__r.Name;
     new_ss_record.program_name__c = prog;
-    Logger.debug(
-        'trgUpdateSessionStatsWithProgram associated program name=' +
-        prog +
-        ' ,record=' +
-        new_ss_record
-      )
-      .addTag('trgUpdateSessionStatsWithProgram')
-      .addTag('logit()');
-    Logger.saveLog();
+
+    L4LNebulaComponentController.logDebug(
+      null,
+      'trgUpdateSessionStatsWithProgram associated program name=' +
+      prog +
+      ' ,record=' +
+      new_ss_record,
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
   }
 
 }

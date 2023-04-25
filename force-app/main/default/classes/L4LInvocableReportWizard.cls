@@ -28,11 +28,13 @@ global with sharing class L4LInvocableReportWizard {
   ) {
     // initialise our list of results
 
+    String SCENARIO = 'Report Wizard - get aggregated client objectives between dates - Apex';
+
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       null,
       'L4LInvocableReportWizard.getStatusCountsBetweenDates()',
-      'Report Wizard - get status counts (active and inactive) between dates',
+      SCENARIO,
       'next-gen-nebula-apex'
     );
 
@@ -123,7 +125,7 @@ global with sharing class L4LInvocableReportWizard {
 
     System.debug(groupedResults);
 
-    //hack to dedup progream names
+    //hack to dedup program names
     Set<String> programSet = new Set<String>();
     System.debug('L4LInvocableReportWizard: deduping program names');
     for (AggregateResult ar : groupedResults) {
@@ -245,7 +247,7 @@ global with sharing class L4LInvocableReportWizard {
    * @date	2022
    * @group Learning For Life
    *
-   * @description
+   * @description Inner class to combine clientid, strttime, emdtime
    */
 
   global class Requests {

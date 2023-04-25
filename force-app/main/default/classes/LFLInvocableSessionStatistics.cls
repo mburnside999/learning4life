@@ -25,12 +25,18 @@ public with sharing class LFLInvocableSessionStatistics {
 
   @InvocableMethod
   public static List<Response> computeSessionStats(List<Id> sessions) {
-    Logger.setScenario('LFLInvocableSessionStatistics');
-    Logger.debug('Apex:computeSessionStats() - invocable called from Flow')
-      .setRecordId(sessions[0])
-      .addTag('LFLInvocableSessionStatistics.computeSessionStats()')
-      .addTag('logit()');
+    
+    String SCENARIO = 'computeSessionStats() - invocable called from Flow';
 
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      sessions[0],
+      'Invocable Session Stats - computeSessionStats() - Apex',
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
+    
     Id session = sessions[0];
     List<Response> responseList = new List<Response>();
     Response response = new Response();
@@ -153,21 +159,19 @@ public with sharing class LFLInvocableSessionStatistics {
     System.debug('incorrect ' + incorrectMap);
     System.debug('prompted ' + promptedMap);
 
-    Logger.debug(
-        'Apex:computeSessionStats() correctMap=' +
+    L4LNebulaComponentController.logDebug(
+      sessions[0],
+      'Apex:computeSessionStats() correctMap=' +
         correctMap +
         ' nonResponsiveMap=' +
         nonResponsiveMap +
         ' incorrectMap=' +
         incorrectMap +
         ' promptedMap=' +
-        promptedMap
-      )
-      .setRecordId(sessions[0])
-      .addTag('LFLInvocableSessionStatistics.computeSessionStats()')
-      .addTag('logit()');
-
-    Logger.saveLog();
+        promptedMap,
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
 
     Map<String, Integer> temp = new Map<String, Integer>();
     Integer count = 0;
@@ -238,25 +242,25 @@ public with sharing class LFLInvocableSessionStatistics {
             sessionStat.totalacquiredprompted__c = 0;
           totalPrompted += (Integer) sessionStat.totalacquiredprompted__c;
 
-          Logger.debug(
-              'Apex:computeSessionStats() inserting session_statistics__c sessStat=' +
-              sessionStat
-            )
-            .setRecordId(sessions[0])
-            .addTag('LFLInvocableSessionStatistics.computeSessionStats()')
-            .addTag('logit()');
+          L4LNebulaComponentController.logDebug(
+            sessions[0],
+            'Apex:computeSessionStats() inserting session_statistics__c sessStat=' +
+            sessionStat,
+            SCENARIO,
+            'next-gen-nebula-apex'
+          );
 
-          Logger.saveLog();
           System.debug(sessionStat);
           insert sessionStat;
 
-          Logger.debug(
-              'Apex:computeSessionStats() inserted session_statistics__c'
-            )
-            .setRecordId(sessionStat.id)
-            .addTag('LFLInvocableSessionStatistics.computeSessionStats()')
-            .addTag('logit()');
-          Logger.saveLog();
+          L4LNebulaComponentController.logDebug(
+            sessionStat.id,
+            'Apex:computeSessionStats() inserted session_statistics__c',            sessionStat,
+            SCENARIO,
+            'next-gen-nebula-apex'
+          );
+
+    
         }
       }
     }
