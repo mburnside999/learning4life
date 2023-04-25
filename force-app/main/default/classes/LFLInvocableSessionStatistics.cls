@@ -25,8 +25,7 @@ public with sharing class LFLInvocableSessionStatistics {
 
   @InvocableMethod
   public static List<Response> computeSessionStats(List<Id> sessions) {
-    
-    String SCENARIO = 'computeSessionStats() - invocable called from Flow';
+    String SCENARIO = 'computeSessionStats() - invocable called from Flow - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -36,7 +35,6 @@ public with sharing class LFLInvocableSessionStatistics {
       'next-gen-nebula-apex'
     );
 
-    
     Id session = sessions[0];
     List<Response> responseList = new List<Response>();
     Response response = new Response();
@@ -162,13 +160,13 @@ public with sharing class LFLInvocableSessionStatistics {
     L4LNebulaComponentController.logDebug(
       sessions[0],
       'Apex:computeSessionStats() correctMap=' +
-        correctMap +
-        ' nonResponsiveMap=' +
-        nonResponsiveMap +
-        ' incorrectMap=' +
-        incorrectMap +
-        ' promptedMap=' +
-        promptedMap,
+      correctMap +
+      ' nonResponsiveMap=' +
+      nonResponsiveMap +
+      ' incorrectMap=' +
+      incorrectMap +
+      ' promptedMap=' +
+      promptedMap,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -255,12 +253,11 @@ public with sharing class LFLInvocableSessionStatistics {
 
           L4LNebulaComponentController.logDebug(
             sessionStat.id,
-            'Apex:computeSessionStats() inserted session_statistics__c',            sessionStat,
+            'Apex:computeSessionStats() inserted session_statistics__c' +
+            sessionStat,
             SCENARIO,
             'next-gen-nebula-apex'
           );
-
-    
         }
       }
     }
