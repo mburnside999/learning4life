@@ -62,7 +62,7 @@ public with sharing class L4LSessionStatsController {
   public static List<session_statistics__c> getD3SessionStatsHistogramData(
     String clientId
   ) {
-    String SCENARIO = 'Session Statistics - get session stats for a session client - Apex';
+    String SCENARIO = 'Session Statistics - get session stats for a client - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(

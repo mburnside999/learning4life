@@ -4,7 +4,7 @@ import getSessionStats from "@salesforce/apex/L4LSessionStatsController.getSessi
 
 const COMPONENT = "l4lPopulateSessionStatsDataTable";
 const TAG = "L4L-Session-Statistics";
-const SCENARIO = "View and filter session statistics";
+const SCENARIO = "View and filter session statistics - LWC";
 
 import { logInfo } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";

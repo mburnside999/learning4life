@@ -74,11 +74,11 @@ jobs:
 
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
-        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" -u LFLHyper -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionRateCalculation,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClientObjective,TestLFLTimeSeriesBatch,TestLFLTimeSeriesBatchScheduler,TestLFLDTDRates,TestLFLDTDRateMaster,TestLFLInvocableListUnusedObj,TestL4LStagesByArea
+        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" --target-org LFLHyper -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionRateCalculation,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClientObjective,TestLFLTimeSeriesBatch,TestLFLTimeSeriesBatchScheduler,TestLFLDTDRates,TestLFLDTDRateMaster,TestLFLInvocableListUnusedObj,TestL4LStagesByArea
 
       # Run Deploy LWC
       - name: "Deploy LWC"
-        run: sfdx force:source:deploy -m "LightningComponentBundle" -u LFLHyper
+        run: sfdx force:source:deploy -m "LightningComponentBundle" --target-org LFLHyper
 
       # Run Apex tests
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
