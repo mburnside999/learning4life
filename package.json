@@ -28,7 +28,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^25.7.0",
     "husky": "^7.0.0",
-    "lint-staged": "^11.0.0",
+    "lint-staged": "^13.2.1",
     "prettier": "2.8.7",
     "prettier-plugin-apex": "1.8.0"
   },
