@@ -12,7 +12,7 @@ public with sharing class L4LSessionStatsController {
    * @name getHighAndLowBoundaries
    * @description Queries lfl_stats_boundary instance of LFL_Stats_Boundary__mdt metadata to obtain the High/Low parameters to 
    control Red/Yellow UI traffic light colours
-   * Used in d3HeatMap
+   * Used in LWC d3HeatMap
    *
    * @param 
    * @return Custom metadata record, lfl_stats_boundary
@@ -94,7 +94,7 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getSessionStats
    * @description Return a list of session stats
-   *
+   * Used in l4lSessionStatsDatatable
    * @param searchKey The session ID
    *
    * @return A list of Session_Statistics__c
@@ -106,7 +106,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getSessionStats(String searchKey) {
-    String SCENARIO = 'Session Statistics - search for session stats for a session - Apex';
+    String SCENARIO = 'Session Statistics - Custom Datatable l4lSessionStatsDatatable - Apex';
 
     L4LNebulaComponentController.setupCache();
 
@@ -154,7 +154,7 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getD3Stats
    * @description Uses SOQL to return a session statistics for a client.
-   *
+   * @deprecated
    * @param clientId The client
    * @param showAcquired A Boolean, should we restrict to previous_status of ACQ
    * @return a list of session statistics
@@ -167,8 +167,7 @@ public with sharing class L4LSessionStatsController {
     String clientId,
     Boolean showAcquired
   ) {
-    String SCENARIO = 'Session Statistics - return session stats (optionally only ACQ) for a client - Apex';
-
+    String SCENARIO = 'Session Statistics - DEPRECATED  Apex';
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
@@ -231,7 +230,7 @@ public with sharing class L4LSessionStatsController {
     String programStr,
     Boolean showAcquired
   ) {
-    String SCENARIO = 'Session Statistics - filter session statistics on program name, and optionally ACQ - Apex';
+    String SCENARIO = 'Session Statistics - DEPRECATED - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -294,7 +293,7 @@ public with sharing class L4LSessionStatsController {
   public static List<AggregateResult> getClientObjectivesByProgram(
     String clientId
   ) {
-    String SCENARIO = 'Session Statistics - return a count of Client_Objectives__c for a client GROUPed BY the program name - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - Combined Client Objectives Timeseries - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -329,7 +328,7 @@ public with sharing class L4LSessionStatsController {
    * @name getD3YAxisScale
    * @description A helper for D3 charting to establish the scale required for the Y Axis.
    * Uses SOQL to count the # of ACTIVE client_objectives, and # of client_objective_timeseries records for a client
-   * TODO check LWC usage, perhaps deprecated
+   * @deprecated LWC d3COTSRetestChart
    *
    * @param clientId The Client ID
    *
@@ -340,7 +339,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3YAxisScale(String clientId) {
-    String SCENARIO = 'D3 Session Statistics Chart - determine YAxis scale - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - DEPRECATED - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -554,7 +553,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3StatusYAxisScale(String clientId) {
-    String SCENARIO = 'DEPRECATED D3 Session Statistics Chart - determine YAxis scale  - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - DEPRECATED determine YAxis scale  - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
