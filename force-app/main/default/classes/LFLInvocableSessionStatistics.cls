@@ -28,7 +28,7 @@ public with sharing class LFLInvocableSessionStatistics {
     String SCENARIO = 'computeSessionStats() - invocable called from Flow - Apex';
 
     Logger.setScenario(SCENARIO);
-    Logger.debug('Apex:computeSessionStats() - invocable called from Flow')
+    Logger.info('Apex:computeSessionStats() - invocable called from Flow')
       .setRecordId(sessions[0])
       .addTag('LFLInvocableSessionStatistics.computeSessionStats()')
       .addTag('logit()');
