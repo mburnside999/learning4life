@@ -416,7 +416,7 @@ public with sharing class L4LController {
 
   @AuraEnabled(cacheable=false)
   public static String getCOActivationSummary(String clientId) {
-    String SCENARIO = 'D3 Charting - create a JSON activation summary - Apex';
+    String SCENARIO = 'Manage Client Objectives - JSON active/inactive summary - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
