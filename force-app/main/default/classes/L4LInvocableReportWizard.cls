@@ -30,13 +30,12 @@ global with sharing class L4LInvocableReportWizard {
 
     String SCENARIO = 'Report Wizard - get aggregated client objectives between dates - Apex';
 
-    L4LNebulaComponentController.setupCache();
-    L4LNebulaComponentController.logInfo(
-      null,
-      'L4LInvocableReportWizard.getStatusCountsBetweenDates()',
-      SCENARIO,
-      'next-gen-nebula-apex'
-    );
+    Logger.setScenario(SCENARIO);
+    Logger.info(
+        'L4LInvocableReportWizard.getStatusCountsBetweenDates - invocable called from Flow'
+      )
+      .addTag('LFLInvocableSessionStatistics.computeSessionStats()')
+      .addTag('logit()');
 
     List<String> result = new List<String>();
 

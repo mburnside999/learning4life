@@ -26,13 +26,10 @@ public class L4LInvocableListUnusedObj {
 
     String SCENARIO = 'L4LInvocableListUnusedObj - Apex';
 
-    L4LNebulaComponentController.setupCache();
-    L4LNebulaComponentController.logInfo(
-      null,
-      'L4LInvocableListUnusedObj.RemoveRecords()',
-      SCENARIO,
-      'next-gen-nebula-apex'
-    );
+    Logger.setScenario(SCENARIO);
+    Logger.info('RemoveRecords')
+      .addTag('L4LInvocableListUnusedObj')
+      .addTag('logit()');
 
     List<Objective__c> passedInObjs = inputVariables.get(0).getSDObj;
     List<Client_Objective__c> passedInClientObjs = inputVariables.get(0)

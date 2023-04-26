@@ -13,17 +13,27 @@ public with sharing class L4LStagesByArea {
   /*******************************************************************************************************
    * @name getSDUsage
    * @description Provide data for Stages2 LWC
-   *
+   * Used by LWC StagesV2
    *
    * @param clientID the Client ID
    * @return JSON string
    *
    * @example
-   * Integer recs = L4LTimeSeries.loadCOTimeSeries();
+   * String str = L4LStagesByArea.getSDUsage(clientId);
    */
 
   @AuraEnabled(cacheable=false)
   public static String getSDUsage(String clientId) {
+    String SCENARIO = 'StagesV2 - SD Usage -  Apex';
+
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      clientId,
+      'L4LStagesByArea.getSDUsage',
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
     // Query for a list of Client_Objective__c and SD__c objects
     List<Client_Objective__c> clientObjectives = [
       SELECT Id, SD_Name__c, Name, SDId__c, Status__c
