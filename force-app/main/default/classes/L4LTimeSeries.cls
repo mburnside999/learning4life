@@ -108,7 +108,7 @@ public class L4LTimeSeries {
   /*******************************************************************************************************
    * @name generateD3COTimeSeriesJson
    * @description Generate a JSON string for use by D3
-   * @deprecated
+   * @deprecated No longer used
    *
    * @param clientId
    * @param status All (actually ACQ & CIP) | status__c
@@ -196,6 +196,8 @@ public class L4LTimeSeries {
   /*******************************************************************************************************
    * @name generateD3COTSJsonByProgramAndSD
    * @description Generate a JSON string for use by D3
+   * Used by LWC d3HorizontalLollipopChart - the combined Clijent Objective line chart
+   * @TODO rename LWC
    *
    *
    * @param clientId the client Id
@@ -219,7 +221,7 @@ public class L4LTimeSeries {
     String status,
     String periodStr
   ) {
-    String SCENARIO = 'CO TimeSeries - generate a JSON string for D3 - Apex';
+    String SCENARIO = 'D3 TimeSeries Chart - Combined Client Objectives - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -308,6 +310,8 @@ public class L4LTimeSeries {
   /*******************************************************************************************************
    * @name generateD3COTimeSeriesByStatusJson
    * @description Generate a JSON string for use by D3
+   * Used by LWC d3MiniBars to plot Client Objectives TS as separate status charts
+
    *
    *
    * @param clientId the client Id
@@ -324,7 +328,7 @@ public class L4LTimeSeries {
 
   @AuraEnabled(cacheable=true)
   public static String generateD3COTimeSeriesByStatusJson(String clientId) {
-    String SCENARIO = 'CO TimeSeries - generate a JSON string for D3 - Apex';
+    String SCENARIO = 'D3 TimeSeries Chart - MiniBars - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -386,7 +390,7 @@ public class L4LTimeSeries {
 
   /*******************************************************************************************************
    * @name generateD3CORetestTimeSeriesJson
-   * @description Generate a JSON string for use by D3
+   * @description Generate a JSON string for use by D3 chart in d3COTSRetestChart
    *
    *
    * @param clientId the client Id
@@ -408,7 +412,7 @@ public class L4LTimeSeries {
     String clientId,
     String status
   ) {
-    String SCENARIO = 'CO TimeSeries - generate a JSON string for D3 - Apex';
+    String SCENARIO = 'D3 TimeSeries Chart - Restest Summary - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -478,7 +482,7 @@ public class L4LTimeSeries {
   /*******************************************************************************************************
    * @name generateD3COTSThresholdJson
    * @description Generate a JSON string for use by D3
-   *
+   * Used by LWC l4lACQThresholdSummary
    *
    * @param clientId the client Id
    * @param threshold1 Integer hours of therapy -the first threshold
@@ -509,7 +513,7 @@ public class L4LTimeSeries {
     Integer threshold1,
     Integer threshold2
   ) {
-    String SCENARIO = 'CO TimeSeries - Threshold - generate a JSON string for D3 - Apex';
+    String SCENARIO = 'D3 TimeSeries Chart - Threshold and Filters - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(

@@ -12,6 +12,7 @@ public with sharing class L4LSessionStatsController {
    * @name getHighAndLowBoundaries
    * @description Queries lfl_stats_boundary instance of LFL_Stats_Boundary__mdt metadata to obtain the High/Low parameters to 
    control Red/Yellow UI traffic light colours
+   * Used in d3HeatMap
    *
    * @param 
    * @return Custom metadata record, lfl_stats_boundary
@@ -22,7 +23,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static LFL_Stats_Boundary__mdt getHighAndLowBoundaries() {
-    String SCENARIO = 'Session Statistics - get configured traffic light boundaries from mdt - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - d3HeatMap - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -50,6 +51,7 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getD3SessionStatsHistogramData
    * @description Returns the session statistics for a client
+   * Used by LWC d3Histogram
    *
    * @param clientId The client ID
    * @return A list of session statistics, List<session_statistics__c>
@@ -62,7 +64,7 @@ public with sharing class L4LSessionStatsController {
   public static List<session_statistics__c> getD3SessionStatsHistogramData(
     String clientId
   ) {
-    String SCENARIO = 'Session Statistics - get session stats for a client - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - Histogram - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -327,6 +329,7 @@ public with sharing class L4LSessionStatsController {
    * @name getD3YAxisScale
    * @description A helper for D3 charting to establish the scale required for the Y Axis.
    * Uses SOQL to count the # of ACTIVE client_objectives, and # of client_objective_timeseries records for a client
+   * TODO check LWC usage, perhaps deprecated
    *
    * @param clientId The Client ID
    *
@@ -337,7 +340,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3YAxisScale(String clientId) {
-    String SCENARIO = 'Session Statistics - determine YAxis scale for D3 - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - determine YAxis scale - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -431,6 +434,7 @@ public with sharing class L4LSessionStatsController {
    * @name getD3RetestYAxisScale
    * @description A helper for D3 charting to establish the scale required for the Retest Y Axis.
    * Uses SOQL to count the # of ACTIVE and Re_Test_Recommended client_objectives and client_objective_timeseries records for a client
+   * Used by LWC d3COTSRetestChart
    *
    * @param clientId The Client ID
    *
@@ -441,7 +445,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3RetestYAxisScale(String clientId) {
-    String SCENARIO = 'Session Statistics - determine Re-Test YAxis scale for D3 - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart  - determine Re-Test YAxis - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -541,7 +545,7 @@ public with sharing class L4LSessionStatsController {
    * @name getD3StatusYAxisScale
    * @description A helper for D3 charting to establish the scale for the Y Axis.
    * Uses SOQL to return the maximum count for any status for all runs of client_objective_timeseries records for a client
-   *
+   * @deprecated
    * @param clientId The client ID
    *
    * @return an Integer - maximum status count for any run for the client
@@ -550,7 +554,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3StatusYAxisScale(String clientId) {
-    String SCENARIO = 'Session Statistics - determine YAxis scale for D3 - Apex';
+    String SCENARIO = 'DEPRECATED D3 Session Statistics Chart - determine YAxis scale  - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -613,7 +617,7 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getD3StatsByProgramAndSD
    * @description Use SOQL to create a list of session_statistics__c for a client according to filter parameters
-   *
+   * Used by LWC d3HeatMap in support of D3 charting
    * @param clientId The client Id
    * @param programStr "All" | program_name__c
    * @param sdStr "All"  sd_name__c
@@ -634,7 +638,7 @@ public with sharing class L4LSessionStatsController {
     String periodStr,
     String stageStr
   ) {
-    String SCENARIO = 'Session Statistics - filter for a client on multiple criteria - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - HeatMap - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -713,7 +717,7 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getProgramsAndSds
    * @description Use SOQL to create a list of Programs filtered by Stage
-   *
+   * Used by LWC d3Nest
    * @param stageStr
    *
    * @return a list of session_Statistics__c
@@ -721,7 +725,7 @@ public with sharing class L4LSessionStatsController {
    */
   @AuraEnabled(Cacheable=true)
   public static List<Program__c> getProgramsAndSds(String stageStr) {
-    String SCENARIO = 'Session Statistics - filter Programs by Stage - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - d3Nest - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -767,7 +771,8 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getClientObjectivesSDCount
    * @description Returns as a List<AggregateResult> the count of client_objectives__c for a client, grouped by program, sd
-   * @param clientId The client ID
+   * Used by LWC d3Nest
+   *  @param clientId The client ID
    *
    * @return An AggregateResult list
    * @example
@@ -777,7 +782,7 @@ public with sharing class L4LSessionStatsController {
   public static List<AggregateResult> getClientObjectivesSDCount(
     String clientId
   ) {
-    String SCENARIO = 'Session Statistics - return a count of COs grouped by program,sdname - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - d3Nest - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -803,6 +808,8 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name generateD3ProgramAreaSDJson
    * @description Generates a JSON string  for use by D3 charting
+   * Used by LWC d3NestExperiment
+   * @TODO deprecated?
    * @param clientId The client Id
    * @param stageSt "All" | sd__c.stage__c
    *
@@ -816,7 +823,7 @@ public with sharing class L4LSessionStatsController {
     String clientId,
     String stageStr
   ) {
-    String SCENARIO = 'Session Statistics - return a JSON string for D3 - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - d3NestExperiment - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -1032,7 +1039,8 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name generateD3AreaSDJson
    * @description Generates a JSON string  for use by D3 charting.
-   * Sorts lisdt of SDs by Name using a custom sorter comparison method in LFLSDWrapper
+   * Used by LWC d3NestExperiment
+   * Sorts list of SDs by Name using a custom sorter comparison method in LFLSDWrapper
    *
    * @param clientId The client Id
    * @param stageStr "All" | sd__c.stage__c
@@ -1046,7 +1054,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static String generateD3AreaSDJson(String clientId, String stageStr) {
-    String SCENARIO = 'Session Statistics - return a JSON string for D3 - Apex';
+    String SCENARIO = 'D3 Session Statistics - d3NestExperiment - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -1194,8 +1202,8 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getProgramSetFromCO
    * @description Generates a set (well actually a Set coerced into a List because LWC can't accept Sets) of Programs currently used in this client's client objectives.
-  Used in pull down filters on D3 charts
-   *
+   * Used in pull down filters on D3 charts
+   *Used in LWC d3HorizontalLollipopChart
    * @param clientId The client Id
    *
    * @return A set of Program names as List<String>
