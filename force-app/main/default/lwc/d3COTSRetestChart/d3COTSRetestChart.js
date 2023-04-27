@@ -163,7 +163,7 @@ export default class D3COTSRetestChart extends LightningElement {
     );
     console.log("cleaning  up  svg");
     let svg = d3.select(
-      this.template.querySelector(".horizontal-lollipop-chart")
+      this.template.querySelector(".horizontal-retest-chart")
     );
     svg.selectAll("*").remove();
 
@@ -173,7 +173,7 @@ export default class D3COTSRetestChart extends LightningElement {
     );
 
     svg = d3
-      .select(this.template.querySelector(".horizontal-lollipop-chart"))
+      .select(this.template.querySelector(".horizontal-retest-chart"))
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")

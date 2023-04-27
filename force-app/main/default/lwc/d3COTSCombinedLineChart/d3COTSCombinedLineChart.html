@@ -1,0 +1,173 @@
+<!-- D 3 Horizontal Line Chart -->
+<template>
+  <lightning-card>
+    <div class="c-container">
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="status"
+              label="ACQ / CIP"
+              value={statusval}
+              options={statusoptions}
+              onchange={handleStatusChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="progress"
+              label="Programs"
+              value={programval}
+              placeholder="Select Program"
+              options={programoptions}
+              onchange={handleProgramChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="sd"
+              label="SD"
+              value={sdval}
+              placeholder="Select SD"
+              options={sdoptions}
+              onchange={handleSDChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="period"
+              label="Period"
+              value={periodval}
+              placeholder="Select Period"
+              options={periodoptions}
+              onchange={handlePeriodChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="All"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="ACQ"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item> -->
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="OBJ"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item> -->
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="1CP"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item> -->
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="1IP"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item> -->
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="CIP"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item> -->
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="HLD"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item> -->
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="DNC"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button>
+          </div>
+        </lightning-layout-item> -->
+        <!-- <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-button
+              label="Null"
+              onclick={handleClick}
+              class="slds-var-m-left_x-small"
+            ></lightning-button> -->
+        <!-- </div> -->
+        <!-- </lightning-layout-item> -->
+      </lightning-layout>
+    </div>
+  </lightning-card>
+  <lightning-card>
+    <div class="c-container">
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <svg class="horizontal-ts-chart" lwc:dom="manual"></svg>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
+</template>

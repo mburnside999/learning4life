@@ -196,8 +196,7 @@ public class L4LTimeSeries {
   /*******************************************************************************************************
    * @name generateD3COTSJsonByProgramAndSD
    * @description Generate a JSON string for use by D3
-   * Used by LWC d3HorizontalLollipopChart - the combined Clijent Objective line chart
-   * @TODO rename LWC
+   * Used by LWC d3COTSCombinedLineChart- the combined Client Objective line chart
    *
    *
    * @param clientId the client Id

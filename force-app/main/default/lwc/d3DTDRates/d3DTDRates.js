@@ -199,13 +199,11 @@ export default class D3DTDRates extends LightningElement {
       `${TAG}`
     );
     console.log("cleaning  up  svg");
-    let svg = d3.select(
-      this.template.querySelector(".horizontal-lollipop-chart")
-    );
+    let svg = d3.select(this.template.querySelector(".horizontal-rates-chart"));
     svg.selectAll("*").remove();
 
     svg = d3
-      .select(this.template.querySelector(".horizontal-lollipop-chart"))
+      .select(this.template.querySelector(".horizontal-rates-chart"))
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")

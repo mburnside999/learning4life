@@ -75,7 +75,7 @@ export default class D3MiniBars extends LightningElement {
         });
       })
       .then((response) => {
-        console.log("calling lollipop, response=" + JSON.stringify(response));
+        console.log("response=" + JSON.stringify(response));
 
         logDebug(
           this.recordId,

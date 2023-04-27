@@ -1,6 +1,13 @@
 import { LightningElement, api, track } from "lwc";
 import getSDUsage from "@salesforce/apex/L4LStagesByArea.getSDUsage";
 
+import { logInfo, logError } from "c/l4lNebulaUtil";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+
+const COMPONENT = "stagesV2";
+const TAG = "L4L-Manage-Client-Objectives";
+const SCENARIO = "Manage Client Objectives Board - LWC";
+
 export default class L4LStagesByArea extends LightningElement {
   // Obtain the Id of the current record from the page
   @api recordId;
@@ -203,6 +210,25 @@ export default class L4LStagesByArea extends LightningElement {
   }
 
   connectedCallback() {
-    this.getUsage();
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Successfully executed Nebula setNewSession()");
+        logInfo(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): all good, calling getUsage()`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+        this.getUsage();
+      })
+      .catch((error) => {
+        console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): error: ${error}`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+      });
   }
 }

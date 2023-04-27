@@ -9,14 +9,14 @@ import getSDSetFromCO from "@salesforce/apex/L4LSessionStatsController.getSDSetF
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logError } from "c/l4lNebulaUtil";
 
-const COMPONENT = "D3HorizontalLollipopChart";
-const TAG = "L4L-Session-Statistics-D3HorizontalLollipopChart";
-const SCENARIO = "DEPRECATED D3 Plot Client Objectives - LWC";
+const COMPONENT = "d3COTSCombinedLineChart";
+const TAG = "L4L-Session-Statistics-d3COTSCombinedLineChart";
+const SCENARIO = "D3 Plot Combine COTS - LWC";
 
 /**
- * DEPRECATED - replaced by d3COTSCombinedLineChart
+ * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
  */
-export default class D3HorizontalLollipopChart extends LightningElement {
+export default class D3COTSCombinedLineChart extends LightningElement {
   @api recordId;
   d3Initialized = false;
   @track result = [];
@@ -236,9 +236,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
       `${TAG}`
     );
     console.log("cleaning  up  svg");
-    let svg = d3.select(
-      this.template.querySelector(".horizontal-lollipop-chart")
-    );
+    let svg = d3.select(this.template.querySelector(".horizontal-ts-chart"));
     svg.selectAll("*").remove();
 
     // append the svg object to the body of the page
@@ -247,7 +245,7 @@ export default class D3HorizontalLollipopChart extends LightningElement {
     // );
 
     svg = d3
-      .select(this.template.querySelector(".horizontal-lollipop-chart"))
+      .select(this.template.querySelector(".horizontal-ts-chart"))
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
