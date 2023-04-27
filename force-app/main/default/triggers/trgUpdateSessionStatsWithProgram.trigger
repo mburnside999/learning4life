@@ -11,7 +11,7 @@
 trigger trgUpdateSessionStatsWithProgram on session_statistics__c(
   before insert
 ) {
-  String SCENARIO = 'Trigger trgUpdateSessionStatsWithProgram - Apex';
+  String SCENARIO = 'Session Stats Trigger - before inserting attach Program Name - Apex';
 
   L4LNebulaComponentController.setupCache();
   L4LNebulaComponentController.logInfo(
