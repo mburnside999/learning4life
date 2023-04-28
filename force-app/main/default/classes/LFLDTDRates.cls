@@ -54,6 +54,7 @@ public with sharing class LFLDTDRates {
    * @name getAcquisitionRateByDates
    * @description Sets up a retrospecitve set of weekly periods, relative to today(), iterates calls to the LFLDTDRates class and returns a
    * combined JSON string
+   * Used by LWC lflDTDAcquisitionRate
    *
    *
    * @param clientId the clientId
@@ -71,6 +72,16 @@ public with sharing class LFLDTDRates {
     DateTime dt1,
     DateTime dt2
   ) {
+    String SCENARIO = 'COTS TimeSeries - Summary - Apex';
+
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      clientId,
+      'LFLDTDRates.getAcquisitionRateByDates()',
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
     //get date and runid limits
 
     String jsonStr;

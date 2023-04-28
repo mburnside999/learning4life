@@ -19,7 +19,6 @@ public class LFLProgramStatusCascadeUtil {
    */
 
   public static void updateSDStatusByMap(Map<id, string> statusMap) {
-   
     String SCENARIO = 'Manage Hierarchy - Update SD status - Apex';
 
     L4LNebulaComponentController.setupCache();
@@ -31,11 +30,11 @@ public class LFLProgramStatusCascadeUtil {
     );
     L4LNebulaComponentController.logDebug(
       null,
-      'updateSDStatusByMap() statusMap='+statusMap,
+      'updateSDStatusByMap() statusMap=' + statusMap,
       SCENARIO,
       'next-gen-nebula-apex'
     );
-    
+
     List<sd__c> sdlist = new List<sd__c>();
     List<sd__c> sdupdatelist = new List<sd__c>();
 
@@ -47,7 +46,7 @@ public class LFLProgramStatusCascadeUtil {
 
     L4LNebulaComponentController.logDebug(
       null,
-      'updateSDStatusByMap() sdList='+sdList,
+      'updateSDStatusByMap() sdList=' + sdList,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -70,7 +69,6 @@ public class LFLProgramStatusCascadeUtil {
    */
 
   public static void updateObjectiveStatusByMap(Map<id, string> statusMap) {
-   
     String SCENARIO = 'Manage Hierarchy - Update Objective status - Apex';
 
     L4LNebulaComponentController.setupCache();
@@ -80,15 +78,13 @@ public class LFLProgramStatusCascadeUtil {
       SCENARIO,
       'next-gen-nebula-apex'
     );
-   
+
     L4LNebulaComponentController.logDebug(
       null,
-      'updateObjectiveStatusByMap() statusMap='+statusMap,
+      'updateObjectiveStatusByMap() statusMap=' + statusMap,
       SCENARIO,
       'next-gen-nebula-apex'
     );
-
-  
 
     List<objective__c> olist = new List<objective__c>();
     List<objective__c> oupdatelist = new List<objective__c>();
@@ -98,14 +94,13 @@ public class LFLProgramStatusCascadeUtil {
       FROM objective__C
       WHERE sd__c IN :statusMap.keySet()
     ];
-   
+
     L4LNebulaComponentController.logDebug(
       null,
-      'updateSDStatusByMap() olist='+olist,
+      'updateSDStatusByMap() olist=' + olist,
       SCENARIO,
       'next-gen-nebula-apex'
     );
-
 
     for (objective__c o : olist) {
       String status = statusMap.get(o.sd__c);

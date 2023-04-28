@@ -1,10 +1,13 @@
 import { LightningElement, wire, api } from "lwc";
-//import { logInfo } from "c/l4lNebulaUtil";
-//import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+import { logInfo } from "c/l4lNebulaUtil";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
 import getAcquisitionRateByDates from "@salesforce/apex/LFLDTDRates.getAcquisitionRateByDates";
 
-//const COMPONENT = "l4lDTDAcquistionRate";
+const TAG = "L4L-TimeSeries-Summary-Panel";
+const SCENARIO = "View the COTS Summary Panel - LWC";
+const COMPONENT = "l4lDTDAcquistionRate";
+
 //const TAG = "L4L-Rates";
 const sd = new Date("2022-03-25"); //just an arbritary early date, i.e. long before TimeSeries
 const ed = new Date();
@@ -43,8 +46,27 @@ export default class LflDTDAcquisitionRate extends LightningElement {
   }
 
   connectedCallback() {
-    console.log("=========" + this.sd);
-    console.log("=========" + this.ed);
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logInfo(
+          this.recordId,
+          `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+      })
+      .catch((error) => {
+        console.log("Error");
+        logError(
+          this.recordId,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+      });
 
     // setNewSession().then((returnVal) => {
     //   console.log("Success");

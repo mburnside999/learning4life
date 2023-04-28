@@ -8,7 +8,7 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3DTDRates";
-const TAG = "L4L-Session-Statistics-D3DTDRatesChart";
+const TAG = "L4L-TimeSeries-D3DTDRatesChart";
 const SCENARIO = "View the D3 DTD Acquisition Rate chart - LWC";
 
 export default class D3DTDRates extends LightningElement {
