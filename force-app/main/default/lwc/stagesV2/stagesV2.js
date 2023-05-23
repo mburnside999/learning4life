@@ -7,6 +7,7 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 const COMPONENT = "stagesV2";
 const TAG = "L4L-Manage-Client-Objectives";
 const SCENARIO = "Stages - Client Objectives Board - LWC";
+const UI_EVENT_TRACKING_SCENARIO = "stagesV2 LWC UI Event Tracking";
 
 export default class L4LStagesByArea extends LightningElement {
   // Obtain the Id of the current record from the page
@@ -51,6 +52,13 @@ export default class L4LStagesByArea extends LightningElement {
   }
   openCABModal(event) {
     // to open modal set isModalOpen track value as true
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: open CABModal`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     this.currentRecord = event.target.getAttribute("data-id");
     this.CABModalOpen = true;
   }
@@ -60,6 +68,12 @@ export default class L4LStagesByArea extends LightningElement {
   }
   closeCABModal() {
     // to close modal set isModalOpen track value as false
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: close CABModal`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
     this.CABModalOpen = false;
   }
   submitDetails() {
@@ -192,6 +206,13 @@ export default class L4LStagesByArea extends LightningElement {
 
   // Declare a change handler for the filter input then return the filtered results as fsdRecords
   handleFilterChange(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Stage filter change`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     // Update the filter value
     this.stageFilter = event.target.value;
     // Convert the Object gfsdRecords into the Array agfsdRecords
@@ -219,6 +240,12 @@ export default class L4LStagesByArea extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
         this.getUsage();
       })
       .catch((error) => {

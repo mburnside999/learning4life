@@ -12,7 +12,8 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "D3HeatMap";
 const TAG = "L4L-Session-Statistics-D3HeatMap";
 const SCENARIO = "View Program Mastery D3HeatMap - LWC";
-
+const UI_EVENT_TRACKING_SCENARIO = "d3HeatMap LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO = "d3HeatMap LWC APEX Event Tracking";
 export default class D3HeatMap extends LightningElement {
   low = 50;
   high = 90; //actual values come from custom metadata
@@ -107,6 +108,18 @@ export default class D3HeatMap extends LightningElement {
         console.log("Success");
         logInfo(
           this.recordId,
+          `${COMPONENT}.connectedCallback()`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: @wire L4LSessionStatsController.getHighAndLowBoundaries`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+        logInfo(
+          this.recordId,
           `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
           `${SCENARIO}`,
           `${TAG}`
@@ -132,6 +145,13 @@ export default class D3HeatMap extends LightningElement {
       return;
     }
     this.d3Initialized = true;
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LSessionStatsController.getD3StatsByProgramAndSD`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     //load D3
     Promise.all([loadScript(this, D3 + "/d3.v5.min.js")])
@@ -457,6 +477,13 @@ export default class D3HeatMap extends LightningElement {
 
   //the Program change handler
   handleChange(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Program Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     const selectedOption = event.detail.value;
     //record this program as selected
     this.options = this.options.map((row) => {
@@ -465,9 +492,17 @@ export default class D3HeatMap extends LightningElement {
     this.composeOptions();
   }
 
-  //the Program change handler
+  //the SD change handler
   handleSDChange(event) {
     console.log("in handleSDChange " + event.detail.value);
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: SD Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     const selectedOption = event.detail.value;
     this.sdoptions = this.sdoptions.map((row) => {
       return { ...row, isChecked: row.label === selectedOption };
@@ -479,6 +514,14 @@ export default class D3HeatMap extends LightningElement {
 
   handleStageChange(event) {
     console.log("in handleSDChange " + event.detail.value);
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Stage Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     const selectedOption = event.detail.value;
     this.stageoptions = this.stageoptions.map((row) => {
       return { ...row, isChecked: row.label === selectedOption };
@@ -492,6 +535,13 @@ export default class D3HeatMap extends LightningElement {
   handleStatusChange(event) {
     console.log("in handleStatusChange " + event.detail.value);
 
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Status Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     const selectedOption = event.detail.value;
     this.statusoptions = this.statusoptions.map((row) => {
       return { ...row, isChecked: row.value === selectedOption };
@@ -503,6 +553,13 @@ export default class D3HeatMap extends LightningElement {
   //the Program change handler
   handlePeriodChange(event) {
     console.log("in handlePeriodChange " + event.detail.value);
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Period Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     const selectedOption = event.detail.value;
     this.periodoptions = this.periodoptions.map((row) => {
@@ -572,6 +629,13 @@ export default class D3HeatMap extends LightningElement {
       `${SCENARIO}`,
       `${TAG}`
     );
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LSessionStatsController.getD3StatsByProgramAndSD`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     getD3StatsByProgramAndSD({
       clientId: this.recordId,

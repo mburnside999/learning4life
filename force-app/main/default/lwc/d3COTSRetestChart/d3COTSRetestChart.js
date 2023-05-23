@@ -10,6 +10,9 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "D3COTSRetestChart";
 const TAG = "L4L-Session-Statistics-D3COTSRetestChart";
 const SCENARIO = "Viewing the D3 Re-Test line chart - LWC";
+const UI_EVENT_TRACKING_SCENARIO = "d3COTSRetestChart LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO =
+  "d3COTSRetestChart LWC APEX Event Tracking";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
@@ -36,6 +39,19 @@ export default class D3COTSRetestChart extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: @wire L4LSessionStatsController.getD3RetestYAxisScale`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         logInfo(
           this.recordId,
           `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
@@ -72,6 +88,13 @@ export default class D3COTSRetestChart extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: L4LTimeSeries.generateD3CORetestTimeSeriesJson`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         return generateD3CORetestTimeSeriesJson({
           clientId: this.recordId,
           status: "All"
@@ -85,7 +108,7 @@ export default class D3COTSRetestChart extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
-
+        console.log("======> calling renderLineChart()");
         this.renderLineChart(response);
       })
       .catch((error) => {
@@ -109,6 +132,8 @@ export default class D3COTSRetestChart extends LightningElement {
   renderLineChart(response) {
     // let data = JSON.parse(
     //   '[{"rundate":"2022-11-26","val":60},{"rundate":"2022-12-19","val":64}]'
+
+    console.log("renderLineChart received " + JSON.stringify(response));
 
     logDebug(
       this.recordId,
@@ -311,7 +336,12 @@ export default class D3COTSRetestChart extends LightningElement {
       `${SCENARIO}`,
       `${TAG}`
     );
-
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LTimeSeries.generateD3CORetestTimeSeriesJson`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
     generateD3CORetestTimeSeriesJson({
       clientId: this.recordId,
       status: this.mode

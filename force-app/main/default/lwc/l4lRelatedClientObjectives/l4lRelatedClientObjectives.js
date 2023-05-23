@@ -36,6 +36,11 @@ import LightningConfirm from "lightning/confirm";
 const COMPONENT = "l4lRelatedClientObjectives";
 const TAG = "L4L-Manage-Client-Objectives";
 const SCENARIO = "View and Manage client Objectives - LWC";
+const UI_EVENT_TRACKING_SCENARIO =
+  "l4lRelatedClientObjectives LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO =
+  "l4lRelatedClientObjectives LWC APEX Event Tracking";
+
 const COLOR = "color:red";
 
 const actions = [
@@ -177,6 +182,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback()`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         this.refresh();
       })
       .catch((error) => {
@@ -375,7 +388,7 @@ export default class L4lRelatedClientObjectives extends LightningElement {
 
   /*******************************************************************************************************
    * @name handleRowAction
-   * @description Determines the action required.c/clientObjBoard
+   * @description Determines the action required.
    * Uses the uiRecordApi.deleteRecord service for deletes.
    * Uses call to Apex deactivateClientObjective for de-activate.
    * When edit requested sets this.isModalEditFormVisible flag to true to show the modal edit form
@@ -388,6 +401,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
    */
 
   handleRowAction(actionName, row) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: RowAction: ${actionName}`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleRowAction(): row=${JSON.stringify(
@@ -405,6 +425,14 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: L4LController.deactivateClientObjective`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         deactivateClientObjective({ clientObjectiveId: row.Id })
           .then(() => {
             this.dispatchEvent(
@@ -443,6 +471,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: lightning/uiRecordApi/deleteRecord`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         deleteRecord(row.Id)
           .then(() => {
             logDebug(
@@ -554,6 +589,12 @@ export default class L4lRelatedClientObjectives extends LightningElement {
     );
 
     console.info(`%crefresh(): calling getCOActivationSummary`, COLOR);
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.getCOActivationSummary`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     getCOActivationSummary({ clientId: this.recordId })
       .then((result) => {
@@ -593,6 +634,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${SCENARIO}`,
       `${TAG}`
     );
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.getClientObjectivesFilteredOnActive`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     getClientObjectivesFilteredOnActive({
       clientId: this.recordId,
@@ -658,6 +706,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${TAG}`
     );
 
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: lightning/uiRecordApi/updateRecord`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     const recordInputs = event.detail.draftValues.slice().map((draft) => {
       const fields = Object.assign({}, draft);
       return {
@@ -717,6 +772,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
    */
 
   handleClickArray(label) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: DataTable MultiRow Button: ${label}`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     let mode = "";
     switch (label) {
       case "Mark ACQ":
@@ -767,6 +829,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       `${SCENARIO}`,
       `${TAG}`
     );
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.setClientObjectivesByArray`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     setClientObjectivesByArray({
       jsonstr: JSON.stringify(_selectedRows),
@@ -833,6 +902,13 @@ export default class L4lRelatedClientObjectives extends LightningElement {
    */
 
   handleActiveCheckboxChange(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Checkbox: Active/Inactive`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     this.showActiveOnly = !this.showActiveOnly;
     console.log("this.showActiveOnly=" + this.showActiveOnly);
     let inp = this.template.querySelector("input");

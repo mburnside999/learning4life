@@ -18,9 +18,13 @@ import { updateRecord } from "lightning/uiRecordApi";
 import { logDebug, logInfo, logFine, logError } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
-const COMPONENT = "l4lFastEditSessionCOStatus";
+const COMPONENT = "LWC: l4lFastEditSessionCOStatus";
 const TAG = "L4L-Fast-Edit-Client-Objectives";
 const SCENARIO = "Fast editing client objectives - LWC";
+const UI_EVENT_TRACKING_SCENARIO =
+  "l4lFastEditSessionCOStatus LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO =
+  "l4lFastEditSessionCOStatus LWC APEX Event Tracking";
 
 const COLOR = "color:olive"; //for console log formatting
 
@@ -103,6 +107,14 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback()`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         this.refresh();
       })
       .catch((error) => {
@@ -123,6 +135,13 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
    * @return
    */
   async handleSave(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Save`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSave(): draftValues=${JSON.stringify(
@@ -147,6 +166,13 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
       `${COMPONENT}.handleSave(): entering try-block, update values using lightning/uiRecordApi updateRecord`,
       `${TAG}`
     );
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: lightning/uiRecordApi/updateRecord`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     try {
       // Update all records in parallel thanks to the UI API
@@ -215,6 +241,13 @@ export default class L4lFastEditSessionCOStatus extends LightningElement {
       `${COMPONENT}.refresh() calling LFLController.getClientObjectivesForSession()`,
       `${TAG}`
     );
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.getClientObjectivesForSession`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     getClientObjectivesForSession({
       searchKey: this.recordId

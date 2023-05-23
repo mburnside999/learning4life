@@ -5,6 +5,10 @@ import getSessionStats from "@salesforce/apex/L4LSessionStatsController.getSessi
 const COMPONENT = "l4lPopulateSessionStatsDataTable";
 const TAG = "L4L-Session-Statistics";
 const SCENARIO = "View and filter session statistics - LWC";
+const UI_EVENT_TRACKING_SCENARIO =
+  "l4lSessionStatsDatatable LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO =
+  "l4lSessionStatsDatatable LWC APEX Event Tracking";
 
 import { logInfo } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
@@ -86,6 +90,18 @@ export default class L4lSessionStatsDatatable extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: @wire L4LSessionStatsController.getSessionStats`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
       })
       .catch((error) => {
         console.log("Error");

@@ -23,9 +23,12 @@ import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
 const TAG = "L4L-Manage-Session-Objectives";
 const SCENARIO = "Manage Session Objectives for a client - LWC";
-
+const UI_EVENT_TRACKING_SCENARIO =
+  "l4lGetSetSessionObjectives LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO =
+  "l4lGetSetSessionObjectives LWC APEX Event Tracking";
 //debugging
-const COMPONENT = "l4lGetSetSessionObjectives";
+const COMPONENT = "LWC: l4lGetSetSessionObjectives";
 const COLOR = "color:blue"; //for console log formatting
 
 //experimental comment editing
@@ -233,6 +236,21 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback()`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: @wire lightning/uiRecordApi/getRecord`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         this.subscription = subscribe(
           this.messageContext,
           L4LMC,
@@ -363,6 +381,13 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
 
     switch (actionName) {
       case "delete":
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: lightning/uiRecordApi/deleteRecord`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         deleteRecord(row.Id)
           .then(() => {
             this.dispatchEvent(
@@ -398,14 +423,15 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
           });
         break;
       case "detail":
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: RowAction: Add Comment`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         logDebug(
           this.recordId,
-          `${COMPONENT}.handleRowAction() case:detail`,
-          `${SCENARIO}`,
-          `${TAG}`
-        );
-        logDebug(
-          row.Id, // the session objective row that the comment was added to
           `${COMPONENT}.handleRowAction() case:detail`,
           `${SCENARIO}`,
           `${TAG}`
@@ -448,6 +474,12 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
       return { fields };
     });
 
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: lightning/uiRecordApi/updateRecord`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
     const promises = recordInputs.map((recordInput) =>
       updateRecord(recordInput)
     );
@@ -530,6 +562,13 @@ export default class L4lGetSetSessionObjectives extends LightningElement {
   }
 
   handleClickArray(label) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Datatable MultiRow Button:  ${label}`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickArray(): label=${label}`,

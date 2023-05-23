@@ -23,7 +23,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static LFL_Stats_Boundary__mdt getHighAndLowBoundaries() {
-    String SCENARIO = 'D3 Session Statistics Chart - d3HeatMap - Apex';
+    String SCENARIO = 'D3 Session Statistics Chart - get HeatMap Traffic Light values - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(

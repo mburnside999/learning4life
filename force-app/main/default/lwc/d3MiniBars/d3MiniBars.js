@@ -10,7 +10,8 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "D3MiniBars";
 const TAG = "L4L-Session-Statistics-D3MiniBars";
 const SCENARIO = "Viewing D3 Client Objectiive mini line charts - LWC";
-
+const UI_EVENT_TRACKING_SCENARIO = "d3MiniBars LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO = "d3MiniBars LWC APEX Event Tracking";
 export default class D3MiniBars extends LightningElement {
   @api recordId;
   d3Initialized = false;
@@ -33,6 +34,14 @@ export default class D3MiniBars extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         logInfo(
           this.recordId,
           `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
@@ -69,6 +78,13 @@ export default class D3MiniBars extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: L4LTimeSeries.generateD3COTimeSeriesByStatusJson`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
 
         return generateD3COTimeSeriesByStatusJson({
           clientId: this.recordId

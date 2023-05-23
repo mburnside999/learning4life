@@ -7,11 +7,15 @@ import getProgramSetFromCO from "@salesforce/apex/L4LSessionStatsController.getP
 import getSDSetFromCO from "@salesforce/apex/L4LSessionStatsController.getSDSetFromCO";
 
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
-import { logDebug, logError } from "c/l4lNebulaUtil";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "d3COTSCombinedLineChart";
 const TAG = "L4L-Session-Statistics-d3COTSCombinedLineChart";
 const SCENARIO = "D3 Plot Combine COTS - LWC";
+const UI_EVENT_TRACKING_SCENARIO =
+  "d3COTSCombinedLineChart LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO =
+  "d3COTSCombinedLineChart LWC APEX Event Tracking";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html
@@ -56,6 +60,12 @@ export default class D3COTSCombinedLineChart extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
         logDebug(
           this.recordId,
           `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
@@ -91,6 +101,13 @@ export default class D3COTSCombinedLineChart extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: L4LSessionStatsController.getProgramSetFromCO`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
         let _result = (this.progSet = await getProgramSetFromCO({
           clientId: this.recordId
         }));
@@ -108,6 +125,13 @@ export default class D3COTSCombinedLineChart extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: L4LSessionStatsController.getSDSetFromCO`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
         let _result = (this.sdSet = await getSDSetFromCO({
           clientId: this.recordId
         }));
@@ -124,6 +148,14 @@ export default class D3COTSCombinedLineChart extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: L4LTimeSeries.generateD3COTSJsonByProgramAndSD`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         return generateD3COTSJsonByProgramAndSD({
           clientId: this.recordId,
           program: "All",
@@ -357,6 +389,13 @@ export default class D3COTSCombinedLineChart extends LightningElement {
       `${TAG}`
     );
 
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LTimeSeries.generateD3COTSJsonByProgramAndSD`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     generateD3COTSJsonByProgramAndSD({
       clientId: this.recordId,
       program: "All",
@@ -375,6 +414,13 @@ export default class D3COTSCombinedLineChart extends LightningElement {
   }
 
   handleSDChange(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: SD Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     console.log("in handleSDChange " + event.detail.value);
     const selectedOption = event.detail.value;
     this.sdoptions = this.sdoptions.map((row) => {
@@ -386,6 +432,13 @@ export default class D3COTSCombinedLineChart extends LightningElement {
   }
 
   handleStatusChange(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Status Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     console.log("in handleSDChange " + event.detail.value);
     const selectedOption = event.detail.value;
     this.statusoptions = this.statusoptions.map((row) => {
@@ -396,8 +449,15 @@ export default class D3COTSCombinedLineChart extends LightningElement {
     this.composeOptions();
   }
 
-  //the Status change handler
+  //the Program change handler
   handleProgramChange(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Program Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     console.log("in handleProgramChange " + event.detail.value);
 
     const selectedOption = event.detail.value;
@@ -410,8 +470,15 @@ export default class D3COTSCombinedLineChart extends LightningElement {
     this.composeOptions();
   }
 
-  //the Program change handler
+  //the Period change handler
   handlePeriodChange(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Period Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     console.log("in handlePeriodChange " + event.detail.value);
 
     const selectedOption = event.detail.value;

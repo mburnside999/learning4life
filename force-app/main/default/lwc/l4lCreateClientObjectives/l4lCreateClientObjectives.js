@@ -13,11 +13,16 @@ import { publish, MessageContext } from "lightning/messageService";
 import L4LMC from "@salesforce/messageChannel/L4LMessageChannel__c";
 
 //debugging
-const COMPONENT = "l4lCreateClientObjectives";
+const COMPONENT = "LWC: l4lCreateClientObjectives";
+
 const TAG = "L4L-Manage-Client-Objectives";
 const COLOR = "color:green"; //for console log formatting
 const SCENARIO = "Create Client Objectives - LWC";
+const UI_EVENT_TRACKING_SCENARIO =
+  "l4lCreateClientObjectives LWC UI Event Tracking";
 
+const APEX_EVENT_TRACKING_SCENARIO =
+  "l4lCreateClientObjectives LWC APEX Event Tracking";
 const columns = [
   { label: "Program", fieldName: "Program__c", type: "text" },
   { label: "SD", fieldName: "SD_Name__c", type: "text" },
@@ -63,6 +68,20 @@ export default class L4lCreateClientObjectives extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
+
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback()`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: @wire L4LController.getUnusedObjectives`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         logInfo(
           this.recordId,
           `${COMPONENT}.connectedCallback(): all good, initializing data by calling getPopularClientObjectives()`,
@@ -132,6 +151,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
       COLOR
     );
 
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.getUnusedObjectivesBySearch`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     getUnusedObjectivesBySearch({
       clientId: this.recordId,
       searchstring: this.searchValue
@@ -171,6 +197,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
    */
 
   handleRefreshPopular(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Refresh Popular`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleRefreshPopular(): calling getPopularClientObjectives()`,
@@ -222,6 +255,14 @@ export default class L4lCreateClientObjectives extends LightningElement {
 
   handleClickArray(event) {
     this.disableButton = true;
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: DataTable MultiRow Button: Create Client Objectives`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickArray(): entering method, bound to lightning-button Create Client Objectives`,
@@ -246,6 +287,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
       );
 
       console.log(JSON.stringify(this.selectedRows));
+
+      logInfo(
+        this.recordId,
+        `${COMPONENT}: Apex Call: L4LController.createClientObjectivesByArray`,
+        `${APEX_EVENT_TRACKING_SCENARIO}`,
+        `${TAG}`
+      ); // adoption tracking
 
       createClientObjectivesByArray({
         jsonstr: JSON.stringify(this.selectedRows),
@@ -426,6 +474,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
    */
 
   handleClickClose(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Close`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickClose(): dispatching CustomEvent(close)`,
@@ -456,6 +511,14 @@ export default class L4lCreateClientObjectives extends LightningElement {
    */
   handleSearchKeyword() {
     this.isLoading = true;
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Search`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSearchWord(): entering, bound to Search lightning-button.onclick - searchValue=${this.searchValue}`,
@@ -470,6 +533,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
         `${SCENARIO}`,
         `${TAG}`
       );
+
+      logInfo(
+        this.recordId,
+        `${COMPONENT}: Apex Call: L4LController.getUnusedObjectivesBySearch`,
+        `${APEX_EVENT_TRACKING_SCENARIO}`,
+        `${TAG}`
+      ); // adoption tracking
 
       this.showPopular = false;
       getUnusedObjectivesBySearch({
@@ -538,6 +608,13 @@ export default class L4lCreateClientObjectives extends LightningElement {
       `%cgetPopularClientObjectives(): calling Apex getPopularObjectives`,
       COLOR
     );
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.getPopularObjectives`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     getPopularObjectives({
       clientId: this.recordId

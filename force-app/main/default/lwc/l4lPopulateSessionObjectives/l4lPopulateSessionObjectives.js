@@ -25,9 +25,14 @@ import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 
-const COMPONENT = "l4lPopulateSessionObjectives";
+const COMPONENT = "LWC: l4lPopulateSessionObjectives";
 const TAG = "L4L-Populate-Session-Objectives";
 const SCENARIO = "Score the Session Objectives for a client - LWC";
+const UI_EVENT_TRACKING_SCENARIO =
+  "l4lPopulateSessionObjectives LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO =
+  "l4lPopulateSessionObjectives LWC APEX Event Tracking";
+
 const COLOR = "color:olive"; //for console log formatting
 
 const columns = [
@@ -115,6 +120,13 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback()`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
+
         this.refresh();
       })
       .catch((error) => {
@@ -144,6 +156,13 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       `${SCENARIO}`,
       `${TAG}`
     );
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.getClientObjectivesForSession`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
 
     getClientObjectivesForSession({
       searchKey: this.recordId
@@ -249,6 +268,12 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
    */
 
   handleIncrCorrect(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: +C`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
     logDebug(
       this.recordId,
       `${COMPONENT}.handleIncrCorrect(): clicked Correct`,
@@ -281,10 +306,24 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   }
 
   handleClickLG(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: LG`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
     console.log("=======>" + this.selectedRows[0].Id);
 
     let coid = this.selectedRows[0].Id;
     console.log(`Calling updateSessionObjectiveWithLG ${coid}`);
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.updateSessionObjectiveWithLG`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     updateSessionObjectiveWithLG({
       sessObjId: this.lastSOID
     })
@@ -343,6 +382,13 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
    * @param event
    */
   handleIncrIncorrect(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: +I`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleIncrIncorrect()`,
@@ -381,6 +427,13 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
    */
 
   handleIncrNonResponsive(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: +N`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleIncrNonResponsive()`,
@@ -417,6 +470,13 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
    * @param event
    */
   handleIncrPrompted(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: +P`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleIncrPrompted()`,
@@ -471,6 +531,13 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
    */
 
   handleClickArray(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Record Assessment`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleClickArray(): entering`,
@@ -506,6 +573,13 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
         `${TAG}`
       );
       console.log("=========>" + JSON.stringify(this.selectedRows));
+
+      logInfo(
+        this.recordId,
+        `${COMPONENT}: Apex Call: L4LController.createSessionObjectivesByArrayWithOrderedResults`,
+        `${APEX_EVENT_TRACKING_SCENARIO}`,
+        `${TAG}`
+      ); // adoption tracking
 
       createSessionObjectivesByArrayWithOrderedResults({
         jsonstr: JSON.stringify(this.selectedRows),

@@ -14,11 +14,12 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 //debugging
-const COMPONENT = "l4lCreateIncidentData";
+const COMPONENT = "LWC: l4lCreateIncidentData";
 const TAG = "L4L-Manage-Session-Incidents";
 const COLOR = "color:purple"; //for console log formatting
 const SCENARIO = "Record session incidents - LWC"; //for console log formatting
-
+const UI_EVENT_TRACKING_SCENARIO =
+  "l4lCreateIncidentData LWC UI Event Tracking";
 export default class L4lCreateIncidentData extends LightningElement {
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing
   @track showStartBtn = true;
@@ -48,6 +49,12 @@ export default class L4lCreateIncidentData extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
       })
       .catch((error) => {
         console.log("Error");
@@ -104,6 +111,13 @@ export default class L4lCreateIncidentData extends LightningElement {
    */
 
   start(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Start Timer`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(this.recordId, `${COMPONENT}.start()`, `${SCENARIO}`, `${TAG}`);
 
     this.showStartBtn = false;
@@ -142,6 +156,13 @@ export default class L4lCreateIncidentData extends LightningElement {
    * @return
    */
   stop(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Stop Timer`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(this.recordId, `${COMPONENT}.stop()`, `${SCENARIO}`, `${TAG}`);
     this.showStartBtn = true;
     clearInterval(this.timeIntervalInstance);
@@ -189,6 +210,13 @@ export default class L4lCreateIncidentData extends LightningElement {
    */
 
   handleSuccess(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Create`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     logDebug(
       this.recordId,
       `${COMPONENT}.handleSuccess() - successfully saved incident`,

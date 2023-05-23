@@ -72,7 +72,7 @@ public with sharing class LFLDTDRates {
     DateTime dt1,
     DateTime dt2
   ) {
-    String SCENARIO = 'COTS TimeSeries - Summary - Apex';
+    String SCENARIO = 'COTS TimeSeries - Acq Rate by Dates - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(

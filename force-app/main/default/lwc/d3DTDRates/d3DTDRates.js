@@ -10,6 +10,8 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "D3DTDRates";
 const TAG = "L4L-TimeSeries-D3DTDRatesChart";
 const SCENARIO = "View the D3 DTD Acquisition Rate chart - LWC";
+const UI_EVENT_TRACKING_SCENARIO = "d3DTDRates LWC UI Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO = "d3DTDRates LWC APEX Event Tracking";
 
 export default class D3DTDRates extends LightningElement {
   @api recordId;
@@ -37,6 +39,12 @@ export default class D3DTDRates extends LightningElement {
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: connectedCallback`,
+          `${UI_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
         logInfo(
           this.recordId,
           `${COMPONENT}.connectedCallback(): all good, call to L4LNebulaComponentController setupCache completed `,
@@ -73,6 +81,12 @@ export default class D3DTDRates extends LightningElement {
           `${SCENARIO}`,
           `${TAG}`
         );
+        logInfo(
+          this.recordId,
+          `${COMPONENT}: Apex Call: LFLDTDRateMaster.getDTDRateArray`,
+          `${APEX_EVENT_TRACKING_SCENARIO}`,
+          `${TAG}`
+        ); // adoption tracking
         return getDTDRateArray({
           clientId: this.recordId,
           iters: "26"
