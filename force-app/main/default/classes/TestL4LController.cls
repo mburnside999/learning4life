@@ -504,7 +504,7 @@ private class TestL4LController {
     LFLPopulateTestData.load();
     Test.stopTest();
     List<Client_objective__c> cobjs = [
-      SELECT Id, Name, Status__c, Active__c
+      SELECT Id, Name, Status__c, Active__c, Frequency__c
       FROM client_objective__c
       LIMIT 1
     ];
@@ -514,8 +514,13 @@ private class TestL4LController {
 
     noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
     System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
-
     val = 'OBJ';
+    noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
+    System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
+    val = 'WEEKLY';
+    noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
+    System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
+    val = 'FORTNIGHTLY';
     noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
     System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
     val = 'Activate';

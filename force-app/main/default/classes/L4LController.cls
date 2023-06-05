@@ -932,19 +932,19 @@ public with sharing class L4LController {
    * @description For a list of client objectives, update to a common status or activate/deactivate
    *
    * @param jsonStr A JSON string containing a list of client objectives to update
-   * @param val "ACQ" or "OBJ" or "Activate" or "Deactivate"
+   * @param val "ACQ" or "OBJ" or "WEEKLY" or "FORTNIGHTLY" or "Activate" or "Deactivate"
    *
    * @return The number of client objectives updated
    *
    * @example
    * Integer noOfClientObjsUpdated = L4LController.setClientObjectivesByArray(jsonStr,'ACQ')
-   * Integer noOfClientObjsActivated = L4LController.setClientObjectivesByArray(jsonStr,'Activater')
+   * Integer noOfClientObjsActivated = L4LController.setClientObjectivesByArray(jsonStr,'Activate')
 
    */
 
   @AuraEnabled
   public static Integer setClientObjectivesByArray(String jsonstr, String val) {
-    String SCENARIO = 'Manage Client Objectives - update a CO status to ACQ/OBJ, or active=true/false from a JSON array - Apex';
+    String SCENARIO = 'Manage Client Objectives - update a CO status to ACQ/OBJ, active=true/false, or frequency Weekly/Fortnighly from a JSON array - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -978,6 +978,20 @@ public with sharing class L4LController {
         when 'OBJ' {
           if (co.Active__c == true) {
             co.Status__c = 'OBJ';
+            updCOList.add(co);
+            recsUpdated += 1;
+          }
+        }
+        when 'WEEKLY' {
+          if (co.Active__c == true) {
+            co.Frequency__c = 'Weekly';
+            updCOList.add(co);
+            recsUpdated += 1;
+          }
+        }
+        when 'FORTNIGHTLY' {
+          if (co.Active__c == true) {
+            co.Frequency__c = 'Fortnightly';
             updCOList.add(co);
             recsUpdated += 1;
           }

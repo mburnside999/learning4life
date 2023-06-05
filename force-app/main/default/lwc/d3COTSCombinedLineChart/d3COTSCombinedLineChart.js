@@ -366,7 +366,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
       .style("font-size", "18px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text(`EXPERIMENTAL - Plotting Client Objectives`);
+      .text(`No of Client Objectives vs. Date`);
 
     svg
       .append("text")
@@ -376,7 +376,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
       .style("font-size", "14px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("Client Objective Time Series, auto refreshed Sunday 10pm");
+      .text("Time Series is auto refreshed every Sunday @10pm");
   }
 
   handleClick(event) {
