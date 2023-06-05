@@ -1,6 +1,6 @@
 <template>
   <lightning-card
-    title="L4L Assigned Client Objectives - NEW! Multi-Edit"
+    title="L4L Assigned Client Objectives - NEW! As of May 31st, Weekly and Fortnightly buttons"
     icon-name="custom:custom63"
   >
     <div class="c-container">
@@ -108,6 +108,18 @@
             <lightning-button
               label="Mark OBJ"
               title="Mark OBJ"
+              onclick={btnConfirmation}
+            >
+            </lightning-button>
+            <lightning-button
+              label="Re-Test Weekly"
+              title="Re-Test Weekly"
+              onclick={btnConfirmation}
+            >
+            </lightning-button>
+            <lightning-button
+              label="Re-Test Fortnightly"
+              title="Re-Test Fortnightly"
               onclick={btnConfirmation}
             >
             </lightning-button>

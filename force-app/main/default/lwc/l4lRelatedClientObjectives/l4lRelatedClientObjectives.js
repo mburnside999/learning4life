@@ -784,6 +784,12 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       case "Mark ACQ":
         mode = "ACQ";
         break;
+      case "Re-Test Weekly":
+        mode = "WEEKLY";
+        break;
+      case "Re-Test Fortnightly":
+        mode = "FORTNIGHTLY";
+        break;
       case "Mark OBJ":
         mode = "OBJ";
         break;
@@ -818,6 +824,8 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       container.Re_Test_Recommended__c = item.Re_Test_Recommended__c;
       container.Active__c = item.Active__c;
       container.Status__c = item.Status__c != undefined ? item.Status__c : null;
+      container.Frequency__c =
+        item.Frequency__c != undefined ? item.Frequency__c : null;
       return container;
     });
 
