@@ -1,5 +1,5 @@
 <template>
-  <lightning-card title="Session Statistics - NEW! now with filtering">
+  <lightning-card title="Session Statistics - NEW! adjusted percentages">
     <input
       class="slds-input"
       size="40"
@@ -8,6 +8,13 @@
       oninput={handleFilterKeyInput}
     />
     <br /><br />
+    <div class="page-header page-section">
+      <i
+        >This table summarises DTD results. %C is the percent correct overall.
+        %Cᵃᵈʲ is the adjusted percent correct value that ignores N values.
+      </i>
+    </div>
+    <br />
     <c-l4l-custom-datatable
       key-field="id"
       data={records}

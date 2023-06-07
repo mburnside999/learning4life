@@ -996,6 +996,20 @@ public with sharing class L4LController {
             recsUpdated += 1;
           }
         }
+        when 'MONTHLY' {
+          if (co.Active__c == true) {
+            co.Frequency__c = 'Monthly';
+            updCOList.add(co);
+            recsUpdated += 1;
+          }
+        }
+        when 'TWICE-WEEKLY' {
+          if (co.Active__c == true) {
+            co.Frequency__c = 'Twice-Weekly';
+            updCOList.add(co);
+            recsUpdated += 1;
+          }
+        }
         when 'Deactivate' {
           co.Active__c = false;
           updCOList.add(co);
