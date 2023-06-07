@@ -20,31 +20,44 @@ const COLS = [
   { label: "SD", fieldName: "SD_Name__c" },
 
   { label: "Objective", fieldName: "Objective" },
-  { label: "Previous", fieldName: "Previous_Status__c" },
+  { label: "Previous", fieldName: "Previous_Status__c", initialWidth: 90 },
+  { label: "% C", fieldName: "Percent_Correct", initialWidth: 75 },
   {
-    label: "Icon",
+    label: "",
     fieldName: "iconstr__c",
     type: "image",
-    initialWidth: 75,
+    initialWidth: 20,
     cellAttributes: { alignment: "center" }
   },
-  { label: "Correct", fieldName: "TotalAcquiredCorrect__c", initialWidth: 120 },
   {
-    label: "Incorrect",
+    label: "% Cᵃᵈʲ",
+    fieldName: "Responded_Percent_Correct",
+    initialWidth: 90
+  },
+  {
+    label: "",
+    fieldName: "responded_iconstr__c",
+    type: "image",
+    initialWidth: 20,
+    cellAttributes: { alignment: "center" }
+  },
+
+  { label: "C", fieldName: "TotalAcquiredCorrect__c", initialWidth: 20 },
+  {
+    label: "I",
     fieldName: "TotalAcquiredIncorrect__c",
-    initialWidth: 120
+    initialWidth: 20
   },
   {
-    label: "NonResponsive",
+    label: "N",
     fieldName: "TotalAcquiredNonResponsive__c",
-    initialWidth: 120
+    initialWidth: 20
   },
   {
-    label: "Prompted",
+    label: "P",
     fieldName: "TotalAcquiredPrompted__c",
-    initialWidth: 120
-  },
-  { label: "% Correct", fieldName: "Percent_Correct", initialWidth: 120 }
+    initialWidth: 20
+  }
 ];
 export default class L4lSessionStatsDatatable extends LightningElement {
   @api recordId;
@@ -64,7 +77,8 @@ export default class L4lSessionStatsDatatable extends LightningElement {
           ...row,
           Objective: row.Objective__r.Name,
           Session: row.Session__r.Name,
-          Percent_Correct: row.Percent_Correct__c + "%"
+          Percent_Correct: row.Percent_Correct__c + "%",
+          Responded_Percent_Correct: row.Responded_Percent_Correct__c + "%"
         };
       });
 

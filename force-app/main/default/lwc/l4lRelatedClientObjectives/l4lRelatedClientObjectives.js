@@ -790,6 +790,12 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       case "Re-Test Fortnightly":
         mode = "FORTNIGHTLY";
         break;
+      case "Re-Test Monthly":
+        mode = "MONTHLY";
+        break;
+      case "Re-Test Twice-Weekly":
+        mode = "TWICE-WEEKLY";
+        break;
       case "Mark OBJ":
         mode = "OBJ";
         break;
