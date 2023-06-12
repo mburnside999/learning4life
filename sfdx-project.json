@@ -16,7 +16,7 @@
   "name": "L4L",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "54.0",
+  "sourceApiVersion": "58.0",
   "packageAliases": {
     "Learning4LifePackage": "0Ho8W000000k9dOSAQ",
     "nebula@4.7.8": "04t5Y0000015lmOQAQ",

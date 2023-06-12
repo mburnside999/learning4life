@@ -42,6 +42,11 @@ export default class D3HeatMap extends LightningElement {
     { label: "ACQ", value: "true" }
   ];
 
+  respondedoptions = [
+    { label: "Yes", value: "true", isChecked: true },
+    { label: "No", value: "false" }
+  ];
+
   stageoptions = [
     { label: "All", value: "All", isChecked: true },
     { label: "Stage One", value: "Stage One" },
@@ -76,6 +81,7 @@ export default class D3HeatMap extends LightningElement {
   stageoptionval = "All";
   periodval = "14";
   statusval = "false";
+  respondedval = "true"; //true=include "N" values
 
   //the clientId from UI
   @api recordId;
@@ -201,6 +207,7 @@ export default class D3HeatMap extends LightningElement {
     let session;
     let objective;
     let value;
+    let adjustedvalue;
     let previous_status;
     let sessiondate;
     let programName;
@@ -211,6 +218,7 @@ export default class D3HeatMap extends LightningElement {
     let totalPrompted;
     let totalNonResponsive;
     let totalResponses;
+    let totalAdjustedResponses;
 
     this.sessionXAxisArray = [];
     this.progYAxisArray = [];
@@ -231,18 +239,20 @@ export default class D3HeatMap extends LightningElement {
       previous_status = row.Previous_Status__c;
       sessiondate = row.Session__r.Date__c;
       value = row.Percent_Correct__c;
-      SDname = row.SD_Name__c;
-
+      (adjustedvalue = row.Responded_Percent_Correct__c),
+        (SDname = row.SD_Name__c);
       totalCorrect = row.TotalAcquiredCorrect__c;
       totalIncorrect = row.TotalAcquiredIncorrect__c;
       totalPrompted = row.TotalAcquiredPrompted__c;
       totalNonResponsive = row.TotalAcquiredNonResponsive__c;
       totalResponses =
         totalCorrect + totalIncorrect + totalPrompted + totalNonResponsive;
+      totalAdjustedResponses = totalCorrect + totalIncorrect + totalPrompted;
       return {
         session,
         objective,
         value,
+        adjustedvalue,
         previous_status,
         sessiondate,
         programName,
@@ -252,7 +262,8 @@ export default class D3HeatMap extends LightningElement {
         totalIncorrect,
         totalPrompted,
         totalNonResponsive,
-        totalResponses
+        totalResponses,
+        totalAdjustedResponses
       };
     });
 
@@ -412,7 +423,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>Score=${d.value}%<br/>Correct=${d.totalCorrect}/${d.totalResponses}</span>`
+          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>%C=${d.value}%<br/>%Cᵃᵈʲ=${d.adjustedvalue}%<br/>C=${d.totalCorrect}/${d.totalResponses}<br/>Cᵃᵈʲ=${d.totalCorrect}/${d.totalAdjustedResponses}</span>`
         )
         .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
@@ -426,6 +437,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(200).style("opacity", 0);
     };
 
+    // if (this.respondedval == "true") {
     svg
       .append("g")
       .selectAll()
@@ -442,8 +454,26 @@ export default class D3HeatMap extends LightningElement {
       })
       .attr("width", x.bandwidth())
       .attr("height", y.bandwidth())
-      .style("fill", function (d) {
-        return color(d.value);
+      .style("opacity", (d) => {
+        if (d.adjustedvalue == d.value) {
+          return 1; // experiments with opacity - currently not used
+        } else {
+          return 1;
+        }
+      })
+
+      .style("fill", (d) => {
+        if (this.respondedval == "true") {
+          console.log(
+            "this.responsdedval==true so including N values, using d.value"
+          );
+          return color(d.value);
+        } else {
+          console.log(
+            "this.responsdedval==false so NOT including N values, using d.adjustedvalue"
+          );
+          return color(d.adjustedvalue);
+        }
       })
       .on("mouseover", mouseover)
       .on("mousemove", mousemove)
@@ -466,7 +496,9 @@ export default class D3HeatMap extends LightningElement {
       .style("font-size", "16px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("Objective Mastery HeatMap");
+      .text(
+        "June 2023, NEW! Option to ignore 'N' responses. Plot colours for either %C or %Cᵃᵈʲ & view both in hover."
+      );
   }
 
   // the ACQ/ALL handler
@@ -532,6 +564,34 @@ export default class D3HeatMap extends LightningElement {
   }
 
   //the Status change handler
+  handleRespondedChange(event) {
+    console.log("in handleRespondedChange " + event.detail.value);
+    this.respondedval = event.detail.value;
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Responded Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
+    const selectedOption = event.detail.value;
+    this.respondedval = selectedOption;
+    this.respondedoptions = this.respondedoptions.map((row) => {
+      return { ...row, isChecked: row.value === selectedOption };
+    });
+    console.log(
+      "in handleRespondedChange, this.respondedval= " +
+        this.respondedval +
+        ", selecteOption=" +
+        selectedOption +
+        ", this.respondeoptions=" +
+        JSON.stringify(this.respondedoptions)
+    );
+    this.composeOptions();
+  }
+
+  //the Status change handler
   handleStatusChange(event) {
     console.log("in handleStatusChange " + event.detail.value);
 
@@ -585,6 +645,16 @@ export default class D3HeatMap extends LightningElement {
       return item.isChecked == true;
     });
     let programStr = optionJson.label;
+
+    //responded values are not passed to Apex, the respondedStr is not really used but is here for consistency
+    //find the curent Responded value
+    let respondedoptionJson = this.respondedoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let respondedStr = respondedoptionJson.label;
+    console.log("respondedStr==" + respondedStr);
+    //the respondedVal was set in the handleResponse and is placed here for consistency
+    console.log("this.respondedval==" + this.respondedval);
 
     //find the curent Stage
     let stageoptionJson = this.stageoptions.find((item) => {

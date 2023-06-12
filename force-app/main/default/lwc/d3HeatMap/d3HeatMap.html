@@ -85,6 +85,19 @@
             ></lightning-combobox>
           </div>
         </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="responded"
+              label="Include N"
+              value={respondedval}
+              options={respondedoptions}
+              onchange={handleRespondedChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
       </lightning-layout>
     </div>
   </lightning-card>
