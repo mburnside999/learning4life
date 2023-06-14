@@ -336,6 +336,61 @@ private class TestL4LController {
     );
   }
 
+  @isTest
+  static void testUpdateSessionObjectiveWithComment() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id sessionId = [SELECT id FROM session__c LIMIT 1].Id;
+    Test.stopTest();
+
+    List<Client_Objective__c> col = [
+      SELECT
+        id,
+        name,
+        objective__c,
+        objective_name__c,
+        client__c,
+        program_name__c,
+        sd_name__c,
+        re_test_Recommended__c,
+        client_objective_notes__c
+      FROM client_objective__c
+      LIMIT 1
+    ];
+    String jsonstr = JSON.serialize(col);
+
+    List<L4LController.SessionResult> lsr = new List<L4LController.SessionResult>();
+    L4LController.SessionResult sr = new L4LController.SessionResult();
+    sr.skill = 'C';
+    lsr.add(sr);
+    sr = new L4LController.SessionResult();
+    sr.skill = 'I';
+    lsr.add(sr);
+    sr = new L4LController.SessionResult();
+    sr.skill = 'P';
+    lsr.add(sr);
+
+    String skillstr = JSON.serialize(lsr);
+
+    List<Session_Obj__c> sosCreatedList = L4LController.createSessionObjectivesByArrayWithOrderedResults(
+      jsonstr,
+      sessionId,
+      skillstr
+    );
+    Integer listSize = sosCreatedList.size();
+    Session_Obj__c myso = sosCreatedList[listSize - 1];
+
+    String lgstr = L4LController.updateSessionObjectiveWithComment(
+      myso.Id,
+      'my comment'
+    );
+
+    System.assert(
+      lgstr != null,
+      'Expected a session ojective to be flagged as LG'
+    );
+  }
+
   /*******************************************************************************************************
    * @description Test createSessionObjectivesByArrayWithOrderedResults method
    * @param void

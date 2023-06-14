@@ -1,0 +1,60 @@
+<template>
+  <p>
+    These layout items specify <code>size="4"</code>, or 4 columns of a 12
+    column grid. Each item occupies 33.33% of the width.
+  </p>
+
+  <lightning-layout multiple-rows>
+    <lightning-layout-item size="6" padding="around-small">
+      <div
+        class="custom-box slds-box slds-p-around_medium slds-text-align_left"
+      >
+        <lightning-layout multiple-rows>
+          <lightning-layout-item size="12">
+            <lightning-button-group>
+              <div class="slds-p-left_small">
+                <lightning-button label="+C"></lightning-button>
+                <lightning-button label="+I"></lightning-button>
+                <lightning-button label="+N"></lightning-button>
+                <lightning-button label="+P"></lightning-button>
+              </div>
+            </lightning-button-group>
+            <lightning-button-group>
+              <div class="slds-p-left_small">
+                <lightning-button label="LG"></lightning-button>
+                <lightning-button label="Comment"></lightning-button>
+              </div>
+            </lightning-button-group>
+            <lightning-button-group>
+              <div class="slds-p-left_small">
+                <lightning-button label="Reset"></lightning-button>
+                <lightning-button label="Close"></lightning-button>
+              </div>
+            </lightning-button-group>
+            <lightning-input
+              type="text"
+              placeholder="Enter some text"
+            ></lightning-input>
+          </lightning-layout-item>
+        </lightning-layout>
+      </div>
+    </lightning-layout-item>
+
+    <lightning-layout-item size="6" padding="around-small">
+      <div
+        class="custom-box slds-box slds-p-around_medium slds-text-align_left"
+      >
+        <p>lorem ipsum</p>
+      </div>
+    </lightning-layout-item>
+
+    <lightning-layout-item size="12" padding="around-small">
+      <div
+        class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+      >
+        3
+        <p>lorem ipsum</p>
+      </div>
+    </lightning-layout-item>
+  </lightning-layout>
+</template>
