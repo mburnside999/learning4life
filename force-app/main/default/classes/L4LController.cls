@@ -1068,6 +1068,44 @@ public with sharing class L4LController {
     return 'so.Id= ' + so.Id + ', comment=' + so.comment__c;
   }
 
+  /*******************************************************************************************************
+   * @description Updates Session Objective comment
+   *
+   * @param sessObjId Session Objective id
+   *
+   * @return Summary of change to Session Objective
+   *
+   * @example
+   * String str = L4LController.updateSessionObjectiveWithLG(sessObjId,comment)
+   *
+   */
+
+  @AuraEnabled(cacheable=false)
+  public static String updateSessionObjectiveWithComment(
+    String sessObjId,
+    String comment
+  ) {
+    String SCENARIO = 'Manage Session Objectives - update an SO With comment - Apex';
+
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      null,
+      'L4LController.updateSessionObjectiveWithComment',
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
+    Session_Obj__c so = [
+      SELECT id, comment__c
+      FROM session_obj__c
+      WHERE id = :sessObjId
+      LIMIT 1
+    ];
+    so.comment__c = comment;
+    update so;
+    return 'so.Id= ' + so.Id + ', comment=' + so.comment__c;
+  }
+
   public class SessionResult {
     public String skill { get; set; }
   }

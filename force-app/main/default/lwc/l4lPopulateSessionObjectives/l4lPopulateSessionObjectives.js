@@ -13,6 +13,7 @@ import { LightningElement, api, wire, track } from "lwc";
 import getClientObjectivesForSession from "@salesforce/apex/L4LController.getClientObjectivesForSession";
 import createSessionObjectivesByArrayWithOrderedResults from "@salesforce/apex/L4LController.createSessionObjectivesByArrayWithOrderedResults";
 import updateSessionObjectiveWithLG from "@salesforce/apex/L4LController.updateSessionObjectiveWithLG";
+import updateSessionObjectiveWithComment from "@salesforce/apex/L4LController.updateSessionObjectiveWithComment";
 
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { CurrentPageReference } from "lightning/navigation";
@@ -88,6 +89,10 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   @track soArray = [];
   rendered = false;
   lgbuttondisabled = true;
+  commentbuttondisabled = true;
+  commentinputdisabled = true;
+
+  commentValue;
 
   lastSOID;
 
@@ -214,6 +219,10 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   getSelectedName(event) {
     this.lgbuttondisabled = true;
+    this.commentbuttondisabled = true;
+    this.commentinputdisabled = true;
+    this.commentValue = "";
+
     let myselectedRows = event.detail.selectedRows;
 
     logDebug(
@@ -340,6 +349,67 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
       })
       .finally(() => {
         this.lgbuttondisabled = true;
+        this.commentbuttondisabled = true;
+        this.commentinputdisabled = true;
+        this.commentValue = "";
+        const message = {
+          recordId: "",
+          message: "message from l4lPopulateSessionObjectives",
+          source: "LWC",
+          recordData: {}
+        };
+
+        logDebug(
+          this.recordId,
+          `${COMPONENT}.handleClickArray(): publishing message via L4LMC, message=${JSON.stringify(
+            message
+          )}`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+        publish(this.messageContext, L4LMC, message);
+      });
+  }
+
+  handleClickComment(event) {
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Button: Comment`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+    console.log("=======>" + this.selectedRows[0].Id);
+
+    let coid = this.selectedRows[0].Id;
+    console.log(`Calling updateSessionObjectiveWithComment ${coid}`);
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: Apex Call: L4LController.updateSessionObjectiveWithComment`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
+    updateSessionObjectiveWithComment({
+      sessObjId: this.lastSOID,
+      comment: this.commentValue
+    })
+      .then((result) => {
+        console.log("returned");
+        console.log("updateSessionObjectiveWithComment returned: " + result);
+      })
+      .then(() => {
+        this.showNotification("Success", `Comment recorded`, "success");
+        this.sessionresults.push("---- " + this.commentValue + " ----");
+      })
+      .catch((error) => {
+        console.log("ERROR " + JSON.stringify(error));
+      })
+      .finally(() => {
+        this.lgbuttondisabled = true;
+        this.commentbuttondisabled = true;
+        this.commentinputdisabled = true;
+        this.commentValue = "";
         const message = {
           recordId: "",
           message: "message from l4lPopulateSessionObjectives",
@@ -654,6 +724,8 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
           );
           publish(this.messageContext, L4LMC, message);
           this.lgbuttondisabled = false;
+          this.commentinputdisabled = false;
+          this.commentValue = "";
         });
     }
   }
@@ -666,13 +738,6 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
-
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.handleSearchKeyInput(): searchKey=${searchKey}`,
-      `${SCENARIO}`,
-      `${TAG}`
-    );
 
     this.objectives = this.filterableObjectives.filter(
       (so) =>
@@ -724,5 +789,19 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     );
 
     this.dispatchEvent(new CustomEvent("close"));
+  }
+
+  handleCommentInputChange(event) {
+    this.commentValue = event.detail.value;
+    if (this.commentValue.length > 0) {
+      this.commentbuttondisabled = false;
+      this.lgbuttondisabled = true;
+    } else {
+      console.log("null path==>" + this.commentValue + "<===");
+      this.lgbuttondisabled = false;
+      this.commentbuttondisabled = true;
+    }
+
+    console.log("========>" + this.commentValue);
   }
 }
