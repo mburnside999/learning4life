@@ -56,7 +56,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
   ];
 
   connectedCallback() {
-    console.log("in connectedCallback recordId=" + this.recordId);
+    console.log("Hi there, in connectedCallback recordId=" + this.recordId);
     setNewSession()
       .then((returnVal) => {
         console.log("Success");
@@ -278,10 +278,38 @@ export default class D3COTSCombinedLineChart extends LightningElement {
 
     svg = d3
       .select(this.template.querySelector(".horizontal-ts-chart"))
+      .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    const tooltip = d3
+      .select(this.template.querySelector(".horizontal-ts-chart"))
+      .append("span")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("font-size", "12px");
+
+    const mouseover = (e, d) => {
+      let _datetext = String(d.rundate);
+      let _briefdate = _datetext.substring(0, 15);
+      tooltip.transition().duration(600).style("opacity", 0.9);
+      tooltip
+        .html(
+          `<span style='color:white'>Date: ${_briefdate}<br/>No. Of Objectives: ${d.val}<br/></span>`
+        )
+        .style("left", d3.pointer(e)[0] + 70 + "px")
+        .style("top", d3.pointer(e)[1] + 30 + "px");
+    };
+    const mousemove = (e) => {
+      tooltip
+        .style("left", d3.pointer(e)[0] + 70 + "px")
+        .style("top", d3.pointer(e)[1] + 30 + "px");
+    };
+    const mouseleave = (e) => {
+      tooltip.transition().duration(200).style("opacity", 0);
+    };
 
     var x = d3
       .scaleTime()
@@ -356,7 +384,10 @@ export default class D3COTSCombinedLineChart extends LightningElement {
         return y(d.val);
       })
       .attr("r", 5)
-      .attr("fill", "#69b3a2");
+      .attr("fill", "#69b3a2")
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave);
 
     svg
       .append("text")
@@ -366,7 +397,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
       .style("font-size", "18px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text(`No of Client Objectives vs. Date`);
+      .text(`Client Objective Status Counts vs. Date`);
 
     svg
       .append("text")
@@ -376,7 +407,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
       .style("font-size", "14px")
       .style("fill", "grey")
       .style("max-width", 400)
-      .text("Time Series is auto refreshed every Sunday @10pm");
+      .text("Hover over the points to see values");
   }
 
   handleClick(event) {

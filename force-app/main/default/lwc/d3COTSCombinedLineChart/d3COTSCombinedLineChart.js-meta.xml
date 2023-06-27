@@ -7,8 +7,11 @@
     <targets>
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
-        <target>lightning__HomePage</target>
+        <target>lightning__HomePage</target> 
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
     </targets>
+   
     <targetConfigs>
         <targetConfig targets="lightning__AppPage">
             <supportedFormFactors>
@@ -28,5 +31,8 @@
                 <supportedFormFactor type="Large" />
             </supportedFormFactors>
         </targetConfig>
+ <targetConfig targets="lightningCommunity__Default">
+         <property name="recordId" type="String" default="{!Route.recordId}" />
+          </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
