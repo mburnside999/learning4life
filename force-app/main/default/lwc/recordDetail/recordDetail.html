@@ -1,12 +1,13 @@
 <template>
-    <c-object-header object-api-name={objectApiName}></c-object-header>
+  <c-object-header object-api-name={objectApiName}></c-object-header>
 
-    <lightning-record-form
-        record-id={recordId}
-        object-api-name={objectApiName}
-        layout-type="Full"
-        mode={actionName}
-        onsuccess={navigateToRecordList}
-        oncancel={navigateToRecordList}>
-    </lightning-record-form>
+  <lightning-record-form
+    record-id={recordId}
+    object-api-name={objectApiName}
+    layout-type="Full"
+    mode={actionName}
+    onsuccess={navigateToRecordList}
+    oncancel={navigateToRecordList}
+  >
+  </lightning-record-form>
 </template>

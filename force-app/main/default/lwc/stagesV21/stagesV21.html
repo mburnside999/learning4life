@@ -1,25 +1,24 @@
 <!-- sldsValidatorIgnore -->
 <template>
-  
   <template lwc:if={startFlow}>
-   
     <lightning-flow
-              flow-api-name="L4LAddClientObjfromSDMap"
-              flow-input-variables={inputVariables}
-              onstatuschange={handleStatusChange} >
-     </lightning-flow>
-    </template>
+      flow-api-name="L4LAddClientObjfromSDMap"
+      flow-input-variables={inputVariables}
+      onstatuschange={handleStatusChange}
+    >
+    </lightning-flow>
+  </template>
 
-<template lwc:if={startCABFlow}>
+  <template lwc:if={startCABFlow}>
     <lightning-flow
-                              flow-api-name="L4LAutoUpdateCOtoCAB"
-                              flow-input-variables={inputVariables}
-                              onstatuschange={handleCABFlowEnd}
-                            >
-                            </lightning-flow>
-</template>
+      flow-api-name="L4LAutoUpdateCOtoCAB"
+      flow-input-variables={inputVariables}
+      onstatuschange={handleCABFlowEnd}
+    >
+    </lightning-flow>
+  </template>
 
-    <template lwc:if={showStage}>
+  <template lwc:if={showStage}>
     <lightning-layout>
       <lightning-combobox
         name="stageFilter"
@@ -30,40 +29,39 @@
       ></lightning-combobox>
     </lightning-layout>
   </template>
-    <br />
-    
-    <lightning-layout>
-      <div class="board">
-       
-        <template lwc:if={agfsdRecords}>
-          <template for:each={agfsdRecords} for:item="group">
-            <div class="tile" key={group.area}>
-              <div class="tile__header">{group.area}</div>
-  
-              <template for:each={group.records} for:item="record">
-                <div class="tile__items" key={record.Id}>
-                  <div class={record.CABStatus}>
-                    <div class="item__bold">
+  <br />
+
+  <lightning-layout>
+    <div class="board">
+      <template lwc:if={agfsdRecords}>
+        <template for:each={agfsdRecords} for:item="group">
+          <div class="tile" key={group.area}>
+            <div class="tile__header">{group.area}</div>
+
+            <template for:each={group.records} for:item="record">
+              <div class="tile__items" key={record.Id}>
+                <div class={record.CABStatus}>
+                  <div class="item__bold">
                     <p>{record.Program_Name__c}</p>
                   </div>
-                    <p>{record.Name}</p>
-                    <br />
-                    <p>
-                      Using {record.Match_Count__c} of:
-                      {record.Objective_Active_Count__c} Objectives
-                    </p>
-                    <br />
-                    <br />
-                    <lightning-button
-                      label="+"
-                      variant="base"
-                      class="add-button slds-var-m-right_x-small"
-                      onclick={openModal}
-                      data-id={record.Id}
-                    >
-                    </lightning-button>
-                    
-                    <template lwc:if={record.NotUsed}> 
+                  <p>{record.Name}</p>
+                  <br />
+                  <p>
+                    Using {record.Match_Count__c} of:
+                    {record.Objective_Active_Count__c} Objectives
+                  </p>
+                  <br />
+                  <br />
+                  <lightning-button
+                    label="+"
+                    variant="base"
+                    class="add-button slds-var-m-right_x-small"
+                    onclick={openModal}
+                    data-id={record.Id}
+                  >
+                  </lightning-button>
+
+                  <template lwc:if={record.NotUsed}>
                     <lightning-button
                       label="CAB"
                       variant="base"
@@ -72,17 +70,16 @@
                       data-id={record.Id}
                     >
                     </lightning-button>
-                  </template>             
-             
-                     </div>
+                  </template>
                 </div>
-              </template>
-            </div>
-          </template>
+              </div>
+            </template>
+          </div>
         </template>
-        <template if:true={error}>
-          <p>{error}</p>
-        </template>
-      </div>
-    </lightning-layout>
-  </template>
+      </template>
+      <template if:true={error}>
+        <p>{error}</p>
+      </template>
+    </div>
+  </lightning-layout>
+</template>
