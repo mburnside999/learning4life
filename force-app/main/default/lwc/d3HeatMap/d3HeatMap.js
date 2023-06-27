@@ -423,7 +423,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status=${d.previous_status}<br/>%C=${d.value}%<br/>%Cᵃᵈʲ=${d.adjustedvalue}%<br/>C=${d.totalCorrect}/${d.totalResponses}<br/>Cᵃᵈʲ=${d.totalCorrect}/${d.totalAdjustedResponses}</span>`
+          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status = ${d.previous_status}<br/>%C = ${d.value}% (${d.totalCorrect}/${d.totalResponses})<br/>%Cᵃᵈʲ = ${d.adjustedvalue}% (${d.totalCorrect}/${d.totalAdjustedResponses})<br/></span>`
         )
         .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
@@ -488,17 +488,17 @@ export default class D3HeatMap extends LightningElement {
       .text("A d3.js heatmap");
 
     // Add subtitle to graph
-    svg
-      .append("text")
-      .attr("x", 0)
-      .attr("y", -20)
-      .attr("text-anchor", "left")
-      .style("font-size", "16px")
-      .style("fill", "grey")
-      .style("max-width", 400)
-      .text(
-        "June 2023, NEW! Option to ignore 'N' responses. Plot colours for either %C or %Cᵃᵈʲ & view both in hover."
-      );
+    // svg
+    //   .append("text")
+    //   .attr("x", 0)
+    //   .attr("y", -20)
+    //   .attr("text-anchor", "left")
+    //   .style("font-size", "16px")
+    //   .style("fill", "grey")
+    //   .style("max-width", 400)
+    //   .text(
+    //     "June 2023, NEW! Option to ignore 'N' responses. Plot colours for either %C or %Cᵃᵈʲ & view both in hover."
+    //   );
   }
 
   // the ACQ/ALL handler
