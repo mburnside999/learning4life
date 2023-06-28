@@ -18,6 +18,10 @@ L4LTimeSeriesScheduler m = new L4LTimeSeriesScheduler();
 String sch = '0 0 22 ? * 1';
 String jobID = System.schedule('Time Series Schedule', sch, m);
 
+
+
+LFLDTDRateMaster.getDTDRateArray('0018t000003RdEjAAK',26);
+
 List<Program__c> results = new List<Program__c>();
 results = L4LSessionStatsController.getProgramsAndSDs('All');
 System.debug('results.size()-' + results.size());
@@ -529,3 +533,94 @@ select id,objective__c,lastmodifieddate from client_objective__c where id ='a058
 
 String l = L4LStagesByArea.getSDUsage('0018t000002vfSfAAI');
 System.debug('=====>'+l);
+
+
+
+LFLDTDRateMaster.getDTDRateArray('0018t000003RdEjAAK',24);
+
+
+Map<string,date> rundatemap = new Map<string,date>();
+list<aggregateresult> runDatesList=[select RunId__c,min(TS_load_DateTime__c) from client_objective_timeseries__c where client__c = 
+        '0018t000003RdEjAAK' group by runid__c];
+System.debug(runDatesList);
+for (AggregateResult res: runDatesList){
+  Datetime dt = (DateTime)res.get('expr0');
+  String runid=(String)res.get('RunId__c');
+  Date d = dt.date();
+  rundatemap.put(runid,d);
+ 
+}
+
+System.debug(rundatemap);
+
+
+
+list<aggregateresult> limitDatesList=[ SELECT runid__c,status__c,count(id)
+      FROM client_objective_timeseries__c
+      WHERE
+        client__c = 
+        '0018t000003RdEjAAK'
+        group by runid__c,status__c
+        having status__c='ACQ'
+    ];
+
+for (AggregateResult res: limitDatesList){
+Integer i = (Integer) res.get('expr0');
+String runid=(String) res.get('RunId__c');
+
+Date rundate=(Date)rundatemap.get(runid);
+System.debug('runid='+runid+' rundate='+rundate+' acqcount='+i);
+}
+
+
+
+    list<aggregateresult> runDatesList = [
+      SELECT RunId__c, min(TS_load_DateTime__c)
+      FROM client_objective_timeseries__c
+      WHERE client__c = '0019n00000BPIjRAAX'
+      GROUP BY runid__c
+      ORDER BY runid__c
+    ];
+    String jsonStr;
+    System.debug('rundateslist='+runDatesList);
+    if (runDatesList.size()==0) {
+      jsonStr = '[{';
+      jsonStr += '"rate":' + 0;
+      jsonStr += ',"startd":"2022-10-30"';
+      jsonStr += ',"endd":"2022-10-30"';
+      jsonStr += ',"elapsed":' + 0;
+      jsonStr += ',"startAcquiredCount":' + 0;
+      jsonStr += ',"endAcquiredCount":' + 0;
+      jsonStr += ',"numberAcquiredInPeriod":' + 0;
+      jsonStr += ',"sessionCount":' + 0;
+      jsonStr += ',"weeks":' + 0;
+      jsonStr += ',"acquiredPerSession":' + 0;
+      jsonStr += ',"totalSessionDurationHrs":' + 0;
+      jsonStr += '}]';
+      System.debug(jsonStr);
+    }
+
+ list<aggregateresult> limitDatesList = [
+      SELECT runid__c, status__c, count(id)
+      FROM client_objective_timeseries__c
+      WHERE client__c = '0019n00000BPIjRAAX'
+      GROUP BY runid__c, status__c
+      HAVING status__c = 'ACQ'
+      ORDER BY runid__c
+    ];
+
+    System.debug('++++'+limitDatesList);
+
+
+String s = LFLDTDRates.getAcquisitionRateforClientTurbo('0018t000003RdEjAAK');
+System.debug('============'+s+'================');
+
+
+String s = LFLDTDRates.getAcquisitionRateforClientTurbo('0018t000003RdEjAAK');
+System.debug('============'+s+'================');
+
+
+
+
+String t=LFLDTDRateMaster.getDTDRateArray('0018t000003RdEjAAK',20);
+system.debug('+++++++++++'+t+'++++++++++++++');

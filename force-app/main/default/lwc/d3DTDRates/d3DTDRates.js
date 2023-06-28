@@ -2,8 +2,8 @@ import { LightningElement, api, track } from "lwc";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import { loadScript } from "lightning/platformResourceLoader";
 import D3 from "@salesforce/resourceUrl/d3";
-import getDTDRateArray from "@salesforce/apex/LFLDTDRateMaster.getDTDRateArray";
-
+//import getDTDRateArray from "@salesforce/apex/LFLDTDRateMaster.getDTDRateArray";
+import getAcquisitionRateForClientTurbo from "@salesforce/apex/LFLDTDRates.getAcquisitionRateforClientTurbo";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
@@ -87,9 +87,12 @@ export default class D3DTDRates extends LightningElement {
           `${APEX_EVENT_TRACKING_SCENARIO}`,
           `${TAG}`
         ); // adoption tracking
-        return getDTDRateArray({
-          clientId: this.recordId,
-          iters: "26"
+        // return getDTDRateArray({
+        //   clientId: this.recordId,
+        //   iters: "24"
+        // });
+        return getAcquisitionRateForClientTurbo({
+          clientId: this.recordId
         });
       })
       .then((response) => {
@@ -141,7 +144,7 @@ export default class D3DTDRates extends LightningElement {
     );
 
     let parsedResponse = JSON.parse(response);
-    console.log("Session duration = " + parsedResponse.duration);
+    //console.log("Session duration = " + parsedResponse.duration);
     let datatmp = parsedResponse.data;
 
     // datatmp.sort(function (a, b) {
