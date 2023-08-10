@@ -2,10 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>icon__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(
-Percent_Correct__c &lt; 0.50,
+    <formula>IF( 
+Percent_Correct__c &lt;  $CustomMetadata.LFL_Stats_Boundary__mdt.lfl_stats_boundary.Low__c, 
 IMAGE(&quot;/resource/red&quot;, &quot;red&quot;),
-IF( Percent_Correct__c &gt;= 0.90,
+IF( Percent_Correct__c &gt;= $CustomMetadata.LFL_Stats_Boundary__mdt.lfl_stats_boundary.High__c,
 IMAGE(&quot;/resource/green&quot;, &quot;green&quot;),
 IMAGE(&quot;/resource/orange&quot;, &quot;orange&quot;)
 ))</formula>

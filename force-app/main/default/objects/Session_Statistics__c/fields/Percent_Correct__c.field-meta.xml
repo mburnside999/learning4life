@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Percent_Correct__c</fullName>
     <externalId>false</externalId>
-    <formula>if ( ( TotalAcquiredCorrect__c + TotalAcquiredIncorrect__c + TotalAcquiredPrompted__c +  TotalAcquiredNonResponsive__c  )&gt;0,
-TotalAcquiredCorrect__c / ( TotalAcquiredCorrect__c + TotalAcquiredIncorrect__c + TotalAcquiredPrompted__c +  TotalAcquiredNonResponsive__c  ),0)</formula>
+    <formula>if (
+(TotalAcquiredCorrect__c + TotalAcquiredIncorrect__c + TotalAcquiredPrompted__c + TotalAcquiredNonResponsive__c)&gt;0,TotalAcquiredCorrect__c / ( TotalAcquiredCorrect__c + TotalAcquiredIncorrect__c + TotalAcquiredPrompted__c +  TotalAcquiredNonResponsive__c),0  )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Percent Correct</label>
     <precision>18</precision>

@@ -3,9 +3,9 @@
     <fullName>iconstr__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-Percent_Correct__c &lt; 0.50,
+Percent_Correct__c &lt;  $CustomMetadata.LFL_Stats_Boundary__mdt.lfl_stats_boundary.Low__c,
 &quot;/resource/red&quot;,
-IF( Percent_Correct__c &gt;= 0.90,
+IF( Percent_Correct__c &gt;=  $CustomMetadata.LFL_Stats_Boundary__mdt.lfl_stats_boundary.High__c,
 &quot;/resource/green&quot;,
 &quot;/resource/orange&quot;
 ))</formula>

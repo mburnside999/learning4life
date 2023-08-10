@@ -3,9 +3,9 @@
     <fullName>iconPortal__c</fullName>
     <externalId>false</externalId>
     <formula>IF(
-Percent_Correct__c &lt; 0.50,
+Percent_Correct__c &lt;  $CustomMetadata.LFL_Stats_Boundary__mdt.lfl_stats_boundary.Low__c,
 IMAGE(&quot;https://l4l.my.site.com/carer/file-asset/red?v=1&quot;, &quot;red&quot;),
-IF( Percent_Correct__c &gt;= 0.90,
+IF( Percent_Correct__c &gt;=  $CustomMetadata.LFL_Stats_Boundary__mdt.lfl_stats_boundary.High__c,
 IMAGE(&quot;https://l4l.my.site.com/carer/file-asset/green?v=1&quot;, &quot;green&quot;),
 IMAGE(&quot;https://l4l.my.site.com/carer/file-asset/orange?v=1&quot;, &quot;orange&quot;)
 ))</formula>
