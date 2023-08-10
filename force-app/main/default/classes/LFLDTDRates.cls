@@ -346,6 +346,9 @@ public with sharing class LFLDTDRates {
     Date startdt;
     Date enddt;
     Decimal totalHours = 0;
+    Decimal totalWeeks = 0;
+    Integer totalSessions = 0;
+
     jsonStr = '[';
 
     for (AggregateResult res : limitDatesList) {
@@ -359,6 +362,7 @@ public with sharing class LFLDTDRates {
         Integer elapsed = startdt.daysBetween(enddt);
 
         Decimal weeks = (Decimal) elapsed / 7;
+        totalweeks += weeks;
         Decimal rate;
         if (elapsed != 0) {
           rate = (decimal) (numberAcquiredInPeriod) / (weeks);
@@ -371,6 +375,7 @@ public with sharing class LFLDTDRates {
         for (Session__c s : sessionList) {
           if (s.Date__c > startdt && s.date__c <= enddt) {
             sessionCount += 1;
+            totalSessions += 1;
             if (s.Session_Length__C != null) {
               totalSessionDurationHrs += s.Session_Length__c;
             }
@@ -424,7 +429,14 @@ public with sharing class LFLDTDRates {
     jsonStr = jsonStr.replace(target, replacement);
 
     jsonStr = '{"data":' + jsonStr;
-    jsonStr += ',"duration":' + totalHours + '}';
+    jsonStr +=
+      ',"duration":' +
+      totalHours +
+      ',"totalweeks":' +
+      totalweeks +
+      ',"totalsessions":' +
+      totalSessions +
+      '}';
     return jsonStr;
   }
 }

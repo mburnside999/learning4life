@@ -1,0 +1,26 @@
+<template>
+  <lightning-card title="Session Statistics">
+    <input
+      class="slds-input"
+      size="40"
+      type="text"
+      placeholder="You can filter results here on any field ...e.g. type ACQ to see all Acquired stats"
+      oninput={handleFilterKeyInput}
+    />
+    <br /><br />
+    <div class="page-header page-section">
+      <i
+        >This table summarises DTD results. %C is the percent correct overall.
+      </i>
+    </div>
+    <br />
+    <c-l4l-custom-datatable
+      key-field="id"
+      data={records}
+      show-row-number-column="false"
+      hide-checkbox-column="false"
+      columns={columns}
+    >
+    </c-l4l-custom-datatable>
+  </lightning-card>
+</template>

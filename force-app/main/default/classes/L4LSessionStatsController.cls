@@ -127,6 +127,7 @@ public with sharing class L4LSessionStatsController {
           previous_status__c,
           icon__c,
           iconstr__c,
+          iconportalstr__c,
           responded_icon__c,
           responded_iconstr__c,
           totalacquiredcorrect__c,
@@ -653,7 +654,7 @@ public with sharing class L4LSessionStatsController {
       sdStr +
       ' showAcquired=' +
       showAcquired +
-      ' persiodStr=' +
+      ' periodStr=' +
       periodStr +
       'stageStr= ' +
       stageStr,
@@ -694,6 +695,8 @@ public with sharing class L4LSessionStatsController {
     }
 
     querySessionStatsString += ' ORDER BY session__r.name, objective__r.name ';
+
+    System.debug(querySessionStatsString);
 
     L4LNebulaComponentController.logDebug(
       clientId,

@@ -1,0 +1,268 @@
+1-APR-23
+Andy Peterson-TEST has completed 34 sessions in a total of 67.0 hours
+
+
+
+
+S-00413 - 3 April 2023 - Josephine Moxey - 3 hours
+-
+Incident Type - Play Development - Intensity 4 - 0 Hours - 0 min - 0 sec
+Incident Type - Reinforcement Development - Intensity 2 - 0 Hours - 0 min - 0 sec
+
+S-00431 - 7 April 2023 - Test Therapist - 1 hours
+-
+
+S-00432 - 8 April 2023 - Mike de Hennin - 1 hours
+-
+
+S-00433 - 8 April 2023 - Mike Burnside - 2 hours
+-
+
+S-00434 - 8 April 2023 - Mike de Hennin - 2 hours
+-
+
+S-00435 - 8 April 2023 - Test Therapist - 1 hours
+-
+
+S-00443 - 13 April 2023 - Test Therapist - 1 hours
+-
+
+S-00447 - 13 April 2023 - Claire Birrell - 3 hours
+-
+
+S-00464 - 16 April 2023 - Elisha Mont - 3 hours
+-
+Incident Type - Behaviours of Concern - Intensity 4 - 0 Hours - 0 min - 15 sec
+
+S-00476 - 18 April 2023 - Claire Birrell - 3 hours
+-
+
+S-00480 - 18 April 2023 - Mike de Hennin - 1 hours
+-
+
+S-00483 - 19 April 2023 - Mike de Hennin - 1 hours
+-
+
+S-00485 - 20 April 2023 - Mike de Hennin - 1 hours
+-
+
+S-00533 - 2 May 2023 - Jodi Harris - 1 hours
+-
+Incident Type - Behaviours of Concern - Intensity 2 - 0 Hours - 5 min - 15 sec
+Incident Type - Toileting - Intensity - 0 Hours - 0 min - 0 sec
+
+S-00563 - 9 May 2023 - Jodi Harris - 1 hours
+-
+
+S-00591 - 15 May 2023 - Elisha Mont - 1 hours
+-
+
+S-00661 - 30 May 2023 - Claire Birrell - 3 hours
+-
+
+S-00690 - 5 June 2023 - Erin Delaney - 3 hours
+-
+Incident Type - Reinforcement Development - Intensity 3 - 0 Hours - 0 min - 0 sec
+
+S-00737 - 15 June 2023 - Claire Birrell - 3 hours
+-
+
+S-00738 - 15 June 2023 - Mike de Hennin - 1 hours
+-
+
+S-00791 - 26 June 2023 - Angelina Liang - 3 hours
+-
+Incident Type - Reinforcement Development - Intensity 3 - 0 Hours - 0 min - 0 sec
+Incident Type - Reinforcement Development - Intensity 3 - 0 Hours - 0 min - 0 sec
+Incident Type - Reinforcement Development - Intensity 2 - 0 Hours - 0 min - 0 sec
+
+S-00814 - 30 June 2023 - Nikita Leonidas - 3 hours
+-
+Incident Type - Play Development - Intensity 2 - 0 Hours - 0 min - 0 sec
+Incident Type - Reinforcement Development - Intensity 2 - 0 Hours - 0 min - 0 sec
+Incident Type - Reinforcement Development - Intensity 4 - 0 Hours - 0 min - 0 sec
+Incident Type - Reinforcement Development - Intensity 4 - 0 Hours - 0 min - 0 sec
+
+S-00833 - 4 July 2023 - Mike de Hennin - 1 hours
+-
+
+S-00848 - 7 July 2023 - Mike de Hennin - 1 hours
+-
+
+S-00857 - 8 July 2023 - Mike de Hennin - 2 hours
+-
+
+S-00871 - 11 July 2023 - Claire Birrell - 3 hours
+-
+Incident Type - Reinforcement Development - Intensity 3 - 0 Hours - 0 min - 0 sec
+
+S-00885 - 14 July 2023 - Claire Birrell - 3 hours
+-
+Incident Type - Play Development - Intensity 2 - 0 Hours - 2 min - 20 sec
+Incident Type - Play Development - Intensity 3 - 0 Hours - min - 15 sec
+
+S-00891 - 17 July 2023 - Mike Burnside - 2 hours
+-
+
+S-00914 - 19 July 2023 - Claire Birrell - 3 hours
+-
+
+S-00915 - 19 July 2023 - Claire Birrell - 3 hours
+-
+
+S-00954 - 27 July 2023 - Mike de Hennin - 2 hours
+-
+
+S-00981 - 1 August 2023 - Mike de Hennin - 1 hours
+-
+
+S-00988 - 2 August 2023 - Mike de Hennin - 1 hours
+-
+
+S-01000 - 4 August 2023 - Rahia Fairhead - 3 hours
+-
+Incident Type - Reinforcement Development - Intensity 3 - 0 Hours - 0 min - 0 sec
+Incident Type - Reinforcement Development - Intensity 2 - 0 Hours - 0 min - 0 sec
+Incident Type - Play Development - Intensity 5 - 0 Hours - 0 min - 0 sec
+
+---------------------------------------------------------------
+
+Total Number of Programs 10
+
+
+Program: Guess
+
+Objectives Acquired (All Time): 0
+
+Number Current Objectives (This Period): 2
+
+    > Animal
+
+    > Clothing
+
+Number Held (This Period): 1
+
+    > Drink
+
+
+Program: People
+
+Objectives Acquired (All Time): 2
+
+Number Acquired (This Period): 2
+
+    > Aunty 1
+
+    > Cousin 1
+
+
+Program: Actions
+
+Objectives Acquired (All Time): 0
+
+Number Current Objectives (This Period): 1
+
+    > Eating
+
+
+Program: 2D Matching
+
+Objectives Acquired (All Time): 8
+
+Number Current Objectives (This Period): 2
+
+    > Car
+
+    > Banana
+
+Number Acquired (This Period): 6
+
+    > Aeroplane
+
+    > Apple
+
+    > Banana
+
+    > Various
+
+    > Ball
+
+    > Bed
+
+Number Absorbed (This Period): 1
+
+    > Car
+
+
+Program: 3D Matching
+
+Objectives Acquired (All Time): 2
+
+Number Acquired (This Period): 2
+
+    > Bath
+
+    > Banana
+
+Number Held (This Period): 1
+
+    > Ball
+
+
+Program: Book Labels
+
+Objectives Acquired (All Time): 4
+
+Number Current Objectives (This Period): 2
+
+    > Ball
+
+    > Boat
+
+Number Acquired (This Period): 4
+
+    > Aeroplane
+
+    > Apple
+
+    > Ball
+
+    > Fire Truck
+
+
+Program: Turn Taking
+
+Objectives Acquired (All Time): 0
+
+Number Current Objectives (This Period): 2
+
+    > Sibling's Turn
+
+    > Peer's turn
+
+
+Program: 3D to 2D Matching
+
+Objectives Acquired (All Time): 0
+
+Number Current Objectives (This Period): 1
+
+    > Banana
+
+
+Program: Receptive Instructions
+
+Objectives Acquired (All Time): 1
+
+Number Acquired (This Period): 1
+
+    > Touch Tummy
+
+
+Program: Communication Temptation
+
+Objectives Acquired (All Time): 1
+
+Number Current Objectives (This Period): 1
+
+    > Help
