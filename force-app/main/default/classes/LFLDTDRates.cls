@@ -252,4 +252,191 @@ public with sharing class LFLDTDRates {
 
     return jsonStr;
   }
+
+  /*******************************************************************************************************
+   * @name getAcquisitionRateforClientTurbo
+   * @description Turbo rate calculator -- hardly any SOQL
+   *
+   *
+   * @param clientId the clientId
+   *
+   * @return JSON string
+   * @example
+   * String jsonStr = LFLDTDRates.getAcquisitionRateforClientTurbo(clientId);
+   */
+  @AuraEnabled(cacheable=true)
+  public static String getAcquisitionRateforClientTurbo(String clientId) {
+    String jsonStr;
+
+    list<Session__c> sessionList = [
+      SELECT date__c, session_length__c
+      FROM Session__c
+      WHERE client__c = :clientId
+      ORDER BY date__c
+    ];
+    System.debug('xxxxxx' + sessionList);
+
+    Map<string, date> rundatemap = new Map<string, date>();
+    list<aggregateresult> runDatesList = [
+      SELECT RunId__c, min(TS_load_DateTime__c)
+      FROM client_objective_timeseries__c
+      WHERE client__c = :clientId
+      GROUP BY runid__c
+      ORDER BY runid__c
+    ];
+
+    if (runDatesList.size() == 0) {
+      jsonStr = '{"data":';
+      jsonStr += '[{';
+      jsonStr += '"rate":' + 0;
+      jsonStr += ',"startd":"2022-10-30"';
+      jsonStr += ',"endd":"2022-10-30"';
+      jsonStr += ',"elapsed":' + 0;
+      jsonStr += ',"startAcquiredCount":' + 0;
+      jsonStr += ',"endAcquiredCount":' + 0;
+      jsonStr += ',"numberAcquiredInPeriod":' + 0;
+      jsonStr += ',"sessionCount":' + 0;
+      jsonStr += ',"weeks":' + 0;
+      jsonStr += ',"acquiredPerSession":' + 0;
+      jsonStr += ',"totalSessionDurationHrs":' + 0;
+      jsonStr += '}]';
+      jsonStr += ',"duration":' + 0 + '}';
+      return jsonStr;
+    }
+
+    for (AggregateResult res : runDatesList) {
+      Datetime dt = (DateTime) res.get('expr0');
+      String runid = (String) res.get('RunId__c');
+      Date d = dt.date();
+      rundatemap.put(runid, d);
+    }
+
+    System.debug(rundatemap);
+
+    list<aggregateresult> limitDatesList = [
+      SELECT runid__c, status__c, count(id)
+      FROM client_objective_timeseries__c
+      WHERE client__c = :clientId
+      GROUP BY runid__c, status__c
+      HAVING status__c = 'ACQ'
+      ORDER BY runid__c
+    ];
+
+    if (limitDatesList.size() == 0) {
+      jsonStr = '{"data":';
+      jsonStr += '[{';
+      jsonStr += '"rate":' + 0;
+      jsonStr += ',"startd":"2022-10-30"';
+      jsonStr += ',"endd":"2022-10-30"';
+      jsonStr += ',"elapsed":' + 0;
+      jsonStr += ',"startAcquiredCount":' + 0;
+      jsonStr += ',"endAcquiredCount":' + 0;
+      jsonStr += ',"numberAcquiredInPeriod":' + 0;
+      jsonStr += ',"sessionCount":' + 0;
+      jsonStr += ',"weeks":' + 0;
+      jsonStr += ',"acquiredPerSession":' + 0;
+      jsonStr += ',"totalSessionDurationHrs":' + 0;
+      jsonStr += '}]';
+      jsonStr += ',"duration":' + 0 + '}';
+      return jsonStr;
+    }
+
+    Integer startAcquiredCount;
+    Integer endAcquiredCount;
+    Date startdt;
+    Date enddt;
+    Decimal totalHours = 0;
+    Decimal totalWeeks = 0;
+    Integer totalSessions = 0;
+
+    jsonStr = '[';
+
+    for (AggregateResult res : limitDatesList) {
+      endAcquiredCount = (Integer) res.get('expr0');
+      Integer i = (Integer) res.get('expr0');
+      String runid = (String) res.get('RunId__c');
+      Date rundate = (Date) rundatemap.get(runid);
+      enddt = rundate;
+      if (startAcquiredCount != null) {
+        Integer numberAcquiredInPeriod = endAcquiredCount - startAcquiredCount;
+        Integer elapsed = startdt.daysBetween(enddt);
+
+        Decimal weeks = (Decimal) elapsed / 7;
+        totalweeks += weeks;
+        Decimal rate;
+        if (elapsed != 0) {
+          rate = (decimal) (numberAcquiredInPeriod) / (weeks);
+        } else
+          rate = 0;
+
+        Integer sessionCount = 0;
+        Decimal totalSessionDurationHrs = 0;
+
+        for (Session__c s : sessionList) {
+          if (s.Date__c > startdt && s.date__c <= enddt) {
+            sessionCount += 1;
+            totalSessions += 1;
+            if (s.Session_Length__C != null) {
+              totalSessionDurationHrs += s.Session_Length__c;
+            }
+            totalHours += totalSessionDurationHrs;
+          }
+        }
+        Decimal acquiredPerSession;
+        if (sessionCount != 0) {
+          acquiredPerSession = (Decimal) numberAcquiredInPeriod / sessionCount;
+        } else {
+          acquiredPerSession = 0;
+        }
+
+        jsonStr += '{';
+        jsonStr += '"rate":' + rate.setScale(2);
+        jsonStr +=
+          ',"startd":"' +
+          startdt.year() +
+          '-' +
+          startdt.month() +
+          '-' +
+          startdt.day() +
+          '"';
+        jsonStr +=
+          ',"endd":"' +
+          enddt.year() +
+          '-' +
+          enddt.month() +
+          '-' +
+          enddt.day() +
+          '"';
+        jsonStr += ',"elapsed":' + elapsed;
+        jsonStr += ',"startAcquiredCount":' + startAcquiredCount;
+        jsonStr += ',"endAcquiredCount":' + endAcquiredCount;
+        jsonStr += ',"numberAcquiredInPeriod":' + numberAcquiredInPeriod;
+        jsonStr += ',"sessionCount":' + sessionCount;
+        jsonStr += ',"weeks":' + weeks.setScale(2);
+        jsonStr += ',"acquiredPerSession":' + acquiredPerSession.setScale(2);
+        jsonStr +=
+          ',"totalSessionDurationHrs":' + totalSessionDurationHrs.setScale(2);
+
+        jsonStr += '},';
+      }
+      startAcquiredCount = endAcquiredCount;
+      startdt = enddt;
+    }
+
+    jsonStr += ']';
+    String target = ',]';
+    String replacement = ']';
+    jsonStr = jsonStr.replace(target, replacement);
+
+    jsonStr = '{"data":' + jsonStr;
+    jsonStr +=
+      ',"duration":' +
+      totalHours +
+      ',"totalweeks":' +
+      totalweeks +
+      ',"totalsessions":' +
+      totalSessions +
+      '}';
+    return jsonStr;
+  }
 }

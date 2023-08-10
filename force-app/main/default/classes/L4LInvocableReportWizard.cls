@@ -1,14 +1,3 @@
-/**************************************************************
- * @author	Mike Burnside
- * @name L4LInvocableReportWizard
- * #description Invocable methods used by the Report Wizard flow
- * @date	2022
- * @group Learning For Life
- *
- * @description	As of January 19, 2022 this is the controller for MDH's Report Wizard flow
- *
- */
-
 global with sharing class L4LInvocableReportWizard {
   /*******************************************************************************************************
    * @description returns the status of a given session
@@ -110,6 +99,37 @@ global with sharing class L4LInvocableReportWizard {
       endtime
     );
 
+    // fix for the DML overflow
+    Map<String, Integer> projAcqMap = new Map<String, Integer>();
+
+    AggregateResult[] countAcquired = [
+      SELECT Objective__r.SD__r.Program__r.Name, count(id)
+      FROM Client_Objective__c
+      WHERE client__c = :clientId AND status__c = 'ACQ'
+      GROUP BY Objective__r.SD__r.Program__r.Name
+    ];
+
+    for (AggregateResult ar : countAcquired) {
+      String pname = (String) ar.get('Name');
+      Integer acqcnt = (Integer) ar.get('expr0');
+      System.debug('==> ' + pname + ' ' + acqcnt);
+      projAcqMap.put(pname, acqcnt);
+    }
+
+    System.debug(projAcqMap);
+
+    List<Client_Objective__c> allcoList = [
+      SELECT
+        Objective_Name__c,
+        status__c,
+        Objective__r.SD__r.Program__r.Name,
+        lastmodifieddate
+      FROM Client_Objective__c
+      WHERE client__c = :clientId
+    ];
+
+    // end of fix
+
     // execute a SOQL aggregate query
     AggregateResult[] groupedResults = [
       SELECT client__c, Objective__r.SD__r.Program__r.Name, status__c, count(id)
@@ -166,7 +186,8 @@ global with sharing class L4LInvocableReportWizard {
         str += '<br/><p>Program: ' + pname + '</p>';
         str +=
           '<p>Objectives Acquired (All Time): ' +
-          countAllTimeAcquired(clientId, pname) +
+          //countAllTimeAcquired(clientId, pname) +
+          getAllTimeAcquired(pname, projAcqMap) +
           '</p>';
       }
       str +=
@@ -181,7 +202,8 @@ global with sharing class L4LInvocableReportWizard {
         pname,
         starttime,
         endtime,
-        status
+        status,
+        allcoList
       );
 
       for (Client_Objective__c co : colist) {
@@ -221,23 +243,43 @@ global with sharing class L4LInvocableReportWizard {
     return result;
   }
 
+  static Integer getAllTimeAcquired(
+    String pname,
+    Map<String, Integer> projAcqMap
+  ) {
+    if (projAcqMap == null)
+      return 0;
+
+    Integer result = projAcqMap.get(pname);
+
+    if (result != null) {
+      return result;
+    } else {
+      return 0;
+    }
+  }
+
   static List<Client_Objective__c> getObjectiveList(
     Id clientId,
     String pname,
     Datetime starttime,
     Datetime endtime,
-    String status
+    String status,
+    List<Client_Objective__c> allcoList
   ) {
-    return [
-      SELECT Objective_Name__c
-      FROM Client_Objective__c
-      WHERE
-        client__c = :clientId
-        AND status__c = :status
-        AND Objective__r.SD__r.Program__r.Name = :pname
-        AND lastmodifieddate >= :starttime
-        AND lastmodifieddate < :endtime
-    ];
+    List<client_objective__c> retlist = new List<client_objective__c>();
+
+    for (client_objective__c co : allcoList) {
+      if (
+        (co.status__c == status) &&
+        (co.Objective__r.SD__r.Program__r.Name == pname) &&
+        (co.lastmodifieddate >= starttime) &&
+        (co.lastmodifieddate < endtime)
+      ) {
+        retlist.add(co);
+      }
+    }
+    return retlist;
   }
 
   /**************************************************************

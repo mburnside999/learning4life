@@ -297,7 +297,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>Date: ${_briefdate}<br/>No. Of Objectives: ${d.val}<br/></span>`
+          `<span style='color:white'>${_briefdate}<br/>Objectives: ${d.val}<br/></span>`
         )
         .style("left", d3.pointer(e)[0] + 70 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");

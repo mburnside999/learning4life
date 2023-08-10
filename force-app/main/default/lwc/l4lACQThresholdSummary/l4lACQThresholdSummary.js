@@ -35,7 +35,8 @@ export default class L4lACQThresholdSummary extends LightningElement {
     { label: "150", value: "150" },
     { label: "200", value: "200" },
     { label: "250", value: "250" },
-    { label: "300", value: "300" }
+    { label: "300", value: "300" },
+    { label: "400", value: "400" }
   ];
 
   t2options = [{ label: "500", value: "500", isChecked: true }];

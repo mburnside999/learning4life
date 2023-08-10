@@ -157,16 +157,16 @@ public with sharing class LFLInvocableSessionStatistics {
     System.debug('incorrect ' + incorrectMap);
     System.debug('prompted ' + promptedMap);
 
-    Logger.debug(
-      'Apex:computeSessionStats() correctMap=' +
-      correctMap +
-      ' nonResponsiveMap=' +
-      nonResponsiveMap +
-      ' incorrectMap=' +
-      incorrectMap +
-      ' promptedMap=' +
-      promptedMap
-    );
+    // Logger.debug(
+    //   'Apex:computeSessionStats() correctMap=' +
+    //   correctMap +
+    //   ' nonResponsiveMap=' +
+    //   nonResponsiveMap +
+    //   ' incorrectMap=' +
+    //   incorrectMap +
+    //   ' promptedMap=' +
+    //   promptedMap
+    // );
 
     Map<String, Integer> temp = new Map<String, Integer>();
     Integer count = 0;

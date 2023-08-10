@@ -1,58 +1,60 @@
 <template>
-  <div class="c-container">
-    <lightning-layout>
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          From: {startd}
-        </div>
-      </lightning-layout-item>
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          To: {endd}
-        </div>
-      </lightning-layout-item>
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          Weeks: {weeks}
-        </div>
-      </lightning-layout-item>
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          Sessions: {sessionCount}
-        </div>
-      </lightning-layout-item>
+  <lightning-card title="Client Objectives Time Series - Summary">
+    <div class="c-container">
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            From: {startd}
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            To: {endd}
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            Weeks: {weeks}
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            Sessions: {sessionCount}
+          </div>
+        </lightning-layout-item>
 
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          Acquired: {numberAcquiredInPeriod}
-        </div>
-      </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            Acquired: {numberAcquiredInPeriod}
+          </div>
+        </lightning-layout-item>
 
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          #ACQ / Week: {rate}
-        </div>
-      </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            #ACQ / Week: {rate}
+          </div>
+        </lightning-layout-item>
 
-      <lightning-layout-item padding="around-small">
-        <div
-          class="custom-box slds-box slds-p-around_medium slds-text-align_center"
-        >
-          #ACQ / Session: {acquiredPerSession}
-        </div>
-      </lightning-layout-item>
-    </lightning-layout>
-  </div>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            #ACQ / Session: {acquiredPerSession}
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
 </template>

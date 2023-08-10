@@ -1,25 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="MBLWCBCShipment">
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle
+  xmlns="http://soap.sforce.com/2006/04/metadata"
+  fqn="MBLWCBCShipment"
+>
     <apiVersion>54.0</apiVersion>
-     <isExposed>true</isExposed>
+    <isExposed>true</isExposed>
     <targets>
-      <target>lightning__RecordPage</target>
-      <target>lightning__AppPage</target>
-      <target>lightning__HomePage</target>
-  </targets>
-  <targetConfigs>
-    <targetConfig targets="lightning__RecordPage">
-      
-        <supportedFormFactors>
-            <supportedFormFactor type="Small" />
-            <supportedFormFactor type="Large" />
-        </supportedFormFactors>
-      
-        <property name="testSessionStatus" type="String"/>
-        <property name="sessionStatus" type="String"/>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+
+            <supportedFormFactors>
+                <supportedFormFactor type="Small" />
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors>
+
+            <property name="testSessionStatus" type="String" />
+            <property name="sessionStatus" type="String" />
 
 
-    </targetConfig>
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property
+        name="recordId"
+        type="String"
+        default="{!Route.recordId}"
+      />
+        </targetConfig>
 
-</targetConfigs>
+    </targetConfigs>
 </LightningComponentBundle>

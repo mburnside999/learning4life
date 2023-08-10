@@ -65,10 +65,10 @@ export default class D3HeatMap extends LightningElement {
   ];
 
   periodoptions = [
-    { label: "All", value: "All" },
+    { label: "All", value: "All", isChecked: true },
     { label: "1 Day", value: "1" },
     { label: "7 Days", value: "7" },
-    { label: "14 Days", value: "14", isChecked: true },
+    { label: "14 Days", value: "14" },
     { label: "30 Days", value: "30" },
     { label: "60 Days", value: "60" },
     { label: "90 Days", value: "90" },
@@ -79,7 +79,7 @@ export default class D3HeatMap extends LightningElement {
   optionval = "All"; //default
   sdoptionval = "All";
   stageoptionval = "All";
-  periodval = "14";
+  periodval = "All";
   statusval = "false";
   respondedval = "true"; //true=include "N" values
 
@@ -166,7 +166,7 @@ export default class D3HeatMap extends LightningElement {
           clientId: this.recordId,
           programStr: "All",
           sdStr: "All",
-          periodStr: "14",
+          periodStr: "All",
           stageStr: "All",
           showAcquired: this.isSelected
         }));
@@ -423,7 +423,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status = ${d.previous_status}<br/>%C = ${d.value}% (${d.totalCorrect}/${d.totalResponses})<br/>%Cᵃᵈʲ = ${d.adjustedvalue}% (${d.totalCorrect}/${d.totalAdjustedResponses})<br/></span>`
+          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status = ${d.previous_status}<br/>Include N, %C = ${d.value}% (${d.totalCorrect}/${d.totalResponses})<br/>Exclude N, %Cᵃᵈʲ = ${d.adjustedvalue}% (${d.totalCorrect}/${d.totalAdjustedResponses})<br/></span>`
         )
         .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
