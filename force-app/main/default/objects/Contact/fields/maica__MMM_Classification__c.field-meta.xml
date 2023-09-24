@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>maica__MMM_Classification__c</fullName>
+    <deprecated>false</deprecated>
+    <description>The Modified Monash Model (MMM) defines whether the Contact resides in a city, rural, remote or very remote location.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The Modified Monash Model (MMM) defines whether the Contact resides in a city, rural, remote or very remote location.</inlineHelpText>
+    <label>MMM Classification</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>maica__MMM_Classification</valueSetName>
+    </valueSet>
+</CustomField>

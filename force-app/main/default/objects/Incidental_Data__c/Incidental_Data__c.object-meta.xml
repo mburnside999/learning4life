@@ -162,8 +162,8 @@
     </nameField>
     <pluralLabel>Incidental Data</pluralLabel>
     <searchLayouts>
-        <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
         <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
+        <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>

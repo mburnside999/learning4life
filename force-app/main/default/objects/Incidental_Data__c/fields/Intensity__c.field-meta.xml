@@ -40,6 +40,7 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Communication</controllingFieldValue>
             <controllingFieldValue>Behaviours of Concern</controllingFieldValue>
             <controllingFieldValue>Self Stimulatory</controllingFieldValue>
             <controllingFieldValue>Reinforcement Development</controllingFieldValue>
@@ -48,6 +49,7 @@
             <valueName>1</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Communication</controllingFieldValue>
             <controllingFieldValue>Behaviours of Concern</controllingFieldValue>
             <controllingFieldValue>Self Stimulatory</controllingFieldValue>
             <controllingFieldValue>Reinforcement Development</controllingFieldValue>
@@ -56,6 +58,7 @@
             <valueName>2</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Communication</controllingFieldValue>
             <controllingFieldValue>Behaviours of Concern</controllingFieldValue>
             <controllingFieldValue>Self Stimulatory</controllingFieldValue>
             <controllingFieldValue>Reinforcement Development</controllingFieldValue>
@@ -64,6 +67,7 @@
             <valueName>3</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Communication</controllingFieldValue>
             <controllingFieldValue>Behaviours of Concern</controllingFieldValue>
             <controllingFieldValue>Self Stimulatory</controllingFieldValue>
             <controllingFieldValue>Reinforcement Development</controllingFieldValue>
@@ -72,6 +76,7 @@
             <valueName>4</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Communication</controllingFieldValue>
             <controllingFieldValue>Behaviours of Concern</controllingFieldValue>
             <controllingFieldValue>Self Stimulatory</controllingFieldValue>
             <controllingFieldValue>Reinforcement Development</controllingFieldValue>

@@ -1295,3 +1295,13 @@ global with sharing class L4LInvocableReportWizard {
   }
 }
 
+
+
+List<Behaviour_of_Concern__c> getUnused=L4LController.getUnusedBOC('0018t000002vfSfAAI');
+System.debug(getUnused);
+
+
+List<Behaviour_of_Concern__c> getPopularCBOC = L4LController.getPopularCBOC('0019n00000BPIjRAAX');
+System.debug(getPopularCBOC);
+List<client_boc__c> cbocList = L4LController.getActiveCBOCList('0018t000002yucNAAQ');
+System.debug('size = '+cbocList.size());

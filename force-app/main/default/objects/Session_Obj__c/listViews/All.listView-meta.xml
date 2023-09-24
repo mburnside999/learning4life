@@ -10,6 +10,21 @@
     <columns>Incorrect__c</columns>
     <columns>Previous_Status__c</columns>
     <columns>Comment__c</columns>
+    <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>LAST_N_DAYS:7</value>
+    </filters>
+    <filters>
+        <field>Comment__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <filters>
+        <field>Comment__c</field>
+        <operation>notEqual</operation>
+        <value>LG</value>
+    </filters>
     <label>All</label>
 </ListView>

@@ -23,6 +23,8 @@ public with sharing class LFLPopulateTestData {
    */
 
   public static void load() {
+    delete [SELECT id FROM Session_BOC__c];
+    delete [SELECT id FROM Client_BOC__c];
     delete [SELECT id FROM Account WHERE FirstName = 'Test FName'];
     delete [SELECT id FROM Account WHERE FirstName = 'TestFN'];
     delete [SELECT id FROM client_objective__c];
@@ -51,6 +53,37 @@ public with sharing class LFLPopulateTestData {
       PersonMobilePhone = '12345678'
     );
     insert newAccount;
+
+    // behaviour of concern
+    Behaviour_of_concern__c boc1 = new Behaviour_of_concern__c(
+      name = 'Behaviour1'
+    );
+    insert boc1;
+    Behaviour_of_concern__c boc2 = new Behaviour_of_concern__c(
+      name = 'Behaviour2'
+    );
+    insert boc2;
+    Behaviour_of_concern__c boc3 = new Behaviour_of_concern__c(
+      name = 'Unused Behaviour'
+    );
+    insert boc3;
+
+    // client behaviour of concern
+    Client_BOC__c cboc1 = new Client_BOC__c(
+      client__c = newAccount.Id,
+      behaviour_of_concern__c = boc1.Id,
+      clinical_notes__c = 'clinical notes',
+      start_date__c = Date.Today(),
+      status__c = 'Active'
+    );
+    insert cboc1;
+    Client_BOC__c cboc2 = new Client_BOC__c(
+      client__c = newAccount.Id,
+      behaviour_of_concern__c = boc2.Id,
+      start_date__c = Date.Today(),
+      status__c = 'Inactive'
+    );
+    insert cboc2;
 
     //create a Program
     Program__c p = new Program__c(
@@ -149,12 +182,33 @@ public with sharing class LFLPopulateTestData {
     so1.Objective__c = o1.Id;
     so1.correct__c = true;
     insert so1;
+    // add a session boc
+    Session_boc__c sboc1 = new Session_boc__c(
+      client_boc__c = cboc1.Id,
+      session__c = session.Id,
+      intensity__c = '1',
+      occurrences__c = 1,
+      duration_mins__c = 10,
+      comments__c = 'Comments'
+    );
+    insert sboc1;
 
     Session_Obj__c so2 = new Session_Obj__c();
     so2.Session__c = session.Id;
     so2.Objective__c = o2.Id;
     so2.incorrect__c = true;
     insert so2;
+
+    // add a session boc
+    Session_boc__c sboc2 = new Session_boc__c(
+      client_boc__c = cboc1.Id,
+      session__c = session.Id,
+      intensity__c = '1',
+      occurrences__c = 1,
+      duration_mins__c = 10,
+      comments__c = 'Comments'
+    );
+    insert sboc2;
 
     Session_Obj__c so3 = new Session_Obj__c();
     so3.Session__c = session.Id;

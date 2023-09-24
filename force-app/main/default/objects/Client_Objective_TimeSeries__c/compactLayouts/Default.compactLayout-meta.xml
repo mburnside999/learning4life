@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Default</fullName>
+    <fields>ProgramObjective__c</fields>
+    <fields>SD_Name__c</fields>
+    <fields>Status__c</fields>
+    <fields>Date_Introduced__c</fields>
+    <fields>Date_CIP__c</fields>
+    <fields>Date_Held__c</fields>
+    <fields>Date_Acquired__c</fields>
+    <fields>Date_Absorbed__c</fields>
+    <fields>Frequency__c</fields>
+    <fields>Re_Test_Recommended__c</fields>
+    <label>Default</label>
+</CompactLayout>

@@ -35,6 +35,29 @@ private class TestL4LController {
   }
 
   /*******************************************************************************************************
+   * @description Test getSessionBOC method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetsessionBOC();
+   */
+
+  @isTest
+  static void testGetsessionBOC() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id sessionId = [SELECT id FROM session__c LIMIT 1].Id;
+    Test.stopTest();
+
+    List<session_boc__c> so = L4LController.getSessionBOC(sessionId);
+    System.assert(
+      so.size() > 0,
+      'Expected at least one session_obj__c record retrieved.'
+    );
+  }
+
+  /*******************************************************************************************************
    * @description Test getClientObjectivesForSession method
    * @param void
    *
@@ -59,6 +82,30 @@ private class TestL4LController {
   }
 
   /*******************************************************************************************************
+   * @description Test getClientBOCForSession method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetClientBOCForSession(sessionId);
+   */
+
+  @isTest
+  static void testGetClientBOCForSession() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id sessionId = [SELECT id FROM session__c LIMIT 1].Id;
+    Test.stopTest();
+    List<Client_BOC__c> cboclist = L4LController.getClientBOCForSession(
+      sessionId
+    );
+    System.assert(
+      cboclist != null,
+      'Expected at least one client_boc__c record retrieved'
+    );
+  }
+
+  /*******************************************************************************************************
    * @description Test getClientObjectives method
    * @param void
    *
@@ -78,6 +125,44 @@ private class TestL4LController {
     System.assert(
       co != null,
       'Expected at least one client_objective__c record retrieved'
+    );
+  }
+
+  /*******************************************************************************************************
+   * @description Test getClientObjectivesFilteredOnActive method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetClientObjectivesFilteredOnActive();
+   */
+
+  @isTest
+  static void testGetClientBOCFilteredOnActive() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+
+    Test.stopTest();
+
+    List<Client_BOC__c> cboclist = L4LController.getClientBOCFilteredOnActive(
+      clientId,
+      true
+    );
+
+    System.assert(
+      cboclist != null,
+      'Expected at least one client_boc__c record retrieved'
+    );
+
+    List<Client_BOC__c> cboclist2 = L4LController.getClientBOCFilteredOnActive(
+      clientId,
+      false
+    );
+
+    System.assert(
+      cboclist2 != null,
+      'Expected at least one client_boc__c record retrieved'
     );
   }
 
@@ -225,6 +310,28 @@ private class TestL4LController {
 
     List<Objective__c> o = L4LController.getUnusedObjectives(clientId);
     System.assert(o.size() != 0, 'Expected non zero unused records.');
+  }
+
+  /*******************************************************************************************************
+   * @description Test getUnusedBOCBySearch method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetUnusedBOCBySearch();
+   */
+  @isTest
+  static void testGetUnusedBOCBySearch() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    List<Behaviour_of_Concern__c> bocList = L4LController.getUnusedBOCBySearch(
+      clientId,
+      '%'
+    );
+    System.assert(bocList.size() != 0, 'Expected non zero unused records.');
   }
 
   /*******************************************************************************************************
@@ -449,6 +556,78 @@ private class TestL4LController {
   }
 
   /*******************************************************************************************************
+   * @description Test createSessionBOCByArrayWithOrderedResults method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testCreateSessionBOCByArrayWithOrderedResults();
+   */
+  @isTest
+  static void testCreateSessionBOCByArrayWithOrderedResults() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id sessionId = [SELECT id FROM session__c LIMIT 1].Id;
+    Test.stopTest();
+
+    List<Client_boc__c> col = [SELECT id, name FROM client_boc__c LIMIT 1];
+
+    String jsonstr = JSON.serialize(col);
+
+    List<L4LController.SessionResult> lsr = new List<L4LController.SessionResult>();
+    L4LController.SessionResult sr = new L4LController.SessionResult();
+    sr.skill = 'C';
+    lsr.add(sr);
+    sr = new L4LController.SessionResult();
+    sr.skill = 'I';
+    lsr.add(sr);
+    sr = new L4LController.SessionResult();
+    sr.skill = 'P';
+    lsr.add(sr);
+
+    String skillstr = JSON.serialize(lsr);
+
+    List<session_boc__c> mysboclist = L4LController.createSessionBOCByArrayWithOrderedResults(
+      jsonstr,
+      sessionId,
+      skillstr
+    );
+
+    System.assert(
+      mysboclist.size() == 0,
+      'Expected no session_bco records created at this stage'
+    );
+  }
+
+  /*******************************************************************************************************
+   * @description Test createSessionBOC method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testCreateSessionBOC();
+   */
+  @isTest
+  static void testCreateSessionBOC() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id sessionId = [SELECT id FROM session__c LIMIT 1].Id;
+    Test.stopTest();
+
+    Id bocid = [SELECT id, name FROM client_boc__c LIMIT 1].Id;
+    Integer i = L4LController.createSessionBOC(
+      bocid,
+      sessionId,
+      '1',
+      10,
+      10,
+      'Added by Test method'
+    );
+
+    System.assert(i == 1, 'Expected session_bco record to be created');
+  }
+
+  /*******************************************************************************************************
    * @description Test createClientObjectivesByArray method
    * @param void
    *
@@ -508,6 +687,47 @@ private class TestL4LController {
   }
 
   /*******************************************************************************************************
+   * @description Test createClientBOCByArray method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testCreateClientBOCByArray();
+   */
+
+  @isTest
+  static void testCreateClientBOCByArray() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+
+    Behaviour_of_concern__c boc1 = new Behaviour_of_concern__c(
+      name = 'Another Behaviour1'
+    );
+    insert boc1;
+
+    List<Behaviour_of_concern__c> bocs = [
+      SELECT id, name
+      FROM Behaviour_of_concern__c
+      WHERE id = :boc1.Id
+      LIMIT 1
+    ];
+
+    String jsonstr = JSON.serialize(bocs);
+
+    Test.stopTest();
+
+    Integer noOfCBOCsCreated = L4LController.createClientBOCByArray(
+      jsonstr,
+      clientId
+    );
+    System.assert(
+      noOfCBOCsCreated == 1,
+      'Expected one Client Objective to be created '
+    );
+  }
+
+  /*******************************************************************************************************
    * @description Test setSessionObjectivesByArray method
    * @param void
    *
@@ -542,6 +762,53 @@ private class TestL4LController {
       val
     );
     System.assert(noOfSOsSet == 1, 'Expected one SO to be set');
+  }
+
+  /*******************************************************************************************************
+   * @description Test setSessionObjectivesByArray method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testSetSessionObjectivesByArray();
+   */
+
+  @isTest
+  static void testSetSessionBOCByArray() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Test.stopTest();
+    List<Session_BOC__c> sbocs = [
+      SELECT id, Name, Comments__c
+      FROM session_BOC__c
+      LIMIT 1
+    ];
+    String jsonstr = JSON.serialize(sbocs);
+    String val = 'Delete';
+    Integer noOfSOsSet = L4LController.setSessionBOCByArray(jsonstr, val);
+    System.assert(noOfSOsSet == 1, 'Expected one SBOC to be processed');
+  }
+
+  /*******************************************************************************************************
+   * @description TestgetActiveCBOC method
+   * @param void
+   *
+   *
+   * @example
+   * TestL4LController.testGetActiveCBOC(clientId);
+   */
+
+  @isTest
+  static void TestgetActiveCBOCList() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+
+    Test.stopTest();
+
+    List<client_BOC__c> cbocs = L4LController.getActiveCBOCList(clientId);
+    cbocs.size();
+    System.assert(cbocs.size() > 0, 'Expected at least one active CBOC');
   }
 
   /*******************************************************************************************************

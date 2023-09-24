@@ -2,15 +2,17 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>LFL_Clients</fullName>
     <columns>ACCOUNT.NAME</columns>
-    <columns>ACCOUNT.PHONE1</columns>
-    <columns>PC_ADDRESS2_STREET</columns>
-    <columns>PC_ADDRESS2_CITY</columns>
-    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Current_Age__pc</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>IS_PERSON_ACCOUNT</field>
         <operation>equals</operation>
         <value>1</value>
     </filters>
-    <label>LFL Clients</label>
+    <filters>
+        <field>Current__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Current L4L Clients</label>
 </ListView>
