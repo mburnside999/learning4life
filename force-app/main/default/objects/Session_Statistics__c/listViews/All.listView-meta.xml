@@ -3,19 +3,13 @@
     <fullName>All</fullName>
     <columns>NAME</columns>
     <columns>Percent_Correct__c</columns>
-    <columns>icon__c</columns>
-    <columns>Responded_Percent_Correct__c</columns>
-    <columns>Responded_Icon__c</columns>
     <columns>Objective__c</columns>
+    <columns>icon__c</columns>
     <columns>Session__c</columns>
     <columns>Previous_Status__c</columns>
     <columns>TotalAcquiredCorrect__c</columns>
     <columns>TotalAcquiredIncorrect__c</columns>
     <columns>TotalAcquiredPrompted__c</columns>
-    <columns>TotalAcquiredNonResponsive__c</columns>
-    <columns>iconPortal__c</columns>
-    <columns>iconstr__c</columns>
-    <columns>responded_iconstr__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>

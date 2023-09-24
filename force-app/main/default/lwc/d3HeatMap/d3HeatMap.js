@@ -65,11 +65,11 @@ export default class D3HeatMap extends LightningElement {
   ];
 
   periodoptions = [
-    { label: "All", value: "All", isChecked: true },
+    { label: "All", value: "All" },
     { label: "1 Day", value: "1" },
     { label: "7 Days", value: "7" },
     { label: "14 Days", value: "14" },
-    { label: "30 Days", value: "30" },
+    { label: "30 Days", value: "30", isChecked: true },
     { label: "60 Days", value: "60" },
     { label: "90 Days", value: "90" },
     { label: "180 Days", value: "180" },
@@ -79,7 +79,7 @@ export default class D3HeatMap extends LightningElement {
   optionval = "All"; //default
   sdoptionval = "All";
   stageoptionval = "All";
-  periodval = "All";
+  periodval = "30";
   statusval = "false";
   respondedval = "true"; //true=include "N" values
 
@@ -166,7 +166,7 @@ export default class D3HeatMap extends LightningElement {
           clientId: this.recordId,
           programStr: "All",
           sdStr: "All",
-          periodStr: "All",
+          periodStr: "30",
           stageStr: "All",
           showAcquired: this.isSelected
         }));
@@ -290,30 +290,31 @@ export default class D3HeatMap extends LightningElement {
     }
 
     // for the LWC radio group we produce the program buttons once upon rendering
-    if (!this.programsrendered) {
-      this.options = [{ label: "All", value: "All", isChecked: true }];
-      this.sdoptions = [{ label: "All", value: "All", isChecked: true }];
+    // if (!this.programsrendered) {
+    console.log("new rendering");
+    this.options = [{ label: "All", value: "All", isChecked: true }];
+    this.sdoptions = [{ label: "All", value: "All", isChecked: true }];
 
-      let _sortedProgsArray = Array.from(this.progsSet).sort();
-      let _sortedProgsSet = new Set(_sortedProgsArray);
-      let progSetIterator = _sortedProgsSet.values();
-      // List all Values
-      for (const entry of progSetIterator) {
-        console.log("Program = " + entry);
-        this.options.push({ label: entry, value: entry });
-      }
-
-      let _sortedSdArray = Array.from(this.sdSet).sort();
-      let _sortedSdSet = new Set(_sortedSdArray);
-      let sdSetIterator = _sortedSdSet.values();
-      // List all Values
-      for (const entry of sdSetIterator) {
-        console.log("SD = " + entry);
-        this.sdoptions.push({ label: entry, value: entry });
-      }
-
-      this.programsrendered = true;
+    let _sortedProgsArray = Array.from(this.progsSet).sort();
+    let _sortedProgsSet = new Set(_sortedProgsArray);
+    let progSetIterator = _sortedProgsSet.values();
+    // List all Values
+    for (const entry of progSetIterator) {
+      console.log("Program = " + entry);
+      this.options.push({ label: entry, value: entry });
     }
+
+    let _sortedSdArray = Array.from(this.sdSet).sort();
+    let _sortedSdSet = new Set(_sortedSdArray);
+    let sdSetIterator = _sortedSdSet.values();
+    // List all Values
+    for (const entry of sdSetIterator) {
+      console.log("SD = " + entry);
+      this.sdoptions.push({ label: entry, value: entry });
+    }
+
+    this.programsrendered = true;
+    // }
 
     //clean up any previous svg.d3 descendents
     let svg = d3.select(this.template.querySelector(".scatterplot"));

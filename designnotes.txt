@@ -27,3 +27,73 @@ OR
     //  a0A8t0000003Ho7EAE 1
     //  a0A8t0000003HnjEAE 1
     //...
+
+
+
+
+
+    // HTML File Code :
+<template>
+    <div style="height: 300px;">
+        <lightning-datatable
+                key-field="id"
+                data={data}
+                hide-checkbox-column
+                    show-row-number-column                    
+                    suppress-bottom-bar
+                    columns={columns}
+                    oncellchange ={handleSave}
+                    draft-values={draftValues} 
+                    errors={errors}>
+        </lightning-datatable>
+    </div>
+</template>
+
+
+//JS File Code:
+import { LightningElement } from 'lwc';
+import generateData from './generateData';
+
+const columns = [
+    { label: 'Label', fieldName: 'name' },
+    { label: 'Website', fieldName: 'website', type: 'url' },
+    { label: 'Phone', fieldName: 'phone', type: 'phone' },
+    { label: 'Balance', fieldName: 'amount', type: 'currency', editable: true },
+    { label: 'CloseAt', fieldName: 'closeAt', type: 'date' },
+];
+
+export default class BasicDatatable extends LightningElement {
+    data = [];
+    columns = columns;
+    errors;
+    saveDraftValues;
+    draftValues = [];
+
+    connectedCallback() {
+        const data = generateData({ amountOfRecords: 100 });
+        this.data = data;
+    }
+
+    handleSave(event) {
+        this.saveDraftValues = event.detail.draftValues;
+        var rowErrorMessages = [];
+        var rowErrorFieldNames = [];
+        var rowsError = {};
+        rowErrorMessages.push('Enter a valid number. Number cannot be less then 100 $.');
+        rowErrorFieldNames.push('amount');
+
+        rowsError[this.saveDraftValues[0].id] = {
+            messages: rowErrorMessages,
+            fieldNames: rowErrorFieldNames,
+            title: 'We found 1 error.'
+        };
+         if (this.saveDraftValues[0].amount <'100') {
+            this.errors = {
+                rows: rowsError
+            }           
+        }
+        else {
+            this.errors = {};      // when error should not show
+        }
+  }
+}

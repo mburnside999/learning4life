@@ -1,0 +1,37 @@
+<template>
+  <c-logger></c-logger>
+
+  <lightning-card title="Available Behaviours of Concern">
+    <input
+      class="slds-input"
+      size="40"
+      type="text"
+      placeholder="You can filter the search results here..."
+      oninput={handleFilterKeyInput}
+    />
+
+    <br /><br />
+    &nbsp;<lightning-button-group>
+      <lightning-button
+        label="Create Client BOC"
+        title="Create Client BOC"
+        variant="brand"
+        onclick={handleClickArray}
+        disabled={disableButton}
+      ></lightning-button>
+
+      <lightning-button label="Close" title="Close" onclick={handleClickClose}>
+      </lightning-button>
+    </lightning-button-group>
+    <br /><br />
+    Result: {resultmessage}
+    <br /><br />
+    <lightning-datatable
+      key-field="Id"
+      is-loading
+      data={boc}
+      columns={columns}
+      onrowselection={getSelectedName}
+    ></lightning-datatable>
+  </lightning-card>
+</template>

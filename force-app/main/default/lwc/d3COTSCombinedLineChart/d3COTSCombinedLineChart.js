@@ -391,7 +391,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
 
     svg
       .append("text")
-      .attr("x", (width - 300) / 2)
+      .attr("x", (width - 360) / 2)
       .attr("y", 0)
       .attr("text-anchor", "left")
       .style("font-size", "18px")

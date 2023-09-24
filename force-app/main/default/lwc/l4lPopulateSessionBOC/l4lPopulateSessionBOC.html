@@ -1,0 +1,150 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <c-logger></c-logger>
+  <lightning-card title="Collect L4L DTD">
+    <div class="page-section page-right"></div>
+    <lightning-input
+      maxlength="50"
+      type="search"
+      placeholder="Filter Prog, Obj, SD or Status..."
+      onchange={handleSearchKeyInput}
+    >
+    </lightning-input>
+    <div class="c-container">
+      <lightning-layout multiple-rows="true">
+        <lightning-layout-item padding="around-small" size="12">
+          <lightning-layout>
+            <lightning-layout-item padding="around-small" size="6">
+              <!-- <div class="slds-text-heading_medium">
+                New! JUNE 2023, after succesfully recording DTD scores add LG,
+                or, write your own Comment (these are applied to last item
+                recorded).
+              </div> -->
+              <br />
+              <!-- <lightning-button  label="+C" onclick={handleIncrCorrect}></lightning-button>-->
+              <!--<lightning-button  label="+I" onclick={handleIncrIncorrect}></lightning-button>-->
+              <!--<lightning-button  label="+P" onclick={handleIncrPrompted}></lightning-button>-->
+              <!--<lightning-button  label="Reset" onclick={resetCounters}></lightning-button>-->
+
+              <lightning-button-group>
+                <div class="slds-p-left_small">
+                  <lightning-button label="+C" onclick={handleIncrCorrect}>
+                  </lightning-button>
+                  <lightning-button label="+I" onclick={handleIncrIncorrect}>
+                  </lightning-button>
+                  <lightning-button
+                    label="+N"
+                    onclick={handleIncrNonResponsive}
+                  >
+                  </lightning-button>
+
+                  <lightning-button label="+P" onclick={handleIncrPrompted}>
+                  </lightning-button>
+                  <lightning-button label="Reset" onclick={resetCounters}>
+                  </lightning-button>
+                </div>
+              </lightning-button-group>
+
+              <lightning-button-group>
+                <div class="slds-p-left_small">
+                  <lightning-button label="Close" onclick={handleClickCancel}>
+                  </lightning-button>
+                </div>
+              </lightning-button-group>
+
+              <br />
+              <div class="slds-text-color_success slds-text-heading_small">
+                {breadcrumb}
+              </div>
+              <div class="slds-text-color_success slds-text-heading_medium">
+                <!-- print the results without line breaks-->
+                <template for:each={results} for:item="result">
+                  <p style="display: inline; color: blue" key={result}>
+                    {result}&nbsp;
+                  </p>
+                </template>
+              </div>
+              <br />
+              <lightning-button-group>
+                <div class="slds-p-left_small">
+                  <lightning-button
+                    label="Record Assessment"
+                    disabled={buttonDisabled}
+                    title="Create Session Objective Assessment"
+                    variant="Brand"
+                    onclick={handleClickArray}
+                  >
+                  </lightning-button>
+                </div>
+              </lightning-button-group>
+              <lightning-button-group>
+                <div class="slds-p-left_small">
+                  <lightning-button
+                    label="LG"
+                    disabled={lgbuttondisabled}
+                    title="LG"
+                    variant="Brand"
+                    onclick={handleClickLG}
+                  >
+                  </lightning-button>
+                  <lightning-button
+                    label="Comment"
+                    disabled={commentbuttondisabled}
+                    title="Comment"
+                    variant="Brand"
+                    onclick={handleClickComment}
+                  >
+                  </lightning-button>
+                </div>
+              </lightning-button-group>
+              <br />
+              <lightning-input
+                disabled={commentinputdisabled}
+                type="text"
+                placeholder="Add a comment"
+                onchange={handleCommentInputChange}
+                value={commentValue}
+              ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small" size="6">
+              <div class="page-section page-right">
+                <div class="slds-text-heading_medium">Recorded</div>
+                <br />
+                <div class="slds-text-heading_small">
+                  <template for:each={sessionresults} for:item="sessionresult">
+                    <p style="color: blue" key={sessionresult}>
+                      {sessionresult}&nbsp;
+                    </p>
+                  </template>
+                </div>
+              </div>
+            </lightning-layout-item>
+          </lightning-layout>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="12">
+          <lightning-datatable
+            max-row-selection="1"
+            enable-infinite-loading
+            key-field="Id"
+            data={objectives}
+            columns={columns}
+            onrowselection={getSelectedName}
+          ></lightning-datatable>
+        </lightning-layout-item>
+        <lightning-layout-item
+          flexibility="auto"
+          padding="around-small"
+          size="12"
+        >
+          <div class="page-footer page-section">
+            <i
+              >Select an objective from the list then press the +C, +I and +P
+              buttons (multiple times if required) to record your assessments.
+              Press "Record Assessment" to confirm.</i
+            >
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>maica__NDIS_Number_Character_Length</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF (
+NOT(ISBLANK(maica__NDIS_Number__c)), OR(LEN(maica__NDIS_Number__c) &lt;&gt;9, NOT(
+ISNUMBER(maica__NDIS_Number__c))), false
+)</errorConditionFormula>
+    <errorMessage>If provided, the NDIS Number must be 9 characters in length.</errorMessage>
+</ValidationRule>

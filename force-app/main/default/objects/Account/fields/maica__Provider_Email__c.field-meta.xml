@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>maica__Provider_Email__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Address used by Maica for email distribution, such as sending Invoices</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Address used by Maica for email distribution, such as sending Invoices</inlineHelpText>
+    <label>Provider Email</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Email</type>
+    <unique>false</unique>
+</CustomField>

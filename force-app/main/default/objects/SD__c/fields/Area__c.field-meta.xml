@@ -58,19 +58,9 @@
                 <label>Speech</label>
             </value>
             <value>
-                <fullName>Play-Skills</fullName>
-                <default>false</default>
-                <label>Play-Skills</label>
-            </value>
-            <value>
                 <fullName>Conversation</fullName>
                 <default>false</default>
                 <label>Conversation</label>
-            </value>
-            <value>
-                <fullName>Receptive-Language</fullName>
-                <default>false</default>
-                <label>Receptive-Language</label>
             </value>
             <value>
                 <fullName>Expressive Language</fullName>
@@ -88,21 +78,64 @@
                 <label>Kinder Readiness</label>
             </value>
             <value>
+                <fullName>School Readiness</fullName>
+                <default>false</default>
+                <label>School Readiness</label>
+            </value>
+            <value>
+                <fullName>Language</fullName>
+                <default>false</default>
+                <label>Language</label>
+            </value>
+            <value>
+                <fullName>Expressive reasoning</fullName>
+                <default>false</default>
+                <label>Expressive reasoning</label>
+            </value>
+            <value>
+                <fullName>Community Access</fullName>
+                <default>false</default>
+                <label>Community Access</label>
+            </value>
+            <value>
+                <fullName>Abstract Language</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Abstract Language</label>
+            </value>
+            <value>
+                <fullName>Play-Skills</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Play-Skills</label>
+            </value>
+            <value>
+                <fullName>Receptive-Language</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Receptive-Language</label>
+            </value>
+            <value>
                 <fullName>SelfCare</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>SelfCare</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Stage One</controllingFieldValue>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
             <valueName>Learning to Learn</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage One</controllingFieldValue>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
             <valueName>Imitation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage One</controllingFieldValue>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <controllingFieldValue>Stage Four</controllingFieldValue>
             <valueName>Play Skills</valueName>
         </valueSettings>
         <valueSettings>
@@ -111,10 +144,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage One</controllingFieldValue>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
             <valueName>Receptive Language</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage One</controllingFieldValue>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
             <valueName>Self-Care</valueName>
         </valueSettings>
         <valueSettings>
@@ -123,30 +160,32 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage One</controllingFieldValue>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
             <valueName>Social Play Skills</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage One</controllingFieldValue>
+            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
             <valueName>Speech</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage Two</controllingFieldValue>
-            <valueName>Play-Skills</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
+            <controllingFieldValue>Stage Four</controllingFieldValue>
             <valueName>Conversation</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage Two</controllingFieldValue>
-            <valueName>Receptive-Language</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Stage Two</controllingFieldValue>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
+            <controllingFieldValue>Stage Four</controllingFieldValue>
             <valueName>Expressive Language</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage Two</controllingFieldValue>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
+            <controllingFieldValue>Stage Four</controllingFieldValue>
             <valueName>Abstract Concepts</valueName>
         </valueSettings>
         <valueSettings>
@@ -155,7 +194,21 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Stage Two</controllingFieldValue>
-            <valueName>SelfCare</valueName>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
+            <valueName>Community Access</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
+            <controllingFieldValue>Stage Four</controllingFieldValue>
+            <valueName>School Readiness</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Three</controllingFieldValue>
+            <valueName>Language</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Stage Four</controllingFieldValue>
+            <valueName>Expressive reasoning</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

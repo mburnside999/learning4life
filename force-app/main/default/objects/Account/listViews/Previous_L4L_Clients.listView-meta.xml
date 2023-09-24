@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Previous_L4L_Clients</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Current_Age__pc</columns>
+    <columns>ACCOUNT.LAST_ACTIVITY</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>IS_PERSON_ACCOUNT</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Current__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>Previous L4L Clients</label>
+</ListView>

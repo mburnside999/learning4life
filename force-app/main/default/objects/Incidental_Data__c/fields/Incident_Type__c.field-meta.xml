@@ -46,6 +46,12 @@
                 <default>false</default>
                 <label>Tolerance</label>
             </value>
+            <value>
+                <fullName>Eating</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Eating</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
