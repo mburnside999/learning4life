@@ -83,7 +83,7 @@ private class TestL4LTimeSeries {
       clientId,
       'All', //Prog
       'All', //SD
-      'Both', //status
+      'All', //status
       'All' //period
     );
     System.assert(str.length() > 0, 'Expected a return string');

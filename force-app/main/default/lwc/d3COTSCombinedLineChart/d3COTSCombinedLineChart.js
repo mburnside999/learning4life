@@ -30,7 +30,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
   yAxisMin;
   programval = "All"; //default
   sdval = "All";
-  statusval = "Both";
+  statusval = "All";
   periodval = "All";
   progSet = [];
   sdSet = [];
@@ -40,8 +40,9 @@ export default class D3COTSCombinedLineChart extends LightningElement {
   sdoptions = [];
 
   statusoptions = [
-    { label: "Both", value: "Both", isChecked: true },
+    { label: "All", value: "All", isChecked: true },
     { label: "ACQ", value: "ACQ" },
+    { label: "ABS", value: "ABS" },
     { label: "CIP", value: "CIP" }
   ];
 
@@ -160,7 +161,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
           clientId: this.recordId,
           program: "All",
           sd: "All",
-          status: "Both",
+          status: "All",
           periodStr: "All"
         });
       })

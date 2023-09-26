@@ -243,8 +243,8 @@ public class L4LTimeSeries {
       queryCOTSString += ' and sd_name__c=:sd ';
     }
 
-    if (status == 'Both') {
-      queryCOTSString += ' and status__c in (\'ACQ\',\'CIP\') ';
+    if (status == 'All') {
+      queryCOTSString += ' and status__c in (\'ACQ\',\'ABS\',\'CIP\') ';
     } else {
       queryCOTSString += ' and status__c = :status ';
     }
