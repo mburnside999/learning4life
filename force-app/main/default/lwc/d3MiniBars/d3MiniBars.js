@@ -182,7 +182,7 @@ export default class D3MiniBars extends LightningElement {
     );
 
     // set the dimensions and margins of the graph
-    var margin = { top: 40, right: 30, bottom: 40, left: 50 },
+    var margin = { top: 40, right: 30, bottom: 50, left: 50 },
       width = 600 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 

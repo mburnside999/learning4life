@@ -256,7 +256,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
     );
 
     // set the dimensions and margins of the graph
-    const margin = { top: 40, right: 30, bottom: 40, left: 50 },
+    const margin = { top: 40, right: 30, bottom: 50, left: 50 },
       width = 1150 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
