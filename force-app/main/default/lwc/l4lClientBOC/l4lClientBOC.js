@@ -51,7 +51,7 @@ const actions = [
 
 const columns = [
   {
-    label: "BOC",
+    label: "CBOC",
     fieldName: "Name",
     type: "text"
   },

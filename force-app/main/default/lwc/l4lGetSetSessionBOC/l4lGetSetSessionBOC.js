@@ -44,7 +44,7 @@ import SESSION_STATUS_FIELD from "@salesforce/schema/Session__c.Status__c";
 const SESSIONFIELDS = [SESSION_STATUS_FIELD];
 //columns when the session is open
 const columns = [
-  { label: "Id", fieldName: "Name", type: "text", initialWidth: 200 },
+  { label: "SBOC", fieldName: "Name", type: "text", initialWidth: 200 },
   // {
   //   label: "Client_BOC__c",
   //   fieldName: "Client_BOC__c",
@@ -124,7 +124,7 @@ const columns = [
 ];
 //columns when the session is locked
 const lockedcolumns = [
-  { label: "Id", fieldName: "Name", type: "text", initialWidth: 200 },
+  { label: "SBOC", fieldName: "Name", type: "text", initialWidth: 200 },
   // {
   //   label: "Client_BOC__c",
   //   fieldName: "Client_BOC__c",

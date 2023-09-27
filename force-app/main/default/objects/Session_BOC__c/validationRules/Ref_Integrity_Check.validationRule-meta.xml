@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ref_Integrity_Check</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR( CBOC_Client__c ==NULL,
+ Session_Client__c ==NULL,
+CBOC_Client__c!=Session_Client__c)</errorConditionFormula>
+    <errorMessage>A Referential Integrity error occurred.
+The Session client and and the BOC client must match. 
+ 
+Action: Please contact your LFL administrator.</errorMessage>
+</ValidationRule>

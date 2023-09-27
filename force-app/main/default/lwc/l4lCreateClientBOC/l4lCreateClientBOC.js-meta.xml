@@ -9,6 +9,9 @@
       <target>lightning__RecordPage</target>
       <target>lightning__AppPage</target>
       <target>lightning__HomePage</target>
+      <target>lightning__RecordAction</target>
+
+
   </targets>
   <targetConfigs>
     <targetConfig targets="lightning__RecordPage">
@@ -17,6 +20,7 @@
         </supportedFormFactors>
 
     </targetConfig>
+     
 
 </targetConfigs>
 </LightningComponentBundle>
