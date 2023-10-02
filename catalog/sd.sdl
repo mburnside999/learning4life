@@ -1,0 +1,8 @@
+#Mapping values
+#Thu Sep 28 12:19:11 AEST 2023
+Status=Status__c
+SD\:\ SD\ Name=Name
+PID=Program__r\:PID__c
+SDID=SDID__c
+Area=Area__c
+Stage=Stage__c

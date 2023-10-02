@@ -5,6 +5,7 @@
     <columns>Status__c</columns>
     <columns>SD_Active_Count__c</columns>
     <columns>SD_Count__c</columns>
+    <columns>PID__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
