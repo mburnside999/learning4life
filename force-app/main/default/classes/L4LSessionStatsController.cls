@@ -1297,13 +1297,16 @@ public with sharing class L4LSessionStatsController {
       linker.remove(sess + '-' + behaviour);
     }
     // entries remaining in the linker cross product represent
-    // sessions where there was no corresponding behgaviour recorded
-    // Why bother? Well we need these entries so that we can produce a rectangular
-    // behaviours X sessions chart with no gaps
+    // sessions where there was no explicit corresponding behaviour recorded,
+    // but are implicitly "zero" entries
+    //
+    // We need these entries so that we can produce a rectangular
+    // behaviours X sessions chart with no gaps, and to color them for readabiity
     //
     // These entries are flagged with "present:false".
     //
-    // Set the occurrences and duration values to zero, retaining the session and behaviour values
+    // For each linker entry look up the sesssion, set the occurrences and duration values to zero,
+    // retaining the session and behaviour values
     // & continue the creation of the JSON string
 
     for (String key : linker.keySet()) {
