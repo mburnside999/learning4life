@@ -18,11 +18,11 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
    * @name start
    * @description Start
    *
-   * @param BC
+   * @param bc
    * @return
    */
 
-  public Database.querylocator start(Database.BatchableContext BC) {
+  public Database.querylocator start(Database.BatchableContext bc) {
     return Database.getQueryLocator(query);
   }
 
@@ -30,12 +30,11 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
    * @name execute
    * @description Start
    *
-   * @param BC
-   * @param scope
+   * @param bc batchable context
+   * @param scope scope
 
-   * @return
    */
-  public void execute(Database.BatchableContext BC, List<sObject> scope) {
+  public void execute(Database.BatchableContext bc, List<sObject> scope) {
     List<Client_Objective_TimeSeries__c> tslist = new List<Client_Objective_TimeSeries__c>();
 
     for (sObject s : scope) {
@@ -72,11 +71,10 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
    * @name finish
    * @description Start
    *
-   * @param BC
-   * @return
+   * @param bc batchable context
    */
 
-  public void finish(Database.BatchableContext BC) {
+  public void finish(Database.BatchableContext bc) {
     TimeSeries_Log__c endlog = new TimeSeries_Log__c();
     endlog.comments__c =
       'Successfully processed ' +

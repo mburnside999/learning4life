@@ -28,14 +28,15 @@ public with sharing class LFLDTDRates {
     //get date and runid limits
 
     String jsonStr;
-    Integer retro_start_months;
+    Integer retroStartMonths;
 
-    if (retro == 0)
-      retro_start_months = -999;
-    else
-      retro_start_months = -1 * retro;
+    if (retro == 0) {
+      retroStartMonths = -999;
+    } else {
+      retroStartMonths = -1 * retro;
+    }
 
-    DateTime endpoint = Datetime.now().addMonths(retro_start_months);
+    DateTime endpoint = Datetime.now().addMonths(retroStartMonths);
     list<aggregateresult> limitDatesList = [
       SELECT
         min(TS_load_DateTime__c),
@@ -72,7 +73,7 @@ public with sharing class LFLDTDRates {
     DateTime dt1,
     DateTime dt2
   ) {
-    String SCENARIO = 'COTS TimeSeries - Acq Rate by Dates - Apex';
+    final String SCENARIO = 'COTS TimeSeries - Acq Rate by Dates - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -194,8 +195,9 @@ public with sharing class LFLDTDRates {
     Decimal rate;
     if (elapsed != 0) {
       rate = (decimal) (numberAcquiredInPeriod) / (weeks);
-    } else
+    } else {
       rate = 0;
+    }
 
     // work out the number of sessions
     list<aggregateresult> sessionCountList = [
@@ -209,8 +211,9 @@ public with sharing class LFLDTDRates {
     Decimal totalSessionDurationHrs = (Decimal) sessionCountList[0]
       .get('expr1');
 
-    if (totalSessionDurationHrs == null)
+    if (totalSessionDurationHrs == null) {
       totalSessionDurationHrs = 1.0;
+    }
 
     Decimal acquiredPerSession;
     if (sessionCount != 0) {
@@ -353,7 +356,6 @@ public with sharing class LFLDTDRates {
 
     for (AggregateResult res : limitDatesList) {
       endAcquiredCount = (Integer) res.get('expr0');
-      Integer i = (Integer) res.get('expr0');
       String runid = (String) res.get('RunId__c');
       Date rundate = (Date) rundatemap.get(runid);
       enddt = rundate;
@@ -366,8 +368,9 @@ public with sharing class LFLDTDRates {
         Decimal rate;
         if (elapsed != 0) {
           rate = (decimal) (numberAcquiredInPeriod) / (weeks);
-        } else
+        } else {
           rate = 0;
+        }
 
         Integer sessionCount = 0;
         Decimal totalSessionDurationHrs = 0;

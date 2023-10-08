@@ -36,8 +36,25 @@ private class TestL4LSessionStatsController {
   }
 
   /*******************************************************************************************************
+   * @description Test generateD3BOCJson method
+   *
+   * @example
+   * TestL4LSessionStatsController.testgenerateD3BOCJson();
+   */
+  @isTest
+  static void testgenerateD3BOCJson() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
+
+    String json = L4LSessionStatsController.generateD3BOCJson(clientId, '30');
+
+    System.assert(json != null, 'Expected a string');
+  }
+
+  /*******************************************************************************************************
    * @description Test generateD3AreaSDJson method
-   * @param void
    *
    *
    * @example

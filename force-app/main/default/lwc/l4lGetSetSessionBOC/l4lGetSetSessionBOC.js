@@ -65,7 +65,7 @@ const columns = [
     type: "button",
     initialWidth: 120,
     typeAttributes: {
-      label: "Add BoC",
+      label: "Copy",
       name: "Add",
       title: "Add",
       disabled: false,

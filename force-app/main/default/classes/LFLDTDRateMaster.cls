@@ -28,7 +28,6 @@ public with sharing class LFLDTDRateMaster {
   public static String getDTDRateArray(String clientId, Integer iters) {
     String jsonStr;
 
-    List<String> dtdRateArray = new List<String>();
     DateTime thismoment = DateTime.now();
 
     jsonStr = '[';

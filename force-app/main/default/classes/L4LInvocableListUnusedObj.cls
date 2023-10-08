@@ -24,9 +24,9 @@ public class L4LInvocableListUnusedObj {
   ) {
     // Get Input Variables
 
-    String SCENARIO = 'L4LInvocableListUnusedObj - Apex';
+    String scenario = 'L4LInvocableListUnusedObj - Apex';
 
-    Logger.setScenario(SCENARIO);
+    Logger.setScenario(scenario);
     Logger.info('RemoveRecords')
       .addTag('L4LInvocableListUnusedObj')
       .addTag('logit()');

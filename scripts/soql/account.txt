@@ -217,4 +217,61 @@ select date(ts_load_datetime__c) from client_objective_timeseries__c   where run
 
 
 
-select scenario__c,count(id),loggedbyusername__c from log__c where LoggedByUsername__c	not in ('mike@lfl.prod','mikeb@lfl.hyper') group by scenario__c,loggedbyusername__c order by scenario__c,count(id) desc,loggedbyusername__c 
+select scenario__c,count(id),loggedbyusername__c from log__c where LoggedByUsername__c	not in ('mike@lfl.prod','mikeb@lfl.hyper') group by scenario__c,loggedbyusername__c order by scenario__c,count(id) desc,loggedbyusername__c
+
+
+Map<Id, Session__c> sessionMap = new Map<Id, Session__c>();
+List<Session__c> sessions = [SELECT Id, Name,Date__c FROM Session__c where client__c='0018t000002vfSfAAI']; 
+for (Session__c session : sessions) {
+    sessionMap.put(session.Id, session);
+}
+
+List<AggregateResult> arl = [
+select session__c sess,client_boc__c,Client_BOC__r.Behaviour_of_Concern__r.ID,Client_BOC__r.Behaviour_of_Concern__r.Name behaviour,sum(duration_mins__c) totalduration,count(id) times  from session_boc__c
+where session__r.client__c='0018t000002vfSfAAI'
+group by session__c,client_boc__c,Client_BOC__r.Behaviour_of_Concern__r.ID,Client_BOC__r.Behaviour_of_Concern__r.Name];
+
+String jsonStr='[';
+for (AggregateResult ar : arl) {
+Id sess = (Id) ar.get('sess');
+Session__c s=sessionMap.get(sess);
+Date temp=s.Date__c;
+String fmtdate = temp.year()+'-'+temp.month()+'-'+temp.day();
+String behaviour=(String) ar.get('behaviour');
+Integer times=(Integer) ar.get('times');
+Decimal totalduration = (Decimal) ar.get('totalduration');
+jsonStr+='{"session":"'+s.Name+'",';
+jsonStr+='"date":"'+fmtdate+'",';
+jsonStr+='"behaviour":"'+behaviour+'",';
+jsonStr+='"times":'+times+',';
+jsonStr+='"totalduration":'+totalduration+'}';
+jsonStr+=',';
+}
+jsonStr+=']';
+System.debug(jsonStr);
+  String target = ',]';
+    String replacement = ']';
+    String jsonret = jsonStr.replace(target, replacement);
+    System.debug(jsonret);
+
+System.debug(L4LSessionStatsController.getD3StatsByProgramAndSD('0018t000002vfSfAAI','All','All',true,'All','All'));
+
+String j = L4LSessionStatsController.generateD3BOCJson('0018t000002vfSfAAI','70');
+System.debug(j);
+
+SELECT Id, Name, Date__c FROM Session__c  
+WHERE client__c = '0018t000002vfSfAAI'  AND Date__c = LAST_N_DAYS:70 AND 
+id NOT IN  (      SELECT session__c FROM session_boc__c WHERE session__r.client__c = '0018t000002vfSfAAI'
+AND session__r.Date__c = LAST_N_DAYS:70)
+
+
+
+
+    // now retrieve all the session bocs for this period';
+    String allBocQuery = 'SELECT session__c, client_boc__c, Client_BOC__r.Behaviour_of_Concern__r.ID, Client_BOC__r.Behaviour_of_Concern__r.Name ';
+    allBocQuery += 'FROM session_boc__c WHERE session__r.client__c = :clientId ';
+    allBocQuery += ' AND session__r.Date__c = LAST_N_DAYS:';
+    allBocQuery += periodStr;
+    List<session_boc__c> bocs = new List<session_boc__c>();
+    bocs = Database.query(allBocQuery);
+

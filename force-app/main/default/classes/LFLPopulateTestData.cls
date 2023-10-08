@@ -9,15 +9,10 @@
  */
 
 public with sharing class LFLPopulateTestData {
-  public LFLPopulateTestData() {
-  }
-
   /*******************************************************************************************************
    * @name load
    * @description Loads representative test data
    *
-   * @param void
-   * @return
    * @example
    * LFLPopulateTestData.load();
    */
@@ -36,22 +31,21 @@ public with sharing class LFLPopulateTestData {
     delete [SELECT id FROM NDIS_Report__c];
     delete [SELECT id FROM Session_Statistics__c];
 
-    String x;
-
     //create a test client
-    String RecTypeId = [
+    String recTypeId = [
       SELECT Id
       FROM RecordType
       WHERE Name = 'LFL Client' AND SobjectType = 'Account'
     ]
     .Id;
     Account newAccount = new Account(
-      RecordTypeID = RecTypeId,
+      RecordTypeID = recTypeId,
       FirstName = 'Test FName',
       LastName = 'Peterson',
       PersonHomePhone = '1234567',
       PersonMobilePhone = '12345678'
     );
+
     insert newAccount;
 
     // behaviour of concern

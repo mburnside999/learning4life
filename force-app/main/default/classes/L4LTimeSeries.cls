@@ -16,7 +16,6 @@ public class L4LTimeSeries {
    * Logging for the run is recorded in TimeSeries_Log__c.
    *
    *
-   * @param void
    * @return the number of records inserted into client_objectives_timeseries__c
    *
    * @example
@@ -155,14 +154,14 @@ public class L4LTimeSeries {
       'next-gen-nebula-apex'
     );
 
-    List<AggregateResult> COTSList = Database.query(queryCOTSString);
+    List<AggregateResult> cotslist = Database.query(queryCOTSString);
 
     System.debug('queryCOTSString=' + queryCOTSString);
 
     //generate  the JSON
     String jsontmp = '[';
 
-    for (AggregateResult agg : COTSList) {
+    for (AggregateResult agg : cotslist) {
       jsontmp += '{';
       jsontmp +=
         '"rundate":"' +
@@ -220,7 +219,7 @@ public class L4LTimeSeries {
     String status,
     String periodStr
   ) {
-    String SCENARIO = 'D3 TimeSeries Chart - Combined Client Objectives - Apex';
+    final String SCENARIO = 'D3 TimeSeries Chart - Combined Client Objectives - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -268,14 +267,14 @@ public class L4LTimeSeries {
       'next-gen-nebula-apex'
     );
 
-    List<AggregateResult> COTSList = Database.query(queryCOTSString);
+    List<AggregateResult> cotslist = Database.query(queryCOTSString);
 
     System.debug('queryCOTSString=' + queryCOTSString);
 
     //generate  the JSON
     String jsontmp = '[';
 
-    for (AggregateResult agg : COTSList) {
+    for (AggregateResult agg : cotslist) {
       jsontmp += '{';
       jsontmp +=
         '"rundate":"' +
@@ -327,7 +326,7 @@ public class L4LTimeSeries {
 
   @AuraEnabled(cacheable=true)
   public static String generateD3COTimeSeriesByStatusJson(String clientId) {
-    String SCENARIO = 'D3 TimeSeries Chart - MiniBars - Apex';
+    final String SCENARIO = 'D3 TimeSeries Chart - MiniBars - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -349,13 +348,13 @@ public class L4LTimeSeries {
       'next-gen-nebula-apex'
     );
 
-    List<AggregateResult> COTSList = Database.query(queryCOTSString);
+    List<AggregateResult> cotslist = Database.query(queryCOTSString);
     System.debug('queryCOTSString=' + queryCOTSString);
 
     //generate  the JSON
     String jsontmp = '[';
 
-    for (AggregateResult agg : COTSList) {
+    for (AggregateResult agg : cotslist) {
       jsontmp += '{';
       jsontmp +=
         '"rundate":"' +
@@ -411,7 +410,7 @@ public class L4LTimeSeries {
     String clientId,
     String status
   ) {
-    String SCENARIO = 'D3 TimeSeries Chart - Restest Summary - Apex';
+    final String SCENARIO = 'D3 TimeSeries Chart - Restest Summary - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -440,14 +439,14 @@ public class L4LTimeSeries {
       'next-gen-nebula-apex'
     );
 
-    List<AggregateResult> COTSList = Database.query(queryCOTSString);
+    List<AggregateResult> cotslist = Database.query(queryCOTSString);
 
     System.debug('queryCOTSString=' + queryCOTSString);
 
     //generate  the JSON
     String jsontmp = '[';
 
-    for (AggregateResult agg : COTSList) {
+    for (AggregateResult agg : cotslist) {
       jsontmp += '{';
       jsontmp +=
         '"rundate":"' +
@@ -512,7 +511,7 @@ public class L4LTimeSeries {
     Integer threshold1,
     Integer threshold2
   ) {
-    String SCENARIO = 'D3 TimeSeries Chart - Threshold and Filters - Apex';
+    final String SCENARIO = 'D3 TimeSeries Chart - Threshold and Filters - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(

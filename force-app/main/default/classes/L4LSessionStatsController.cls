@@ -23,7 +23,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static LFL_Stats_Boundary__mdt getHighAndLowBoundaries() {
-    String SCENARIO = 'D3 Session Statistics Chart - get HeatMap Traffic Light values - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - get HeatMap Traffic Light values - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -64,7 +64,7 @@ public with sharing class L4LSessionStatsController {
   public static List<session_statistics__c> getD3SessionStatsHistogramData(
     String clientId
   ) {
-    String SCENARIO = 'D3 Session Statistics Chart - Histogram - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - Histogram - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -106,7 +106,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static List<Session_Statistics__c> getSessionStats(String searchKey) {
-    String SCENARIO = 'Session Statistics - Custom Datatable l4lSessionStatsDatatable - Apex';
+    final String SCENARIO = 'Session Statistics - Custom Datatable l4lSessionStatsDatatable - Apex';
 
     L4LNebulaComponentController.setupCache();
 
@@ -171,7 +171,7 @@ public with sharing class L4LSessionStatsController {
     String clientId,
     Boolean showAcquired
   ) {
-    String SCENARIO = 'Session Statistics - DEPRECATED  Apex';
+    final String SCENARIO = 'Session Statistics - DEPRECATED  Apex';
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       clientId,
@@ -189,8 +189,9 @@ public with sharing class L4LSessionStatsController {
       'FROM Session_Statistics__c ' +
       'WHERE session__r.client__c = :clientId ';
 
-    if (showAcquired)
+    if (showAcquired) {
       querySessionStatsString += ' AND previous_status__c = \'ACQ\' ';
+    }
 
     querySessionStatsString += 'ORDER BY session__r.name, objective__r.name ';
 
@@ -234,7 +235,7 @@ public with sharing class L4LSessionStatsController {
     String programStr,
     Boolean showAcquired
   ) {
-    String SCENARIO = 'Session Statistics - DEPRECATED - Apex';
+    final String SCENARIO = 'Session Statistics - DEPRECATED - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -255,8 +256,9 @@ public with sharing class L4LSessionStatsController {
       'FROM Session_Statistics__c ' +
       'WHERE session__r.client__c = :clientId AND program_name__c=:programStr ';
 
-    if (showAcquired)
+    if (showAcquired) {
       querySessionStatsString += ' AND previous_status__c = \'ACQ\' ';
+    }
 
     querySessionStatsString += 'ORDER BY session__r.name, objective__r.name ';
 
@@ -297,7 +299,7 @@ public with sharing class L4LSessionStatsController {
   public static List<AggregateResult> getClientObjectivesByProgram(
     String clientId
   ) {
-    String SCENARIO = 'D3 Session Statistics Chart - Combined Client Objectives Timeseries - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - Combined Client Objectives Timeseries - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -343,7 +345,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3YAxisScale(String clientId) {
-    String SCENARIO = 'D3 Session Statistics Chart - DEPRECATED - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - DEPRECATED - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -353,8 +355,8 @@ public with sharing class L4LSessionStatsController {
       'next-gen-nebula-apex'
     );
 
-    Integer ts_max = 0;
-    Integer curr_max = 0;
+    Integer tsmax = 0;
+    Integer currmax = 0;
     Integer result = 0;
 
     L4LNebulaComponentController.logDebug(
@@ -373,7 +375,7 @@ public with sharing class L4LSessionStatsController {
       WHERE client__c = :clientId AND active__c = TRUE
     ];
 
-    curr_max = (Integer) curr_agg[0].get('c');
+    currmax = (Integer) curr_agg[0].get('c');
 
     L4LNebulaComponentController.logDebug(
       clientId,
@@ -389,7 +391,7 @@ public with sharing class L4LSessionStatsController {
     );
 
     // this is the current maximum of the timeseries set
-    List<AggregateResult> ts_agg = [
+    List<AggregateResult> tsagg = [
       SELECT count(id) c
       FROM client_objective_timeseries__c
       WHERE client__c = :clientId AND active__c = TRUE
@@ -398,32 +400,32 @@ public with sharing class L4LSessionStatsController {
       LIMIT 1
     ];
 
-    if (ts_agg.isEmpty()) {
-      ts_max = 0;
+    if (tsagg.isEmpty()) {
+      tsmax = 0;
     } else {
-      ts_max = (integer) ts_agg[0].get('c');
+      tsmax = (integer) tsagg[0].get('c');
     }
 
-    if (curr_max >= ts_max)
-      result = curr_max;
+    if (currmax >= tsmax)
+      result = currmax;
     else
-      result = ts_max;
+      result = tsmax;
 
     System.debug(
-      'curr_max=' +
-      curr_max +
-      ', ts_max=' +
-      ts_max +
+      'currmax=' +
+      currmax +
+      ', tsmax=' +
+      tsmax +
       ', result = ' +
       result
     );
 
     L4LNebulaComponentController.logDebug(
       clientId,
-      'curr_max=' +
-      curr_max +
-      ', ts_max=' +
-      ts_max +
+      'currmax=' +
+      currmax +
+      ', tsmax=' +
+      tsmax +
       ', returning result = ' +
       result,
       SCENARIO,
@@ -448,7 +450,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3RetestYAxisScale(String clientId) {
-    String SCENARIO = 'D3 Session Statistics Chart  - determine Re-Test YAxis - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart  - determine Re-Test YAxis - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -458,8 +460,8 @@ public with sharing class L4LSessionStatsController {
       'next-gen-nebula-apex'
     );
 
-    Integer ts_max = 0;
-    Integer curr_max = 0;
+    Integer tsmax = 0;
+    Integer currmax = 0;
     Integer result = 0;
 
     L4LNebulaComponentController.logDebug(
@@ -481,7 +483,7 @@ public with sharing class L4LSessionStatsController {
         AND re_test_recommended__c = TRUE
     ];
 
-    curr_max = (Integer) curr_agg[0].get('c');
+    currmax = (Integer) curr_agg[0].get('c');
 
     L4LNebulaComponentController.logDebug(
       clientId,
@@ -497,7 +499,7 @@ public with sharing class L4LSessionStatsController {
     );
 
     // this is the current maximum of the timeseries set
-    List<AggregateResult> ts_agg = [
+    List<AggregateResult> tsagg = [
       SELECT count(id) c
       FROM client_objective_timeseries__c
       WHERE
@@ -509,32 +511,33 @@ public with sharing class L4LSessionStatsController {
       LIMIT 1
     ];
 
-    if (ts_agg.isEmpty()) {
-      ts_max = 0;
+    if (tsagg.isEmpty()) {
+      tsmax = 0;
     } else {
-      ts_max = (integer) ts_agg[0].get('c');
+      tsmax = (integer) tsagg[0].get('c');
     }
 
-    if (curr_max >= ts_max)
-      result = curr_max;
-    else
-      result = ts_max;
+    if (currmax >= tsmax) {
+      result = currmax;
+    } else {
+      result = tsmax;
+    }
 
     System.debug(
-      'curr_max=' +
-      curr_max +
-      ', ts_max=' +
-      ts_max +
+      'currmax=' +
+      currmax +
+      ', tsmax=' +
+      tsmax +
       ', result = ' +
       result
     );
 
     L4LNebulaComponentController.logDebug(
       clientId,
-      'curr_max=' +
-      curr_max +
-      ', ts_max=' +
-      ts_max +
+      'currmax=' +
+      currmax +
+      ', tsmax=' +
+      tsmax +
       ', returning result = ' +
       result,
       SCENARIO,
@@ -557,7 +560,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static Integer getD3StatusYAxisScale(String clientId) {
-    String SCENARIO = 'D3 Session Statistics Chart - DEPRECATED determine YAxis scale  - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - DEPRECATED determine YAxis scale  - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -567,7 +570,7 @@ public with sharing class L4LSessionStatsController {
       'next-gen-nebula-apex'
     );
 
-    Integer ts_max = 0;
+    Integer tsmax = 0;
     Integer result = 0;
 
     L4LNebulaComponentController.logDebug(
@@ -590,7 +593,7 @@ public with sharing class L4LSessionStatsController {
     );
 
     // this is the current maximum of the timeseries set
-    List<AggregateResult> ts_agg = [
+    List<AggregateResult> tsagg = [
       SELECT runid__c, status__c, count(id) c
       FROM client_objective_timeseries__c
       WHERE client__c = :clientId AND active__c = TRUE
@@ -599,13 +602,13 @@ public with sharing class L4LSessionStatsController {
       LIMIT 1
     ];
 
-    if (ts_agg.isEmpty()) {
-      ts_max = 0;
+    if (tsagg.isEmpty()) {
+      tsmax = 0;
     } else {
-      ts_max = (integer) ts_agg[0].get('c');
+      tsmax = (integer) tsagg[0].get('c');
     }
 
-    result = ts_max;
+    result = tsmax;
 
     L4LNebulaComponentController.logDebug(
       clientId,
@@ -641,7 +644,7 @@ public with sharing class L4LSessionStatsController {
     String periodStr,
     String stageStr
   ) {
-    String SCENARIO = 'D3 Session Statistics Chart - HeatMap - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - HeatMap - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -682,8 +685,9 @@ public with sharing class L4LSessionStatsController {
     } else {
       querySessionStatsString += ' AND objective__r.sd__r.Stage__c=:stageStr ';
     }
-    if (showAcquired)
+    if (showAcquired) {
       querySessionStatsString += ' AND previous_status__c = \'ACQ\' ';
+    }
 
     if (periodStr == 'All') {
     } else {
@@ -730,7 +734,7 @@ public with sharing class L4LSessionStatsController {
    */
   @AuraEnabled(Cacheable=true)
   public static List<Program__c> getProgramsAndSds(String stageStr) {
-    String SCENARIO = 'D3 Session Statistics Chart - d3Nest - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - d3Nest - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -787,7 +791,7 @@ public with sharing class L4LSessionStatsController {
   public static List<AggregateResult> getClientObjectivesSDCount(
     String clientId
   ) {
-    String SCENARIO = 'D3 Session Statistics Chart - d3Nest - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - d3Nest - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -816,7 +820,7 @@ public with sharing class L4LSessionStatsController {
    * Used by LWC d3NestExperiment
    * @TODO deprecated?
    * @param clientId The client Id
-   * @param stageSt "All" | sd__c.stage__c
+   * @param stageStr "All" | sd__c.stage__c
    *
    * @return a JSON string
    * @TODO work on the explanation and provide an example
@@ -828,7 +832,7 @@ public with sharing class L4LSessionStatsController {
     String clientId,
     String stageStr
   ) {
-    String SCENARIO = 'D3 Session Statistics Chart - d3NestExperiment - Apex';
+    final String SCENARIO = 'D3 Session Statistics Chart - d3NestExperiment - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -1059,7 +1063,7 @@ public with sharing class L4LSessionStatsController {
 
   @AuraEnabled(cacheable=true)
   public static String generateD3AreaSDJson(String clientId, String stageStr) {
-    String SCENARIO = 'D3 Session Statistics - d3NestExperiment - Apex';
+    final String SCENARIO = 'D3 Session Statistics - d3NestExperiment - Apex';
 
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
@@ -1202,6 +1206,130 @@ public with sharing class L4LSessionStatsController {
     );
 
     return jsonstr;
+  }
+  /*******************************************************************************************************
+   * @name generateD3BOCJson
+   * @description Generates a JSON string  for use by D3 charting.
+   * Used by LWC d3BOCHeatmap
+   *
+   * @param clientId The client Id
+   * @param periodStr the period for returning sessions
+   *
+   * @return jsnStr a JSON string
+   * @TODO work on the explanation and provide an example
+   * @example
+   *
+   */
+  @AuraEnabled(cacheable=true)
+  public static String generateD3BOCJson(String clientId, String periodStr) {
+    final String SCENARIO = 'D3 Session Statistics - d3BOC - Apex';
+
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      clientId,
+      'L4LSessionStatsController.generateD3BOCJson() clientId=' + clientId,
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
+    //first retrieve all the sesssions for this period
+    String querySessionString = 'SELECT Id, Name, Date__c FROM Session__c ';
+    querySessionString += ' WHERE client__c = :clientId ';
+    querySessionString += ' AND Date__c = LAST_N_DAYS:';
+    querySessionString += periodStr;
+    List<Session__c> sessions = new List<session__c>();
+    sessions = Database.query(querySessionString);
+    Map<Id, Session__c> sessionsMap = new Map<Id, Session__c>();
+    for (Session__c session : sessions) {
+      sessionsMap.put(session.Id, session);
+    }
+
+    // now retrieve all the session bocs for this period';
+    String allBocQuery = 'SELECT session__c, client_boc__c, Client_BOC__r.Behaviour_of_Concern__r.ID, Client_BOC__r.Behaviour_of_Concern__r.Name ';
+    allBocQuery += 'FROM session_boc__c WHERE session__r.client__c = :clientId ';
+    allBocQuery += ' AND session__r.Date__c = LAST_N_DAYS:';
+    allBocQuery += periodStr;
+    List<session_boc__c> bocs = new List<session_boc__c>();
+    bocs = Database.query(allBocQuery);
+
+    // now generate cross product map "linker" of all sessions / session bocs
+    Map<String, String> linker = new Map<String, String>();
+    for (session__c s : sessions) {
+      for (session_boc__c sboc : bocs) {
+        linker.put(
+          s.Id +
+          '-' +
+          sboc.Client_BOC__r.Behaviour_of_Concern__r.Name,
+          'linked'
+        );
+      }
+    }
+    // now do the aggregation (sum of minutes, sum of occurrences) of the session bocs grouped by session,client boc
+    String bocQuery = 'SELECT session__c sess, client_boc__c, Client_BOC__r.Behaviour_of_Concern__r.ID, Client_BOC__r.Behaviour_of_Concern__r.Name behaviour, sum(duration_mins__c) totalduration, sum(occurrences__c) times ';
+    bocQuery += 'FROM session_boc__c WHERE session__r.client__c = :clientId ';
+    bocQuery += ' AND session__r.Date__c = LAST_N_DAYS:';
+    bocQuery += periodStr;
+    bocQuery += ' GROUP BY session__c,client_boc__c,Client_BOC__r.Behaviour_of_Concern__r.ID,Client_BOC__r.Behaviour_of_Concern__r.Name ';
+
+    List<AggregateResult> arl = Database.query(bocQuery);
+    String jsonTmp = '['; // start to build a json string
+    for (AggregateResult ar : arl) {
+      // for each record in the aggregate query
+      Id sess = (Id) ar.get('sess');
+      Session__c s = sessionsMap.get(sess); //get complete session from sessions map
+      String session = s.Name;
+      Date temp = s.Date__c;
+      String fmtdate = temp.year() + '-' + temp.month() + '-' + temp.day();
+      String behaviour = (String) ar.get('behaviour');
+      Decimal times = (Decimal) ar.get('times');
+      Decimal totalduration = (Decimal) ar.get('totalduration');
+      // each record in the query corresponds to a real occurrence of the session boc
+      // and is designated present:true, as compared to the entries that are fabricated for charting purposes below (present:false)
+      // Process the json from the aggregate and then remove the corresponding entry from the linker cross product map
+      jsonTmp += '{"session":"' + session + '",';
+      jsonTmp += '"sessiondate":"' + fmtdate + '",';
+      jsonTmp += '"behaviour":"' + behaviour + '",';
+      jsonTmp += '"times":' + times + ',';
+      jsonTmp += '"present":"true",'; // a boc is present
+      jsonTmp += '"totalduration":' + totalduration + '}';
+      jsonTmp += ',';
+
+      linker.remove(sess + '-' + behaviour);
+    }
+    // entries remaining in the linker cross product represent
+    // sessions where there was no corresponding behgaviour recorded
+    // Why bother? Well we need these entries so that we can produce a rectangular
+    // behaviours X sessions chart with no gaps
+    //
+    // These entries are flagged with "present:false".
+    //
+    // Set the occurrences and duration values to zero, retaining the session and behaviour values
+    // & continue the creation of the JSON string
+
+    for (String key : linker.keySet()) {
+      System.debug('key=' + key);
+      String[] parts = key.split('-');
+      Session__c s = sessionsMap.get(parts[0]);
+      String session = s.Name;
+      Date temp = s.Date__c;
+      String fmtdate = temp.year() + '-' + temp.month() + '-' + temp.day();
+      String behaviour = parts[1];
+      Integer times = 0;
+      Decimal totalduration = 0.0;
+      jsonTmp += '{"session":"' + session + '",';
+      jsonTmp += '"sessiondate":"' + fmtdate + '",';
+      jsonTmp += '"behaviour":"' + behaviour + '",';
+      jsonTmp += '"times":' + times + ',';
+      jsonTmp += '"present":"false",'; // a boc is not present for this session
+      jsonTmp += '"totalduration":' + totalduration + '}';
+      jsonTmp += ',';
+    }
+    // trim the extraneous "," at the end and close the array
+    jsonTmp += ']';
+    String target = ',]';
+    String replacement = ']';
+    String jsonStr = jsonTmp.replace(target, replacement);
+    return jsonStr;
   }
 
   /*******************************************************************************************************

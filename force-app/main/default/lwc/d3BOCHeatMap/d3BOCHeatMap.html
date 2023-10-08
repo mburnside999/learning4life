@@ -1,0 +1,25 @@
+<template>
+  <lightning-card title="L4L BOC Analysis" icon-name="custom:custom19">
+    <div class="c-container">
+      <lightning-layout>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              name="period"
+              label="Period"
+              value={periodval}
+              placeholder="Select Period"
+              options={periodoptions}
+              onchange={handlePeriodChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
+  <lightning-card>
+    <div class="scatterplot" lwc:dom="manual"></div>
+  </lightning-card>
+</template>
