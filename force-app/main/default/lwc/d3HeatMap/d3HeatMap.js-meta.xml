@@ -19,7 +19,24 @@
             <property name="recordId" type="String" label="Record Id" />
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
-           
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Client Program Mastery"
+        label="Enter a LWC title"
+      />
+      <property
+        name="chartTitle"
+        type="String"
+        default="Objectives Vs. Sessions"
+        label="Enter a chart title"
+      />
+      <property
+        name="chartSubTitle"
+        type="String"
+        default="Red, Orange , Green "
+        label="Enter a chart sub-title"
+      />
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
                 <supportedFormFactor type="Small" />

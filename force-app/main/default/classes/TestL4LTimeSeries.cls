@@ -83,7 +83,7 @@ private class TestL4LTimeSeries {
       clientId,
       'All', //Prog
       'All', //SD
-      'All', //status
+      'All (ABS/ACQ/CIP)', //status
       'All' //period
     );
     System.assert(str.length() > 0, 'Expected a return string');
@@ -92,6 +92,15 @@ private class TestL4LTimeSeries {
       co.Program_Name__c,
       co.SD_Name__c,
       'ACQ',
+      '60'
+    );
+    System.assert(str.length() > 0, 'Expected a return string');
+
+    str = L4LTimeSeries.generateD3COTSJsonByProgramAndSD(
+      clientId,
+      co.Program_Name__c,
+      co.SD_Name__c,
+      'Mastered (ABS/ACQ)',
       '60'
     );
     System.assert(str.length() > 0, 'Expected a return string');

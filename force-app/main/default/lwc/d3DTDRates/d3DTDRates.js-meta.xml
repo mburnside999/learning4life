@@ -12,19 +12,71 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__AppPage">
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Learning Rate Plot"
+        label="Enter a LWC title"
+      />
+                  <property
+        name="chartTitle"
+        type="String"
+        default="Learning Rate (ACQ/Week) vs. Date"
+        label="Enter a chart title"
+      />
+                  <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
             <supportedFormFactors>
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
-           
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Learning Rate Plot"
+        label="Enter a LWC title"
+      />
+                      <property
+        name="chartTitle"
+        type="String"
+        default="Learning Rate (ACQ/Week) vs. Date"
+        label="Enter a chart title"
+      />
+                      <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__HomePage">
-           
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Learning Rate Plot"
+        label="Enter a LWC title"
+      />
+                      <property
+        name="chartTitle"
+        type="String"
+        default="Learning Rate (ACQ/Week) vs. Date"
+        label="Enter a chart title"
+      />
+                      <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
             </supportedFormFactors>

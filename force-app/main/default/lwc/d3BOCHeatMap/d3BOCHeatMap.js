@@ -14,6 +14,10 @@ const SCENARIO = "View D3BOCHeatMap - LWC";
 const UI_EVENT_TRACKING_SCENARIO = "d3BOCHeatMap LWC UI Event Tracking";
 const APEX_EVENT_TRACKING_SCENARIO = "d3BOCHeatMap LWC APEX Event Tracking";
 export default class D3BOCHeatMap extends LightningElement {
+  @api lwcTitle = "Client BOC Analysis";
+  @api chartTitle = "D3 Chart";
+  @api chartSubTitle = "D3 Chart";
+
   low = 1;
   high = 3; //actual values come from custom metadata
 
@@ -339,27 +343,27 @@ export default class D3BOCHeatMap extends LightningElement {
       .on("mouseover", mouseover)
       .on("mousemove", mousemove)
       .on("mouseleave", mouseleave);
+    console.log("x=" + (width - 360) / 2);
+    console.log("width=" + width);
 
     svg
       .append("text")
-      .attr("x", (width - 360) / 2)
-      .attr("y", -20)
-      .attr("text-anchor", "left")
+      .attr("x", width / 2)
+      .attr("y", -30)
+      .attr("text-anchor", "middle")
       .style("font-size", "18px")
       .style("fill", "grey")
-      .style("max-width", 400)
-      .text(` Client Behaviours of Concern  vs. Sessions`);
+      .text(`${this.chartTitle}`);
 
     //Add subtitle to graph
-    //   svg
-    //     .append("text")
-    //     .attr("x", 0)
-    //     .attr("y", -10)
-    //     .attr("text-anchor", "left")
-    //     .style("font-size", "16px")
-    //     .style("fill", "grey")
-    //     .style("max-width", 400)
-    //     .text("test");
+    svg
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", -10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px")
+      .style("fill", "grey")
+      .text(`${this.chartSubTitle}`);
   }
 
   // the ACQ/ALL handler

@@ -7,15 +7,54 @@
     <targets>
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
-        <target>lightning__HomePage</target>
+        <target>lightning__HomePage</target> 
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
     </targets>
+   
     <targetConfigs>
         <targetConfig targets="lightning__AppPage">
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Re-Test Timeseries"
+        label="Enter a LWC title"
+      />
+              <property
+        name="chartTitle"
+        type="String"
+        default="Re-Test Counts vs. Date"
+        label="Enter a chart title"
+      />
+              <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
             <supportedFormFactors>
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Re-Test Timeseries"
+        label="Enter a LWC title"
+      />
+          <property
+        name="chartTitle"
+        type="String"
+        default="Re-Test Counts vs. Date"
+        label="Enter a chart title"
+      />
+          <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
            
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
@@ -23,10 +62,31 @@
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__HomePage">
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Re-Test Timeseries"
+        label="Enter a LWC title"
+      />
+              <property
+        name="chartTitle"
+        type="String"
+        default="Re-Test Counts vs. Date"
+        label="Enter a chart title"
+      />
+              <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
            
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
             </supportedFormFactors>
         </targetConfig>
+ <targetConfig targets="lightningCommunity__Default">
+         <property name="recordId" type="String" default="{!Route.recordId}" />
+          </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

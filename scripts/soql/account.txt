@@ -275,3 +275,137 @@ AND session__r.Date__c = LAST_N_DAYS:70)
     List<session_boc__c> bocs = new List<session_boc__c>();
     bocs = Database.query(allBocQuery);
 
+String s = LFLDTDRateMaster.getDTDRateArray('0018t000002vfSfAAI', 3);
+
+
+SELECT Client__c, TS_Load_DateTime__c,RunId__c,count(id)
+  FROM Client_Objective_TimeSeries__c
+  group by Client__c, TS_Load_DateTime__c,RunId__c
+
+  SELECT Client__c, runid__c,Status__c,count(id)
+  FROM Client_Objective_TimeSeries__c
+  group by client__c,runid__c,Status__c
+  having runid__c > 'TSL-2022-10-00000'  and runid__c < 'TSL-2023-03-99999'
+
+  SELECT RunId__c,count(id)
+  FROM Client_Objective_TimeSeries__c 
+  group by RunId__c
+
+
+Map<date,List<client_objective_timeseries__c>> datemap = new Map<date,List<client_objective_timeseries__c>>();
+Map<string,List<client_objective_timeseries__c>> runmap = new Map<string,List<client_objective_timeseries__c>>();
+for (client_objective_timeseries__c t: [select ts_load_datetime__c from client_objective_timeseries__c where runid__c > 'TSL-2022-10-00000'  and runid__c < 'TSL-2023-03-99999' limit 50000]) {
+Date d = t.TS_Load_DateTime__c.date();
+String r = t.Runid__c;
+
+if (runmap.containskey(r)) {
+List<client_objective_timeseries__c> runexisting = runmap.get(t);
+ruexisting.add(t);
+runmap.put(r,runexisting);
+} else {
+List<client_objective_timeseries__c> rl = new List<client_objective_timeseries__c>();
+rl.add(t);
+runmap.put(r,rl);
+}
+
+if (datemap.containskey(d)) {
+List<client_objective_timeseries__c> existing = datemap.get(d);
+existing.add(t);
+datemap.put(d,existing);
+} else {
+List<client_objective_timeseries__c> l = new List<client_objective_timeseries__c>();
+l.add(t);
+datemap.put(d,l);
+}
+
+}
+for (Date d : datemap.keyset()) {
+List<client_objective_timeseries__c> r = datemap.get(d);
+System.debug(r.size());
+}
+
+for (String s : runmap.keyset()) {
+List<client_objective_timeseries__c> rl = runmap.get(s);
+System.debug(rl.size());
+}
+
+
+
+
+
+for (client_objective_timeseries__c t: [select ts_load_datetime__c from client_objective_timeseries__c order by ts_load_datetime__c limit 2000]){
+System.debug(t.ts_load_datetime__c);
+}
+
+
+
+
+
+
+Map<string,datetime> runmap = new Map<string,datetime>();
+
+for (Timeseries_log__c tsl: [select name,ts_log_datetime__c from  timeseries_log__c]
+) {
+runmap.put(tsl.name,tsl.ts_log_datetime__c);
+}
+
+System.debug(runmap);
+
+Set<string> runidSet =new Set<String>();
+
+List<AggregateResult> arl = new List<AggregateResult>();
+arl=[SELECT RunId__c,count(id) FROM Client_Objective_TimeSeries__c group by RunId__c];
+for (AggregateResult ar : arl) {
+
+String r = (String) ar.get('RunId__c');
+runidSet.add(r);
+}
+
+System.debug('size='+runidSet.size());
+
+for (String r : runidSet) {
+List<AggregateResult> aggl= new List<AggregateResult>();
+aggl=[SELECT Client__c, Status__c,count(id) FROM Client_Objective_TimeSeries__c where runid__c=:r group by client__c,Status__c];
+System.debug(aggl.size());
+System.debug(runmap.get(r));
+List<client_objective_timeseries_rollup__c> cotsrulist = new  List<client_objective_timeseries_rollup__c>();
+for (AggregateResult ar : aggl) {
+client_objective_timeseries_rollup__c cotsru = new client_objective_timeseries_rollup__c();
+
+Id clientId=(id)ar.get('Client__c');
+DateTime rundatetime = (DateTime) runmap.get(r);
+String runid = r;
+String status = (String) ar.get('Status__c');
+Integer statuscount = (Integer) ar.get('expr0');
+
+System.debug(clientId);
+cotsru.client__c=clientId;
+cotsru.rundatetime__c=rundatetime;
+cotsru.runid__c=r;
+cotsru.status__c=status;
+cotsru.statuscount__c=statuscount;
+cotsrulist.add(cotsru);
+
+}
+
+insert cotsrulist;
+
+
+}
+
+
+
+
+
+L4LTimeSeries l = new L4LTimeSeries();
+    Integer x = l.loadCOTimeSeries();
+    System.debug('timeseries list tslist.size()=' + x);
+
+
+
+
+
+
+
+
+  

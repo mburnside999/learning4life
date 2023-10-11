@@ -1,0 +1,45 @@
+Map<date,List<client_objective_timeseries__c>> datemap = new Map<date,List<client_objective_timeseries__c>>();
+Map<string,List<client_objective_timeseries__c>> runmap = new Map<string,List<client_objective_timeseries__c>>();
+
+for (client_objective_timeseries__c t: [select runid__c,ts_load_datetime__c from client_objective_timeseries__c where runid__c > 'TSL-2023-08-00000'  and runid__c < 'TSL-2023-10-99999' limit 50000]) {
+Date d = t.TS_Load_DateTime__c.date();
+String r = t.Runid__c;
+
+if (runmap.containskey(r)) {
+List<client_objective_timeseries__c> runexisting = runmap.get(r);
+runexisting.add(t);
+runmap.put(r,runexisting);
+} else {
+List<client_objective_timeseries__c> rl = new List<client_objective_timeseries__c>();
+rl.add(t);
+runmap.put(r,rl);
+}
+
+if (datemap.containskey(d)) {
+List<client_objective_timeseries__c> existing = datemap.get(d);
+existing.add(t);
+datemap.put(d,existing);
+} else {
+List<client_objective_timeseries__c> l = new List<client_objective_timeseries__c>();
+l.add(t);
+datemap.put(d,l);
+}
+
+}
+Map<String,Integer> results=new Map<String,Integer>();
+for (String s : runmap.keyset()) {
+List<client_objective_timeseries__c> rl = runmap.get(s);
+for (client_objective_timeseries__c cots : rl) {
+Date x =  cots.TS_Load_DateTime__c.date();
+list<client_objective_timeseries__c> cots2list = datemap.get(x);
+
+if (cots2list.size()!=rl.size()) {
+System.debug('d='+x+ 's='+s+'cots.RunId='+cots.RunId__c+ 'cots2list = '+cots2list.size()+' rl = '+rl.size());
+results.put(cots.RunId__c,rl.size());
+results.put(cots.RunId__c,cots2list.size());
+//System.debug('d='+x+ 's='+s+'cots.RunId='+cots.RunId__c+ 'cots2list = '+cots2list.size()+' rl = '+rl.size());
+}
+}
+}
+System.debug(results);
+

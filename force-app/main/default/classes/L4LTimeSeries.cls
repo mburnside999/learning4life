@@ -81,6 +81,36 @@ public class L4LTimeSeries {
       insert tslist;
 
       System.debug(
+        'loadCOTimeSeries(): updating Client_Objective_Timeseries_Rollup__c : '
+      );
+
+      List<AggregateResult> aggl = new List<AggregateResult>();
+      aggl = [
+        SELECT Client__c, Status__c, count(id)
+        FROM Client_Objective_TimeSeries__c
+        WHERE runid__c = :runId
+        GROUP BY client__c, Status__c
+      ];
+      List<Client_Objective_Timeseries_Rollup__c> cotsrulist = new List<Client_Objective_Timeseries_Rollup__c>();
+      for (AggregateResult ar : aggl) {
+        client_objective_timeseries_rollup__c cotsru = new client_objective_timeseries_rollup__c();
+
+        Id clientId = (id) ar.get('Client__c');
+        String status = (String) ar.get('Status__c');
+        Integer statuscount = (Integer) ar.get('expr0');
+
+        System.debug(clientId);
+        cotsru.runId__c = runId;
+        cotsru.client__c = clientId;
+        cotsru.status__c = status;
+        cotsru.statuscount__c = statuscount;
+        cotsrulist.add(cotsru);
+      }
+
+      insert cotsrulist;
+
+      // log end of run
+      System.debug(
         'loadCOTimeSeries(): logging END to TimeSeries_Log__c(): ' + log
       );
 
@@ -88,7 +118,9 @@ public class L4LTimeSeries {
       endlog.comments__c =
         'Successfully processed ' +
         tslist.size() +
-        ' client objective timeseries records';
+        ' Client_Objective_Timeseries__c records / ' +
+        cotsrulist.size() +
+        ' Client_Objective_Timeseries_Rollup__c records';
       insert endlog;
 
       System.debug(
@@ -242,8 +274,10 @@ public class L4LTimeSeries {
       queryCOTSString += ' and sd_name__c=:sd ';
     }
 
-    if (status == 'All') {
+    if (status == 'All (ABS/ACQ/CIP)') {
       queryCOTSString += ' and status__c in (\'ACQ\',\'ABS\',\'CIP\') ';
+    } else if (status == 'Mastered (ABS/ACQ)') {
+      queryCOTSString += ' and status__c in (\'ACQ\',\'ABS\') ';
     } else {
       queryCOTSString += ' and status__c = :status ';
     }

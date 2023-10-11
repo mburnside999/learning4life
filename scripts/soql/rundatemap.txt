@@ -1,0 +1,22 @@
+Map<date,Lisdt<String>> rundatemap = new Map<date,List<String>>();
+
+for (Timeseries_log__c tsl: [select name,ts_log_datetime__c from  timeseries_log__c]
+) {
+Date d = tsl.ts_log_datetime__c.date();
+
+if (rundatemap.containskey(d)) {
+List<String> strList = rundatemap.get(d);
+strlist.add(tsl.name);
+rundatemap.put(d,strList);
+} else {
+List<String> strListNew = new List<String>();
+strListNew.add(tsl.name);
+rundatemap.put(d,strListNew);
+}
+
+}
+
+for (Date k: rundatemsp.keyset()) {
+
+System.debug(k);
+}

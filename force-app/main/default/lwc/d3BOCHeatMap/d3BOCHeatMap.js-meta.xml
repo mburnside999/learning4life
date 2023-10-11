@@ -16,16 +16,69 @@
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
             <property name="recordId" type="String" label="Record Id" />
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Client BoC Analysis"
+        label="Enter a LWC title"
+      />
+      <property
+        name="chartTitle"
+        type="String"
+        default="Behaviours of Concern Vs. Sessions"
+        label="Enter a chart title"
+      />
+      <property
+        name="chartSubTitle"
+        type="String"
+        default="Red=Tracked, Green=Untracked, Orange=Tracked (0)"
+        label="Enter a chart sub-title"
+      />
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
-           
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Client BoC Analysis"
+        label="Enter a LWC title"
+      />
+      <property
+        name="chartTitle"
+        type="String"
+        default="Behaviours of Concern Vs. Sessions"
+        label="Enter a chart title"
+      />
+    <property
+        name="chartSubTitle"
+        type="String"
+        default="Red=Tracked, Green=Untracked, Orange=Tracked (0)"
+        label="Enter a chart sub-title"
+      />
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__HomePage">
-           
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Client BoC Analysis"
+        label="Enter a LWC title"
+      />
+      <property
+        name="chartTitle"
+        type="String"
+        default="Behaviours of Concern Vs. Sessions"
+        label="Enter a chart title"
+      />
+      <property
+        name="chartSubTitle"
+        type="String"
+        default="Red=Tracked, Green=Untracked, Orange=Tracked (0)"
+        label="Enter a chart sub-title"
+      />
+
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
             </supportedFormFactors>

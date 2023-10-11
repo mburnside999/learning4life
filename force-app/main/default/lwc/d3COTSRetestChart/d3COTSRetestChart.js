@@ -19,6 +19,9 @@ const APEX_EVENT_TRACKING_SCENARIO =
  */
 export default class D3COTSRetestChart extends LightningElement {
   @api recordId;
+  @api lwcTitle = "Client Objectives Timeseries";
+  @api chartTitle = "D3 Chart";
+  @api chartSubTitle = "D3 Chart";
   d3Initialized = false;
   @track result = [];
   mode = "All";
@@ -174,7 +177,7 @@ export default class D3COTSRetestChart extends LightningElement {
     );
 
     // set the dimensions and margins of the graph
-    const margin = { top: 40, right: 30, bottom: 40, left: 50 },
+    const margin = { top: 50, right: 30, bottom: 50, left: 50 },
       width = 1150 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
@@ -277,25 +280,43 @@ export default class D3COTSRetestChart extends LightningElement {
       .attr("r", 5)
       .attr("fill", "#69b3a2");
 
+    // svg
+    //   .append("text")
+    //   .attr("x", (width - 300) / 2)
+    //   .attr("y", 0)
+    //   .attr("text-anchor", "left")
+    //   .style("font-size", "18px")
+    //   .style("fill", "grey")
+    //   .style("max-width", 400)
+    //   .text(`EXPERIMENTAL: ACTIVE Re-Test-Recommended Count`);
+
+    // svg
+    //   .append("text")
+    //   .attr("x", (width - 300) / 2)
+    //   .attr("y", 20)
+    //   .attr("text-anchor", "left")
+    //   .style("font-size", "14px")
+    //   .style("fill", "grey")
+    //   .style("max-width", 400)
+    //   .text("Client Objective Time Series, auto refreshed Sunday 10pm");
     svg
       .append("text")
-      .attr("x", (width - 300) / 2)
-      .attr("y", 0)
-      .attr("text-anchor", "left")
+      .attr("x", width / 2)
+      .attr("y", -30)
+      .attr("text-anchor", "middle")
       .style("font-size", "18px")
       .style("fill", "grey")
-      .style("max-width", 400)
-      .text(`EXPERIMENTAL: ACTIVE Re-Test-Recommended Count`);
+      .text(`${this.chartTitle}`);
 
+    //Add subtitle to graph
     svg
       .append("text")
-      .attr("x", (width - 300) / 2)
-      .attr("y", 20)
-      .attr("text-anchor", "left")
+      .attr("x", width / 2)
+      .attr("y", -10)
+      .attr("text-anchor", "middle")
       .style("font-size", "14px")
       .style("fill", "grey")
-      .style("max-width", 400)
-      .text("Client Objective Time Series, auto refreshed Sunday 10pm");
+      .text(`${this.chartSubTitle}`);
 
     // Parse the Data
     // Add X axis

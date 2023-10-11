@@ -14,11 +14,47 @@
    
     <targetConfigs>
         <targetConfig targets="lightning__AppPage">
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Client Objectives"
+        label="Enter a LWC title"
+      />
+      <property
+        name="chartTitle"
+        type="String"
+        default="Objective Counts Vs. Sessions"
+        label="Enter a chart title"
+      />
+      <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
             <supportedFormFactors>
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Client Objectives"
+        label="Enter a LWC title"
+      />
+          <property
+        name="chartTitle"
+        type="String"
+        default="Objective Counts Vs. Sessions"
+        label="Enter a chart title"
+      />
+          <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
            
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
@@ -26,6 +62,24 @@
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__HomePage">
+            <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Client Objectives"
+        label="Enter a LWC title"
+      />
+          <property
+        name="chartTitle"
+        type="String"
+        default="Objective Counts Vs. Sessions"
+        label="Enter a chart title"
+      />
+          <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
            
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />

@@ -22,6 +22,9 @@ const APEX_EVENT_TRACKING_SCENARIO =
  */
 export default class D3COTSCombinedLineChart extends LightningElement {
   @api recordId;
+  @api lwcTitle = "Client Objectives Timeseries";
+  @api chartTitle = "D3 Chart";
+  @api chartSubTitle = "D3 Chart";
   d3Initialized = false;
   @track result = [];
   mode = "All";
@@ -30,7 +33,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
   yAxisMin;
   programval = "All"; //default
   sdval = "All";
-  statusval = "All";
+  statusval = "All (ABS/ACQ/CIP)";
   periodval = "All";
   progSet = [];
   sdSet = [];
@@ -40,7 +43,8 @@ export default class D3COTSCombinedLineChart extends LightningElement {
   sdoptions = [];
 
   statusoptions = [
-    { label: "All", value: "All", isChecked: true },
+    { label: "All (ABS/ACQ/CIP)", value: "All (ABS/ACQ/CIP)", isChecked: true },
+    { label: "Mastered (ABS/ACQ)", value: "Mastered (ABS/ACQ)" },
     { label: "ACQ", value: "ACQ" },
     { label: "ABS", value: "ABS" },
     { label: "CIP", value: "CIP" }
@@ -161,7 +165,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
           clientId: this.recordId,
           program: "All",
           sd: "All",
-          status: "All",
+          status: "All (ABS/ACQ/CIP)",
           periodStr: "All"
         });
       })
@@ -256,7 +260,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
     );
 
     // set the dimensions and margins of the graph
-    const margin = { top: 40, right: 30, bottom: 50, left: 50 },
+    const margin = { top: 50, right: 30, bottom: 50, left: 50 },
       width = 1150 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
@@ -390,25 +394,45 @@ export default class D3COTSCombinedLineChart extends LightningElement {
       .on("mousemove", mousemove)
       .on("mouseleave", mouseleave);
 
-    svg
-      .append("text")
-      .attr("x", (width - 360) / 2)
-      .attr("y", 0)
-      .attr("text-anchor", "left")
-      .style("font-size", "18px")
-      .style("fill", "grey")
-      .style("max-width", 400)
-      .text(`Client Objective Status Counts vs. Date`);
+    //   svg
+    //     .append("text")
+    //     .attr("x", (width - 360) / 2)
+    //     .attr("y", 0)
+    //     .attr("text-anchor", "left")
+    //     .style("font-size", "18px")
+    //     .style("fill", "grey")
+    //     .style("max-width", 400)
+    //     .text(`Client Objective Status Counts vs. Date`);
+
+    //   svg
+    //     .append("text")
+    //     .attr("x", (width - 300) / 2)
+    //     .attr("y", 20)
+    //     .attr("text-anchor", "left")
+    //     .style("font-size", "14px")
+    //     .style("fill", "grey")
+    //     .style("max-width", 400)
+    //     .text("Hover over the points to see values");
+    //
 
     svg
       .append("text")
-      .attr("x", (width - 300) / 2)
-      .attr("y", 20)
-      .attr("text-anchor", "left")
+      .attr("x", width / 2)
+      .attr("y", -30)
+      .attr("text-anchor", "middle")
+      .style("font-size", "18px")
+      .style("fill", "grey")
+      .text(`${this.chartTitle}`);
+
+    //Add subtitle to graph
+    svg
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", -10)
+      .attr("text-anchor", "middle")
       .style("font-size", "14px")
       .style("fill", "grey")
-      .style("max-width", 400)
-      .text("Hover over the points to see values");
+      .text(`${this.chartSubTitle}`);
   }
 
   handleClick(event) {
@@ -471,7 +495,7 @@ export default class D3COTSCombinedLineChart extends LightningElement {
       `${TAG}`
     ); // adoption tracking
 
-    console.log("in handleSDChange " + event.detail.value);
+    console.log("in handleStatusChange " + event.detail.value);
     const selectedOption = event.detail.value;
     this.statusoptions = this.statusoptions.map((row) => {
       return { ...row, isChecked: row.label === selectedOption };
