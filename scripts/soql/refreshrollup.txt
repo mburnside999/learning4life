@@ -1,0 +1,48 @@
+String runid1='TSL-2022-08-0000';
+String runid2='TSL-2023-10-9999';
+Map<string,datetime> runmap = new Map<string,datetime>();
+for (Timeseries_log__c tsl: [select name,ts_log_datetime__c from  timeseries_log__c]
+) {
+runmap.put(tsl.name,tsl.ts_log_datetime__c);
+}
+
+
+System.debug('timeseries run log runmap has a total of size='+runmap.size());
+
+Set<string> runidSet =new Set<String>();
+List<AggregateResult> arl = new List<AggregateResult>();
+arl=[SELECT RunId__c,count(id) FROM Client_Objective_TimeSeries__c where runid__c >= :runid1 and runid__c<:runid2 group by RunId__c order by runid__c];
+for (AggregateResult ar : arl) {
+
+String r = (String) ar.get('RunId__c');
+runidSet.add(r);
+}
+System.debug('co timeseries runid set size='+runidSet.size());
+for (String r : runidSet) {
+System.debug('cleaning up client_objective_timeseries_rollup__c for runid='+r);
+delete [select id from client_objective_timeseries_rollup__c where runid__c=:r];
+
+List<AggregateResult> aggl= new List<AggregateResult>();
+aggl=[SELECT Client__c, Status__c,count(id) FROM Client_Objective_TimeSeries__c where runid__c=:r group by client__c,Status__c];
+List<client_objective_timeseries_rollup__c> cotsrulist = new  List<client_objective_timeseries_rollup__c>();
+for (AggregateResult ar : aggl) {
+client_objective_timeseries_rollup__c cotsru = new client_objective_timeseries_rollup__c();
+Id clientId=(id)ar.get('Client__c');
+DateTime rundatetime = (DateTime) runmap.get(r);
+String runid = r;
+String status = (String) ar.get('Status__c');
+Integer statuscount = (Integer) ar.get('expr0');
+
+cotsru.client__c=clientId;
+cotsru.rundatetime__c=rundatetime;
+cotsru.runid__c=r;
+cotsru.status__c=status;
+cotsru.statuscount__c=statuscount;
+cotsrulist.add(cotsru);
+
+}
+System.debug('inserting '+cotsrulist.size()+ ' rollup records');
+insert cotsrulist;
+
+
+}
