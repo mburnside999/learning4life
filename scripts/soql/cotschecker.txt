@@ -1,0 +1,46 @@
+String runid1='TSL-2023-08-000080';
+String runid2='TSL-2023-10-999999';
+
+Set<string> runidSet =new Set<String>();
+List<AggregateResult> arl = new List<AggregateResult>();
+arl=[SELECT RunId__c,count(id) FROM Client_Objective_TimeSeries__c where runid__c >= :runid1 and runid__c<:runid2 group by RunId__c order by runid__c];
+for (AggregateResult ar : arl) {
+String r = (String) ar.get('RunId__c');
+runidSet.add(r);
+}
+
+Map<Date,Set<String>> mapper = new  Map<Date,Set<String>>();
+Double cnt=0;
+for (String r : runidSet) {
+List<client_objective_timeseries__c>  lcots=[select id, ts_load_datetime__c from client_objective_timeseries__c where runid__c=:r];
+
+for (client_objective_timeseries__c cots: lcots) {
+cnt++;
+Date d = cots.ts_load_datetime__c.date();
+
+if (mapper.containskey(d)) {
+
+Set<String> s = mapper.get(d);
+s.add(r);
+mapper.put(d,s);
+} else {
+Set<String> t = new Set<String>();
+t.add(r);
+mapper.put(d,t);
+}
+
+
+}
+}
+System.debug('mapper='+mapper);
+System.debug('recordcount='+cnt);
+for (Date  d: mapper.keyset() ){
+Set<String> s = mapper.get(d);
+System.debug(d +' - '+s.size() + '-' + s);
+
+}
+
+
+
+
+

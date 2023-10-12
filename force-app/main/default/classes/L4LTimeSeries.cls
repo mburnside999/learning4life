@@ -27,113 +27,138 @@ public class L4LTimeSeries {
     System.debug('in loadCOTimeSeries(): logging START to TimeSeries_Log__c()');
 
     TimeSeries_Log__c log = new TimeSeries_Log__c();
-    log.comments__c = 'Started client objective timeseries run';
-    insert log;
+    if (L4LTimeSeries.previousCOTSLoad(Date.today())) {
+      log.comments__c = 'Error: duplicate run prevented. 0 Client_Objective_Timeseries__c records / 0 Client_Objective_Timeseries_Rollup__c records processed';
+      insert log;
+      return 0; //bail
+    } else {
+      log.comments__c = 'Started client objective timeseries run';
+      insert log;
+      String runId = [SELECT name FROM TimeSeries_Log__c WHERE id = :log.Id]
+      .Name;
 
-    System.debug(
-      'in loadCOTimeSeries(): successfully logged START to TimeSeries_Log__c(): ' +
-      log
-    );
+      String clientObjectiveSOQLStr =
+        'Select Id,Client__c,Client_Objective_Notes__c, Date_Absorbed__c,' +
+        'Date_Acquired__c, Date_CIP__c, Date_Held__c, Date_Introduced__c,' +
+        'Days_Since_Tested_Correct__c, Days_Since_Tested__c, Frequency__c,' +
+        'Name, Objective__c, Program_Name__c, Area__c, Stage__c,' +
+        'Re_Test_Recommended__c, Status__c, Active__c FROM Client_Objective__c ';
 
-    String runId = [SELECT name FROM TimeSeries_Log__c WHERE id = :log.Id].Name;
+      List<Client_Objective__c> results = new List<Client_Objective__c>();
 
-    String clientObjectiveSOQLStr =
-      'Select Id,Client__c,Client_Objective_Notes__c, Date_Absorbed__c,' +
-      'Date_Acquired__c, Date_CIP__c, Date_Held__c, Date_Introduced__c,' +
-      'Days_Since_Tested_Correct__c, Days_Since_Tested__c, Frequency__c,' +
-      'Name, Objective__c, Program_Name__c, Area__c, Stage__c,' +
-      'Re_Test_Recommended__c, Status__c, Active__c FROM Client_Objective__c ';
+      System.debug('clientObjectiveSOQLStr= ' + clientObjectiveSOQLStr);
 
-    List<Client_Objective__c> results = new List<Client_Objective__c>();
+      results = Database.query(clientObjectiveSOQLStr);
 
-    System.debug('clientObjectiveSOQLStr= ' + clientObjectiveSOQLStr);
+      List<Client_Objective_TimeSeries__c> tslist = new List<Client_Objective_TimeSeries__c>();
 
-    results = Database.query(clientObjectiveSOQLStr);
+      for (client_objective__c co : results) {
+        Client_Objective_TimeSeries__c tsrecord = new Client_Objective_TimeSeries__c();
+        tsrecord.runId__c = runId;
+        tsrecord.client_objective__c = co.Id;
+        tsrecord.client__c = co.client__c;
+        tsrecord.client_objective_notes__c = co.client_objective_notes__c;
+        tsrecord.Date_Absorbed__c = co.Date_Absorbed__c;
+        tsrecord.Date_Acquired__c = co.Date_Acquired__c;
+        tsrecord.Date_CIP__c = co.Date_CIP__c;
+        tsrecord.Date_Held__c = co.Date_Held__c;
+        tsrecord.Date_Introduced__c = co.Date_Introduced__c;
+        tsrecord.Days_Since_Tested_Correct__c = co.Days_Since_Tested_Correct__c;
+        tsrecord.Days_Since_Tested__c = co.Days_Since_Tested__c;
+        tsrecord.Frequency__c = co.Frequency__c;
+        tsrecord.CO_Name__c = co.Name;
+        tsrecord.Objective__c = co.Objective__c;
+        tsrecord.Stage__c = co.Stage__c;
+        tsrecord.Area__c = co.Area__c;
+        tsrecord.status__c = co.status__c;
+        tsrecord.active__c = co.active__c;
 
-    List<Client_Objective_TimeSeries__c> tslist = new List<Client_Objective_TimeSeries__c>();
-
-    for (client_objective__c co : results) {
-      Client_Objective_TimeSeries__c tsrecord = new Client_Objective_TimeSeries__c();
-      tsrecord.runId__c = runId;
-      tsrecord.client_objective__c = co.Id;
-      tsrecord.client__c = co.client__c;
-      tsrecord.client_objective_notes__c = co.client_objective_notes__c;
-      tsrecord.Date_Absorbed__c = co.Date_Absorbed__c;
-      tsrecord.Date_Acquired__c = co.Date_Acquired__c;
-      tsrecord.Date_CIP__c = co.Date_CIP__c;
-      tsrecord.Date_Held__c = co.Date_Held__c;
-      tsrecord.Date_Introduced__c = co.Date_Introduced__c;
-      tsrecord.Days_Since_Tested_Correct__c = co.Days_Since_Tested_Correct__c;
-      tsrecord.Days_Since_Tested__c = co.Days_Since_Tested__c;
-      tsrecord.Frequency__c = co.Frequency__c;
-      tsrecord.CO_Name__c = co.Name;
-      tsrecord.Objective__c = co.Objective__c;
-      tsrecord.Stage__c = co.Stage__c;
-      tsrecord.Area__c = co.Area__c;
-      tsrecord.status__c = co.status__c;
-      tsrecord.active__c = co.active__c;
-
-      tsrecord.Re_Test_Recommended__c = co.Re_Test_Recommended__c;
-      tslist.add(tsrecord);
-    }
-
-    try {
-      insert tslist;
-
-      System.debug(
-        'loadCOTimeSeries(): updating Client_Objective_Timeseries_Rollup__c : '
-      );
-
-      List<AggregateResult> aggl = new List<AggregateResult>();
-      aggl = [
-        SELECT Client__c, Status__c, count(id)
-        FROM Client_Objective_TimeSeries__c
-        WHERE runid__c = :runId
-        GROUP BY client__c, Status__c
-      ];
-      List<Client_Objective_Timeseries_Rollup__c> cotsrulist = new List<Client_Objective_Timeseries_Rollup__c>();
-      for (AggregateResult ar : aggl) {
-        client_objective_timeseries_rollup__c cotsru = new client_objective_timeseries_rollup__c();
-
-        Id clientId = (id) ar.get('Client__c');
-        String status = (String) ar.get('Status__c');
-        Integer statuscount = (Integer) ar.get('expr0');
-
-        System.debug(clientId);
-        cotsru.runId__c = runId;
-        cotsru.client__c = clientId;
-        cotsru.status__c = status;
-        cotsru.statuscount__c = statuscount;
-        cotsrulist.add(cotsru);
+        tsrecord.Re_Test_Recommended__c = co.Re_Test_Recommended__c;
+        tslist.add(tsrecord);
       }
 
-      insert cotsrulist;
+      try {
+        insert tslist;
 
-      // log end of run
+        System.debug(
+          'loadCOTimeSeries(): updating Client_Objective_Timeseries_Rollup__c : '
+        );
+
+        List<AggregateResult> aggl = new List<AggregateResult>();
+        aggl = [
+          SELECT Client__c, Status__c, count(id)
+          FROM Client_Objective_TimeSeries__c
+          WHERE runid__c = :runId
+          GROUP BY client__c, Status__c
+        ];
+        List<Client_Objective_Timeseries_Rollup__c> cotsrulist = new List<Client_Objective_Timeseries_Rollup__c>();
+        for (AggregateResult ar : aggl) {
+          client_objective_timeseries_rollup__c cotsru = new client_objective_timeseries_rollup__c();
+
+          Id clientId = (id) ar.get('Client__c');
+          String status = (String) ar.get('Status__c');
+          Integer statuscount = (Integer) ar.get('expr0');
+
+          System.debug(clientId);
+          cotsru.runId__c = runId;
+          cotsru.client__c = clientId;
+          cotsru.status__c = status;
+          cotsru.statuscount__c = statuscount;
+          cotsrulist.add(cotsru);
+        }
+
+        insert cotsrulist;
+
+        // log end of run
+        System.debug(
+          'loadCOTimeSeries(): logging END to TimeSeries_Log__c(): ' + log
+        );
+
+        TimeSeries_Log__c endlog = new TimeSeries_Log__c();
+        endlog.comments__c =
+          'Successfully processed ' +
+          tslist.size() +
+          ' Client_Objective_Timeseries__c records / ' +
+          cotsrulist.size() +
+          ' Client_Objective_Timeseries_Rollup__c records';
+        insert endlog;
+
+        System.debug(
+          'loadCOTimeSeries(): successfully logged END to TimeSeries_Log__c(): ' +
+          log
+        );
+      } catch (DmlException e) {
+        System.debug('error ' + e.getMessage());
+      }
       System.debug(
-        'loadCOTimeSeries(): logging END to TimeSeries_Log__c(): ' + log
+        tslist.size() + ' Client Objective TimeSeries records processed '
       );
-
-      TimeSeries_Log__c endlog = new TimeSeries_Log__c();
-      endlog.comments__c =
-        'Successfully processed ' +
-        tslist.size() +
-        ' Client_Objective_Timeseries__c records / ' +
-        cotsrulist.size() +
-        ' Client_Objective_Timeseries_Rollup__c records';
-      insert endlog;
-
-      System.debug(
-        'loadCOTimeSeries(): successfully logged END to TimeSeries_Log__c(): ' +
-        log
-      );
-    } catch (DmlException e) {
-      System.debug('error ' + e.getMessage());
+      return tslist.size();
     }
-    System.debug(
-      tslist.size() + ' Client Objective TimeSeries records processed '
-    );
-    return tslist.size();
+  }
+
+  /*******************************************************************************************************
+   * @name previousCOTSLoad
+   * @description check for previous COTS load
+   * @param d the date to check
+   *
+   * @return true - Yes, there was another load today
+   *
+   * @example
+   * Boolean anotherloadToday = L4LTimeSeries.previousSameDayCOTSLoad(Date);
+   */
+
+  public static Boolean previousCOTSLoad(Date d) {
+    Set<Date> dateset = new Set<Date>();
+    for (Timeseries_log__c tsl : [
+      SELECT ts_log_datetime__c
+      FROM timeseries_log__c
+    ]) {
+      Date datevar = tsl.ts_log_datetime__c.date();
+      dateset.add(datevar);
+    }
+
+    return (dateset.contains(d));
   }
 
   /*******************************************************************************************************

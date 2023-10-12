@@ -181,4 +181,24 @@ private class TestL4LTimeSeries {
     String str = L4LTimeSeries.generateD3COTSThresholdJson(clientId, 100, 200);
     System.assert(str.length() > 0, 'Expected a return string');
   }
+
+  @isTest
+  static void testpreviousSameDayCOTSLoad() {
+    Test.startTest();
+    TimeSeries_Log__c tsl1 = new TimeSeries_Log__c();
+    tsl1.TS_Log_DateTime__c = DateTime.Now();
+    tsl1.Comments__c = 'test';
+    insert tsl1;
+
+    TimeSeries_Log__c tsl2 = new TimeSeries_Log__c();
+    tsl2.TS_Log_DateTime__c = DateTime.Now();
+    tsl2.Comments__c = 'test';
+    insert tsl2;
+
+    Test.stopTest();
+
+    //L4LTimeSeries ts = new L4LTimeSeries();
+    Boolean b = L4LTimeSeries.previousCOTSLoad(Date.today());
+    System.assert(b == true, 'Expected detection of same day loads');
+  }
 }
