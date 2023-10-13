@@ -72,23 +72,23 @@ jobs:
           fi
       # Authenticate sandbox
       - name: "Authenticate Sandbox"
-        run: sfdx auth:sfdxurl:store -f ./LFL_PARTIAL_SANDBOX_URL.txt -a LFLHyperPARTIAL -s
+        run: sf org login sfdx-url --sfdx-url-file ./LFL_PARTIAL_SANDBOX_URL.txt --alias LFLHyperPARTIAL --set-default
 
       # Run Deploy Custom Objects
       #- name: "Deploy Custom Objects"
-      # run: sfdx force:source:deploy -m "CustomObject:Client_Objective__c, CustomObject:Client_Objective_TimeSeries__c,CustomObject:TimeSeries_Log__c,CustomObject:Incidental_Data__c,CustomObject:NDIS_Report__c,CustomObject:Objective__c,CustomObject:Program__c,CustomObject:SD__c,CustomObject:Session__c,CustomObject:Session_Obj__c,CustomObject:Session_Statistics__c" -u LFLHyperPARTIAL
+      # run: sf project deploy start --metadata "CustomObject:Client_Objective__c, CustomObject:Client_Objective_TimeSeries__c,CustomObject:TimeSeries_Log__c,CustomObject:Incidental_Data__c,CustomObject:NDIS_Report__c,CustomObject:Objective__c,CustomObject:Program__c,CustomObject:SD__c,CustomObject:Session__c,CustomObject:Session_Obj__c,CustomObject:Session_Statistics__c" -u LFLHyperPARTIAL
 
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
-        run: sfdx force:source:deploy -m "AuraDefinitionBundle,ApexClass,ApexTrigger,Flow,LightningMessageChannel" --target-org LFLHyperPARTIAL -l RunSpecifiedTests -r TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionRateCalculation,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClientObjective,TestLFLTimeSeriesBatch,TestLFLTimeSeriesBatchScheduler,TestLFLDTDRates,TestLFLDTDRateMaster,TestLFLInvocableListUnusedObj,TestL4LStagesByArea
+        run: sf project deploy start --metadata AuraDefinitionBundle --metadata ApexClass --metadata ApexTrigger --metadata Flow --metadata LightningMessageChannel --target-org LFLHyperPARTIAL --test-level RunSpecifiedTests --tests TestL4LController TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard TestLFLInvocableSessionStatistics TestLFLPopulateTestData TestLFLProgramStatusCascadeUtil TestCascadeProgramStatusTrg TestCascadeSDStatusTrg TestDaysSinceUpdatedTr TestLFLSessionStatsTrg TestClientObjectiveList TestL4LNebulaComponentController TestL4LExceptionRateCalculation TestL4LExceptionClientObjectiveMissing TestTrgUniqueObjectivePerClientObjective TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj TestL4LStagesByArea
 
       # Run Deploy LWC
       - name: "Deploy LWC"
-        run: sfdx force:source:deploy -m "LightningComponentBundle" --target-org LFLHyperPARTIAL
+        run: sf project deploy start --metadata LightningComponentBundle --target-org LFLHyperPARTIAL 
 
       # Run Run Apex tests
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
-        run: sfdx apex run test -l RunSpecifiedTests -t TestL4LController,TestL4LSessionStatsController,TestL4LSDStageMap,TestLFLUtil,TestLFLSDWrapper,TestL4LTimeSeries,TestL4LTimeSeriesScheduler,TestLFLClientObjectiveHelper,TestLFLInvocableMasteryStatistics,TestLFLInvocableReportWizard,TestLFLInvocableSessionStatistics,TestLFLPopulateTestData,TestLFLProgramStatusCascadeUtil,TestCascadeProgramStatusTrg,TestCascadeSDStatusTrg,TestDaysSinceUpdatedTrg,TestLFLSessionStatsTrg,TestClientObjectiveList,TestL4LNebulaComponentController,TestL4LExceptionRateCalculation,TestL4LExceptionClientObjectiveMissing,TestTrgUniqueObjectivePerClientObjective,TestLFLTimeSeriesBatch,TestLFLTimeSeriesBatchScheduler,TestLFLDTDRates,TestLFLDTDRateMaster,TestLFLInvocableListUnusedObj,TestL4LStagesByArea --target-org LFLHyperPARTIAL -c -r human -d ./tests/apex -w 20
+        run: sf apex run test --test-level  RunSpecifiedTests --tests TestL4LController TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard TestLFLInvocableSessionStatistics TestLFLPopulateTestData TestLFLProgramStatusCascadeUtil TestCascadeProgramStatusTrg TestCascadeSDStatusTrg TestDaysSinceUpdatedTrg TestLFLSessionStatsTrg TestClientObjectiveList TestL4LNebulaComponentController TestL4LExceptionRateCalculation TestL4LExceptionClientObjectiveMissing TestTrgUniqueObjectivePerClientObjective TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj TestL4LStagesByArea --target-org LFLHyperPARTIAL --code-coverage --result-format human --output-dir ./tests/apex -w 20          
 
       # Delete temporary test file that Codecov is unable to parse
       #- name: "Delete coverage file (temporary step)"
