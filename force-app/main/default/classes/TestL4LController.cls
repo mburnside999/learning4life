@@ -621,6 +621,7 @@ private class TestL4LController {
       '1',
       10,
       10,
+      '10:00',
       'Added by Test method'
     );
 

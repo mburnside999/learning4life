@@ -44,7 +44,7 @@ import SESSION_STATUS_FIELD from "@salesforce/schema/Session__c.Status__c";
 const SESSIONFIELDS = [SESSION_STATUS_FIELD];
 //columns when the session is open
 const columns = [
-  { label: "SBOC", fieldName: "Name", type: "text", initialWidth: 200 },
+  { label: "SBOC", fieldName: "Name", type: "text", initialWidth: 150 },
   // {
   //   label: "Client_BOC__c",
   //   fieldName: "Client_BOC__c",
@@ -57,13 +57,13 @@ const columns = [
     label: "Behaviour",
     fieldName: "Behaviour__c",
     type: "text",
-    initialWidth: 300,
+    initialWidth: 200,
     editable: false
   },
   {
     label: "Action",
     type: "button",
-    initialWidth: 120,
+    initialWidth: 100,
     typeAttributes: {
       label: "Copy",
       name: "Add",
@@ -74,19 +74,26 @@ const columns = [
     }
   },
   {
+    label: "Time (HH24:MI)",
+    fieldName: "Time__c",
+    type: "text",
+    initialWidth: 160,
+    editable: true
+  },
+  {
     label: "Duration (Mins)",
     fieldName: "Duration_Mins__c",
     type: "number",
-    initialWidth: 130,
+    initialWidth: 160,
     max: "60",
     min: "0",
     editable: true
   },
   {
-    label: "Intensity",
+    label: "Intensity (0-5)",
     fieldName: "Intensity__c",
     type: "number",
-    initialWidth: 120,
+    initialWidth: 160,
     max: "5",
     min: "1",
     editable: true
@@ -95,7 +102,7 @@ const columns = [
     label: "Occurences",
     fieldName: "Occurrences__c",
     type: "number",
-    initialWidth: 120,
+    initialWidth: 160,
     max: 10,
     min: 0,
     editable: true
@@ -124,7 +131,7 @@ const columns = [
 ];
 //columns when the session is locked
 const lockedcolumns = [
-  { label: "SBOC", fieldName: "Name", type: "text", initialWidth: 200 },
+  { label: "SBOC", fieldName: "Name", type: "text", initialWidth: 150 },
   // {
   //   label: "Client_BOC__c",
   //   fieldName: "Client_BOC__c",
@@ -136,28 +143,35 @@ const lockedcolumns = [
     label: "Behaviour",
     fieldName: "Behaviour__c",
     type: "text",
-    initialWidth: 300,
+    initialWidth: 200,
+    editable: false
+  },
+  {
+    label: "Time (HH24:MI)",
+    fieldName: "Time__c",
+    type: "text",
+    initialWidth: 160,
     editable: false
   },
   {
     label: "Duration (Mins)",
     fieldName: "Duration_Mins__c",
     type: "number",
-    initialWidth: 130,
+    initialWidth: 160,
     editable: false
   },
   {
-    label: "Intensity",
+    label: "Intensity (0-5)",
     fieldName: "Intensity__c",
     type: "number",
-    initialWidth: 120,
+    initialWidth: 160,
     editable: false
   },
   {
     label: "Occurences",
     fieldName: "Occurrences__c",
     type: "number",
-    initialWidth: 120,
+    initialWidth: 180,
     editable: false
   },
   {
@@ -456,7 +470,8 @@ export default class L4lGetSetSessionBOC extends LightningElement {
           intensity: row.Intensity__c,
           mins: row.Duration_Mins__c,
           occurrences: row.Occurrences__c,
-          comments: "Added by Therapist. Please complete."
+          sboctime: row.Time__c,
+          comments: ""
         })
           .then(() => {
             this.dispatchEvent(
@@ -523,7 +538,19 @@ export default class L4lGetSetSessionBOC extends LightningElement {
     let valid = true;
 
     event.detail.draftValues.map((row) => {
-      console.log("in the map, row id = " + row.Id);
+      console.log("*****in the map, row = " + JSON.stringify(row));
+
+      if ("Time__c" in row) {
+        if (
+          row.Time__c != "" &&
+          !/^(?:[01][0-9]|2[0-3]):[0-5][0-9](?::[0-5][0-9])?$/.test(row.Time__c)
+        ) {
+          valid = false;
+          rowErrorMessages.push(`Time must be in 24HH:MI format`);
+          rowErrorFieldNames.push("Time__c");
+        }
+      }
+
       if (row.Intensity__c > 5 || row.Intensity__c < 0) {
         valid = false;
         rowErrorMessages.push(`Intensity must be between 0 and 5.`);

@@ -183,6 +183,7 @@ public with sharing class LFLPopulateTestData {
       intensity__c = '1',
       occurrences__c = 1,
       duration_mins__c = 10,
+      time__c = '10:00',
       comments__c = 'Comments'
     );
     insert sboc1;
@@ -200,6 +201,7 @@ public with sharing class LFLPopulateTestData {
       intensity__c = '1',
       occurrences__c = 1,
       duration_mins__c = 10,
+      time__c = '10:00',
       comments__c = 'Comments'
     );
     insert sboc2;
