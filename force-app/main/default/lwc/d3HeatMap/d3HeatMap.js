@@ -223,6 +223,7 @@ export default class D3HeatMap extends LightningElement {
     let totalNonResponsive;
     let totalResponses;
     let totalAdjustedResponses;
+    let therapistName;
 
     this.sessionXAxisArray = [];
     this.progYAxisArray = [];
@@ -252,6 +253,7 @@ export default class D3HeatMap extends LightningElement {
       totalResponses =
         totalCorrect + totalIncorrect + totalPrompted + totalNonResponsive;
       totalAdjustedResponses = totalCorrect + totalIncorrect + totalPrompted;
+      therapistName = row.Session__r.Therapist_Name__c;
       return {
         session,
         objective,
@@ -267,7 +269,8 @@ export default class D3HeatMap extends LightningElement {
         totalPrompted,
         totalNonResponsive,
         totalResponses,
-        totalAdjustedResponses
+        totalAdjustedResponses,
+        therapistName
       };
     });
 
@@ -428,7 +431,7 @@ export default class D3HeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>${d.session}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status = ${d.previous_status}<br/>Include N, %C = ${d.value}% (${d.totalCorrect}/${d.totalResponses})<br/>Exclude N, %Cᵃᵈʲ = ${d.adjustedvalue}% (${d.totalCorrect}/${d.totalAdjustedResponses})<br/></span>`
+          `<span style='color:white'>${d.session}<br/>${d.therapistName}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status = ${d.previous_status}<br/>Include N, %C = ${d.value}% (${d.totalCorrect}/${d.totalResponses})<br/>Exclude N, %Cᵃᵈʲ = ${d.adjustedvalue}% (${d.totalCorrect}/${d.totalAdjustedResponses})<br/></span>`
         )
         .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");

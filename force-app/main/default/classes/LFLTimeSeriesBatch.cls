@@ -75,11 +75,40 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
    */
 
   public void finish(Database.BatchableContext bc) {
+    List<AggregateResult> aggl = new List<AggregateResult>();
+    aggl = [
+      SELECT Client__c, Status__c, count(id)
+      FROM Client_Objective_TimeSeries__c
+      WHERE runid__c = :runId
+      GROUP BY client__c, Status__c
+    ];
+
+    List<Client_Objective_Timeseries_Rollup__c> cotsrulist = new List<Client_Objective_Timeseries_Rollup__c>();
+    for (AggregateResult ar : aggl) {
+      client_objective_timeseries_rollup__c cotsru = new client_objective_timeseries_rollup__c();
+
+      Id clientId = (id) ar.get('Client__c');
+      String status = (String) ar.get('Status__c');
+      Integer statuscount = (Integer) ar.get('expr0');
+
+      System.debug(clientId);
+      cotsru.runId__c = runId;
+      cotsru.client__c = clientId;
+      cotsru.status__c = status;
+      cotsru.statuscount__c = statuscount;
+      cotsrulist.add(cotsru);
+    }
+
+    insert cotsrulist;
+
     TimeSeries_Log__c endlog = new TimeSeries_Log__c();
+
     endlog.comments__c =
       'Successfully processed ' +
       recs +
-      ' timeseries records';
+      ' Client_Objective_Timeseries__c records / ' +
+      cotsrulist.size() +
+      ' Client_Objective_Timeseries_Rollup__c records';
     insert endlog;
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -90,9 +119,11 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
     mail.setSubject('LFLTimeSeriesBatch completed.');
 
     mail.setPlainTextBody(
-      'LFLTimeSeriesBatch completed successfully: ' +
+      'Successfully processed ' +
       recs +
-      ' Client Objective TimeSeries records created.'
+      ' Client_Objective_Timeseries__c records / ' +
+      cotsrulist.size() +
+      ' Client_Objective_Timeseries_Rollup__c records'
     );
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });

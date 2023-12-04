@@ -313,7 +313,7 @@ public with sharing class L4LController {
     );
 
     String debugsoql =
-      'SELECT Id,Client_BOC__c,Comments__c,Duration_Mins__c,Intensity__c,Occurrences__c,Session__c,Name ' +
+      'SELECT Id,Client_BOC__c,Comments__c,Duration_Mins__c,Intensity__c,Occurrences__c,Session__c,Time__c,Name ' +
       'FROM Session_BOC__c ' +
       ' WHERE Session__c = ' +
       sess +
@@ -335,6 +335,7 @@ public with sharing class L4LController {
           Duration_Mins__c,
           Intensity__c,
           Occurrences__c,
+          Time__c,
           Session__c,
           Behaviour__c,
           Name
@@ -1542,6 +1543,7 @@ public with sharing class L4LController {
     String intensity,
     Decimal mins,
     Decimal occurrences,
+    String sboctime,
     String comments
   ) {
     final String SCENARIO = 'Create Session BOC';
@@ -1560,6 +1562,7 @@ public with sharing class L4LController {
       Intensity__c = intensity,
       Duration_Mins__c = mins,
       Occurrences__c = occurrences,
+      Time__c = sboctime,
       Comments__c = comments
     );
 

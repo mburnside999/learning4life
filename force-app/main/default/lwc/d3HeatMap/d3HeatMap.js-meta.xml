@@ -50,6 +50,24 @@
         </targetConfig>
          <targetConfig targets="lightningCommunity__Default">
          <property name="recordId" type="String" default="{!Route.recordId}" />
+         <property
+        name="lwcTitle"
+        type="String"
+        default="LFL Client Program Mastery"
+        label="Enter a LWC title"
+      />
+       <property
+        name="chartTitle"
+        type="String"
+        default="Objectives Vs. Sessions"
+        label="Enter a chart title"
+      />
+       <property
+        name="chartSubTitle"
+        type="String"
+        default="Hover over the cells to see individual scores"
+        label="Enter a chart subtitle"
+      />
           </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

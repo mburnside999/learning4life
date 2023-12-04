@@ -43,3 +43,9 @@ results.put(cots.RunId__c,cots2list.size());
 }
 System.debug(results);
 
+
+
+
+String s =L4LSessionStatsController.generateD3BOCJson('0018t000002vfSfAAI','30');
+System.debug(s);
+

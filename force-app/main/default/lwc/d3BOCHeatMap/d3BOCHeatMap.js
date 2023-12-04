@@ -298,7 +298,7 @@ export default class D3BOCHeatMap extends LightningElement {
       tooltip.transition().duration(600).style("opacity", 0.9);
       tooltip
         .html(
-          `<span style='color:white'>Session: ${d.session}<br/>Date: ${d.sessiondate}<br/>Behaviour: ${d.behaviour}<br/>Total Duration: ${d.totalduration}<br/>Occurrences: ${d.value}<br/><br/>ACTIVE: ${d.present}</span>`
+          `<span style='color:white'>Session: ${d.session}<br/>Date: ${d.sessiondate}<br/>Behaviour: ${d.behaviour}<br/>Total Duration: ${d.totalduration}<br/>Occurrences: ${d.value}<br/><br/>Present: ${d.present}</span>`
         )
         .style("left", d3.pointer(e)[0] + 100 + "px")
         .style("top", d3.pointer(e)[1] + 30 + "px");
@@ -332,13 +332,16 @@ export default class D3BOCHeatMap extends LightningElement {
       .style("opacity", (d) => {
         return 0.7; // experiments with opacity - currently not used
       })
-
       .style("fill", (d) => {
         if (d.present == "true") {
           if (d.value == "0") {
-            return "#ffa500"; //orange
-          } else return "#ff0000"; //red
-        } else return "#008000"; //green
+            return "#008000"; //green
+          } else if (d.value == null) {
+            return "#7393B3"; //bluegrey
+          } else {
+            return "#FF0000"; //red
+          }
+        } else return "#E5E4E2"; //platinum
       })
       .on("mouseover", mouseover)
       .on("mousemove", mousemove)
