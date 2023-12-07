@@ -630,7 +630,7 @@ public with sharing class L4LSessionStatsController {
    * @param showAcquired True | False, restrict to ACQ only or not
    * @param periodStr "All" | 30,60,90 days etc
    * @param stageStr "All" | objective__r.sd__r.Stage__c
-   *
+   * @param therapistStr "All" | session__r.therapy_name__c
    * @return a list of session_Statistics__c
    * @example
    */
@@ -642,7 +642,8 @@ public with sharing class L4LSessionStatsController {
     String sdStr,
     Boolean showAcquired,
     String periodStr,
-    String stageStr
+    String stageStr,
+    String therapistStr
   ) {
     final String SCENARIO = 'D3 Session Statistics Chart - HeatMap - Apex';
 
@@ -679,6 +680,11 @@ public with sharing class L4LSessionStatsController {
     if (sdStr == 'All') {
     } else {
       querySessionStatsString += ' AND SD_Name__c=:sdStr ';
+    }
+
+    if (therapistStr == 'All') {
+    } else {
+      querySessionStatsString += ' AND session__r.Therapist_Name__c=:therapistStr ';
     }
 
     if (stageStr == 'All') {
