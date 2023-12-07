@@ -72,6 +72,10 @@ jobs:
       #- name: "Deploy Custom Objects"
       # run: sf project deploy start --metadata "CustomObject:Client_Objective__c, CustomObject:Client_Objective_TimeSeries__c,CustomObject:TimeSeries_Log__c,CustomObject:Incidental_Data__c,CustomObject:NDIS_Report__c,CustomObject:Objective__c,CustomObject:Program__c,CustomObject:SD__c,CustomObject:Session__c,CustomObject:Session_Obj__c,CustomObject:Session_Statistics__c" -u LFLHyper
 
+      # Run Deploy CachePartitions
+      - name: "Cache Partitions"
+        run: sf project deploy start --metadata PlatformCachePartition --target-org LFLHyper
+
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
         run: sf project deploy start --metadata AuraDefinitionBundle --metadata ApexClass --metadata ApexTrigger --metadata Flow --metadata LightningMessageChannel --target-org LFLHyper --test-level RunSpecifiedTests --tests TestL4LController TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard TestLFLInvocableSessionStatistics TestLFLPopulateTestData TestLFLProgramStatusCascadeUtil TestCascadeProgramStatusTrg TestCascadeSDStatusTrg TestDaysSinceUpdatedTr TestLFLSessionStatsTrg TestClientObjectiveList TestL4LNebulaComponentController TestL4LExceptionRateCalculation TestL4LExceptionClientObjectiveMissing TestTrgUniqueObjectivePerClientObjective TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj TestL4LStagesByArea TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler
