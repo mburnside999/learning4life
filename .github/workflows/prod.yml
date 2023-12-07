@@ -4,12 +4,6 @@ name: CI-LFLProduction
 # Definition when the workflow should run
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "sfdx-project.json"
-      - "README.md"
 
 # Jobs to be executed
 jobs:
@@ -43,7 +37,7 @@ jobs:
       - name: "Lint Lightning Web Components"
         run: npm run lint
 
-  sandbox-push:
+  production-push:
     runs-on: ubuntu-latest
     needs: formatting-and-linting
     if: ${{ github.actor != 'dependabot[bot]' }}
@@ -60,19 +54,19 @@ jobs:
       - name: "Checkout source code"
         uses: actions/checkout@v3
 
-      # Store secret for review sandbox
-      - name: "Populate auth file with LFL_PARTIAL_SANDBOX_URL secret"
+      # Store secret for review Production
+      - name: "Populate auth file with LFL_HYPER_PRODUCTION_URL secret"
         shell: bash
         run: |
-          echo ${{ secrets.LFL_PARTIAL_SANDBOX_URL}} > ./LFL_PARTIAL_SANDBOX_URL.txt
-          secretFileSize=$(wc -c "./LFL_PARTIAL_SANDBOX_URL.txt" | awk '{print $1}')
+          echo ${{ secrets.LFL_HYPER_PRODUCTION_URL}} > ./LFL_HYPER_PRODUCTION_URL.txt
+          secretFileSize=$(wc -c "./LFL_HYPER_PRODUCTION_URL.txt" | awk '{print $1}')
           if [ $secretFileSize == 1 ]; then
-              echo "Missing LFL_PARTIAL_SANDBOX_URL secret. Is this workflow running on a fork?";
+              echo "Missing LFL_HYPER_PRODUCTION_URL secret. Is this workflow running on a fork?";
               exit 1;
           fi
-      # Authenticate sandbox
-      - name: "Authenticate Sandbox"
-        run: sf org login sfdx-url --sfdx-url-file ./LFL_PARTIAL_SANDBOX_URL.txt --alias LFLHyper --set-default
+      # Authenticate Production
+      - name: "Authenticate Production"
+        run: sf org login sfdx-url --sfdx-url-file ./LFL_HYPER_PRODUCTION_URL.txt --alias LFLHyper --set-default
 
       # Run Deploy Custom Objects
       #- name: "Deploy Custom Objects"
@@ -84,11 +78,11 @@ jobs:
 
       # Run Deploy LWC
       - name: "Deploy LWC"
-        run: sf project deploy start --metadata LightningComponentBundle --target-org LFLHyper 
+        run: sf project deploy start --metadata LightningComponentBundle --target-org LFLHyper
 
       # Run Run Apex tests
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
-        run: sf apex run test --test-level  RunSpecifiedTests --tests TestL4LController TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard TestLFLInvocableSessionStatistics TestLFLPopulateTestData TestLFLProgramStatusCascadeUtil TestCascadeProgramStatusTrg TestCascadeSDStatusTrg TestDaysSinceUpdatedTrg TestLFLSessionStatsTrg TestClientObjectiveList TestL4LNebulaComponentController TestL4LExceptionRateCalculation TestL4LExceptionClientObjectiveMissing TestTrgUniqueObjectivePerClientObjective TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj TestL4LStagesByArea --target-org LFLHyper --code-coverage --result-format human --output-dir ./tests/apex -w 20          
+        run: sf apex run test --test-level  RunSpecifiedTests --tests TestL4LController TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard TestLFLInvocableSessionStatistics TestLFLPopulateTestData TestLFLProgramStatusCascadeUtil TestCascadeProgramStatusTrg TestCascadeSDStatusTrg TestDaysSinceUpdatedTrg TestLFLSessionStatsTrg TestClientObjectiveList TestL4LNebulaComponentController TestL4LExceptionRateCalculation TestL4LExceptionClientObjectiveMissing TestTrgUniqueObjectivePerClientObjective TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj TestL4LStagesByArea --target-org LFLHyper --code-coverage --result-format human --output-dir ./tests/apex -w 20
 
       # Delete temporary test file that Codecov is unable to parse
       #- name: "Delete coverage file (temporary step)"
