@@ -68,6 +68,8 @@ export default class D3HeatMap extends LightningElement {
     // { label: "Bring Me", value: "Bring Me" }
   ];
 
+  therapistoptions = [{ label: "All", value: "All", isChecked: true }];
+
   periodoptions = [
     { label: "All", value: "All" },
     { label: "1 Day", value: "1" },
@@ -82,6 +84,7 @@ export default class D3HeatMap extends LightningElement {
 
   optionval = "All"; //default
   sdoptionval = "All";
+  therapistoptionval = "All";
   stageoptionval = "All";
   periodval = "30";
   statusval = "false";
@@ -103,6 +106,7 @@ export default class D3HeatMap extends LightningElement {
   objsSet = new Set([]);
   progsSet = new Set([]);
   sdSet = new Set([]);
+  therapistSet = new Set([]);
 
   @track result; //raw returned records from Apex query
   @track gridData = []; //the data that D3 iterates across
@@ -172,7 +176,8 @@ export default class D3HeatMap extends LightningElement {
           sdStr: "All",
           periodStr: "30",
           stageStr: "All",
-          showAcquired: this.isSelected
+          showAcquired: this.isSelected,
+          therapistStr: "All"
         }));
         console.log(_result);
         //this shenanigans was to get D3 to wait for the Apex to finish
@@ -185,7 +190,7 @@ export default class D3HeatMap extends LightningElement {
         this.dispatchEvent(
           new ShowToastEvent({
             title: "Error loading D3",
-            message: error.message,
+            message: error,
             variant: "error"
           })
         );
@@ -206,6 +211,7 @@ export default class D3HeatMap extends LightningElement {
     this.objsSet = new Set([]);
     this.progsSet = new Set([]);
     this.sdSet = new Set([]);
+    this.therapistSet = new Set([]);
 
     //local variables to convert the __r field names received from Apex
     let session;
@@ -237,6 +243,7 @@ export default class D3HeatMap extends LightningElement {
       this.objsSet.add(row.SD_And_Objective_Str__c);
       this.progsSet.add(row.Program_Name__c);
       this.sdSet.add(row.SD_Name__c);
+      this.therapistSet.add(row.Session__r.Therapist_Name__c);
       session = row.Session__r.Name;
       SDObjStr = row.SD_And_Objective_Str__c;
       objective = row.Objective__r.Name;
@@ -254,6 +261,7 @@ export default class D3HeatMap extends LightningElement {
         totalCorrect + totalIncorrect + totalPrompted + totalNonResponsive;
       totalAdjustedResponses = totalCorrect + totalIncorrect + totalPrompted;
       therapistName = row.Session__r.Therapist_Name__c;
+      console.log("============>>>therapistName=" + therapistName);
       return {
         session,
         objective,
@@ -296,11 +304,9 @@ export default class D3HeatMap extends LightningElement {
       s.push(entry);
     }
 
-    // for the LWC radio group we produce the program buttons once upon rendering
-    // if (!this.programsrendered) {
-    console.log("new rendering");
     this.options = [{ label: "All", value: "All", isChecked: true }];
     this.sdoptions = [{ label: "All", value: "All", isChecked: true }];
+    this.therapistoptions = [{ label: "All", value: "All", isChecked: true }];
 
     let _sortedProgsArray = Array.from(this.progsSet).sort();
     let _sortedProgsSet = new Set(_sortedProgsArray);
@@ -319,9 +325,18 @@ export default class D3HeatMap extends LightningElement {
       console.log("SD = " + entry);
       this.sdoptions.push({ label: entry, value: entry });
     }
+    // swet to support therapist functionality
+
+    let _sortedTherapistArray = Array.from(this.therapistSet).sort();
+    let _sortedTherapistSet = new Set(_sortedTherapistArray);
+    let therapistSetIterator = _sortedTherapistSet.values();
+    // List all Values
+    for (const entry of therapistSetIterator) {
+      console.log("Therapist = " + entry);
+      this.therapistoptions.push({ label: entry, value: entry });
+    }
 
     this.programsrendered = true;
-    // }
 
     //clean up any previous svg.d3 descendents
     let svg = d3.select(this.template.querySelector(".scatterplot"));
@@ -433,13 +448,13 @@ export default class D3HeatMap extends LightningElement {
         .html(
           `<span style='color:white'>${d.session}<br/>${d.therapistName}<br/>${d.sessiondate}<br/>${d.programName}<br/>${d.SDname}<br/>Prev. Status = ${d.previous_status}<br/>Include N, %C = ${d.value}% (${d.totalCorrect}/${d.totalResponses})<br/>Exclude N, %Cᵃᵈʲ = ${d.adjustedvalue}% (${d.totalCorrect}/${d.totalAdjustedResponses})<br/></span>`
         )
-        .style("left", d3.pointer(e)[0] + 100 + "px")
-        .style("top", d3.pointer(e)[1] + 30 + "px");
+        .style("left", d3.pointer(e)[0] + 80 + "px")
+        .style("top", d3.pointer(e)[1] + 3 + "px");
     };
     const mousemove = (e) => {
       tooltip
-        .style("left", d3.pointer(e)[0] + 100 + "px")
-        .style("top", d3.pointer(e)[1] + 30 + "px");
+        .style("left", d3.pointer(e)[0] + 80 + "px")
+        .style("top", d3.pointer(e)[1] + 3 + "px");
     };
     const mouseleave = (e) => {
       tooltip.transition().duration(200).style("opacity", 0);
@@ -547,6 +562,16 @@ export default class D3HeatMap extends LightningElement {
     this.options = this.options.map((row) => {
       return { ...row, isChecked: row.label === selectedOption };
     });
+
+    const sdval = this.template.querySelector(".sd-val");
+    if (sdval) {
+      sdval.value = "All";
+    }
+    const therapistval = this.template.querySelector(".therapist-val");
+    if (therapistval) {
+      therapistval.value = "All";
+    }
+
     this.composeOptions();
   }
 
@@ -566,6 +591,45 @@ export default class D3HeatMap extends LightningElement {
       return { ...row, isChecked: row.label === selectedOption };
     });
     console.log("in handleSDChange " + JSON.stringify(this.sdoptions));
+
+    const progval = this.template.querySelector(".prog-val");
+    if (progval) {
+      progval.value = "All";
+    }
+    const therapistval = this.template.querySelector(".therapist-val");
+    if (therapistval) {
+      therapistval.value = "All";
+    }
+    this.composeOptions();
+  }
+
+  //the Therpaist change handler
+  handleTherapistChange(event) {
+    console.log("==========> in handleTherapistChange " + event.detail.value);
+
+    logInfo(
+      this.recordId,
+      `${COMPONENT}: ComboBox: Therapist Filter`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
+    const selectedOption = event.detail.value;
+    this.therapistoptions = this.therapistoptions.map((row) => {
+      return { ...row, isChecked: row.label === selectedOption };
+    });
+    console.log(
+      "in handleTherapistChange " + JSON.stringify(this.therapistoptions)
+    );
+
+    const progval = this.template.querySelector(".prog-val");
+    if (progval) {
+      progval.value = "All";
+    }
+    const sdval = this.template.querySelector(".sd-val");
+    if (sdval) {
+      sdval.value = "All";
+    }
 
     this.composeOptions();
   }
@@ -652,6 +716,20 @@ export default class D3HeatMap extends LightningElement {
       return { ...row, isChecked: row.value === selectedOption };
     });
     console.log("in handlePeriodChange " + JSON.stringify(this.periodoptions));
+
+    const progval = this.template.querySelector(".prog-val");
+    if (progval) {
+      progval.value = "All";
+    }
+    const sdval = this.template.querySelector(".sd-val");
+    if (sdval) {
+      sdval.value = "All";
+    }
+    const therapistval = this.template.querySelector(".therapist-val");
+    if (therapistval) {
+      therapistval.value = "All";
+    }
+
     this.composeOptions();
   }
 
@@ -671,6 +749,7 @@ export default class D3HeatMap extends LightningElement {
       return item.isChecked == true;
     });
     let programStr = optionJson.label;
+    console.log("+++ composeOptions programStr=" + programStr);
 
     //responded values are not passed to Apex, the respondedStr is not really used but is here for consistency
     //find the curent Responded value
@@ -695,6 +774,13 @@ export default class D3HeatMap extends LightningElement {
     });
     let sdStr = sdoptionJson.label;
     console.log("programStr=" + programStr + " sdStr=" + sdStr);
+
+    //find the curent Therapist
+    let therapistoptionJson = this.therapistoptions.find((item) => {
+      return item.isChecked == true;
+    });
+    let therapistStr = therapistoptionJson.label;
+    console.log("therapistStr=" + therapistStr);
 
     console.log("period options=" + JSON.stringify(this.periodoptions));
     //find the curent Period
@@ -733,13 +819,25 @@ export default class D3HeatMap extends LightningElement {
       `${TAG}`
     ); // adoption tracking
 
+    console.log("+++filter settings for payload");
+    console.log("+++================");
+    console.log("+++periodStr=" + periodStr);
+    console.log("+++statusStr=" + statusStr);
+    console.log("+++programStr=" + programStr);
+    console.log("+++sdStr=" + sdStr);
+    console.log("+++stageStr=" + stageStr);
+    console.log("+++respondedStr (local)=" + respondedStr);
+    console.log("+++therapistStr=" + therapistStr);
+    console.log("+++================");
+
     getD3StatsByProgramAndSD({
       clientId: this.recordId,
       programStr: programStr,
       sdStr: sdStr,
       periodStr: periodStr,
       showAcquired: statusStr,
-      stageStr: stageStr
+      stageStr: stageStr,
+      therapistStr: therapistStr
     })
       .then((result) => {
         logDebug(

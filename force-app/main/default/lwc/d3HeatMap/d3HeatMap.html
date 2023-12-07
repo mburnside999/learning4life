@@ -7,6 +7,20 @@
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
             <lightning-combobox
+              name="period"
+              label="Period"
+              value={periodval}
+              placeholder="Select Period"
+              options={periodoptions}
+              onchange={handlePeriodChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
               name="status"
               label="Status"
               value={statusval}
@@ -31,6 +45,7 @@
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
             <lightning-combobox
+              class="prog-val"
               name="progress"
               label="Programs"
               value={optionval}
@@ -45,6 +60,7 @@
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
             <lightning-combobox
+              class="sd-val"
               name="sd"
               label="SD"
               value={sdoptionval}
@@ -68,20 +84,7 @@
             ></lightning-combobox>
           </div>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small">
-          <div
-            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
-          >
-            <lightning-combobox
-              name="period"
-              label="Period"
-              value={periodval}
-              placeholder="Select Period"
-              options={periodoptions}
-              onchange={handlePeriodChange}
-            ></lightning-combobox>
-          </div>
-        </lightning-layout-item>
+
         <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
@@ -92,6 +95,20 @@
               value={respondedval}
               options={respondedoptions}
               onchange={handleRespondedChange}
+            ></lightning-combobox>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            <lightning-combobox
+              class="therapist-val"
+              name="therapist"
+              label="Therapist"
+              value={therapistoptionval}
+              options={therapistoptions}
+              onchange={handleTherapistChange}
             ></lightning-combobox>
           </div>
         </lightning-layout-item>

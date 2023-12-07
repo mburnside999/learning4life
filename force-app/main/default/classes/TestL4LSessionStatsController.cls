@@ -362,6 +362,7 @@ private class TestL4LSessionStatsController {
       'Identical',
       false,
       '180',
+      'All',
       'All'
     );
     System.assert(
