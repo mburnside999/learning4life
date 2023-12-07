@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>High__c</field>
-        <value xsi:type="xsd:double">0.9</value>
+        <value xsi:type="xsd:double">0.95</value>
     </values>
     <values>
         <field>Low__c</field>

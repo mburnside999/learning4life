@@ -300,13 +300,13 @@ export default class D3BOCHeatMap extends LightningElement {
         .html(
           `<span style='color:white'>Session: ${d.session}<br/>Date: ${d.sessiondate}<br/>Behaviour: ${d.behaviour}<br/>Total Duration: ${d.totalduration}<br/>Occurrences: ${d.value}<br/><br/>Present: ${d.present}</span>`
         )
-        .style("left", d3.pointer(e)[0] + 100 + "px")
-        .style("top", d3.pointer(e)[1] + 30 + "px");
+        .style("left", d3.pointer(e)[0] + 80 + "px")
+        .style("top", d3.pointer(e)[1] + 3 + "px");
     };
     const mousemove = (e) => {
       tooltip
-        .style("left", d3.pointer(e)[0] + 100 + "px")
-        .style("top", d3.pointer(e)[1] + 30 + "px");
+        .style("left", d3.pointer(e)[0] + 80 + "px")
+        .style("top", d3.pointer(e)[1] + 3 + "px");
     };
     const mouseleave = (e) => {
       tooltip.transition().duration(200).style("opacity", 0);
