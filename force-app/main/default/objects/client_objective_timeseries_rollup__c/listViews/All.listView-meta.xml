@@ -8,6 +8,7 @@
     <columns>Status__c</columns>
     <columns>statuscount__c</columns>
     <columns>Client__c</columns>
+    <columns>Mastered__c</columns>
     <filterScope>Everything</filterScope>
     <label>All</label>
 </ListView>
