@@ -14,7 +14,7 @@ public with sharing class ClientObjectiveList {
    * @description
    * @param clientId The Client ID
    *
-   * @return List of Client Objectives
+   * @return A List of Client Objectives
    *
    * @example List<Client_Objective__c> l = ClientObjectiveList.getClientObjectives(clientID)
    */
