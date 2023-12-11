@@ -1,6 +1,6 @@
-# L4LTimeSeriesScheduler
+# LFLTSBatchUtilScheduler
 
-Implements Schedulable, invokes the class to create the TimeSeries
+Schedule batch integrity checks on CO Timeseries.
 
 
 **Implemented types**
@@ -8,10 +8,10 @@ Implements Schedulable, invokes the class to create the TimeSeries
 [Schedulable](Schedulable)
 
 
-**Name** L4LTimeSeriesScheduler
-
-
 **Author** Mike Burnside
+
+
+**Name** LFLTSBatchUtilScheduler
 
 
 **Date** 2023

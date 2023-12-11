@@ -1,17 +1,17 @@
-# TestLFLTimeSeriesBatchScheduler
+# TestLFLTSBatchUtilScheduler
 
 `ISTEST`
 
-Test methods for LFLTimeSeriesBatchScheduler
+Test methods for LFLTimeSeriesBatch
 
 
 **Author** Mike Burnside
 
 
-**Name** TestLFLTimeSeriesBatchScheduler
+**Name** TestLFLTSBatchUtilScheduler
 
 
-**Date** 2022
+**Date** 2023
 
 
 **Group** Learning For Life Testing
@@ -23,7 +23,7 @@ Test schedule
 
 #### Example
 ```apex
-TestLFLTimeSeriesBatchScheduler.test();
+TestLFLTSBatchUtilScheduler.test();
 ```
 
 

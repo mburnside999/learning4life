@@ -1,44 +1,65 @@
----
-layout: default
----
-
 # L4LTimeSeries
 
-Methods for creating and querying Client_Objective_TimeSeries\_\_c records
+Methods for creating and querying Client_Objective_TimeSeries__c records
+
 
 **Name** L4LTimeSeries
 
+
 **Author** Mike Burnside
 
+
 **Date** 2023
+
 
 **Group** Learning For Life
 
 ## Methods
+### `public Integer loadCOTimeSeries()`
 
-### `loadCOTimeSeries()`
+Creates a timeseries by copying all client_objectives__c at a point in time. Timeseries table is client_objectives_timeseries__c Logging for the run is recorded in TimeSeries_Log__c.
 
-Creates a timeseries by copying all client_objectives**c at a point in time. Timeseries table is client_objectives_timeseries**c Logging for the run is recorded in TimeSeries_Log\_\_c.
+#### Returns
 
-#### Return
+|Type|Description|
+|---|---|
+|`Integer`|the number of records inserted into client_objectives_timeseries__c|
 
-**Type**
-
-Integer
-
-**Description**
-
-the number of records inserted into client_objectives_timeseries\_\_c
 
 **Name** loadCOTimeSeries
 
 #### Example
-
 ```apex
 Integer recs = L4LTimeSeries.loadCOTimeSeries();
 ```
 
-### `static generateD3COTimeSeriesJson(String clientId, String status)`
+
+### `public static Boolean previousCOTSLoad(Date d)`
+
+check for previous COTS load
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`d`|the date to check|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`Boolean`|true - Yes, there was another load today|
+
+
+**Name** previousCOTSLoad
+
+#### Example
+```apex
+Boolean anotherloadToday = L4LTimeSeries.previousSameDayCOTSLoad(Date);
+```
+
+
+### `public static String generateD3COTimeSeriesJson(String clientId, String status)`
 
 `AURAENABLED`
 
@@ -46,99 +67,93 @@ Generate a JSON string for use by D3
 
 #### Parameters
 
-| Param      | Description              |
-| ---------- | ------------------------ | ----------- |
-| `clientId` |                          |
-| `status`   | All (actually ACQ & CIP) | status\_\_c |
+|Param|Description|
+|---|---|
+|`clientId`||
+|`status`|All (actually ACQ & CIP) | status__c|
 
-#### Return
+#### Returns
 
-**Type**
+|Type|Description|
+|---|---|
+|`String`|the number of records inserted into client_objectives_timeseries__c|
 
-String
-
-**Description**
-
-the number of records inserted into client_objectives_timeseries\_\_c
 
 **Name** generateD3COTimeSeriesJson
 
-**Deprecated**
+
+**Deprecated** No longer used
+
 
 **TODO** example of format returned
 
 #### Example
-
 ```apex
 String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesJson(clientId, 'All');
 [{"rundate":"2022-11-27","val":2},{"rundate":"2022-12-4","val":2}]
 ```
 
-### `static generateD3COTSJsonByProgramAndSD(String clientId, String program, String sd, String status, String periodStr)`
+
+### `public static String generateD3COTSJsonByProgramAndSD(String clientId, String program, String sd, String status, String periodStr)`
 
 `AURAENABLED`
 
-Generate a JSON string for use by D3
+Generate a JSON string for use by D3 Used by LWC d3COTSCombinedLineChart- the combined Client Objective line chart
 
 #### Parameters
 
-| Param       | Description   |
-| ----------- | ------------- | -------------------------------- | ---------------------------------------- |
-| `clientId`  | the client Id |
-| `program`   | "All"         | program_name\_\_c                |
-| `sd`        | "All"         | sd_name\_\_c                     |
-| `status`    | "Both" (ACQ   | CIP)                             | client_objective_timeseries**c.status**c |
-| `periodStr` | "All"         | 30,60,90 days etc -- LAST N Days |
+|Param|Description|
+|---|---|
+|`clientId`|the client Id|
+|`program`|"All" | program_name__c|
+|`sd`|"All" | sd_name__c|
+|`status`|"Both" (ACQ|CIP) | client_objective_timeseries__c.status__c|
+|`periodStr`|"All" | 30,60,90 days etc -- LAST N Days|
 
-#### Return
+#### Returns
 
-**Type**
+|Type|Description|
+|---|---|
+|`String`|a JSON string|
 
-String
-
-**Description**
-
-a JSON string
 
 **Name** generateD3COTSJsonByProgramAndSD
+
 
 **TODO** example of format returned
 
 #### Example
-
 ```apex
 String jsonstr  = L4LTimeSeries.generateD3COTSJsonByProgramAndSD(clientId, programName,sdName,'Both','60');
 jsonStr example: [{"rundate":"2023-2-12","val":8},{"rundate":"2023-2-19","val":9},...]
 ```
 
-### `static generateD3COTimeSeriesByStatusJson(String clientId)`
+
+### `public static String generateD3COTimeSeriesByStatusJson(String clientId)`
 
 `AURAENABLED`
 
-Generate a JSON string for use by D3
+Generate a JSON string for use by D3 Used by LWC d3MiniBars to plot Client Objectives TS as separate status charts
 
 #### Parameters
 
-| Param      | Description   |
-| ---------- | ------------- |
-| `clientId` | the client Id |
+|Param|Description|
+|---|---|
+|`clientId`|the client Id|
 
-#### Return
+#### Returns
 
-**Type**
+|Type|Description|
+|---|---|
+|`String`|a JSON string|
 
-String
-
-**Description**
-
-a JSON string
 
 **Name** generateD3COTimeSeriesByStatusJson
+
 
 **TODO** example of format returned
 
 #### Example
-
 ```apex
 String jsonstr  = L4LTimeSeries.generateD3COTimeSeriesByStatusJson(clientId);
 jsonStr example: [{"rundate":"2022-12-25","val":3,"status":"CIP"},
@@ -147,35 +162,33 @@ jsonStr example: [{"rundate":"2022-12-25","val":3,"status":"CIP"},
 ...]
 ```
 
-### `static generateD3CORetestTimeSeriesJson(String clientId, String status)`
+
+### `public static String generateD3CORetestTimeSeriesJson(String clientId, String status)`
 
 `AURAENABLED`
 
-Generate a JSON string for use by D3
+Generate a JSON string for use by D3 chart in d3COTSRetestChart
 
 #### Parameters
 
-| Param      | Description   |
-| ---------- | ------------- | ---------------------------------------- |
-| `clientId` | the client Id |
-| `status`   | "All"         | client_objective_timeseries**c.status**c |
+|Param|Description|
+|---|---|
+|`clientId`|the client Id|
+|`status`|"All" | client_objective_timeseries__c.status__c|
 
-#### Return
+#### Returns
 
-**Type**
+|Type|Description|
+|---|---|
+|`String`|a JSON string|
 
-String
-
-**Description**
-
-a JSON string
 
 **Name** generateD3CORetestTimeSeriesJson
+
 
 **TODO** example of format returned
 
 #### Example
-
 ```apex
 String jsonstr  = L4LTimeSeries.generateD3CORetestTimeSeriesJson(clientId,'ACQ');
 jsonStr example: [{"rundate":"2023-1-15","val":2},{"rundate":"2023-1-29","val":1},{"rundate":"2023-2-12","val":2},
@@ -183,43 +196,49 @@ jsonStr example: [{"rundate":"2023-1-15","val":2},{"rundate":"2023-1-29","val":1
 ...]
 ```
 
-### `static generateD3COTSThresholdJson(String clientId, Integer threshold1, Integer threshold2)`
+
+### `public static String generateD3COTSThresholdJson(String clientId, Integer threshold1, Integer threshold2)`
 
 `AURAENABLED`
 
-Generate a JSON string for use by D3
+Generate a JSON string for use by D3 Used by LWC l4lACQThresholdSummary
 
 #### Parameters
 
-| Param        | Description                                    |
-| ------------ | ---------------------------------------------- |
-| `clientId`   | the client Id                                  |
-| `threshold1` | Integer hours of therapy -the first threshold  |
-| `threshold2` | Integer hours of therapy -the second threshold |
+|Param|Description|
+|---|---|
+|`clientId`|the client Id|
+|`threshold1`|Integer hours of therapy -the first threshold|
+|`threshold2`|Integer hours of therapy -the second threshold|
 
-#### Return
+#### Returns
 
-**Type**
+|Type|Description|
+|---|---|
+|`String`|a JSON string|
 
-String
-
-**Description**
-
-a JSON string
 
 **Name** generateD3COTSThresholdJson
+
 
 **TODO** logging
 
 #### Example
-
 ```apex
 String jsonstr  = L4LTimeSeries.generateD3COTSThresholdJson(clientId,100,200);
-jsonStr example: {"reserved1":1,"reserved2":2,"sessiondata":
-[{"thresholdHrs":10,"thresholdReached":true,"actualHrsAtThreshold":11.0,"runId":"TSL-2022-11-000000",
-"runDate":"2022-11-27","dateAtThreshold":"2022-10-07 00:00:00","data":[],"acquiredTotal":0},
-{"thresholdHrs":20,"thresholdReached":true,"actualHrsAtThreshold":20.0,"runId":"TSL-2022-11-000000",
-"dateAtThreshold":"2022-10-27 00:00:00","data":[],"acquiredTotal":0}]}
+{"reserved1":1,"reserved2":2,
+"sessiondata":[
+{"thresholdHrs":100,"thresholdReached":false,"actualHrsAtThreshold":69.5,"runId":"TSL-2023-04-000042","runDate":"2023-04-23","dateAtThreshold":"2023-04-21 00:00:00",
+"data":[
+{"key":0,"programName":"Arts and Crafts","acquiredCount":1},
+{"key":1,"programName":"Behaviour Vocabulary","acquiredCount":1},
+...
+{"key":6,"programName":"Conversation","acquiredCount":2},
+...
+{"key":16,"programName":"Why/because","acquiredCount":4}],
+"acquiredTotal":55}
+]}
 ```
+
 
 ---

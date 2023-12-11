@@ -1,4 +1,4 @@
-# TestLFLSessionStatsTrg
+# TestLFLSessionBOCTrg
 
 `ISTEST`
 
@@ -8,7 +8,7 @@ Test methods for LFLSessionStatsTrg
 **Author** Mike Burnside
 
 
-**Name** TestLFLSessionStatsTrg
+**Name** TestLFLSessionBOCTrg
 
 
 **Date** 2022
@@ -25,7 +25,7 @@ Test trigger
 
 #### Example
 ```apex
-TestLFLSessionStatsTrg.testTrg();
+TestLFLSessionBOCTrg.testTrg();
 ```
 
 

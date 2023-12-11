@@ -1,3 +1,14 @@
+
+/**************************************************************
+ * @author	Mike Burnside
+ * @name LFLTSBatchUtilScheduler
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	Schedule batch integrity checks on CO Timeseries.
+ *
+ */
+
 global class LFLTSBatchUtilScheduler implements Schedulable {
   /*******************************************************************************************************
    * @name execute

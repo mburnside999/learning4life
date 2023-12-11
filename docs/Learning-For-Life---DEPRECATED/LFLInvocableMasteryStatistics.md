@@ -1,37 +1,35 @@
----
-layout: default
----
-
 # LFLInvocableMasteryStatistics
 
 Deprecated on 30/1/2023.
 Roll up stats to the Program level.
 
+
 **Name** LFLDTDRates
+
 
 **Author** Mike Burnside
 
+
 **Date** 2023
 
-**Deprecated**
+
+**Deprecated** 
+
 
 **Group** Learning For Life - DEPRECATED
 
 ## Methods
+### `public static List<Response> computeMasteryStats(List<Id> sessions)`
 
-### `static computeMasteryStats(List<Id> sessions)`
-
-## `INVOCABLEMETHOD`
-
+`INVOCABLEMETHOD`
+---
 ## Classes
-
 ### Response
-
 #### Fields
 
-##### `outputString` → `String`
+##### `public outputString` → `String`
 
-`INVOCABLEVARIABLE`
+`INVOCABLEVARIABLE` 
 
 ---
 

@@ -1,3 +1,14 @@
+
+/**************************************************************
+ * @author	Mike Burnside
+ * @name LFLTSBatchUtil
+ * @date	2023
+ * @group Learning For Life
+ *
+ * @description	Perform batch integrity checks on CO Timeseries.
+ *
+ */
+
 global class LFLTSBatchUtil implements Database.Batchable<sobject>, Database.Stateful {
   Integer i = 0;
   Integer nullStatus = 0;
@@ -6,7 +17,7 @@ global class LFLTSBatchUtil implements Database.Batchable<sobject>, Database.Sta
   Map<String, Integer> runcounts = new Map<String, Integer>();
 
   global Database.QueryLocator start(Database.BatchableContext bc) {
-    System.debug('XXXXXX START XXXX');
+    System.debug('XXXXXX in LFLTSBatchUtil.start() XXXX');
 
     return Database.getQueryLocator(
       'SELECT Id,runid__c,ts_load_datetime__c,status__c from client_objective_timeseries__c order by runid__c'
@@ -47,7 +58,7 @@ global class LFLTSBatchUtil implements Database.Batchable<sobject>, Database.Sta
   }
 
   global void finish(Database.BatchableContext bc) {
-    System.debug('XXXXXX FINISH XXXX');
+    System.debug('in LFLTSBatchUtil.finish()');
     System.debug('SET SIZE=' + runidSet.size());
     System.debug('RECORDS=' + i);
     String emailtext = '';

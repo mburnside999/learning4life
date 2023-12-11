@@ -1,4 +1,4 @@
-# TestLFLTimeSeriesBatch
+# TestLFLTSBatchUtil
 
 `ISTEST`
 
@@ -20,13 +20,4 @@ Test methods for LFLTimeSeriesBatch
 ### `private static void testbatch()`
 
 `ISTEST`
-
-Test executeBatch
-
-#### Example
-```apex
-TestLFLTimeSeriesBatch.testbatch();
-```
-
-
 ---

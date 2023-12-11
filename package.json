@@ -41,6 +41,7 @@
     ]
   },
   "dependencies": {
+    "@cparra/apexdocs": "^2.19.0",
     "jest": "^27.4.7"
   }
 }

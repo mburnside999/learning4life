@@ -123,7 +123,7 @@ public with sharing class L4LController {
    * have been already allocated to the client.
    *
    * @param clientId The client Id
-   * @return List of popular Client Objectives
+   * @return List of Client_BOC__c 
    *
    * @example
    * List<client_BOC__c> cbocList = L4LController.getPopularCBOC(clientId)
@@ -182,7 +182,7 @@ public with sharing class L4LController {
    * @description Returns a list of active Client BOC for a Client
    *
    * @param clientId The client Id
-   * @return List of popular Client Objectives
+   * @return List of active Client_BOC__c
    *
    * @example
    * List<client_BOC__c> cbocList = L4LController.getActiveCBOC(clientId)
@@ -229,7 +229,7 @@ public with sharing class L4LController {
    * @description returns a list session objectives for a session.
    *
    * @param sess The session Id
-   * @return List of session objectives
+   * @return List of session_obj__c
    *
    * @example
    * List<session_obj__c> soList = L4LController.getSessionObjectives(sess)
@@ -294,7 +294,7 @@ public with sharing class L4LController {
    * @description returns a list of session BOCs for a session.
    *
    * @param sess The session Id
-   * @return List of session objectives
+   * @return List of session_boc__c 
    *
    * @example
    * List<Session_BOC__c> soList = L4LController.getSessionBOC(sess)
@@ -362,7 +362,7 @@ public with sharing class L4LController {
    * TODO fix parameter name
    *
    * @param sessionId The session Id
-   * @return List of Client Objectives
+   * @return List of active Client_boc__c 
    *
    * @example
    * List<client_boc__c> coList = L4LController.getClientBOCForSession(sessionId)
@@ -1522,12 +1522,12 @@ public with sharing class L4LController {
   /*******************************************************************************************************
    * @description Simple minded create a Session BOC -- for testing clone idea
    *
-   * @param clientBOCId
-   * @param sessionId
-   * @param intensity
-   * @param mins
-   * @param occurrences
-   * @param comments
+   * @param clientBOCId the clientBOC recordId
+   * @param sessionId the sessionId
+   * @param intensity intensity 1-5
+   * @param mins no of minutes recorded for this BOC
+   * @param occurrences the no of minutes
+   * @param comments comments for the clientBOC
 
 
    * @return The number of session BOC created (1)

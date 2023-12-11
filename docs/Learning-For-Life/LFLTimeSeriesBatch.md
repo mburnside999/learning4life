@@ -1,97 +1,85 @@
----
-layout: default
----
-
 # LFLTimeSeriesBatch
 
 Batchable class for running the CO timeseries
 
+
 **Implemented types**
 
-[Database.Batchable&lt;sObject&gt;](Database.Batchable<sObject>)
-,
+[Database.Batchable&lt;sObject&gt;](Database.Batchable&lt;sObject&gt;)
+, 
 [Database.Stateful](Database.Stateful)
+
 
 **Name** LFLTimeSeriesBatch
 
+
 **Author** Mike Burnside
 
+
 **Date** 2023
+
 
 **Group** Learning For Life
 
 ## Fields
 
-### `email` → `String`
+### `public email` → `String`
 
-### `query` → `String`
 
-### `recs` → `integer`
+### `public query` → `String`
 
-### `runId` → `String`
+
+### `public recs` → `integer`
+
+
+### `public runId` → `String`
+
 
 ---
-
 ## Methods
-
-### `start(Database BC)`
+### `public Database start(Database bc)`
 
 Start
 
 #### Parameters
 
-| Param | Description |
-| ----- | ----------- |
-| `BC`  |             |
+|Param|Description|
+|---|---|
+|`bc`||
 
-#### Return
+#### Returns
 
-**Type**
+|Type|Description|
+|---|---|
+|`Database`||
 
-Database
-
-**Description**
 
 **Name** start
 
-### `execute(Database BC, List<sObject> scope)`
+### `public void execute(Database bc, List<sObject> scope)`
 
 Start
 
 #### Parameters
 
-| Param   | Description |
-| ------- | ----------- |
-| `BC`    |             |
-| `scope` |             |
+|Param|Description|
+|---|---|
+|`bc`|batchable context|
+|`scope`|scope|
 
-#### Return
-
-**Type**
-
-void
-
-**Description**
 
 **Name** execute
 
-### `finish(Database BC)`
+### `public void finish(Database bc)`
 
 Start
 
 #### Parameters
 
-| Param | Description |
-| ----- | ----------- |
-| `BC`  |             |
+|Param|Description|
+|---|---|
+|`bc`|batchable context|
 
-#### Return
-
-**Type**
-
-void
-
-**Description**
 
 **Name** finish
 

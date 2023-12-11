@@ -1,3 +1,14 @@
+
+/**************************************************************
+ * @author	Mike Burnside
+ * @name L4LInvocableReportWizard
+ * @date	2022
+ * @group Learning For Life
+ *
+ * @description Invocable methods 
+ *
+ */
+
 global with sharing class L4LInvocableReportWizard {
   /*******************************************************************************************************
    * @description returns the status of a given session

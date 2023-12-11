@@ -1,22 +1,21 @@
----
-layout: default
----
-
 # L4LInvocableReportWizard
 
-As of January 19, 2022 this is the controller for MDH's Report Wizard flow
+Invocable methods
+
 
 **Author** Mike Burnside
 
-**Name** L4LInvocableReportWizard #description Invocable methods used by the Report Wizard flow
+
+**Name** L4LInvocableReportWizard
+
 
 **Date** 2022
+
 
 **Group** Learning For Life
 
 ## Methods
-
-### `static getStatusCountsBetweenDates(List<Requests> requests)`
+### `public static List<String> getStatusCountsBetweenDates(List<Requests> requests)`
 
 `INVOCABLEMETHOD`
 
@@ -24,57 +23,55 @@ returns the status of a given session
 
 #### Parameters
 
-| Param      | Description   |
-| ---------- | ------------- |
-| `requests` | List<Request> |
+|Param|Description|
+|---|---|
+|`requests`|List<Request>|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;String&gt;
-
-**Description**
-
-result List&lt;String&gt;
+|Type|Description|
+|---|---|
+|`List<String>`|result List<String>|
 
 #### Example
-
 ```apex
-
 ```
 
-### `static countAllTimeAcquired(Id clientId, String pname)`
 
-### `static getObjectiveList(Id clientId, String pname, Datetime starttime, Datetime endtime, String status)`
-
+### `private static Integer countAllTimeAcquired(Id clientId, String pname)`
+### `private static Integer getAllTimeAcquired(String pname, Map<String,Integer> projAcqMap)`
+### `private static List<Client_Objective__c> getObjectiveList(Id clientId, String pname, Datetime starttime, Datetime endtime, String status, List<Client_Objective__c> allcoList)`
 ---
-
 ## Classes
-
 ### Requests
+
+Inner class to combine clientid, strttime, emdtime
+
 
 **Author** Mike Burnside
 
+
 **Name** L4LInvocableReportWizard.Requests
 
+
 **Date** 2022
+
 
 **Group** Learning For Life
 
 #### Fields
 
-##### `clientId` → `Id`
+##### `global clientId` → `Id`
 
-`INVOCABLEVARIABLE`
+`INVOCABLEVARIABLE` 
 
-##### `endtime` → `DateTime`
+##### `global endtime` → `DateTime`
 
-`INVOCABLEVARIABLE`
+`INVOCABLEVARIABLE` 
 
-##### `starttime` → `DateTime`
+##### `global starttime` → `DateTime`
 
-`INVOCABLEVARIABLE`
+`INVOCABLEVARIABLE` 
 
 ---
 

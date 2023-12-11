@@ -1,22 +1,23 @@
----
-layout: default
----
-
 # L4LController
+
+`SUPPRESSWARNINGS`
 
 Main LWC controller class.
 
+
 **Author** Mike Burnside
+
 
 **Name** L4LController
 
+
 **Date** 2022
+
 
 **Group** Learning For Life
 
 ## Methods
-
-### `static getSessionStatus(String recordId)`
+### `public static String getSessionStatus(String recordId)`
 
 `AURAENABLED`
 
@@ -24,27 +25,23 @@ Returns the status of a given session
 
 #### Parameters
 
-| Param      | Description    |
-| ---------- | -------------- |
-| `recordId` | The Session ID |
+|Param|Description|
+|---|---|
+|`recordId`|The Session ID|
 
-#### Return
+#### Returns
 
-**Type**
-
-String
-
-**Description**
-
-Session status
+|Type|Description|
+|---|---|
+|`String`|Session status|
 
 #### Example
-
 ```apex
 String status=L4LController.getSessionStatus(recordId);
 ```
 
-### `static getPopularObjectives(String clientId)`
+
+### `public static List<Objective__c> getPopularObjectives(String clientId)`
 
 `AURAENABLED`
 
@@ -52,27 +49,71 @@ Returns a list of 50 popular Client Objectives, ignoring those that have been al
 
 #### Parameters
 
-| Param      | Description   |
-| ---------- | ------------- |
-| `clientId` | The client Id |
+|Param|Description|
+|---|---|
+|`clientId`|The client Id|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;Objective\_\_c&gt;
-
-**Description**
-
-List of popular Client Objectives
+|Type|Description|
+|---|---|
+|`List<Objective__c>`|List of popular Client Objectives|
 
 #### Example
-
 ```apex
 List<client_objective__c> coList = L4LController.getPopularObjectives(clientId)
 ```
 
-### `static getSessionObjectives(String sess)`
+
+### `public static List<Behaviour_of_Concern__c> getPopularCBOC(String clientId)`
+
+`AURAENABLED`
+
+Returns a list of 50 popular Client BOC, ignoring those that have been already allocated to the client.
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`clientId`|The client Id|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`List<Behaviour_of_Concern__c>`|List of Client_BOC__c|
+
+#### Example
+```apex
+List<client_BOC__c> cbocList = L4LController.getPopularCBOC(clientId)
+```
+
+
+### `public static List<client_BOC__c> getActiveCBOCList(String clientId)`
+
+`AURAENABLED`
+
+Returns a list of active Client BOC for a Client
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`clientId`|The client Id|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`List<client_BOC__c>`|List of active Client_BOC__c|
+
+#### Example
+```apex
+List<client_BOC__c> cbocList = L4LController.getActiveCBOC(clientId)
+```
+
+
+### `public static List<Session_obj__c> getSessionObjectives(String sess)`
 
 `AURAENABLED`
 
@@ -80,27 +121,71 @@ returns a list session objectives for a session.
 
 #### Parameters
 
-| Param  | Description    |
-| ------ | -------------- |
-| `sess` | The session Id |
+|Param|Description|
+|---|---|
+|`sess`|The session Id|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;Session_obj\_\_c&gt;
-
-**Description**
-
-List of session objectives
+|Type|Description|
+|---|---|
+|`List<Session_obj__c>`|List of session_obj__c|
 
 #### Example
-
 ```apex
 List<session_obj__c> soList = L4LController.getSessionObjectives(sess)
 ```
 
-### `static getClientObjectivesForSession(String searchKey)`
+
+### `public static List<Session_BOC__c> getSessionBOC(String sess)`
+
+`AURAENABLED`
+
+returns a list of session BOCs for a session.
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`sess`|The session Id|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`List<Session_BOC__c>`|List of session_boc__c|
+
+#### Example
+```apex
+List<Session_BOC__c> soList = L4LController.getSessionBOC(sess)
+```
+
+
+### `public static List<Client_BOC__c> getClientBOCForSession(String sessionId)`
+
+`AURAENABLED`
+
+Returns a list of ACTIVE Client BOC for a sesssion TODO fix parameter name
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`sessionId`|The session Id|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`List<Client_BOC__c>`|List of active Client_boc__c|
+
+#### Example
+```apex
+List<client_boc__c> coList = L4LController.getClientBOCForSession(sessionId)
+```
+
+
+### `public static List<Client_Objective__c> getClientObjectivesForSession(String searchKey)`
 
 `AURAENABLED`
 
@@ -108,27 +193,23 @@ Returns a list of ACTIVE Client Objectives for a sesssion ordered by Program Nam
 
 #### Parameters
 
-| Param       | Description    |
-| ----------- | -------------- |
-| `searchKey` | The session Id |
+|Param|Description|
+|---|---|
+|`searchKey`|The session Id|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;Client_Objective\_\_c&gt;
-
-**Description**
-
-List of Client Objectives
+|Type|Description|
+|---|---|
+|`List<Client_Objective__c>`|List of Client Objectives|
 
 #### Example
-
 ```apex
 List<client_objective__c> coList = L4LController.getClientObjectivesForSession(sessionId)
 ```
 
-### `static getClientObjectives(String clientId)`
+
+### `public static List<Client_Objective__c> getClientObjectives(String clientId)`
 
 `AURAENABLED`
 
@@ -136,27 +217,23 @@ Returns a list of Client Objectives for a client, ordered by Program Name, Name 
 
 #### Parameters
 
-| Param      | Description   |
-| ---------- | ------------- |
-| `clientId` | The client Id |
+|Param|Description|
+|---|---|
+|`clientId`|The client Id|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;Client_Objective\_\_c&gt;
-
-**Description**
-
-List of Client Objectives
+|Type|Description|
+|---|---|
+|`List<Client_Objective__c>`|List of Client Objectives|
 
 #### Example
-
 ```apex
 List<client_objective__c> coList = L4LController.getClientObjectives(clientId)
 ```
 
-### `static getClientObjectivesFilteredOnActive(String clientId, boolean showActiveOnly)`
+
+### `public static List<Client_Objective__c> getClientObjectivesFilteredOnActive(String clientId, boolean showActiveOnly)`
 
 `AURAENABLED`
 
@@ -164,57 +241,74 @@ Returns a list of all, or active only Client Objectives for a client, ordered by
 
 #### Parameters
 
-| Param            | Description                                                 |
-| ---------------- | ----------------------------------------------------------- |
-| `clientId`       | The client Id                                               |
-| `showActiveOnly` | Flag to indicate whether to show the ACTIVE objectives only |
+|Param|Description|
+|---|---|
+|`clientId`|The client Id|
+|`showActiveOnly`|Flag to indicate whether to show the ACTIVE objectives only|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;Client_Objective\_\_c&gt;
-
-**Description**
-
-list of Client Objectives
+|Type|Description|
+|---|---|
+|`List<Client_Objective__c>`|list of Client Objectives|
 
 #### Example
-
 ```apex
 List<client_objective__c> coList = L4LController.getClientObjectivesFilteredOnActive(clientId,true)
 ```
 
-### `static getCOActivationSummary(String clientId)`
+
+### `public static List<Client_BOC__c> getClientBOCFilteredOnActive(String clientId, boolean showActiveOnly)`
 
 `AURAENABLED`
 
-Returns a JSON string summarising ACTIVE, INACTIVE and TOTAL Client Objectives for a client
+Returns a list of all, or active only Client BOC for a client
 
 #### Parameters
 
-| Param      | Description   |
-| ---------- | ------------- |
-| `clientId` | The client Id |
+|Param|Description|
+|---|---|
+|`clientId`|The client Id|
+|`showActiveOnly`|Flag to indicate whether to show the ACTIVE objectives only|
 
-#### Return
+#### Returns
 
-**Type**
-
-String
-
-**Description**
-
-JSON string summary of statuses
+|Type|Description|
+|---|---|
+|`List<Client_BOC__c>`|list of Client_BOC|
 
 #### Example
+```apex
+List<client_boc__c> cbocList = L4LController.getClientBOCFilteredOnActive(clientId,true)
+```
 
+
+### `public static String getCOActivationSummary(String clientId)`
+
+`AURAENABLED`
+
+Returns a JSON  string summarising ACTIVE, INACTIVE and TOTAL Client Objectives for a client
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`clientId`|The client Id|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`String`|JSON string summary of statuses|
+
+#### Example
 ```apex
 String aggStr = L4LController.getCOActivationSummary(clientId)
 aggStr contains JSON string: {"active":20, "inactive":5,"total",25}
 ```
 
-### `static deactivateClientObjective(String clientObjectiveId)`
+
+### `public static Client_Objective__c deactivateClientObjective(String clientObjectiveId)`
 
 `AURAENABLED`
 
@@ -222,27 +316,23 @@ Deactivates a Client Objective
 
 #### Parameters
 
-| Param      | Description             |
-| ---------- | ----------------------- |
-| `clientId` | The Client Objective Id |
+|Param|Description|
+|---|---|
+|`clientObjectiveId`|The Client Objective Id|
 
-#### Return
+#### Returns
 
-**Type**
-
-Client_Objective\_\_c
-
-**Description**
-
-The deactivated client objective
+|Type|Description|
+|---|---|
+|`Client_Objective__c`|The deactivated client objective|
 
 #### Example
-
 ```apex
 List<client_objective__c> coList = L4LController.deactivateClientObjective(clientObjectiveId)
 ```
 
-### `static getUnusedObjectives(String clientId)`
+
+### `public static List<Objective__c> getUnusedObjectives(String clientId)`
 
 `AURAENABLED`
 
@@ -250,27 +340,47 @@ Returns a list of all active objectives not yet assigned to a client
 
 #### Parameters
 
-| Param      | Description             |
-| ---------- | ----------------------- |
-| `clientId` | The Client Objective Id |
+|Param|Description|
+|---|---|
+|`clientId`|The Client Objective Id|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;Objective\_\_c&gt;
-
-**Description**
-
-List of client objectives not assigned to client
+|Type|Description|
+|---|---|
+|`List<Objective__c>`|List of client objectives not assigned to client|
 
 #### Example
-
 ```apex
 List<objective__c> coList = L4LController.getUnusedObjectives(clientObjectiveId)
 ```
 
-### `static getUnusedObjectivesBySearch(String clientId, String searchstring)`
+
+### `public static List<Behaviour_of_Concern__c> getUnusedBOC(String clientId)`
+
+`AURAENABLED`
+
+Returns a list of all active objectives not yet assigned to a client
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`clientId`|The Client Objective Id|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`List<Behaviour_of_Concern__c>`|List of client objectives not assigned to client|
+
+#### Example
+```apex
+List<objective__c> coList = L4LController.getUnusedBOC(clientId)
+```
+
+
+### `public static List<Objective__c> getUnusedObjectivesBySearch(String clientId, String searchstring)`
 
 `AURAENABLED`
 
@@ -278,28 +388,49 @@ Returns a list of all active objectives not yet assigned to this client that hav
 
 #### Parameters
 
-| Param          | Description                    |
-| -------------- | ------------------------------ |
-| `clientId`     | The Client Objective Id        |
-| `searchstring` | The search string for the name |
+|Param|Description|
+|---|---|
+|`clientId`|The Client Objective Id|
+|`searchstring`|The search string for the name|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;Objective\_\_c&gt;
-
-**Description**
-
-list of client objectives not assigned to client
+|Type|Description|
+|---|---|
+|`List<Objective__c>`|list of client objectives not assigned to client|
 
 #### Example
-
 ```apex
 List<objective__c> coList = L4LController.getUnusedObjectivesBySearch(clientId,'Banana')
 ```
 
-### `static deleteSessionObjectives(String sessionid)`
+
+### `public static List<Behaviour_of_Concern__c> getUnusedBOCBySearch(String clientId, String searchstring)`
+
+`AURAENABLED`
+
+Returns a list of all active objectives not yet assigned to this client that have a Name like %searchString%
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`clientId`|The Client Objective Id|
+|`searchstring`|The search string for the name|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`List<Behaviour_of_Concern__c>`|list of client objectives not assigned to client|
+
+#### Example
+```apex
+List<objective__c> coList = L4LController.getUnusedBOCBySearch(clientId,'Banana')
+```
+
+
+### `public static void deleteSessionObjectives(String sessionid)`
 
 `AURAENABLED`
 
@@ -307,27 +438,23 @@ Delete all session objectives for the session that have a Name like %searchStrin
 
 #### Parameters
 
-| Param       | Description    |
-| ----------- | -------------- |
-| `sessionId` | The Session Id |
+|Param|Description|
+|---|---|
+|`sessionid`|The Session Id|
 
-#### Return
+#### Returns
 
-**Type**
-
-void
-
-**Description**
-
-void
+|Type|Description|
+|---|---|
+|`void`|void|
 
 #### Example
-
 ```apex
-L4LController.deleteSessionObjectives(sessionId)
+L4LController.deleteSessionObjectives(sessionid)
 ```
 
-### `static createSessionObjectivesByArrayWithOrderedResults(String jsonstr, String sess, String skillstring)`
+
+### `public static List<Session_Obj__c> createSessionObjectivesByArrayWithOrderedResults(String jsonstr, String sess, String skillstring)`
 
 `AURAENABLED`
 
@@ -335,29 +462,76 @@ For a given session, for each client objective in a list create session objectiv
 
 #### Parameters
 
-| Param         | Description                                          |
-| ------------- | ---------------------------------------------------- |
-| `jsonStr`     | A JSON string containing a list of client objectives |
-| `sess`        | The session Id                                       |
-| `skillstring` | A JSON string containing a list of DTD scores        |
+|Param|Description|
+|---|---|
+|`jsonstr`|A JSON string containing a list of client objectives|
+|`sess`|The session Id|
+|`skillstring`|A JSON string containing a list of DTD scores|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;Session_Obj\_\_c&gt;
-
-**Description**
-
-the number of session objectives added
+|Type|Description|
+|---|---|
+|`List<Session_Obj__c>`|the number of session objectives added|
 
 #### Example
-
 ```apex
 Integer noOfCreatedSessionObjs = L4LController.createSessionObjectivesByArrayWithOrderedResults(jsonStr,sess,skillstring)
 ```
 
-### `static createClientObjectivesByArray(String jsonstr, String sess)`
+
+### `public static List<Session_BOC__c> createSessionBOCByArrayWithOrderedResults(String jsonstr, String sess, String skillstring)`
+
+`AURAENABLED`
+
+For a given session, for each client objective in a list create session objectives from its list of DTD scores
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`jsonstr`|A JSON string containing a list of client objectives|
+|`sess`|The session Id|
+|`skillstring`|A JSON string containing a list of DTD scores|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`List<Session_BOC__c>`|the number of session objectives added|
+
+#### Example
+```apex
+Integer noOfCreatedSessionObjs = L4LController.createSessionBOCByArrayWithOrderedResults(jsonStr,sess,skillstring)
+```
+
+
+### `public static Integer createClientBOCByArray(String jsonstr, String clientId)`
+
+`AURAENABLED`
+
+Create client BOC from a JSON list of boc
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`jsonstr`|A JSON string containing a list of objectives|
+|`clientId`|The Client Id|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`Integer`|The number of client BOC added|
+
+#### Example
+```apex
+Integer noOfCreatedClientBOCs = L4LController.createClientBOCByArray(jsonStr,sess)
+```
+
+
+### `public static Integer createClientObjectivesByArray(String jsonstr, String sess)`
 
 `AURAENABLED`
 
@@ -365,28 +539,24 @@ Create client objectives from a JSON list of objectives
 
 #### Parameters
 
-| Param     | Description                                   |
-| --------- | --------------------------------------------- |
-| `jsonStr` | A JSON string containing a list of objectives |
-| `sess`    | The session Id                                |
+|Param|Description|
+|---|---|
+|`jsonstr`|A JSON string containing a list of objectives|
+|`sess`|The session Id|
 
-#### Return
+#### Returns
 
-**Type**
-
-Integer
-
-**Description**
-
-The number of client objectives added
+|Type|Description|
+|---|---|
+|`Integer`|The number of client objectives added|
 
 #### Example
-
 ```apex
 Integer noOfCreatedClientObjs = L4LController.createClientObjectivesByArray(jsonStr,sess)
 ```
 
-### `static setSessionObjectivesByArray(String jsonstr, String val)`
+
+### `public static Integer setSessionObjectivesByArray(String jsonstr, String val)`
 
 `AURAENABLED`
 
@@ -394,28 +564,78 @@ Update session objective scores from a JSON list
 
 #### Parameters
 
-| Param     | Description                                                     |
-| --------- | --------------------------------------------------------------- |
-| `jsonStr` | A JSON string containing a list of session objectives to update |
-| `Val`     | The score - "Correct" or "Incorrect" ...etc                     |
+|Param|Description|
+|---|---|
+|`jsonstr`|A JSON string containing a list of session objectives to update|
+|`val`|The score - "Correct" or "Incorrect" ...etc|
 
-#### Return
+#### Returns
 
-**Type**
-
-Integer
-
-**Description**
-
-The number of session objectives updated
+|Type|Description|
+|---|---|
+|`Integer`|The number of session objectives updated|
 
 #### Example
-
 ```apex
 Integer noOfSessionObjsUpdated = L4LController.setSessionObjectivesByArray(jsonStr,'Correct')
 ```
 
-### `static setClientObjectivesByArray(String jsonstr, String val)`
+
+### `public static Integer createSessionBOC(String clientBOCId, String sessionId, String intensity, Decimal mins, Decimal occurrences, String sboctime, String comments)`
+
+`AURAENABLED`
+
+Simple minded create a Session BOC -- for testing clone idea
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`clientBOCId`|the clientBOC recordId|
+|`sessionId`|the sessionId|
+|`intensity`|intensity 1-5|
+|`mins`|no of minutes recorded for this BOC|
+|`occurrences`|the no of minutes|
+|`comments`|comments for the clientBOC|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`Integer`|The number of session BOC created (1)|
+
+#### Example
+```apex
+Integer i = L4LController.createSessionBOC(...)
+```
+
+
+### `public static Integer setSessionBOCByArray(String jsonstr, String val)`
+
+`AURAENABLED`
+
+Update session objective scores from a JSON list
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`jsonstr`|A JSON string containing a list of session objectives to update|
+|`val`|The score - "Correct" or "Incorrect" ...etc|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`Integer`|The number of session objectives updated|
+
+#### Example
+```apex
+Integer noOfSessionObjsUpdated = L4LController.setSessionBOCByArray(jsonStr,'Correct')
+```
+
+
+### `public static Integer setClientObjectivesByArray(String jsonstr, String val)`
 
 `AURAENABLED`
 
@@ -423,29 +643,25 @@ For a list of client objectives, update to a common status or activate/deactivat
 
 #### Parameters
 
-| Param     | Description                                                    |
-| --------- | -------------------------------------------------------------- |
-| `jsonStr` | A JSON string containing a list of client objectives to update |
-| `val`     | "ACQ" or "OBJ" or "Activate" or "Deactivate"                   |
+|Param|Description|
+|---|---|
+|`jsonstr`|A JSON string containing a list of client objectives to update|
+|`val`|"ACQ" or "OBJ" or "WEEKLY" or "FORTNIGHTLY" or "Activate" or "Deactivate"|
 
-#### Return
+#### Returns
 
-**Type**
-
-Integer
-
-**Description**
-
-The number of client objectives updated
+|Type|Description|
+|---|---|
+|`Integer`|The number of client objectives updated|
 
 #### Example
-
 ```apex
 Integer noOfClientObjsUpdated = L4LController.setClientObjectivesByArray(jsonStr,'ACQ')
-Integer noOfClientObjsActivated = L4LController.setClientObjectivesByArray(jsonStr,'Activater')
+Integer noOfClientObjsActivated = L4LController.setClientObjectivesByArray(jsonStr,'Activate')
 ```
 
-### `static updateSessionObjectiveWithLG(String sessObjId)`
+
+### `public static String updateSessionObjectiveWithLG(String sessObjId)`
 
 `AURAENABLED`
 
@@ -453,35 +669,71 @@ Updates Session Objective comment to "LG"
 
 #### Parameters
 
-| Param       | Description          |
-| ----------- | -------------------- |
-| `sessObjId` | Session Objective id |
+|Param|Description|
+|---|---|
+|`sessObjId`|Session Objective id|
 
-#### Return
+#### Returns
 
-**Type**
-
-String
-
-**Description**
-
-Summary of change to Session Objective
+|Type|Description|
+|---|---|
+|`String`|Summary of change to Session Objective|
 
 #### Example
-
 ```apex
 String str = L4LController.updateSessionObjectiveWithLG(sessObjId)
 ```
 
+
+### `public static String updateSessionObjectiveWithComment(String sessObjId, String comment)`
+
+`AURAENABLED`
+
+Updates Session Objective comment
+
+#### Parameters
+
+|Param|Description|
+|---|---|
+|`sessObjId`|Session Objective id|
+|`comment`|comment|
+
+#### Returns
+
+|Type|Description|
+|---|---|
+|`String`|Summary of change to Session Objective|
+
+#### Example
+```apex
+String str = L4LController.updateSessionObjectiveWithComment(sessObjId,comment)
+```
+
+
 ---
-
 ## Classes
-
 ### SessionResult
+
+Helper.
+
+
+**Author** Mike Burnside
+
+
+**Name** SessionResult
+
+
+**Date** 2022
+
+
+**Group** Learning For Life
 
 #### Properties
 
-##### `skill` → `String`
+##### `public skill` → `String`
+
+
+getter/setter
 
 ---
 

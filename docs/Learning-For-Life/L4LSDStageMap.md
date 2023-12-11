@@ -1,43 +1,37 @@
----
-layout: default
----
-
 # L4LSDStageMap
+
+
 
 **Author** Mike Burnside
 
+
 **Name** L4LSDStageMap
 
+
 **Date** 2023
+
 
 **Group** Learning For Life
 
 ## Methods
-
-### `static removeDuplicates(String clientId)`
+### `public static List<SD__c> removeDuplicates(String clientId)`
 
 `AURAENABLED`
-
 #### Parameters
 
-| Param      | Description   |
-| ---------- | ------------- |
-| `clientId` | The Client ID |
+|Param|Description|
+|---|---|
+|`clientId`|The Client ID|
 
-#### Return
+#### Returns
 
-**Type**
-
-List&lt;SD\_\_c&gt;
-
-**Description**
-
-A list of SDs
+|Type|Description|
+|---|---|
+|`List<SD__c>`|A list of SDs|
 
 #### Example
-
 ```apex
-
 ```
+
 
 ---

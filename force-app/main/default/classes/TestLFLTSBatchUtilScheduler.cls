@@ -1,4 +1,13 @@
 @isTest
+/**************************************************************
+ * @author	Mike Burnside
+ * @name TestLFLTSBatchUtilScheduler
+ * @date	2023
+ * @group Learning For Life Testing
+ *
+ * @description	Test methods for LFLTimeSeriesBatch
+ *
+ */
 private class TestLFLTSBatchUtilScheduler {
   /*******************************************************************************************************
    * @description Test schedule

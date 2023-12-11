@@ -1,64 +1,60 @@
----
-layout: default
----
-
 # L4LStagesByArea
 
 Provides data for the Stages2 LWC
 
+
 **Name** L4LStagesByArea
+
 
 **Author** Mike Burnside
 
+
 **Date** 2023
+
 
 **Group** Learning For Life
 
 ## Methods
-
-### `static getSDUsage(String clientId)`
+### `public static String getSDUsage(String clientId)`
 
 `AURAENABLED`
 
-Provide data for Stages2 LWC
+Provide data for Stages2 LWC Used by LWC StagesV2
 
 #### Parameters
 
-| Param      | Description   |
-| ---------- | ------------- |
-| `clientID` | the Client ID |
+|Param|Description|
+|---|---|
+|`clientID`|the Client ID|
 
-#### Return
+#### Returns
 
-**Type**
+|Type|Description|
+|---|---|
+|`String`|JSON string|
 
-String
-
-**Description**
-
-JSON string
 
 **Name** getSDUsage
 
 #### Example
-
 ```apex
-Integer recs = L4LTimeSeries.loadCOTimeSeries();
+String str = L4LStagesByArea.getSDUsage(clientId);
 ```
 
+
 ---
-
 ## Classes
-
 ### XSD
-
 #### Properties
 
-##### `CABStatus` → `String`
+##### `public CABStatus` → `String`
 
-##### `NotUsed` → `Boolean`
 
-##### `sd` → `SD__C`
+##### `public NotUsed` → `Boolean`
+
+
+##### `public sd` → `SD__C`
+
 
 ---
 
