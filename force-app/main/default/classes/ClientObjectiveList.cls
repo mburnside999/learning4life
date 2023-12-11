@@ -16,7 +16,7 @@ public with sharing class ClientObjectiveList {
    *
    * @return List of Client Objectives
    *
-   * @example
+   * @example List<Client_Objective__c> l = ClientObjectiveList.getClientObjectives(clientID)
    */
 
   @AuraEnabled(cacheable=true)
