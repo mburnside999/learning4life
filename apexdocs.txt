@@ -1,1 +1,2 @@
+#apexdocs
 apexdocs-generate -s "./force-app/main/default/classes" -t docs -p global public private -g docsify
