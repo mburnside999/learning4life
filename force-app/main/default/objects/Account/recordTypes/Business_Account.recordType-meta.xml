@@ -3,29 +3,7 @@
     <fullName>Business_Account</fullName>
     <active>true</active>
     <label>Business Account</label>
-    <picklistValues>
-        <picklist>AccountSource</picklist>
-        <values>
-            <fullName>Advertisement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Employee Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Trade Show</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
+   
     <picklistValues>
         <picklist>Industry</picklist>
         <values>
