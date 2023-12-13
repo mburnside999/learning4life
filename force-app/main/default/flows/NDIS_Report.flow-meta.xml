@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <assignments>
@@ -10,7 +10,8 @@
             <assignToReference>vProgramName</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>LoopClientObj.Program_Name__c</elementReference>
+                <elementReference
+        >LoopClientObj.Program_Name__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -24,14 +25,16 @@
             <assignToReference>vProgramNameDisplay</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>{!LoopClientObj.Program_Name__c} &lt;br/&gt;</stringValue>
+                <stringValue
+        >{!LoopClientObj.Program_Name__c} &lt;br/&gt;</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>vProgramNameCollection</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>LoopClientObj.Program_Name__c</elementReference>
+                <elementReference
+        >LoopClientObj.Program_Name__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -102,7 +105,8 @@
             <assignToReference>vSessionName</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>{!ReadSessionRecords.Name} -  {!ReadSessionRecords.Date__c} -   {!ReadSessionRecords.Therapist_Name__c} &lt;br/&gt;</stringValue>
+                <stringValue
+        >{!ReadSessionRecords.Name} -  {!ReadSessionRecords.Date__c} -   {!ReadSessionRecords.Therapist_Name__c} &lt;br/&gt;</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -129,7 +133,8 @@
             <name>Duplicate_Program_Name</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>LoopClientObj.Program_Name__c</leftValueReference>
+                <leftValueReference
+        >LoopClientObj.Program_Name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>vProgramName</elementReference>
@@ -151,7 +156,8 @@
             <name>Status_OBJ</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CountObjectives.Status__c</leftValueReference>
+                <leftValueReference
+        >CountObjectives.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>OBJ</stringValue>
@@ -166,7 +172,8 @@
             <name>Status_ACQ</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CountObjectives.Status__c</leftValueReference>
+                <leftValueReference
+        >CountObjectives.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>ACQ</stringValue>
@@ -268,7 +275,8 @@
         <label>GetAccountDetails</label>
         <locationX>536</locationX>
         <locationY>206</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Welcome_Screen</targetReference>
         </connector>
@@ -289,7 +297,8 @@
         <label>GetClientObj</label>
         <locationX>536</locationX>
         <locationY>902</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopClientObj</targetReference>
         </connector>
@@ -312,7 +321,8 @@
         <label>GetSessionDetails</label>
         <locationX>536</locationX>
         <locationY>446</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ReadSessionRecords</targetReference>
         </connector>
@@ -349,7 +359,8 @@
         <label>GetSingleProgramData</label>
         <locationX>1064</locationX>
         <locationY>1382</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CountObjectives</targetReference>
         </connector>
@@ -401,7 +412,8 @@
         </connector>
         <fields>
             <name>statuscountscreen</name>
-            <fieldText>&lt;p&gt;Acquired Status {!Status_ACQ}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Objective Status {!Status_OBJ}&lt;/p&gt;</fieldText>
+            <fieldText
+      >&lt;p&gt;Acquired Status {!Status_ACQ}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Objective Status {!Status_OBJ}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -420,7 +432,8 @@
         </connector>
         <fields>
             <name>SessionSummaryDisplay</name>
-            <fieldText>&lt;p&gt;{!vNumberObj}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Between {!Start_Date_for_Data_Summary} --- {!End_Date_for_Data_Summary}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!GetAccountDetails.Name} has completed {!vNumSessions} sessions&lt;/p&gt;&lt;p&gt;{!vSessionName}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;There are &lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!vNumberofPrograms} &lt;/span&gt;Current Programs:&lt;/p&gt;&lt;p&gt;{!vProgramNameDisplay}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+      >&lt;p&gt;{!vNumberObj}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Between {!Start_Date_for_Data_Summary} --- {!End_Date_for_Data_Summary}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!GetAccountDetails.Name} has completed {!vNumSessions} sessions&lt;/p&gt;&lt;p&gt;{!vSessionName}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;There are &lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!vNumberofPrograms} &lt;/span&gt;Current Programs:&lt;/p&gt;&lt;p&gt;{!vProgramNameDisplay}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -464,7 +477,8 @@
         </fields>
         <fields>
             <name>Display_Client_Details</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;{!GetAccountDetails.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText
+      >&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 18px;&quot;&gt;{!GetAccountDetails.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>

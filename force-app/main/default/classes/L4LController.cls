@@ -123,7 +123,7 @@ public with sharing class L4LController {
    * have been already allocated to the client.
    *
    * @param clientId The client Id
-   * @return List of Client_BOC__c 
+   * @return List of Client_BOC__c
    *
    * @example
    * List<client_BOC__c> cbocList = L4LController.getPopularCBOC(clientId)
@@ -294,7 +294,7 @@ public with sharing class L4LController {
    * @description returns a list of session BOCs for a session.
    *
    * @param sess The session Id
-   * @return List of session_boc__c 
+   * @return List of session_boc__c
    *
    * @example
    * List<Session_BOC__c> soList = L4LController.getSessionBOC(sess)
@@ -362,7 +362,7 @@ public with sharing class L4LController {
    * TODO fix parameter name
    *
    * @param sessionId The session Id
-   * @return List of active Client_boc__c 
+   * @return List of active Client_boc__c
    *
    * @example
    * List<client_boc__c> coList = L4LController.getClientBOCForSession(sessionId)
@@ -839,12 +839,12 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LController:getUnusedObjectives(): SELECT Id, Name, Program__c, SD_Name__c ' +
-      ' FROM Objective__c ' +
-      ' WHERE Id NOT IN ( ' +
-      ' SELECT Objective__c ' +
-      ' FROM Client_Objective__c ' +
-      ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
-      ' AND status__c="Active"',
+        ' FROM Objective__c ' +
+        ' WHERE Id NOT IN ( ' +
+        ' SELECT Objective__c ' +
+        ' FROM Client_Objective__c ' +
+        ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
+        ' AND status__c="Active"',
       'L4LController.getUnusedObjectives()',
       'next-gen-nebula-apex'
     );
@@ -966,12 +966,12 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'getUnusedObjectivesBySearch(): SELECT Id, Name, Program__c, SD_Name__c ' +
-      ' FROM Objective__c ' +
-      ' WHERE Id NOT IN ( ' +
-      ' SELECT Objective__c ' +
-      ' FROM Client_Objective__c ' +
-      ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
-      ' AND status__c="Active" and Name like...',
+        ' FROM Objective__c ' +
+        ' WHERE Id NOT IN ( ' +
+        ' SELECT Objective__c ' +
+        ' FROM Client_Objective__c ' +
+        ' WHERE Client__c = :clientId ORDER BY Program__c, Name )' +
+        ' AND status__c="Active" and Name like...',
       'L4LController.getUnusedObjectivesBySearch()',
       'next-gen-nebula-apex'
     );
@@ -1038,12 +1038,12 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'getUnusedBOCBySearch(): SELECT Id, Name ' +
-      ' FROM Behaviour_of_Concern__c ' +
-      ' WHERE Id NOT IN ( ' +
-      ' SELECT Behaviour_of_Concern__c ' +
-      ' FROM Client_BOC__c ' +
-      ' WHERE Client__c = :clientId ORDER BY Name )' +
-      ' and Name like...',
+        ' FROM Behaviour_of_Concern__c ' +
+        ' WHERE Id NOT IN ( ' +
+        ' SELECT Behaviour_of_Concern__c ' +
+        ' FROM Client_BOC__c ' +
+        ' WHERE Client__c = :clientId ORDER BY Name )' +
+        ' and Name like...',
       'L4LController.getUnusedBOCBySearch()',
       'next-gen-nebula-apex'
     );
@@ -1128,11 +1128,11 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logInfo(
       sess,
       'L4LController.createSessionObjectivesByArrayWithOrderedResults() jsonstr=' +
-      jsonstr +
-      ' sess=' +
-      sess +
-      'skillstring=' +
-      skillstring,
+        jsonstr +
+        ' sess=' +
+        sess +
+        'skillstring=' +
+        skillstring,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -1248,11 +1248,11 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logInfo(
       sess,
       'L4LController.createSessionBOCByArrayWithOrderedResults() jsonstr=' +
-      jsonstr +
-      ' sess=' +
-      sess +
-      'skillstring=' +
-      skillstring,
+        jsonstr +
+        ' sess=' +
+        sess +
+        'skillstring=' +
+        skillstring,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -1465,9 +1465,9 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logInfo(
       null,
       'L4LController.setSessionObjectivesByArray jsonstr=' +
-      jsonstr +
-      ' val=' +
-      val,
+        jsonstr +
+        ' val=' +
+        val,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -1589,10 +1589,7 @@ public with sharing class L4LController {
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       null,
-      'L4LController.setSessionBOCByArray jsonstr=' +
-      jsonstr +
-      ' val=' +
-      val,
+      'L4LController.setSessionBOCByArray jsonstr=' + jsonstr + ' val=' + val,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -1635,9 +1632,9 @@ public with sharing class L4LController {
     L4LNebulaComponentController.logInfo(
       null,
       'L4LController.setClientObjectivesByArray jsonstr=' +
-      jsonstr +
-      ' val=' +
-      val,
+        jsonstr +
+        ' val=' +
+        val,
       SCENARIO,
       'next-gen-nebula-apex'
     );

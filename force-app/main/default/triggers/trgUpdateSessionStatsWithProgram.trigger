@@ -36,9 +36,9 @@ trigger trgUpdateSessionStatsWithProgram on session_statistics__c(
     L4LNebulaComponentController.logDebug(
       null,
       'trgUpdateSessionStatsWithProgram associated program name=' +
-      prog +
-      ' ,record=' +
-      new_ss_record,
+        prog +
+        ' ,record=' +
+        new_ss_record,
       SCENARIO,
       'next-gen-nebula-apex'
     );

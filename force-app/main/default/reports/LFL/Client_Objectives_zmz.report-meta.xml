@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <chart>
         <backgroundColor1>#FFFFFF</backgroundColor1>
@@ -14,7 +14,8 @@
         <groupingColumn>FK_$Objective__c.Program__c</groupingColumn>
         <legendPosition>Right</legendPosition>
         <location>CHART_BOTTOM</location>
-        <secondaryGroupingColumn>Client_Objective__c.Status__c</secondaryGroupingColumn>
+        <secondaryGroupingColumn
+    >Client_Objective__c.Status__c</secondaryGroupingColumn>
         <showAxisLabels>false</showAxisLabels>
         <showPercentage>false</showPercentage>
         <showTotal>false</showTotal>
@@ -48,7 +49,8 @@
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>AccountCustomEntity$Client_Objective__c@Client_Objective__c.Objective__c</reportType>
+    <reportType
+  >AccountCustomEntity$Client_Objective__c@Client_Objective__c.Objective__c</reportType>
     <scope>user</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

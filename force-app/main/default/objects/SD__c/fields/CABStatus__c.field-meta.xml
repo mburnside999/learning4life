@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CABStatus__c</fullName>
-    <description>This field is used to store for the UI display StagesV2 if an Objective is used in an SD has status CAB. The field manages the color of the tile on the UI (via css)</description>
+    <description
+  >This field is used to store for the UI display StagesV2 if an Objective is used in an SD has status CAB. The field manages the color of the tile on the UI (via css)</description>
     <externalId>false</externalId>
     <label>CABStatus</label>
     <length>20</length>

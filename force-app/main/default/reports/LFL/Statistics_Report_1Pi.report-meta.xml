@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <aggregates>
-        <calculatedFormula>Session_Statistics__c.TotalAcquiredCorrect__c:SUM/(Session_Statistics__c.TotalAcquiredCorrect__c:SUM + Session_Statistics__c.TotalAcquiredIncorrect__c:SUM+ Session_Statistics__c.TotalAcquiredPrompted__c:SUM)</calculatedFormula>
+        <calculatedFormula
+    >Session_Statistics__c.TotalAcquiredCorrect__c:SUM/(Session_Statistics__c.TotalAcquiredCorrect__c:SUM + Session_Statistics__c.TotalAcquiredIncorrect__c:SUM+ Session_Statistics__c.TotalAcquiredPrompted__c:SUM)</calculatedFormula>
         <datatype>percent</datatype>
         <developerName>FORMULA1</developerName>
         <isActive>true</isActive>
@@ -50,7 +51,8 @@
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>CustomEntityCustomEntity$Session__c$Session_Statistics__c</reportType>
+    <reportType
+  >CustomEntityCustomEntity$Session__c$Session_Statistics__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>

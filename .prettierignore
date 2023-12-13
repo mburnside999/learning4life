@@ -6,5 +6,8 @@
 .localdevserver
 .sfdx
 .vscode
+**/*.xml
+**/*.md
+**/tests/apex/**
 
 coverage/

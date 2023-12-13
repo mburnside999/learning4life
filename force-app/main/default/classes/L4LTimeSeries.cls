@@ -606,11 +606,11 @@ public class L4LTimeSeries {
       totalSessionLength += s.session_length__c;
       System.debug(
         'date=' +
-        s.date__c +
-        ' length=' +
-        s.session_length__c +
-        ' ,totalSessionLength=' +
-        totalSessionLength
+          s.date__c +
+          ' length=' +
+          s.session_length__c +
+          ' ,totalSessionLength=' +
+          totalSessionLength
       );
 
       if (totalSessionLength >= threshold1 && !reachedThreshold1) {
@@ -644,17 +644,17 @@ public class L4LTimeSeries {
     System.debug('d1' + d1 + ' ' + 'd2' + d2);
     System.debug(
       'reachedThreshold1' +
-      reachedThreshold1 +
-      ' ' +
-      'reachedThreshold2' +
-      reachedThreshold2
+        reachedThreshold1 +
+        ' ' +
+        'reachedThreshold2' +
+        reachedThreshold2
     );
     System.debug(
       'valueAtThreshold1' +
-      valueAtThreshold1 +
-      ' ' +
-      'valueAtThreshold2' +
-      valueAtThreshold2
+        valueAtThreshold1 +
+        ' ' +
+        'valueAtThreshold2' +
+        valueAtThreshold2
     );
 
     jsonStr += ',"sessiondata":[';

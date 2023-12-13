@@ -179,9 +179,9 @@ public with sharing class LFLDTDRates {
 
     System.debug(
       'startAcquiredCount = ' +
-      startAcquiredCount +
-      ' endAcquiredCount=' +
-      endAcquiredCount
+        startAcquiredCount +
+        ' endAcquiredCount=' +
+        endAcquiredCount
     );
 
     // work out the elapsed days

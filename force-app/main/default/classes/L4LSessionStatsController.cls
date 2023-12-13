@@ -176,9 +176,9 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LSessionStatsController.getD3Stats() clientId=' +
-      clientId +
-      ' showAcquired=' +
-      showAcquired,
+        clientId +
+        ' showAcquired=' +
+        showAcquired,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -241,11 +241,11 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LSessionStatsController.getD3StatsByProgram() clientId=' +
-      clientId +
-      ' programStr=' +
-      programStr +
-      ' showAcquired=' +
-      showAcquired,
+        clientId +
+        ' programStr=' +
+        programStr +
+        ' showAcquired=' +
+        showAcquired,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -362,8 +362,8 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
-      clientId +
-      ' and active__c=true',
+        clientId +
+        ' and active__c=true',
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -380,12 +380,12 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
-      ' WHERE client__c = ' +
-      clientId +
-      ' and active__c=true ' +
-      ' GROUP BY runId__c ' +
-      ' ORDER BY count(id) DESC ' +
-      ' LIMIT 1',
+        ' WHERE client__c = ' +
+        clientId +
+        ' and active__c=true ' +
+        ' GROUP BY runId__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -412,22 +412,17 @@ public with sharing class L4LSessionStatsController {
       result = tsmax;
 
     System.debug(
-      'currmax=' +
-      currmax +
-      ', tsmax=' +
-      tsmax +
-      ', result = ' +
-      result
+      'currmax=' + currmax + ', tsmax=' + tsmax + ', result = ' + result
     );
 
     L4LNebulaComponentController.logDebug(
       clientId,
       'currmax=' +
-      currmax +
-      ', tsmax=' +
-      tsmax +
-      ', returning result = ' +
-      result,
+        currmax +
+        ', tsmax=' +
+        tsmax +
+        ', returning result = ' +
+        result,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -467,8 +462,8 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3RetestYAxisScale() get current CO count - soql= SELECT count(id) c FROM client_objective__c WHERE client__c = ' +
-      clientId +
-      ' and re_test_recommended__c=true',
+        clientId +
+        ' and re_test_recommended__c=true',
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -488,12 +483,12 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT count(id) c FROM client_objective_timeseries__c ' +
-      ' WHERE client__c = ' +
-      clientId +
-      ' AND active__c=true and re_test_recommended__c=true ' +
-      ' GROUP BY runId__c ' +
-      ' ORDER BY count(id) DESC ' +
-      ' LIMIT 1',
+        ' WHERE client__c = ' +
+        clientId +
+        ' AND active__c=true and re_test_recommended__c=true ' +
+        ' GROUP BY runId__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -524,22 +519,17 @@ public with sharing class L4LSessionStatsController {
     }
 
     System.debug(
-      'currmax=' +
-      currmax +
-      ', tsmax=' +
-      tsmax +
-      ', result = ' +
-      result
+      'currmax=' + currmax + ', tsmax=' + tsmax + ', result = ' + result
     );
 
     L4LNebulaComponentController.logDebug(
       clientId,
       'currmax=' +
-      currmax +
-      ', tsmax=' +
-      tsmax +
-      ', returning result = ' +
-      result,
+        currmax +
+        ', tsmax=' +
+        tsmax +
+        ', returning result = ' +
+        result,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -576,19 +566,19 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT runid__c,status__c,count(id) c FROM client_objective_timeseries__c ' +
-      ' WHERE client__c = ' +
-      clientId +
-      ' AND active__c = TRUE' +
-      ' GROUP BY runid__c,Status__c ' +
-      ' ORDER BY count(id) DESC ' +
-      ' LIMIT 1',
+        ' WHERE client__c = ' +
+        clientId +
+        ' AND active__c = TRUE' +
+        ' GROUP BY runid__c,Status__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
       'L4LSessionStatsController.getD3YAxisScale() get max CO count from TS - soql= SELECT runid__c,status__c,count(id) c FROM client_objective_timeseries__c ' +
-      ' WHERE client__c = ' +
-      clientId +
-      ' AND active__c = TRUE' +
-      ' GROUP BY Status__c ' +
-      ' ORDER BY count(id) DESC ' +
-      ' LIMIT 1',
+        ' WHERE client__c = ' +
+        clientId +
+        ' AND active__c = TRUE' +
+        ' GROUP BY Status__c ' +
+        ' ORDER BY count(id) DESC ' +
+        ' LIMIT 1',
       'next-gen-nebula-apex'
     );
 
@@ -651,17 +641,17 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LSessionStatsController.getD3StatsByProgramAndSD() clientId=' +
-      clientId +
-      ' programStr=' +
-      programStr +
-      ' sdStr=' +
-      sdStr +
-      ' showAcquired=' +
-      showAcquired +
-      ' periodStr=' +
-      periodStr +
-      'stageStr= ' +
-      stageStr,
+        clientId +
+        ' programStr=' +
+        programStr +
+        ' sdStr=' +
+        sdStr +
+        ' showAcquired=' +
+        showAcquired +
+        ' periodStr=' +
+        periodStr +
+        'stageStr= ' +
+        stageStr,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -844,9 +834,9 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LSessionStatsController.generateD3ProgramAreaSDJson() clientId=' +
-      clientId +
-      ' stageStr=' +
-      stageStr,
+        clientId +
+        ' stageStr=' +
+        stageStr,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -1075,9 +1065,9 @@ public with sharing class L4LSessionStatsController {
     L4LNebulaComponentController.logInfo(
       clientId,
       'L4LSessionStatsController.generateD3AreaSDJson() clientId=' +
-      clientId +
-      ' stageStr=' +
-      stageStr,
+        clientId +
+        ' stageStr=' +
+        stageStr,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -1263,9 +1253,7 @@ public with sharing class L4LSessionStatsController {
     for (session__c s : sessions) {
       for (session_boc__c sboc : bocs) {
         linker.put(
-          s.Id +
-          '-' +
-          sboc.Client_BOC__r.Behaviour_of_Concern__r.Name,
+          s.Id + '-' + sboc.Client_BOC__r.Behaviour_of_Concern__r.Name,
           'linked'
         );
       }

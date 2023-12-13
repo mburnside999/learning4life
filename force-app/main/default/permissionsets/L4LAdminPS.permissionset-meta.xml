@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <applicationVisibilities>
         <application>Learning_for_Life</application>
@@ -181,7 +181,8 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Client_Objective_TimeSeries__c.Days_Since_Tested_Correct__c</field>
+        <field
+    >Client_Objective_TimeSeries__c.Days_Since_Tested_Correct__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Compute_Session_Stats</name>
@@ -59,7 +59,8 @@
         <inputParameters>
             <name>message</name>
             <value>
-                <stringValue>In the Compute Session Statistics Flow</stringValue>
+                <stringValue
+        >In the Compute Session Statistics Flow</stringValue>
             </value>
         </inputParameters>
         <nameSegment>FlowLogEntry</nameSegment>
@@ -68,7 +69,8 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <description>deprecated MasterStatistics action</description>
-    <interviewLabel>Compute Session Statistics {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel
+  >Compute Session Statistics {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Compute Session Statistics</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -97,7 +99,8 @@
         <inputAssignments>
             <field>Statistics_Summary__c</field>
             <value>
-                <elementReference>Compute_Session_Stats.outputString</elementReference>
+                <elementReference
+        >Compute_Session_Stats.outputString</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>

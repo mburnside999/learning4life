@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>ListUnusedObj</name>
@@ -75,20 +75,23 @@
         </connector>
     </assignments>
     <collectionProcessors>
-        <description>Reduce the size of the collection to display to 10- so it doesn&apos;t overwhelm the modal flow display</description>
+        <description
+    >Reduce the size of the collection to display to 10- so it doesn&apos;t overwhelm the modal flow display</description>
         <name>Return_10_Results</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Return 10 Results</label>
         <locationX>270</locationX>
         <locationY>518</locationY>
-        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
+        <collectionProcessorType
+    >SortCollectionProcessor</collectionProcessorType>
         <collectionReference>ListUnusedObj</collectionReference>
         <connector>
             <targetReference>Display_Choices</targetReference>
         </connector>
         <limit>10</limit>
         <sortOptions>
-            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <doesPutEmptyStringAndNullFirst
+      >false</doesPutEmptyStringAndNullFirst>
             <sortField>Name</sortField>
             <sortOrder>Asc</sortOrder>
         </sortOptions>
@@ -137,7 +140,8 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Flow called from Stages&gt;Areas Component on Client - that enables Users to add Objectives from a specific SD to a Clients Objectives</description>
+    <description
+  >Flow called from Stages&gt;Areas Component on Client - that enables Users to add Objectives from a specific SD to a Clients Objectives</description>
     <dynamicChoiceSets>
         <name>ClientObJRecords</name>
         <dataType>String</dataType>
@@ -179,7 +183,8 @@
     <formulas>
         <name>ConvertSeperators</name>
         <dataType>String</dataType>
-        <expression>SUBSTITUTE({!selectedIds}, &quot;;&quot;, &quot;,&quot;)</expression>
+        <expression
+    >SUBSTITUTE({!selectedIds}, &quot;;&quot;, &quot;,&quot;)</expression>
     </formulas>
     <formulas>
         <description>LEFT({!selectedIds}, FIND(“;”,{!selectedIds})-1)
@@ -190,14 +195,18 @@ LEFT({!varMyString},FIND(&quot;;&quot;,{!varMyString})-1))</description>
 LEFT({!selectedIds},FIND(&quot;;&quot;,{!selectedIds}) -1)</expression>
     </formulas>
     <formulas>
-        <description>TRIM(LEFT({!selectedIds},FIND(&apos;;&apos;, {!selectedIds}, -1 )))
+        <description
+    >TRIM(LEFT({!selectedIds},FIND(&apos;;&apos;, {!selectedIds}, -1 )))
 TRIM(SUBSTITUTE({!selectedIds},{!FirstID}+&apos;;&apos;,&apos;&apos;))</description>
         <name>RemoveFirstID</name>
         <dataType>String</dataType>
-        <expression>TRIM((RIGHT({!selectedIds},LEN({!selectedIds})-FIND(&quot;;&quot;,{!selectedIds}))))</expression>
+        <expression
+    >TRIM((RIGHT({!selectedIds},LEN({!selectedIds})-FIND(&quot;;&quot;,{!selectedIds}))))</expression>
     </formulas>
-    <interviewLabel>L4LAddClientObjfromSDMap {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <interviewLabel
+  >L4LAddClientObjfromSDMap {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun
+  >true</isAdditionalPermissionRequiredToRun>
     <label>L4LAddClientObjfromSDMap</label>
     <loops>
         <name>Loop</name>
@@ -257,7 +266,8 @@ TRIM(SUBSTITUTE({!selectedIds},{!FirstID}+&apos;;&apos;,&apos;&apos;))</descript
         <label>getClientObj</label>
         <locationX>270</locationX>
         <locationY>158</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getSDObj</targetReference>
         </connector>
@@ -280,7 +290,8 @@ TRIM(SUBSTITUTE({!selectedIds},{!FirstID}+&apos;;&apos;,&apos;&apos;))</descript
         <label>getSDObj</label>
         <locationX>270</locationX>
         <locationY>278</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ListUnusedObj</targetReference>
         </connector>

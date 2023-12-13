@@ -1,180 +1,490 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-    <testsuite name="force.apex" timestamp="2023-10-12T23:50:54.000Z" hostname="https://l4l--lflpartial.sandbox.my.salesforce.com" tests="77" failures="0"  errors="0"  time="265.28">
+    <testsuite
+    name="force.apex"
+    timestamp="2023-10-12T23:50:54.000Z"
+    hostname="https://l4l--lflpartial.sandbox.my.salesforce.com"
+    tests="77"
+    failures="0"
+    errors="0"
+    time="265.28"
+  >
         <properties>
-            <property name="outcome" value="Successful"/>
-            <property name="testsRan" value="77"/>
-            <property name="passing" value="77"/>
-            <property name="failing" value="0"/>
-            <property name="skipped" value="0"/>
-            <property name="passRate" value="100%"/>
-            <property name="failRate" value="0%"/>
-            <property name="testStartTime" value="Fri Oct 13 2023 10:50:54 AM"/>
-            <property name="testExecutionTime" value="265.28 s"/>
-            <property name="testTotalTime" value="265.28 s"/>
-            <property name="commandTime" value="2.05 s"/>
-            <property name="hostname" value="https://l4l--lflpartial.sandbox.my.salesforce.com"/>
-            <property name="orgId" value="00D9n000000oX7FEAU"/>
-            <property name="username" value="mikeb@lfl.hyper.lflpartial"/>
-            <property name="testRunId" value="7079n00000dBglW"/>
-            <property name="userId" value="0058t000000JCHzAAO"/>
-            <property name="coveredLines" value="3907"/>
-            <property name="testRunCoverage" value="68%"/>
-            <property name="orgWideCoverage" value="60%"/>
+            <property name="outcome" value="Successful" />
+            <property name="testsRan" value="77" />
+            <property name="passing" value="77" />
+            <property name="failing" value="0" />
+            <property name="skipped" value="0" />
+            <property name="passRate" value="100%" />
+            <property name="failRate" value="0%" />
+            <property
+        name="testStartTime"
+        value="Fri Oct 13 2023 10:50:54 AM"
+      />
+            <property name="testExecutionTime" value="265.28 s" />
+            <property name="testTotalTime" value="265.28 s" />
+            <property name="commandTime" value="2.05 s" />
+            <property
+        name="hostname"
+        value="https://l4l--lflpartial.sandbox.my.salesforce.com"
+      />
+            <property name="orgId" value="00D9n000000oX7FEAU" />
+            <property name="username" value="mikeb@lfl.hyper.lflpartial" />
+            <property name="testRunId" value="7079n00000dBglW" />
+            <property name="userId" value="0058t000000JCHzAAO" />
+            <property name="coveredLines" value="3907" />
+            <property name="testRunCoverage" value="68%" />
+            <property name="orgWideCoverage" value="60%" />
         </properties>
-        <testcase name="TestgetActiveCBOCList" classname="TestL4LController" time="4.06">
+        <testcase
+      name="TestgetActiveCBOCList"
+      classname="TestL4LController"
+      time="4.06"
+    >
         </testcase>
-        <testcase name="testCreateClientBOCByArray" classname="TestL4LController" time="3.50">
+        <testcase
+      name="testCreateClientBOCByArray"
+      classname="TestL4LController"
+      time="3.50"
+    >
         </testcase>
-        <testcase name="testCreateClientObjectivesByArray" classname="TestL4LController" time="3.65">
+        <testcase
+      name="testCreateClientObjectivesByArray"
+      classname="TestL4LController"
+      time="3.65"
+    >
         </testcase>
-        <testcase name="testCreateSessionBOC" classname="TestL4LController" time="3.42">
+        <testcase
+      name="testCreateSessionBOC"
+      classname="TestL4LController"
+      time="3.42"
+    >
         </testcase>
-        <testcase name="testCreateSessionBOCByArrayWithOrderedResults" classname="TestL4LController" time="3.36">
+        <testcase
+      name="testCreateSessionBOCByArrayWithOrderedResults"
+      classname="TestL4LController"
+      time="3.36"
+    >
         </testcase>
-        <testcase name="testCreateSessionObjectivesByArrayWithOrderedResults" classname="TestL4LController" time="3.84">
+        <testcase
+      name="testCreateSessionObjectivesByArrayWithOrderedResults"
+      classname="TestL4LController"
+      time="3.84"
+    >
         </testcase>
-        <testcase name="testDeactivateClientObjective" classname="TestL4LController" time="3.38">
+        <testcase
+      name="testDeactivateClientObjective"
+      classname="TestL4LController"
+      time="3.38"
+    >
         </testcase>
-        <testcase name="testDeleteSessionObjectives" classname="TestL4LController" time="3.66">
+        <testcase
+      name="testDeleteSessionObjectives"
+      classname="TestL4LController"
+      time="3.66"
+    >
         </testcase>
-        <testcase name="testGetCOActivationSummary" classname="TestL4LController" time="3.31">
+        <testcase
+      name="testGetCOActivationSummary"
+      classname="TestL4LController"
+      time="3.31"
+    >
         </testcase>
-        <testcase name="testGetClientBOCFilteredOnActive" classname="TestL4LController" time="3.55">
+        <testcase
+      name="testGetClientBOCFilteredOnActive"
+      classname="TestL4LController"
+      time="3.55"
+    >
         </testcase>
-        <testcase name="testGetClientBOCForSession" classname="TestL4LController" time="3.36">
+        <testcase
+      name="testGetClientBOCForSession"
+      classname="TestL4LController"
+      time="3.36"
+    >
         </testcase>
-        <testcase name="testGetClientObjectives" classname="TestL4LController" time="3.58">
+        <testcase
+      name="testGetClientObjectives"
+      classname="TestL4LController"
+      time="3.58"
+    >
         </testcase>
-        <testcase name="testGetClientObjectivesFilteredOnActive" classname="TestL4LController" time="3.79">
+        <testcase
+      name="testGetClientObjectivesFilteredOnActive"
+      classname="TestL4LController"
+      time="3.79"
+    >
         </testcase>
-        <testcase name="testGetClientObjectivesForSession" classname="TestL4LController" time="3.84">
+        <testcase
+      name="testGetClientObjectivesForSession"
+      classname="TestL4LController"
+      time="3.84"
+    >
         </testcase>
-        <testcase name="testGetUnusedBOCBySearch" classname="TestL4LController" time="3.76">
+        <testcase
+      name="testGetUnusedBOCBySearch"
+      classname="TestL4LController"
+      time="3.76"
+    >
         </testcase>
-        <testcase name="testGetUnusedObjectives" classname="TestL4LController" time="3.76">
+        <testcase
+      name="testGetUnusedObjectives"
+      classname="TestL4LController"
+      time="3.76"
+    >
         </testcase>
-        <testcase name="testGetUnusedObjectivesBySearch" classname="TestL4LController" time="3.94">
+        <testcase
+      name="testGetUnusedObjectivesBySearch"
+      classname="TestL4LController"
+      time="3.94"
+    >
         </testcase>
-        <testcase name="testGetsessionBOC" classname="TestL4LController" time="3.75">
+        <testcase
+      name="testGetsessionBOC"
+      classname="TestL4LController"
+      time="3.75"
+    >
         </testcase>
-        <testcase name="testGetsessionObjectives" classname="TestL4LController" time="3.69">
+        <testcase
+      name="testGetsessionObjectives"
+      classname="TestL4LController"
+      time="3.69"
+    >
         </testcase>
-        <testcase name="testSetClientObjectivesByArray" classname="TestL4LController" time="4.03">
+        <testcase
+      name="testSetClientObjectivesByArray"
+      classname="TestL4LController"
+      time="4.03"
+    >
         </testcase>
-        <testcase name="testSetSessionBOCByArray" classname="TestL4LController" time="3.76">
+        <testcase
+      name="testSetSessionBOCByArray"
+      classname="TestL4LController"
+      time="3.76"
+    >
         </testcase>
-        <testcase name="testSetSessionObjectivesByArray" classname="TestL4LController" time="3.68">
+        <testcase
+      name="testSetSessionObjectivesByArray"
+      classname="TestL4LController"
+      time="3.68"
+    >
         </testcase>
-        <testcase name="testUpdateSessionObjectiveWithComment" classname="TestL4LController" time="4.17">
+        <testcase
+      name="testUpdateSessionObjectiveWithComment"
+      classname="TestL4LController"
+      time="4.17"
+    >
         </testcase>
-        <testcase name="testUpdateSessionObjectiveWithLG" classname="TestL4LController" time="4.14">
+        <testcase
+      name="testUpdateSessionObjectiveWithLG"
+      classname="TestL4LController"
+      time="4.14"
+    >
         </testcase>
-        <testcase name="test2generateD3ProgramAreaSDJson" classname="TestL4LSessionStatsController" time="4.67">
+        <testcase
+      name="test2generateD3ProgramAreaSDJson"
+      classname="TestL4LSessionStatsController"
+      time="4.67"
+    >
         </testcase>
-        <testcase name="testGetClientObjectivesByProgram" classname="TestL4LSessionStatsController" time="4.46">
+        <testcase
+      name="testGetClientObjectivesByProgram"
+      classname="TestL4LSessionStatsController"
+      time="4.46"
+    >
         </testcase>
-        <testcase name="testGetD3Stats" classname="TestL4LSessionStatsController" time="5.18">
+        <testcase
+      name="testGetD3Stats"
+      classname="TestL4LSessionStatsController"
+      time="5.18"
+    >
         </testcase>
-        <testcase name="testGetD3StatsByProgram" classname="TestL4LSessionStatsController" time="5.04">
+        <testcase
+      name="testGetD3StatsByProgram"
+      classname="TestL4LSessionStatsController"
+      time="5.04"
+    >
         </testcase>
-        <testcase name="testGetD3StatsByProgramAndSD" classname="TestL4LSessionStatsController" time="4.01">
+        <testcase
+      name="testGetD3StatsByProgramAndSD"
+      classname="TestL4LSessionStatsController"
+      time="4.01"
+    >
         </testcase>
-        <testcase name="testGetHighAndLowBoundaries" classname="TestL4LSessionStatsController" time="0.12">
+        <testcase
+      name="testGetHighAndLowBoundaries"
+      classname="TestL4LSessionStatsController"
+      time="0.12"
+    >
         </testcase>
-        <testcase name="testGetsessionObjectives" classname="TestL4LSessionStatsController" time="3.99">
+        <testcase
+      name="testGetsessionObjectives"
+      classname="TestL4LSessionStatsController"
+      time="3.99"
+    >
         </testcase>
-        <testcase name="testgenerateD3AreaSDJson" classname="TestL4LSessionStatsController" time="4.07">
+        <testcase
+      name="testgenerateD3AreaSDJson"
+      classname="TestL4LSessionStatsController"
+      time="4.07"
+    >
         </testcase>
-        <testcase name="testgenerateD3BOCJson" classname="TestL4LSessionStatsController" time="3.99">
+        <testcase
+      name="testgenerateD3BOCJson"
+      classname="TestL4LSessionStatsController"
+      time="3.99"
+    >
         </testcase>
-        <testcase name="testgenerateD3ProgramAreaSDJson" classname="TestL4LSessionStatsController" time="4.48">
+        <testcase
+      name="testgenerateD3ProgramAreaSDJson"
+      classname="TestL4LSessionStatsController"
+      time="4.48"
+    >
         </testcase>
-        <testcase name="testgetClientObjectivesSDCount" classname="TestL4LSessionStatsController" time="4.03">
+        <testcase
+      name="testgetClientObjectivesSDCount"
+      classname="TestL4LSessionStatsController"
+      time="4.03"
+    >
         </testcase>
-        <testcase name="testgetD3RetestYAxisScale" classname="TestL4LSessionStatsController" time="4.44">
+        <testcase
+      name="testgetD3RetestYAxisScale"
+      classname="TestL4LSessionStatsController"
+      time="4.44"
+    >
         </testcase>
-        <testcase name="testgetD3SessionStatsHistogramData" classname="TestL4LSessionStatsController" time="4.16">
+        <testcase
+      name="testgetD3SessionStatsHistogramData"
+      classname="TestL4LSessionStatsController"
+      time="4.16"
+    >
         </testcase>
-        <testcase name="testgetD3StatusYAxisScale" classname="TestL4LSessionStatsController" time="4.17">
+        <testcase
+      name="testgetD3StatusYAxisScale"
+      classname="TestL4LSessionStatsController"
+      time="4.17"
+    >
         </testcase>
-        <testcase name="testgetD3YAxisScale" classname="TestL4LSessionStatsController" time="5.48">
+        <testcase
+      name="testgetD3YAxisScale"
+      classname="TestL4LSessionStatsController"
+      time="5.48"
+    >
         </testcase>
-        <testcase name="testgetProgramSetFromCO" classname="TestL4LSessionStatsController" time="4.35">
+        <testcase
+      name="testgetProgramSetFromCO"
+      classname="TestL4LSessionStatsController"
+      time="4.35"
+    >
         </testcase>
-        <testcase name="testgetProgramsAndSds" classname="TestL4LSessionStatsController" time="4.12">
+        <testcase
+      name="testgetProgramsAndSds"
+      classname="TestL4LSessionStatsController"
+      time="4.12"
+    >
         </testcase>
-        <testcase name="testgetSDSetFromCO" classname="TestL4LSessionStatsController" time="4.17">
+        <testcase
+      name="testgetSDSetFromCO"
+      classname="TestL4LSessionStatsController"
+      time="4.17"
+    >
         </testcase>
-        <testcase name="testRemoveDuplicates" classname="TestL4LSDStageMap" time="3.84">
+        <testcase
+      name="testRemoveDuplicates"
+      classname="TestL4LSDStageMap"
+      time="3.84"
+    >
         </testcase>
         <testcase name="testUtil" classname="TestLFLUtil" time="0.02">
         </testcase>
-        <testcase name="testcomparison" classname="TestLFLSDWrapper" time="0.02">
+        <testcase
+      name="testcomparison"
+      classname="TestLFLSDWrapper"
+      time="0.02"
+    >
         </testcase>
-        <testcase name="TestGenerateD3CORetestTimeSeriesJson" classname="TestL4LTimeSeries" time="2.69">
+        <testcase
+      name="TestGenerateD3CORetestTimeSeriesJson"
+      classname="TestL4LTimeSeries"
+      time="2.69"
+    >
         </testcase>
-        <testcase name="TestGenerateD3COTimeSeriesByStatusJson" classname="TestL4LTimeSeries" time="2.35">
+        <testcase
+      name="TestGenerateD3COTimeSeriesByStatusJson"
+      classname="TestL4LTimeSeries"
+      time="2.35"
+    >
         </testcase>
-        <testcase name="tesGenerateD3COTimeSeriesJson" classname="TestL4LTimeSeries" time="2.64">
+        <testcase
+      name="tesGenerateD3COTimeSeriesJson"
+      classname="TestL4LTimeSeries"
+      time="2.64"
+    >
         </testcase>
-        <testcase name="testGenerateD3COTSJsonByProgramAndSD" classname="TestL4LTimeSeries" time="2.57">
+        <testcase
+      name="testGenerateD3COTSJsonByProgramAndSD"
+      classname="TestL4LTimeSeries"
+      time="2.57"
+    >
         </testcase>
-        <testcase name="testGenerateD3COTSThresholdJson" classname="TestL4LTimeSeries" time="2.39">
+        <testcase
+      name="testGenerateD3COTSThresholdJson"
+      classname="TestL4LTimeSeries"
+      time="2.39"
+    >
         </testcase>
-        <testcase name="testLoadCOTimeSeries" classname="TestL4LTimeSeries" time="2.52">
+        <testcase
+      name="testLoadCOTimeSeries"
+      classname="TestL4LTimeSeries"
+      time="2.52"
+    >
         </testcase>
-        <testcase name="test" classname="TestL4LTimeSeriesScheduler" time="0.19">
+        <testcase
+      name="test"
+      classname="TestL4LTimeSeriesScheduler"
+      time="0.19"
+    >
         </testcase>
-        <testcase name="testGetStatusCountsBetweenDates" classname="TestLFLClientObjectiveHelper" time="4.44">
+        <testcase
+      name="testGetStatusCountsBetweenDates"
+      classname="TestLFLClientObjectiveHelper"
+      time="4.44"
+    >
         </testcase>
-        <testcase name="testComputeMasteryStats" classname="TestLFLInvocableMasteryStatistics" time="3.91">
+        <testcase
+      name="testComputeMasteryStats"
+      classname="TestLFLInvocableMasteryStatistics"
+      time="3.91"
+    >
         </testcase>
-        <testcase name="testGetStatusCountsBetweenDates" classname="TestLFLInvocableReportWizard" time="3.23">
+        <testcase
+      name="testGetStatusCountsBetweenDates"
+      classname="TestLFLInvocableReportWizard"
+      time="3.23"
+    >
         </testcase>
-        <testcase name="testComputeSessionStats" classname="TestLFLInvocableSessionStatistics" time="4.73">
+        <testcase
+      name="testComputeSessionStats"
+      classname="TestLFLInvocableSessionStatistics"
+      time="4.73"
+    >
         </testcase>
-        <testcase name="testLoad" classname="TestLFLPopulateTestData" time="4.52">
+        <testcase
+      name="testLoad"
+      classname="TestLFLPopulateTestData"
+      time="4.52"
+    >
         </testcase>
-        <testcase name="testUpdateObjectiveStatus" classname="TestLFLProgramStatusCascadeUtil" time="4.14">
+        <testcase
+      name="testUpdateObjectiveStatus"
+      classname="TestLFLProgramStatusCascadeUtil"
+      time="4.14"
+    >
         </testcase>
-        <testcase name="testUpdateSDStatus" classname="TestLFLProgramStatusCascadeUtil" time="3.82">
+        <testcase
+      name="testUpdateSDStatus"
+      classname="TestLFLProgramStatusCascadeUtil"
+      time="3.82"
+    >
         </testcase>
-        <testcase name="testTrg" classname="TestCascadeProgramStatusTrg" time="4.34">
+        <testcase
+      name="testTrg"
+      classname="TestCascadeProgramStatusTrg"
+      time="4.34"
+    >
         </testcase>
         <testcase name="testTrg" classname="TestCascadeSDStatusTrg" time="4.67">
         </testcase>
-        <testcase name="testTrg" classname="TestDaysSinceUpdatedTrg" time="2.81">
+        <testcase
+      name="testTrg"
+      classname="TestDaysSinceUpdatedTrg"
+      time="2.81"
+    >
         </testcase>
         <testcase name="testTrg" classname="TestLFLSessionStatsTrg" time="3.77">
         </testcase>
-        <testcase name="testGetClientObjectives" classname="TestClientObjectiveList" time="4.03">
+        <testcase
+      name="testGetClientObjectives"
+      classname="TestClientObjectiveList"
+      time="4.03"
+    >
         </testcase>
-        <testcase name="testnebula" classname="TestL4LNebulaComponentController" time="4.03">
+        <testcase
+      name="testnebula"
+      classname="TestL4LNebulaComponentController"
+      time="4.03"
+    >
         </testcase>
-        <testcase name="test1" classname="TestL4LExceptionRateCalculation" time="0.02">
+        <testcase
+      name="test1"
+      classname="TestL4LExceptionRateCalculation"
+      time="0.02"
+    >
         </testcase>
-        <testcase name="test1" classname="TestL4LExceptionClientObjectiveMissing" time="0.01">
+        <testcase
+      name="test1"
+      classname="TestL4LExceptionClientObjectiveMissing"
+      time="0.01"
+    >
         </testcase>
-        <testcase name="testDuplicateObjectivePrevention" classname="TestTrgUniqueObjectivePerClientObjective" time="4.11">
+        <testcase
+      name="testDuplicateObjectivePrevention"
+      classname="TestTrgUniqueObjectivePerClientObjective"
+      time="4.11"
+    >
         </testcase>
-        <testcase name="testbatch" classname="TestLFLTimeSeriesBatch" time="4.19">
+        <testcase
+      name="testbatch"
+      classname="TestLFLTimeSeriesBatch"
+      time="4.19"
+    >
         </testcase>
-        <testcase name="test" classname="TestLFLTimeSeriesBatchScheduler" time="0.23">
+        <testcase
+      name="test"
+      classname="TestLFLTimeSeriesBatchScheduler"
+      time="0.23"
+    >
         </testcase>
-        <testcase name="testGetAcquisitionRate" classname="TestLFLDTDRates" time="4.05">
+        <testcase
+      name="testGetAcquisitionRate"
+      classname="TestLFLDTDRates"
+      time="4.05"
+    >
         </testcase>
-        <testcase name="testGetAcquisitionRateByDates" classname="TestLFLDTDRates" time="2.37">
+        <testcase
+      name="testGetAcquisitionRateByDates"
+      classname="TestLFLDTDRates"
+      time="2.37"
+    >
         </testcase>
-        <testcase name="testGetAcquisitionRateForClientTurbo" classname="TestLFLDTDRates" time="2.31">
+        <testcase
+      name="testGetAcquisitionRateForClientTurbo"
+      classname="TestLFLDTDRates"
+      time="2.31"
+    >
         </testcase>
-        <testcase name="testGetDTDRateArray" classname="TestLFLDTDRateMaster" time="3.93">
+        <testcase
+      name="testGetDTDRateArray"
+      classname="TestLFLDTDRateMaster"
+      time="3.93"
+    >
         </testcase>
-        <testcase name="testInternalClass" classname="TestLFLDTDRateMaster" time="0.01">
+        <testcase
+      name="testInternalClass"
+      classname="TestLFLDTDRateMaster"
+      time="0.01"
+    >
         </testcase>
-        <testcase name="test1" classname="TestLFLInvocableListUnusedObj" time="3.95">
+        <testcase
+      name="test1"
+      classname="TestLFLInvocableListUnusedObj"
+      time="3.95"
+    >
         </testcase>
-        <testcase name="testGetSDUsage" classname="TestL4LStagesByArea" time="4.55">
+        <testcase
+      name="testGetSDUsage"
+      classname="TestL4LStagesByArea"
+      time="4.55"
+    >
         </testcase>
     </testsuite>
 </testsuites>

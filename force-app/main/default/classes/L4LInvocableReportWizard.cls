@@ -1,11 +1,10 @@
-
 /**************************************************************
  * @author	Mike Burnside
  * @name L4LInvocableReportWizard
  * @date	2022
  * @group Learning For Life
  *
- * @description Invocable methods 
+ * @description Invocable methods
  *
  */
 
@@ -68,8 +67,8 @@ global with sharing class L4LInvocableReportWizard {
     Integer offset = tz.getOffset(starttime.dateGMT());
     System.debug(
       'L4LInvocableReportWizard: at the received starttime the offset to GMT is : ' +
-      offset / 1000 +
-      ' seconds.'
+        offset / 1000 +
+        ' seconds.'
     );
     starttime = starttime.addSeconds(0 - (offset / 1000));
     System.debug(
@@ -91,8 +90,8 @@ global with sharing class L4LInvocableReportWizard {
     offset = tz.getOffset(endtime.dateGMT());
     System.debug(
       'L4LInvocableReportWizard: at the stretched endtime the offset to GMT is: ' +
-      offset / 1000 +
-      ' seconds.'
+        offset / 1000 +
+        ' seconds.'
     );
     endtime = endtime.addSeconds(0 - (offset / 1000));
     System.debug(
@@ -105,9 +104,9 @@ global with sharing class L4LInvocableReportWizard {
     );
     System.debug(
       'L4LInvocableReportWizard: BOTTOM LINE we submit a SOQL statement that says=> SELECT..cols.. WHERE lastmodifieddate>=' +
-      starttime +
-      ' AND lastmodifieddate < ' +
-      endtime
+        starttime +
+        ' AND lastmodifieddate < ' +
+        endtime
     );
 
     // fix for the DML overflow

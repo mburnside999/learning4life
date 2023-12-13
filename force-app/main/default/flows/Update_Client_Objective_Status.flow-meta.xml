@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <constants>
@@ -23,7 +23,8 @@
         </value>
     </constants>
     <decisions>
-        <description>Choose the status update based on previous status. DNC = Did not Confirm</description>
+        <description
+    >Choose the status update based on previous status. DNC = Did not Confirm</description>
         <name>Decide_Status</name>
         <label>Decide Status</label>
         <locationX>578</locationX>
@@ -40,7 +41,8 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Session_Obj.Previous_Status__c</leftValueReference>
+                <leftValueReference
+        >Get_Session_Obj.Previous_Status__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -62,7 +64,8 @@
             <name>Update_to_CIP</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Session_Obj.Previous_Status__c</leftValueReference>
+                <leftValueReference
+        >Get_Session_Obj.Previous_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>1CP</stringValue>
@@ -91,7 +94,8 @@
             <name>Update_to_1IP</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Session_Obj.Previous_Status__c</leftValueReference>
+                <leftValueReference
+        >Get_Session_Obj.Previous_Status__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -120,7 +124,8 @@
             <name>Update_to_DNC</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Session_Obj.Previous_Status__c</leftValueReference>
+                <leftValueReference
+        >Get_Session_Obj.Previous_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>1CP</stringValue>
@@ -146,8 +151,10 @@
             <label>Update to DNC</label>
         </rules>
     </decisions>
-    <description>Updates new Client Objectives Status to either 1CP , 1IP, CIP or OBJ</description>
-    <interviewLabel>Update Client-Objective Status {!$Flow.CurrentDateTime}</interviewLabel>
+    <description
+  >Updates new Client Objectives Status to either 1CP , 1IP, CIP or OBJ</description>
+    <interviewLabel
+  >Update Client-Objective Status {!$Flow.CurrentDateTime}</interviewLabel>
     <label>L4L Update Client-Objective Status</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -173,7 +180,8 @@
         <label>Get Session Details</label>
         <locationX>578</locationX>
         <locationY>335</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Session_Obj</targetReference>
         </connector>
@@ -190,12 +198,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <description>Getting the first record of the Session for the current Objective-</description>
+        <description
+    >Getting the first record of the Session for the current Objective-</description>
         <name>Get_Session_Obj</name>
         <label>Get Session-Obj</label>
         <locationX>578</locationX>
         <locationY>455</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound
+    >false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Decide_Status</targetReference>
         </connector>
@@ -261,14 +271,16 @@
         <locationX>50</locationX>
         <locationY>695</locationY>
         <connector>
-            <targetReference>Update_SessionObj_First_Record_Status</targetReference>
+            <targetReference
+      >Update_SessionObj_First_Record_Status</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Session_Details.Client__c</elementReference>
+                <elementReference
+        >Get_Session_Details.Client__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -292,14 +304,16 @@
         <locationX>578</locationX>
         <locationY>695</locationY>
         <connector>
-            <targetReference>Update_SessionObj_First_Record_Status_0</targetReference>
+            <targetReference
+      >Update_SessionObj_First_Record_Status_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Session_Details.Client__c</elementReference>
+                <elementReference
+        >Get_Session_Details.Client__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -323,14 +337,16 @@
         <locationX>314</locationX>
         <locationY>695</locationY>
         <connector>
-            <targetReference>Update_SessionObj_First_Record_Status_0_0</targetReference>
+            <targetReference
+      >Update_SessionObj_First_Record_Status_0_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Session_Details.Client__c</elementReference>
+                <elementReference
+        >Get_Session_Details.Client__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -361,7 +377,8 @@
             <field>Client__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Session_Details.Client__c</elementReference>
+                <elementReference
+        >Get_Session_Details.Client__c</elementReference>
             </value>
         </filters>
         <filters>

@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
     <masterLabel>L4LSessionMessageChannel</masterLabel>
     <isExposed>true</isExposed>
-    <description>This is the L4L Session Lightning Message Channel.</description>
+    <description
+  >This is the L4L Session Lightning Message Channel.</description>
     <lightningMessageFields>
         <fieldName>recordId</fieldName>
         <description>This is the record Id</description>

@@ -120,10 +120,10 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
 
     mail.setPlainTextBody(
       'Successfully processed ' +
-      recs +
-      ' Client_Objective_Timeseries__c records / ' +
-      cotsrulist.size() +
-      ' Client_Objective_Timeseries_Rollup__c records'
+        recs +
+        ' Client_Objective_Timeseries__c records / ' +
+        cotsrulist.size() +
+        ' Client_Objective_Timeseries_Rollup__c records'
     );
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });

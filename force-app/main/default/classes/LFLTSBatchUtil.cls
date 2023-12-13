@@ -1,4 +1,3 @@
-
 /**************************************************************
  * @author	Mike Burnside
  * @name LFLTSBatchUtil
