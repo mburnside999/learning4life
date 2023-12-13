@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Return_10_Results</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>getClientObj</name>
             <value>
@@ -22,7 +23,9 @@
                 <elementReference>getSDObj</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>L4LInvocableListUnusedObj</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <assignments>
@@ -85,6 +88,7 @@
         </connector>
         <limit>10</limit>
         <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
             <sortField>Name</sortField>
             <sortOrder>Asc</sortOrder>
         </sortOptions>
@@ -193,6 +197,7 @@ TRIM(SUBSTITUTE({!selectedIds},{!FirstID}+&apos;;&apos;,&apos;&apos;))</descript
         <expression>TRIM((RIGHT({!selectedIds},LEN({!selectedIds})-FIND(&quot;;&quot;,{!selectedIds}))))</expression>
     </formulas>
     <interviewLabel>L4LAddClientObjfromSDMap {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>L4LAddClientObjfromSDMap</label>
     <loops>
         <name>Loop</name>
