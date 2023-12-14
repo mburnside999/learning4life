@@ -14,13 +14,13 @@ trigger trgUpdateDateSinceCorrect on Session_Obj__c(
 ) {
   System.debug('trgUpdateDateSinceCorrect: entering');
 
-  L4LNebulaComponentController.setupCache();
-  L4LNebulaComponentController.logDebug(
-    null,
-    'Trigger: trgUpdateDateSinceCorrect:',
-    'Trigger: trgUpdateDateSinceCorrect:',
-    'next-gen-nebula-apex'
-  );
+  // L4LNebulaComponentController.setupCache();
+  // L4LNebulaComponentController.logDebug(
+  //   null,
+  //   'Trigger: trgUpdateDateSinceCorrect:',
+  //   'Trigger: trgUpdateDateSinceCorrect:',
+  //   'next-gen-nebula-apex'
+  // );
 
   for (Id soid : Trigger.newMap.keyset()) {
     System.debug('trgUpdateDateSinceCorrect: in New loop');
@@ -46,12 +46,12 @@ trigger trgUpdateDateSinceCorrect on Session_Obj__c(
 
     // if (so.correct__c == true && (so.previous_status__c == 'ACQ')) {
     if (fire) {
-      L4LNebulaComponentController.logDebug(
-        soid,
-        'Trigger: trgUpdateDateSinceCorrect: C,I,N,P changed ',
-        'Trigger: trgUpdateDateSinceCorrect: C,I,N,P changed ',
-        'next-gen-nebula-apex'
-      );
+      // L4LNebulaComponentController.logDebug(
+      //   soid,
+      //   'Trigger: trgUpdateDateSinceCorrect: C,I,N,P changed ',
+      //   'Trigger: trgUpdateDateSinceCorrect: C,I,N,P changed ',
+      //   'next-gen-nebula-apex'
+      // );
 
       Id clientid = [
         SELECT session__r.client__r.id
@@ -74,43 +74,43 @@ trigger trgUpdateDateSinceCorrect on Session_Obj__c(
 
       // allow edits when inactive CO detected but log a warning
       if (co.active__c == false) {
-        L4LNebulaComponentController.logWarning(
-          co.id,
-          'Trigger: trgUpdateDateSinceCorrect: Warning, the related CO is inactive - why is the SO being assessed?!',
-          'Trigger: trgUpdateDateSinceCorrect: Warning, the related CO is inactive - why is the SO being assessed?!',
-          'next-gen-nebula-apex'
-        );
+        // L4LNebulaComponentController.logWarning(
+        //   co.id,
+        //   'Trigger: trgUpdateDateSinceCorrect: Warning, the related CO is inactive - why is the SO being assessed?!',
+        //   'Trigger: trgUpdateDateSinceCorrect: Warning, the related CO is inactive - why is the SO being assessed?!',
+        //   'next-gen-nebula-apex'
+        // );
       }
 
       if (Trigger.newMap.get(soid).correct__c) {
         co.last_tested_correct__c = date.today();
 
-        L4LNebulaComponentController.logDebug(
-          co.id,
-          'Trigger: trgUpdateDateSinceCorrect: Correct__c=true, setting CO last_tested_correct date to today ',
-          'Trigger: trgUpdateDateSinceCorrect: Correct__c=true, setting CO last_tested_correct date to today ',
-          'next-gen-nebula-apex'
-        );
+        // L4LNebulaComponentController.logDebug(
+        //   co.id,
+        //   'Trigger: trgUpdateDateSinceCorrect: Correct__c=true, setting CO last_tested_correct date to today ',
+        //   'Trigger: trgUpdateDateSinceCorrect: Correct__c=true, setting CO last_tested_correct date to today ',
+        //   'next-gen-nebula-apex'
+        // );
       }
 
       co.last_tested__c = date.today();
-      L4LNebulaComponentController.logDebug(
-        co.id,
-        'Trigger: trgUpdateDateSinceCorrect: setting CO last tested date to today ',
-        'Trigger: trgUpdateDateSinceCorrect: setting CO last tested date to today ',
-        'next-gen-nebula-apex'
-      );
+      // L4LNebulaComponentController.logDebug(
+      //   co.id,
+      //   'Trigger: trgUpdateDateSinceCorrect: setting CO last tested date to today ',
+      //   'Trigger: trgUpdateDateSinceCorrect: setting CO last tested date to today ',
+      //   'next-gen-nebula-apex'
+      // );
 
       System.debug(
         'trgUpdateDateSinceCorrect: updating client objective, co=' + co
       );
       update co;
-      L4LNebulaComponentController.logDebug(
-        co.id,
-        'Trigger: trgUpdateDateSinceCorrect: update successful',
-        'Trigger: trgUpdateDateSinceCorrect: update successful',
-        'next-gen-nebula-apex'
-      );
+      // L4LNebulaComponentController.logDebug(
+      //   co.id,
+      //   'Trigger: trgUpdateDateSinceCorrect: update successful',
+      //   'Trigger: trgUpdateDateSinceCorrect: update successful',
+      //   'next-gen-nebula-apex'
+      // );
     }
   }
 }
