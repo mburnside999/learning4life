@@ -116,7 +116,7 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
     mail.setToAddresses(new List<String>{ email });
     mail.setReplyTo('batch@acme.com');
     mail.setSenderDisplayName('Batch Processing');
-    mail.setSubject('LFLTimeSeriesBatch completed.');
+    mail.setSubject('LFLTimeSeriesBatch completed, ACTIVE clients only.');
 
     mail.setPlainTextBody(
       'Successfully processed ' +
