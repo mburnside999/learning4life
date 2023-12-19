@@ -43,6 +43,7 @@ const columns = [
  */
 
 export default class L4lCreateClientObjectives extends LightningElement {
+  @api lwcTitle="Populate Client Objectives";
   @wire(MessageContext) messageContext;
   @api recordId = "0012v00002fY86nAAC"; //Andy
   @wire(CurrentPageReference) pageRef;

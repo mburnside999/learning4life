@@ -65,6 +65,7 @@ const columns = [
 ];
 
 export default class L4lPopulateSessionObjectives extends LightningElement {
+  @api lwcTitle="Record Session DTD";
   @wire(CurrentPageReference) pageRef;
   @wire(MessageContext) messageContext;
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing

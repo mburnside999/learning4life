@@ -112,6 +112,8 @@ const columns = [
 ];
 
 export default class L4lRelatedClientObjectives extends LightningElement {
+  @api lwcTitle = "Assigned Client Objectives";
+
   @track clientId = "";
   @api recordId = "0012v00002fY86nAAC";
   @track COrecordId = "";

@@ -1,13 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle
   xmlns="http://soap.sforce.com/2006/04/metadata"
   fqn="MBLWCBCShipment"
 >
-    <apiVersion>54.0</apiVersion>
-     <isExposed>true</isExposed>
-    <targets>
-      <target>lightning__RecordPage</target>
-      <target>lightning__AppPage</target>
-      <target>lightning__HomePage</target>
+  <apiVersion>54.0</apiVersion>
+  <isExposed>true</isExposed>
+  <targets>
+    <target>lightning__RecordPage</target>
+    <target>lightning__AppPage</target>
+    <target>lightning__HomePage</target>
   </targets>
+  <targetConfigs>
+    <targetConfig targets="lightning__RecordPage">
+      <property
+        name="lwcTitle"
+        type="String"
+        default="Create Incidental Data"
+        label="Enter a LWC title"
+      />
+
+
+    </targetConfig>
+
+
+  </targetConfigs>
 </LightningComponentBundle>
