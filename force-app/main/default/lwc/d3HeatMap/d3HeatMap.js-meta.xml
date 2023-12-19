@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <description>D3 Heatmap</description>
@@ -8,7 +8,7 @@
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>
-         <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>
     </targets>
     <targetConfigs>
@@ -20,54 +20,54 @@
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
             <property
-        name="lwcTitle"
-        type="String"
-        default="LFL Client Program Mastery"
-        label="Enter a LWC title"
-      />
-      <property
-        name="chartTitle"
-        type="String"
-        default="Objectives Vs. Sessions"
-        label="Enter a chart title"
-      />
-      <property
-        name="chartSubTitle"
-        type="String"
-        default="Red, Orange , Green "
-        label="Enter a chart sub-title"
-      />
+                name="lwcTitle"
+                type="String"
+                default="Client Program Mastery"
+                label="Enter a LWC title"
+            />
+            <property
+                name="chartTitle"
+                type="String"
+                default="Objectives Vs. Sessions"
+                label="Enter a chart title"
+            />
+            <property
+                name="chartSubTitle"
+                type="String"
+                default="Red, Orange , Green "
+                label="Enter a chart sub-title"
+            />
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__HomePage">
-           
+
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
             </supportedFormFactors>
         </targetConfig>
-         <targetConfig targets="lightningCommunity__Default">
-         <property name="recordId" type="String" default="{!Route.recordId}" />
-         <property
-        name="lwcTitle"
-        type="String"
-        default="LFL Client Program Mastery"
-        label="Enter a LWC title"
-      />
-       <property
-        name="chartTitle"
-        type="String"
-        default="Objectives Vs. Sessions"
-        label="Enter a chart title"
-      />
-       <property
-        name="chartSubTitle"
-        type="String"
-        default="Hover over the cells to see individual scores"
-        label="Enter a chart subtitle"
-      />
-          </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="recordId" type="String" default="{!Route.recordId}" />
+            <property
+                name="lwcTitle"
+                type="String"
+                default="Client Program Mastery"
+                label="Enter a LWC title"
+            />
+            <property
+                name="chartTitle"
+                type="String"
+                default="Objectives Vs. Sessions"
+                label="Enter a chart title"
+            />
+            <property
+                name="chartSubTitle"
+                type="String"
+                default="Hover over the cells to see individual scores"
+                label="Enter a chart subtitle"
+            />
+        </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

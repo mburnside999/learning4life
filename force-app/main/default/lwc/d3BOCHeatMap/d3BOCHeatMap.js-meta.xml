@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>53.0</apiVersion>
-    <description>D3 BOC Heatmap</description>
-    <isExposed>true</isExposed>
-    <masterLabel>D3 BOC Heatmap</masterLabel>
-    <targets>
-        <target>lightning__AppPage</target>
-        <target>lightning__RecordPage</target>
-        <target>lightning__HomePage</target>
-         
-    </targets>
-    <targetConfigs>
-        <targetConfig targets="lightning__AppPage">
-            <supportedFormFactors>
-                <supportedFormFactor type="Small" />
-            </supportedFormFactors>
-            <property name="recordId" type="String" label="Record Id" />
-            <property
+  <apiVersion>53.0</apiVersion>
+  <description>D3 BOC Heatmap</description>
+  <isExposed>true</isExposed>
+  <masterLabel>D3 BOC Heatmap</masterLabel>
+  <targets>
+    <target>lightning__AppPage</target>
+    <target>lightning__RecordPage</target>
+    <target>lightning__HomePage</target>
+
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightning__AppPage">
+      <supportedFormFactors>
+        <supportedFormFactor type="Small" />
+      </supportedFormFactors>
+      <property name="recordId" type="String" label="Record Id" />
+      <property
         name="lwcTitle"
         type="String"
-        default="LFL Client BoC Analysis"
+        default="Client BoC Analysis"
         label="Enter a LWC title"
       />
       <property
@@ -34,12 +34,12 @@
         default="Red=Tracked, Green=Untracked, Orange=Tracked (0)"
         label="Enter a chart sub-title"
       />
-        </targetConfig>
-        <targetConfig targets="lightning__RecordPage">
-            <property
+    </targetConfig>
+    <targetConfig targets="lightning__RecordPage">
+      <property
         name="lwcTitle"
         type="String"
-        default="LFL Client BoC Analysis"
+        default="Client BoC Analysis"
         label="Enter a LWC title"
       />
       <property
@@ -48,22 +48,22 @@
         default="Behaviours of Concern Vs. Sessions"
         label="Enter a chart title"
       />
-    <property
+      <property
         name="chartSubTitle"
         type="String"
         default="Red=Tracked, Green=Untracked, Orange=Tracked (0)"
         label="Enter a chart sub-title"
       />
-            <supportedFormFactors>
-                <supportedFormFactor type="Large" />
-                <supportedFormFactor type="Small" />
-            </supportedFormFactors>
-        </targetConfig>
-        <targetConfig targets="lightning__HomePage">
-            <property
+      <supportedFormFactors>
+        <supportedFormFactor type="Large" />
+        <supportedFormFactor type="Small" />
+      </supportedFormFactors>
+    </targetConfig>
+    <targetConfig targets="lightning__HomePage">
+      <property
         name="lwcTitle"
         type="String"
-        default="LFL Client BoC Analysis"
+        default="Client BoC Analysis"
         label="Enter a LWC title"
       />
       <property
@@ -79,10 +79,10 @@
         label="Enter a chart sub-title"
       />
 
-            <supportedFormFactors>
-                <supportedFormFactor type="Large" />
-            </supportedFormFactors>
-        </targetConfig>
+      <supportedFormFactors>
+        <supportedFormFactor type="Large" />
+      </supportedFormFactors>
+    </targetConfig>
 
-    </targetConfigs>
+  </targetConfigs>
 </LightningComponentBundle>
