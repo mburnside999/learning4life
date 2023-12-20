@@ -10,16 +10,25 @@ import { logDebug, logError } from "c/l4lNebulaUtil";
 
 const COMPONENT = "D3Nest";
 const TAG = "L4L-Session-Statistics-D3Nest";
-
+const columns = [
+  { label: "Program", fieldName: "name" },
+  {
+    label: "Assigned Client Objectives",
+    fieldName: "counter"
+  }
+];
 export default class D3Nest extends LightningElement {
+  @api lwcTitle = "Client Objective Program Nesting";
   //the clientId from UI
   @api recordId;
-
+  columns = columns;
+  data = [];
   //chart dimensions
-  svgWidth = 1400;
+  svgWidth = 1600;
   svgHeight = 1200;
 
-  isSelected = false;
+  isSelected = true;
+  heatMapShown = false;
 
   @track result; //raw returned records from Apex query
   @track gridDataTree = []; //the data that D3 iterates across
@@ -67,7 +76,7 @@ export default class D3Nest extends LightningElement {
   }
 
   get resultmessage() {
-    if (this.programsDisplayed > 0) {
+    if (this.programsDisplayed >= 0) {
       return this.isSelected
         ? "Tree contains " + this.programsDisplayed + " assigned programs."
         : "Tree contains " + this.programsDisplayed + " total programs.";
@@ -200,7 +209,7 @@ export default class D3Nest extends LightningElement {
     };
 
     var margin = { top: 10, right: 5, bottom: 20, left: 10 },
-      width = 1400 - margin.left - margin.right,
+      width = 1600 - margin.left - margin.right,
       height = 1200 - margin.top - margin.bottom;
 
     logDebug(
@@ -239,10 +248,7 @@ export default class D3Nest extends LightningElement {
         let _value = this.sdcountmap.has(key)
           ? this.sdcountmap.get(key) + 1
           : 1;
-        let _desc =
-          sd.Description__c == undefined
-            ? "No description recorded for this SD"
-            : sd.Description__c;
+        let _desc = sd.Description__c == undefined ? "" : sd.Description__c;
         _counter += _value - 1;
         return {
           name: this.truncate(sd.Name, 50),
@@ -267,9 +273,10 @@ export default class D3Nest extends LightningElement {
 
     if (this.isSelected) {
       _gridData = _gridData.filter((d) => d.counter > 0);
+      this.result = _gridData;
     }
 
-    //c/d3HeatMapconsole.log(`_gridData=${JSON.stringify(_gridData)}`);
+    console.log(`_gridData=${JSON.stringify(_gridData)}`);
 
     this.programsDisplayed = _gridData.length;
 
@@ -429,6 +436,11 @@ export default class D3Nest extends LightningElement {
     console.log("click");
     this.isSelected = !this.isSelected;
     this.composeOptions();
+  }
+  handleHeatMap() {
+    console.log("click");
+    this.heatMapShown = !this.heatMapShown;
+    console.log("this.heatMapShown=" + this.heatMapShown);
   }
 
   handleStageChange(event) {

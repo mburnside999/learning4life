@@ -1,8 +1,5 @@
 <template>
-  <lightning-card
-    title="L4L Allocated Client Objectives, now with Stage Filter"
-    icon-name="custom:custom19"
-  >
+  <lightning-card title={lwcTitle} icon-name="custom:custom19">
     <div class="c-container">
       <lightning-layout>
         <lightning-layout-item padding="around-small">
@@ -10,21 +7,22 @@
             class="custom-box slds-box slds-p-around_medium slds-text-align_center"
           >
             <lightning-button-stateful
-              label-when-off="Click to show Assigned Only "
-              label-when-on="Click to show ALL"
-              selected={isSelected}
-              onclick={handleClick}
+              label-when-off="Click to view DataTable "
+              label-when-on="Click to hide DataTable"
+              selected={heatMapShown}
+              onclick={handleHeatMap}
             >
             </lightning-button-stateful>
           </div>
         </lightning-layout-item>
+
         <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-p-around_medium slds-text-align_center"
           >
             <lightning-combobox
               name="stage"
-              label="Stage"
+              label="Filter by Stage"
               value={stageoptionval}
               placeholder="Select Stage"
               options={stageoptions}
@@ -32,11 +30,28 @@
             ></lightning-combobox>
           </div>
         </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-p-around_medium slds-text-align_center"
+          >
+            <div class="demo-only" style="padding: 0.5rem; background: #16325c">
+              <div class="slds-text-color_inverse">{resultmessage}</div>
+            </div>
+          </div>
+        </lightning-layout-item>
       </lightning-layout>
-      <br />
-
-      {resultmessage}
     </div>
+  </lightning-card>
+  <lightning-card>
+    <template lwc:if={heatMapShown}>
+      <lightning-datatable
+        hide-checkbox-column
+        key-field="id"
+        data={result}
+        columns={columns}
+      >
+      </lightning-datatable>
+    </template>
   </lightning-card>
 
   <div class="nest" lwc:dom="manual"></div>

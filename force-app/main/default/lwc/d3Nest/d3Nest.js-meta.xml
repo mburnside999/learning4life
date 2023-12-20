@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <description>D3 Client Objective Nest</description>
@@ -16,14 +16,19 @@
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__RecordPage">
-           
+            <property
+                name="lwcTitle"
+                type="String"
+                default="Client Objective Program Nesting"
+                label="Enter a LWC title"
+            />
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
                 <supportedFormFactor type="Small" />
             </supportedFormFactors>
         </targetConfig>
         <targetConfig targets="lightning__HomePage">
-           
+
             <supportedFormFactors>
                 <supportedFormFactor type="Large" />
             </supportedFormFactors>
