@@ -125,100 +125,76 @@ export default class D3MiniBars extends LightningElement {
     //   '[{"rundate":"2022-11-26","val":60,"status":ACQ},{"rundate":"2022-12-19","val":64,"status":"ACQ"}]'
     // );
 
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.renderLineChart(): wrangling data and drawing mini line charts`,
-      `${SCENARIO}`,
-      `${TAG}`
-    );
-
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.renderLineChart(): parameter is response=${response}`,
-      `${SCENARIO}`,
-      `${TAG}`
-    );
-
     let datatmp = JSON.parse(response);
     let data = datatmp.map(myfunction);
 
-    // var sumstat = d3
-    //   .nest() // nest function allows to group the calculation per level of a factor
-    //   .key(function (d) {
-    //     return d.name;
-    //   })
-    //   .entries(data);
-
-    const sumstat = d3.group(data, (d) => d.status); // nest function allows to group the calculation per level of a factor
-
-    // What is the list of groups?
-    const allKeys = new Set(data.map((d) => d.status));
-
-    console.log(allKeys);
+    function make_y_gridlines() {
+      return d3.axisLeft(y).ticks(10);
+    }
+    function make_x_gridlines() {
+      return d3.axisBottom(x).ticks(10);
+    }
 
     function myfunction(d) {
       return {
         rundate: d3.timeParse("%Y-%m-%d")(d.rundate),
-        val: d.val,
-        status: d.status
+        status: d.status,
+        val: d.val
       };
     }
 
-    function make_y_gridlines() {
-      return d3.axisLeft(y).ticks(5);
-    }
+    console.log("===== testdata ====" + JSON.stringify(data));
 
-    function make_x_gridlines() {
-      return d3.axisBottom(x).ticks(5);
-    }
-
-    console.log("data " + JSON.stringify(data));
-
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.renderLineChart(): data=${JSON.stringify(data)}`,
-      `${COMPONENT}.renderLineChart(): preparing to draw multiple mini linecharts, data logged`,
-      `${TAG}`
-    );
-
-    // set the dimensions and margins of the graph
-    var margin = { top: 40, right: 30, bottom: 50, left: 50 },
-      width = 600 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
-
-    logDebug(
-      this.recordId,
-      `${COMPONENT}.renderLineChart(): width=${width} height=${height} margin=${JSON.stringify(
-        margin
-      )}`,
-      `${COMPONENT}.renderLineChart(): width=${width} height=${height} margin=${JSON.stringify(
-        margin
-      )}`,
-      `${TAG}`
-    );
+    const margin = { top: 10, right: 100, bottom: 50, left: 50 },
+      width = 1150 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
 
     console.log("cleaning  up  svg");
     // let svg = d3.select(this.template.querySelector(".d3-minibars-chart"));
     // svg.selectAll("*").remove();
-    let svg = d3.select(this.template.querySelector("div"));
+    let svg = d3.select(this.template.querySelector(".my_dataviz"));
     svg.selectAll("*").remove();
 
     console.log("set up svg");
 
     svg = d3
-      .select(this.template.querySelector("div"))
-      .selectAll("uniqueChart")
-      .data(sumstat)
-      .enter()
+      .select(this.template.querySelector(".my_dataviz"))
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Add X axis --> it is a date format
-    console.log("set up X");
+    const tooltip = d3
+      .select(this.template.querySelector(".my_dataviz"))
+      .append("span")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("font-size", "12px");
 
+    const mouseover = (e, d) => {
+      let _datetext = String(d.rundate);
+      let _briefdate = _datetext.substring(0, 15);
+      tooltip.transition().duration(600).style("opacity", 0.9);
+      tooltip
+        .html(
+          `<span style='color:white'>${_briefdate}<br/>Status: ${d.status}<br/>Objectives: ${d.val}<br/></span>`
+        )
+        .style("left", d3.pointer(e)[0] + 70 + "px")
+        .style("top", d3.pointer(e)[1] + 30 + "px");
+    };
+    const mousemove = (e) => {
+      tooltip
+        .style("left", d3.pointer(e)[0] + 70 + "px")
+        .style("top", d3.pointer(e)[1] + 30 + "px");
+    };
+    const mouseleave = (e) => {
+      tooltip.transition().duration(200).style("opacity", 0);
+    };
+
+    const sumstat = d3.group(data, (d) => d.status); // nest function allows to group the calculation per level of a factor
+
+    // Add X axis --> it is a date format
     const x = d3
       .scaleTime()
       .domain(
@@ -227,16 +203,10 @@ export default class D3MiniBars extends LightningElement {
         })
       )
       .range([0, width]);
-
     svg
       .append("g")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x).ticks(5))
-      .selectAll("text")
-      .style("text-anchor", "end")
-      .attr("dx", "-.8em")
-      .attr("dy", ".15em")
-      .attr("transform", "rotate(-45)");
+      .call(d3.axisBottom(x).ticks(5));
 
     svg
       .append("g")
@@ -244,62 +214,46 @@ export default class D3MiniBars extends LightningElement {
       .attr("transform", "translate(0," + height + ")")
       .call(make_x_gridlines().tickSize(-height).tickFormat(""));
 
-    console.log("set up Y");
-
     const y = d3
       .scaleLinear()
       .domain([
         0,
         d3.max(data, function (d) {
-          return Math.ceil(d.val / 20) * 20 + 5;
-          //+d.val;
+          return +d.val;
         })
       ])
       .range([height, 0]);
-    svg.append("g").call(d3.axisLeft(y).ticks(5));
+    svg.append("g").call(d3.axisLeft(y));
 
-    svg
-      .append("g")
-      .attr("class", "grid")
-      .call(make_y_gridlines().tickSize(-width).tickFormat(""));
-
-    d3.selectAll(".grid  line")
-      .style("stroke", "lightgrey")
-      .style("stroke-opacity", 0.7)
-      .style("shape-rendering", "crispEdges");
-
-    d3.selectAll(".grid  path").style("stroke-width", 0);
-
-    console.log("set up color");
-    // color palette
     const color = d3
       .scaleOrdinal()
-      //.domain(allKeys)
       .range([
         "#e41a1c",
         "#377eb8",
         "#4daf4a",
         "#984ea3",
         "#ff7f00",
-        "#ffdd33",
+        "#ffff33",
         "#a65628",
         "#f781bf",
         "#999999"
       ]);
 
-    console.log("draw the Line");
-
-    // Draw the line
+    svg
+      .append("g")
+      .attr("class", "grid")
+      .call(make_y_gridlines().tickSize(-width).tickFormat(""));
 
     svg
-      .append("path")
+      .selectAll(".line")
+      .data(sumstat)
+      .join("path")
       .attr("fill", "none")
       .attr("stroke", function (d) {
         return color(d[0]);
       })
-      .attr("stroke-width", 2.3)
+      .attr("stroke-width", 2.5)
       .attr("d", function (d) {
-        console.log("path " + JSON.stringify(d));
         return d3
           .line()
           .x(function (d) {
@@ -310,64 +264,79 @@ export default class D3MiniBars extends LightningElement {
           })(d[1]);
       });
 
-    console.log("add the titles");
-
-    // Add titles
     svg
-      .append("text")
-      .attr("text-anchor", "start")
-      .attr("y", -5)
-      .attr("x", 0)
-      .text(function (d) {
-        return d[0];
+      .append("g")
+      .selectAll("dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", function (d) {
+        return x(d.rundate);
       })
-      .style("fill", function (d) {
+      .attr("cy", function (d) {
+        return y(d.val);
+      })
+      .attr("r", 5)
+      .attr("fill", function (d) {
+        return color(d.status);
+      })
+
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave);
+
+    var legend = d3
+      .select("svg")
+      .selectAll("g.legend")
+      .data(sumstat)
+      .enter()
+      .append("g")
+      .attr("class", "legend");
+
+    legend
+      .append("circle")
+      .attr("cx", width + margin.left + margin.right - 50)
+      .attr("cy", (d, i) => i * 20 + 205)
+      .attr("r", 6)
+      .attr("fill", function (d) {
         return color(d[0]);
       });
 
-    // Add the points
+    legend
+      .append("text")
+      .attr("x", width + margin.left + margin.right - 40)
+      .attr("y", (d, i) => i * 20 + 210)
+      .text(function (d) {
+        console.log("+++++" + JSON.stringify(d));
+        return d[0];
+      });
+
     // svg
-    //   .append("g")
-    //   .selectAll("dot")
-    //   .data(sumstat)
-    //   .enter()
-    //   .append("circle")
-    //   .attr("cx", function (d) {
-    //     return x(d.rundate);
-    //   })
-    //   .attr("cy", function (d) {
-    //     return y(d.val);
-    //   })
-    //   .attr("r", 5)
-    //   .attr("fill", "#69b3a2");
+    //   .append("text")
+    //   .attr("x", 185)
+    //   .attr("y", 5)
+    //   .attr("text-anchor", "middle")
+    //   .text("Client Objective Status Summary")
+    //   .style("fill", "black")
+    //   .style("font-size", "18px")
+    //   .style("font-family", "Arial Black");
 
-    let titlesvg = d3
-      .select(this.template.querySelector(".title"))
-      .attr("width", 800)
-      .attr("height", 60)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    titlesvg
+    legend
       .append("text")
-      .attr("x", 50)
-      //.attr("x", 200)
-      .attr("y", 0)
-      .attr("text-anchor", "left")
-      .style("font-size", "18px")
-      .style("fill", "grey")
-      .style("max-width", 800)
-      .text(`EXPERIMENTAL: Client Objective Counts by Status`);
+      .attr("x", width + margin.left + margin.right - 60)
+      .attr("y", 180)
+      .text("Legend")
+      .style("fill", "black")
+      .style("font-size", "14px");
 
-    titlesvg
+    legend
       .append("text")
-      .attr("x", 50)
-      //.attr("x", 200)
-      .attr("y", 15)
-      .attr("text-anchor", "left")
-      .style("font-size", "14px")
-      .style("fill", "grey")
-      .style("max-width", 800)
-      .text(`Client Objective Time Series, auto refreshed Sunday 10pm`);
+      .attr("x", width + margin.left + margin.right - 60)
+      .attr("y", 190)
+      .text("--------")
+      .style("fill", "black")
+      .style("font-size", "14px");
+
+    //apend source
   }
 }
