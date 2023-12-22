@@ -308,13 +308,13 @@ export default class D3Nest extends LightningElement {
         .html(
           `<span style='color:white'>${d.data.progname}<br/>${d.data.fullname}<br>${d.data.description}<br/>No of related Client Objectives= ${d.data.allocated} </span>`
         )
-        .style("left", d3.pointer(e)[0] + 30 + "px")
-        .style("top", d3.pointer(e)[1] + 30 + "px");
+        .style("left", d3.pointer(e)[0] + 80 + "px")
+        .style("top", d3.pointer(e)[1] + 3 + "px");
     };
     const mousemove = (e) => {
       tooltip
-        .style("left", d3.pointer(e)[0] + 30 + "px")
-        .style("top", d3.pointer(e)[1] + 30 + "px");
+        .style("left", d3.pointer(e)[0] + 80 + "px")
+        .style("top", d3.pointer(e)[1] + 3 + "px");
     };
     const mouseleave = (e) => {
       tooltip.transition().duration(200).style("opacity", 0);

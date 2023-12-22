@@ -1,0 +1,32 @@
+<template>
+  <div class="slds-card slds-theme_shade" if:true={expression}>
+    <div class="slds-card__header slds-grid">
+      <div
+        class="slds-notify slds-notify_alert slds-alert_warning"
+        role="alert"
+      >
+        <span class="slds-assistive-text">warning</span>
+        <span
+          class="slds-icon_container slds-icon-utility-warning slds-var-m-right_x-small"
+          title="Description of icon when needed"
+        >
+          <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+            <use
+              xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#warning"
+            ></use>
+          </svg>
+        </span>
+
+        <div if:true={banner.data} class="slds-text-heading_small">
+          {message}
+        </div>
+
+        <!-- <h1 if:true={banner.data}>
+          {message}&nbsp;
+           <a href="https://status.salesforce.com" target="_blank"
+            >More Information</a> 
+        </h1> -->
+      </div>
+    </div>
+  </div>
+</template>

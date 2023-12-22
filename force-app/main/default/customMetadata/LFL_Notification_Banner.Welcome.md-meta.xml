@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Welcome</label>
+    <protected>false</protected>
+    <values>
+        <field>End__c</field>
+        <value xsi:type="xsd:date">2023-12-25</value>
+    </values>
+    <values>
+        <field>Message__c</field>
+        <value xsi:type="xsd:string">Hi everyone, we are in the process of updating the charts so you might experience some changes to formatting.   Have a great Christmas!</value>
+    </values>
+    <values>
+        <field>Start__c</field>
+        <value xsi:type="xsd:date">2023-12-21</value>
+    </values>
+</CustomMetadata>
