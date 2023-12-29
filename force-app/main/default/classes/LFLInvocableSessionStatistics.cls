@@ -35,8 +35,11 @@ public with sharing class LFLInvocableSessionStatistics {
 
     Logger.saveLog();
 
-    Id session = sessions[0];
+    
     List<Response> responseList = new List<Response>();
+
+    for (Id session : sessions) {
+
     Response response = new Response();
     String PREVDEFAULT = 'BLANK';
     String previousStr;
@@ -285,6 +288,7 @@ public with sharing class LFLInvocableSessionStatistics {
       '%' +
       '\n----------------------\n';
     responseList.add(response);
+  }
     return responseList;
   }
 
