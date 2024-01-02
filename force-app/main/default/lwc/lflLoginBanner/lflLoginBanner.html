@@ -19,9 +19,11 @@
 
         <div if:true={banner.data} class="slds-text-heading_small">
           {message}&nbsp;&nbsp;
-        </br>
-          <span class="slds-align_absolute-center slds-text-body_small" if:true={notificationlink}>
-            
+          <br />
+          <span
+            class="slds-align_absolute-center slds-text-body_small"
+            if:true={notificationlink}
+          >
             <a href={notificationlink} target="_blank">{notificationtext}</a>
           </span>
         </div>
