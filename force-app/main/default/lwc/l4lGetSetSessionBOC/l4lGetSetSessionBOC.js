@@ -192,7 +192,7 @@ export default class L4lGetSetSessionBOC extends LightningElement {
   //track the session objective for the modal
   @track sessionBOCId;
   @track areDetailsVisible = false;
-
+  @api lwcTitle = "Session Behaviours of Concern";
   @api recordId = "a3N2v000003Gr4VEAS"; //this is session 31
   @track sessionboc;
   @track isLocked = false;

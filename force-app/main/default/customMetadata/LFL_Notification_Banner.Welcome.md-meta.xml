@@ -8,15 +8,23 @@
     </values>
     <values>
         <field>End__c</field>
-        <value xsi:type="xsd:date">2023-12-27</value>
+        <value xsi:type="xsd:date">2024-01-06</value>
     </values>
     <values>
         <field>Message__c</field>
-        <value xsi:type="xsd:string">Welcome to Leornian</value>
+        <value xsi:type="xsd:string">Happy New Year everyone from the Mikes! We are currently updating some charts and screen layouts - nothing major, but things may look a little different. Did you know this app is on YouTube?</value>
+    </values>
+    <values>
+        <field>NotificationLink__c</field>
+        <value xsi:type="xsd:string">https://www.youtube.com/watch?v=vzF-4nqBaxw</value>
+    </values>
+    <values>
+        <field>NotificationText__c</field>
+        <value xsi:type="xsd:string">View Leornian on YouTube</value>
     </values>
     <values>
         <field>Published__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Start__c</field>

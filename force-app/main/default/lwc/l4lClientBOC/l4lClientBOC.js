@@ -90,6 +90,7 @@ const columns = [
 ];
 
 export default class L4ll4lClientBOC extends LightningElement {
+  @api lwcTitle = "Client Behaviours of Concern";
   @track clientId = "";
   @api recordId = "0012v00002fY86nAAC";
   @track CBOCrecordId = "";

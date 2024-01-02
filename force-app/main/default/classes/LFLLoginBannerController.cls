@@ -4,9 +4,9 @@ public with sharing class LFLLoginBannerController {
         public static LFL_Notification_Banner__mdt getBannerDetail() {
             
             return [ 
-                    SELECT Id, Start__c, End__c, Message__c
+                    SELECT Id, Start__c, End__c, Message__c,NotificationLink__c,NotificationText__c
                     FROM LFL_Notification_Banner__mdt 
-                    where DeveloperName ='Welcome' 
+                    where Published__c=true 
                     LIMIT 1
                    ];
         }

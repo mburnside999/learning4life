@@ -7,10 +7,10 @@
       >
         <span class="slds-assistive-text">warning</span>
         <span
-          class="slds-icon_container slds-icon-utility-warning slds-var-m-right_x-small"
+          class="slds-icon_container slds-icon-utility-announcement slds-var-m-right_x-small"
           title="Description of icon when needed"
         >
-          <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+          <svg class="slds-icon slds-icon_large" aria-hidden="true">
             <use
               xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#warning"
             ></use>
@@ -18,12 +18,17 @@
         </span>
 
         <div if:true={banner.data} class="slds-text-heading_small">
-          {message}
+          {message}&nbsp;&nbsp;
+        </br>
+          <span class="slds-align_absolute-center slds-text-body_small" if:true={notificationlink}>
+            
+            <a href={notificationlink} target="_blank">{notificationtext}</a>
+          </span>
         </div>
 
         <!-- <h1 if:true={banner.data}>
           {message}&nbsp;
-           <a href="https://status.salesforce.com" target="_blank"
+           <a href={notificationlink} target="_blank"
             >More Information</a> 
         </h1> -->
       </div>

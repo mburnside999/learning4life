@@ -61,6 +61,7 @@ const COLS = [
 ];
 export default class L4lSessionStatsDatatable extends LightningElement {
   @api recordId;
+  @api lwcTitle = "Session Statistics";
   columns = COLS;
   wiredrecords;
   records;

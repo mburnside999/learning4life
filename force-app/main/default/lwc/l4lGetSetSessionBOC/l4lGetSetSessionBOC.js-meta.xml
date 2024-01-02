@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle
-  xmlns="http://soap.sforce.com/2006/04/metadata"
-  fqn="MBLWCBCShipment"
+    xmlns="http://soap.sforce.com/2006/04/metadata"
+    fqn="MBLWCBCShipment"
 >
     <apiVersion>54.0</apiVersion>
     <isExposed>true</isExposed>
@@ -19,7 +19,12 @@
                 <supportedFormFactor type="Small" />
                 <supportedFormFactor type="Large" />
             </supportedFormFactors>
-
+            <property
+                name="lwcTitle"
+                type="String"
+                default="Session Behaviours of Concern"
+                label="Enter a LWC title"
+            />
             <property name="testSessionStatus" type="String" />
             <property name="sessionStatus" type="String" />
 
@@ -27,10 +32,10 @@
         </targetConfig>
         <targetConfig targets="lightningCommunity__Default">
             <property
-        name="recordId"
-        type="String"
-        default="{!Route.recordId}"
-      />
+                name="recordId"
+                type="String"
+                default="{!Route.recordId}"
+            />
         </targetConfig>
 
     </targetConfigs>

@@ -10,6 +10,14 @@ export default class LflLoginBanner extends LightningElement {
     return this.banner.data.Message__c;
   }
 
+  get notificationlink() {
+    return this.banner.data.NotificationLink__c;
+  }
+
+  get notificationtext() {
+    return this.banner.data.NotificationText__c;
+  }
+
   notificationStartDate() {
     return this.banner && this.banner.data
       ? this.banner.data.Start__c
