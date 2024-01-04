@@ -50,7 +50,6 @@ public with sharing class L4LStagesByArea {
         Objective_Active_Count__c,
         Description__c
       FROM SD__c
-      WITH SECURITY_ENFORCED
       ORDER BY Stage__c ASC NULLS LAST, Area__c
     ];
 

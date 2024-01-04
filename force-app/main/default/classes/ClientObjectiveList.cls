@@ -34,7 +34,6 @@ public with sharing class ClientObjectiveList {
         Area__c
       FROM Client_Objective__c
       WHERE Client__c = :clientId AND active__c = TRUE
-      WITH SECURITY_ENFORCED
       ORDER BY Stage__c ASC NULLS LAST, Area__c
     ];
   }
