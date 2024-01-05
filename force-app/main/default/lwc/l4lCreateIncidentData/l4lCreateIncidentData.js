@@ -21,7 +21,7 @@ const SCENARIO = "Record session incidents - LWC"; //for console log formatting
 const UI_EVENT_TRACKING_SCENARIO =
   "l4lCreateIncidentData LWC UI Event Tracking";
 export default class L4lCreateIncidentData extends LightningElement {
-  @api lwcTitle="Create Incidental Data";
+  @api lwcTitle = "Create Incidental Data";
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing
   @track showStartBtn = true;
   @track timeVal = "00:00:00";

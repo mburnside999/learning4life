@@ -37,7 +37,7 @@ const columns = [{ label: "Name", fieldName: "Name", type: "text" }];
  */
 
 export default class L4lCreateClientBOC extends LightningElement {
- @api lwcTitle="Populate Client Behaviours of Concern";
+  @api lwcTitle = "Populate Client Behaviours of Concern";
   @wire(MessageContext) messageContext;
   @api recordId = "0012v00002fY86nAAC"; //Andy
   @wire(CurrentPageReference) pageRef;

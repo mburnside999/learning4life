@@ -3,8 +3,8 @@ import getBannerDetail from "@salesforce/apex/LFLLoginBannerController.getBanner
 
 export default class LflLoginBanner extends LightningElement {
   @api txtBoxVal;
-
-  @wire(getBannerDetail) banner;
+  hidden = false;
+  @wire(getBannerDetail, { hide: false }) banner;
 
   get message() {
     return this.banner.data.Message__c;
@@ -45,5 +45,17 @@ export default class LflLoginBanner extends LightningElement {
     } else {
       return false;
     }
+  }
+
+  handleChange(event) {
+    this.hidden = !this.hidden;
+    console.log("hidden is now " + this.hidden);
+    getBannerDetail({
+      hide: this.hidden
+    }).then((result) => {
+      this.banner = result;
+      console.log("returned");
+      console.log(`returned ${JSON.stringify(result)}`);
+    });
   }
 }

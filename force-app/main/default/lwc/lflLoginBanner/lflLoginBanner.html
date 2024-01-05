@@ -19,6 +19,7 @@
 
         <div if:true={banner.data} class="slds-text-heading_small">
           {message}&nbsp;&nbsp;
+
           <br />
           <span
             class="slds-align_absolute-center slds-text-body_small"
@@ -26,6 +27,15 @@
           >
             <a href={notificationlink} target="_blank">{notificationtext}</a>
           </span>
+        </div>
+
+        <div if:true={banner.data}>
+          <lightning-input
+            class="slds-p-left_xx-large"
+            type="checkbox"
+            label="Hide"
+            onchange={handleChange}
+          ></lightning-input>
         </div>
 
         <!-- <h1 if:true={banner.data}>

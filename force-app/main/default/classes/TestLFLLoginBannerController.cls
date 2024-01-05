@@ -9,32 +9,28 @@
  *
  */
 public with sharing class TestLFLLoginBannerController {
-  
-    /*******************************************************************************************************
-   * @description Test getHighAndLowBoundaries method
+  /*******************************************************************************************************
+   * @description Test testGetBannerDetail method
    * @param void
    *
    *
    * @example
-   * TestL4LSessionStatsController.testgetD3StatusYAxisScale();
+   * TestLFLLoginBannerController.testGetBannerDetail();
    */
 
   @isTest
   static void testGetBannerDetail() {
     Test.startTest();
-
-    
-    LFLLoginBannerController.getBannerDetail();
-
-    LFL_Notification_Banner__mdt welcome =LFL_Notification_Banner__mdt.getInstance(
-      'Welcome'
+    Boolean flag = false;
+    LFL_Notification_Banner__mdt welcome = LFLLoginBannerController.getBannerDetail(
+      flag
     );
+    System.assert(welcome != null, 'Must have a LFL_Notification_Banner__mdt');
 
-    System.assert(
-      welcome != null,
-      'Must have a LFL_Notification_Banner__mdt'
+    flag = true;
+    LFL_Notification_Banner__mdt hidden = LFLLoginBannerController.getBannerDetail(
+      flag
     );
+    System.assert(hidden == null, 'Must be hidden');
   }
-    
-
 }
