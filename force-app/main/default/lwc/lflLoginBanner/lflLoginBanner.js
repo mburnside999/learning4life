@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from "lwc";
 import getBannerDetail from "@salesforce/apex/LFLLoginBannerController.getBannerDetail";
+import { RefreshEvent } from "lightning/refresh";
 
 export default class LflLoginBanner extends LightningElement {
   @api txtBoxVal;
@@ -56,6 +57,7 @@ export default class LflLoginBanner extends LightningElement {
       this.banner = result;
       console.log("returned");
       console.log(`returned ${JSON.stringify(result)}`);
+      this.dispatchEvent(new RefreshEvent());
     });
   }
 }
