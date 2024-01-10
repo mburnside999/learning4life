@@ -8,5 +8,6 @@
   "editor.formatOnSave": true,
   "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home",
   "prettier.enableDebugLogs": true,
-  "salesforcedx-vscode-core.retrieve-test-code-coverage": true
+  "salesforcedx-vscode-core.retrieve-test-code-coverage": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
