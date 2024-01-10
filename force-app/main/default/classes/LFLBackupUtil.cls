@@ -44,18 +44,17 @@ public class LFLBackupUtil {
     }
 
     String email = 'mburnside@salesforce.com';
-
+    String orgname = UserInfo.getOrganizationName();
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
     mail.setToAddresses(new List<String>{ email });
     mail.setReplyTo('batch@acme.com');
     mail.setSenderDisplayName('Backup Cleaner');
-    mail.setSubject('BACKUP library has been cleaned');
+    mail.setSubject(orgName + ': ' + 'BACKUP library cleaned');
 
-    mail.setPlainTextBody('Retained ' + keepList.size() + 'backup ZIP files');
+    mail.setPlainTextBody(keepList.size() + 'backup ZIP files retained.');
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
-
     return keepList.size();
   }
 }
