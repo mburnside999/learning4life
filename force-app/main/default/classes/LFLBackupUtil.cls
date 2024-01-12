@@ -31,7 +31,7 @@ public class LFLBackupUtil {
     ]) {
       keepList.add(cdkeep.Id);
     }
-
+    Integer removed = 0;
     for (ContentDocument cdremove : [
       SELECT id
       FROM ContentDocument
@@ -40,19 +40,33 @@ public class LFLBackupUtil {
         AND FileExtension = 'zip'
         AND id NOT IN :keepList
     ]) {
+      removed += 1;
       delete cdremove;
     }
 
-    String email = 'mburnside@salesforce.com';
+    LFL_Backup_Utility__mdt LFL_Backup_Utility = LFL_Backup_Utility__mdt.getInstance(
+      'BackupUtilConfig'
+    );
+
+    String emailStr = LFL_Backup_Utility.Email_List__c;
+
+    List<String> emailList = emailStr.split(',');
+
     String orgname = UserInfo.getOrganizationName();
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
-    mail.setToAddresses(new List<String>{ email });
+    mail.setToAddresses(emailList);
     mail.setReplyTo('batch@acme.com');
-    mail.setSenderDisplayName('Backup Cleaner');
-    mail.setSubject(orgName + ': ' + 'BACKUP library cleaned');
+    mail.setSenderDisplayName(orgName + ' - Backup Cleaner');
+    mail.setSubject(orgName + ': ' + 'BACKUP library cleaned.');
 
-    mail.setPlainTextBody(keepList.size() + 'backup ZIP files retained.');
+    mail.setPlainTextBody(
+      'Backup Util completed.\nRemoved: ' +
+        removed +
+        ' zip files\nRetained: ' +
+        keepList.size() +
+        ' zip files.'
+    );
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
     return keepList.size();
