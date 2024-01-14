@@ -4,7 +4,7 @@
  * @date	2023
  * @group Learning For Life
  *
- * @description	Implements Schedulable, invokes the class to create the TimeSeries
+ * @description	Implements Schedulable, invokes the class to clean up backups
  *
  */
 
