@@ -27,7 +27,7 @@ public class LFLBackupUtil {
       FROM ContentDocument
       WHERE title LIKE '%BACKUP%' AND FileExtension = 'zip'
       ORDER BY createddate DESC
-      LIMIT 5
+      LIMIT 7
     ]) {
       keepList.add(cdkeep.Id);
     }
