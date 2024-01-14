@@ -112,11 +112,14 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
     insert endlog;
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+    String orgname = UserInfo.getOrganizationName();
 
     mail.setToAddresses(new List<String>{ email });
     mail.setReplyTo('batch@acme.com');
     mail.setSenderDisplayName('Batch Processing');
-    mail.setSubject('LFLTimeSeriesBatch completed, ACTIVE clients only.');
+    mail.setSubject(
+      orgname + ' TimeSeriesBatch completed, ACTIVE clients only.'
+    );
 
     mail.setPlainTextBody(
       'Successfully processed ' +
