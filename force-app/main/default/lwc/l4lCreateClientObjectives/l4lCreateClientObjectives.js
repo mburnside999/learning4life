@@ -365,7 +365,7 @@ export default class L4lCreateClientObjectives extends LightningElement {
           );
           this.showNotification(
             "An error occurred when creating Client Objectives. ",
-            `Error: Check team member has R+W permissions on client`,
+            `Error: Check team member has R+W permissions on client, or contact yor admin`,
             "error"
           );
         })
