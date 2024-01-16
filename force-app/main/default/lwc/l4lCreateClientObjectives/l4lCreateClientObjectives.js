@@ -355,9 +355,17 @@ export default class L4lCreateClientObjectives extends LightningElement {
         })
         .catch((error) => {
           this.error = error;
+          logError(
+            this.recordId,
+            `${COMPONENT}.handleClickArray() -- check  permissions for Client Team? ${JSON.stringify(
+              error
+            )}`,
+            `${SCENARIO}`,
+            "next-gen-LWC-nebula"
+          );
           this.showNotification(
             "An error occurred when creating Client Objectives. ",
-            `Error: Limit exceeded (100 records) or client objective is already assigned `,
+            `Error: Check team member has R+W permissions on client`,
             "error"
           );
         })

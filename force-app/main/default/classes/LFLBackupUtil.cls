@@ -22,13 +22,16 @@ public class LFLBackupUtil {
   public Integer cleanupbackups() {
     List<Id> keepList = new List<Id>();
 
+string emailMessageBody='Backup Files:\n';
+
     for (ContentDocument cdkeep : [
-      SELECT id
+      SELECT id,Title,ContentSize,
       FROM ContentDocument
-      WHERE title LIKE '%BACKUP%' AND FileExtension = 'zip'
+      WHERE Title LIKE '%BACKUP%' AND FileExtension = 'zip'
       ORDER BY createddate DESC
       LIMIT 7
     ]) {
+      emailMessageBody+=cdkeep.Title+' ('+cdkeep.ContentSize+' bytes) \n';
       keepList.add(cdkeep.Id);
     }
     Integer removed = 0;
