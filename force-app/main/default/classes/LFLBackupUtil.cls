@@ -22,18 +22,20 @@ public class LFLBackupUtil {
   public Integer cleanupbackups() {
     List<Id> keepList = new List<Id>();
 
-string emailMessageBody='Backup Files:\n';
+    string emailMessageBody = 'ZIP Files Retained:\n-------------------\n';
 
     for (ContentDocument cdkeep : [
-      SELECT id,Title,ContentSize,
+      SELECT id, Title, ContentSize
       FROM ContentDocument
       WHERE Title LIKE '%BACKUP%' AND FileExtension = 'zip'
       ORDER BY createddate DESC
       LIMIT 7
     ]) {
-      emailMessageBody+=cdkeep.Title+' ('+cdkeep.ContentSize+' bytes) \n';
+      decimal size = (decimal) cdkeep.ContentSize / 1024 / 1024;
+      emailMessageBody += cdkeep.Title + ' (' + size.setScale(4) + ' MB) \n';
       keepList.add(cdkeep.Id);
     }
+    System.debug(emailMessageBody);
     Integer removed = 0;
     for (ContentDocument cdremove : [
       SELECT id
@@ -68,7 +70,8 @@ string emailMessageBody='Backup Files:\n';
         removed +
         ' zip files\nRetained: ' +
         keepList.size() +
-        ' zip files.'
+        ' zip files.\n' +
+        emailMessageBody
     );
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
