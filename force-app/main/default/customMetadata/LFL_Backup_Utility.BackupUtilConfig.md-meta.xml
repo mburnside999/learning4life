@@ -10,4 +10,8 @@
         <field>FirstPublishLocationId__c</field>
         <value xsi:type="xsd:string">058OZ0000002OflYAE</value>
     </values>
+    <values>
+        <field>RetentionDays__c</field>
+        <value xsi:type="xsd:double">7.0</value>
+    </values>
 </CustomMetadata>
