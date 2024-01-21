@@ -230,14 +230,14 @@ export default class D3BOCHeatMap extends LightningElement {
     logDebug(
       this.recordId,
       `${COMPONENT}.initializeD3(): X-axis: ${d3sessionXAxis}`,
-      `X-axis: ${d3sessionXAxis}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
     logDebug(
       this.recordId,
       `${COMPONENT}.initializeD3(): Y-axis:  ${d3behaviourYAxisArray} `,
-      `Y-axis:  ${d3behaviourYAxisArray}`,
+      `${SCENARIO}`,
       `${TAG}`
     );
 
@@ -246,9 +246,7 @@ export default class D3BOCHeatMap extends LightningElement {
       `${COMPONENT}.initializeD3(): this.gridData:  ${JSON.stringify(
         this.gridData
       )} `,
-      `${COMPONENT}.initializeD3(): this.gridData:  ${JSON.stringify(
-        this.gridData
-      )} `,
+      `${SCENARIO}`,
       `${TAG}`
     );
     // Build X scales and axis:

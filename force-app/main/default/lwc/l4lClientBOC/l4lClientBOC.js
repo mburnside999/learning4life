@@ -440,7 +440,7 @@ export default class L4ll4lClientBOC extends LightningElement {
             logError(
               this.recordId,
               `${COMPONENT}.handleRowAction(): error=${JSON.stringify(error)}`,
-              "delete error occurred",
+              `${SCENARIO}`,
               `${TAG}`
             );
 
