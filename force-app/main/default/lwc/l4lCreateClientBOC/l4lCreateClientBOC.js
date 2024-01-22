@@ -270,8 +270,8 @@ export default class L4lCreateClientBOC extends LightningElement {
         .catch((error) => {
           this.error = error;
           this.showNotification(
-            "An error occurred when creating Client Objectives. ",
-            `Error: Limit exceeded (100 records) or client objective is already assigned `,
+            "An error occurred when creating Client BOC. ",
+            `Error: Check team member has R+W permissions on client, or contact yor admin`,
             "error"
           );
         })
