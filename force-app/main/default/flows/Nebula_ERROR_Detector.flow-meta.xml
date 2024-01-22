@@ -11,13 +11,13 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <stringValue>mburnside@salesforce.com,tomburnside90@gmail.com</stringValue>
+                <stringValue>mburnside@salesforce.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailSubject</name>
             <value>
-                <stringValue>Nebula ERROR Detected</stringValue>
+                <stringValue>Nebula ERROR Detected in Org: {!varOrgname}</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -95,4 +95,14 @@
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;&lt;u&gt;Nebula detected an Error condition in Org: {!$Record.OrganizationName__c}&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Message&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;: {!$Record.Message__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Record:&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; {!$Record}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Related Record ID&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;: {!$Record.RecordId__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Record SObjectType:&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt; {!$Record.RecordSObjectType__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Username&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;: {!$Record.LoggedByUsername__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Origin Location:&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt; {!$Record.OriginLocation__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Origin Type:&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt; {!$Record.OriginType__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Exception&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;: {!$Record.ExceptionMessage__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Component&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;: {!$Record.ComponentType__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;CreatedDate&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;: {!$Record.CreatedDate}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Exception Type&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;: {!$Record.ExceptionType__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Logged By&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;: {!$Record.LoggedByUsername__c}&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>varOrgname</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Organization.Name</elementReference>
+        </value>
+    </variables>
 </Flow>
