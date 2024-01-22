@@ -12,10 +12,8 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "d3COTSCombinedLineChart";
 const TAG = "L4L-Session-Statistics-d3COTSCombinedLineChart";
 const SCENARIO = "D3 Plot Combine COTS - LWC";
-const UI_EVENT_TRACKING_SCENARIO =
-  "d3COTSCombinedLineChart LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO =
-  "d3COTSCombinedLineChart LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: d3COTSCombinedLineChart";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: d3COTSCombinedLineChart";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html

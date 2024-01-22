@@ -23,10 +23,8 @@ import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
 const TAG = "L4L-Manage-Session-Objectives";
 const SCENARIO = "Manage Session Objectives for a client - LWC";
-const UI_EVENT_TRACKING_SCENARIO =
-  "l4lGetSetSessionObjectives LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO =
-  "l4lGetSetSessionObjectives LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lGetSetSessionObjectives";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lGetSetSessionObjectives";
 //debugging
 const COMPONENT = "LWC: l4lGetSetSessionObjectives";
 const COLOR = "color:blue"; //for console log formatting

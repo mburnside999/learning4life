@@ -18,11 +18,9 @@ const COMPONENT = "LWC: l4lCreateClientObjectives";
 const TAG = "L4L-Manage-Client-Objectives";
 const COLOR = "color:green"; //for console log formatting
 const SCENARIO = "Create Client Objectives - LWC";
-const UI_EVENT_TRACKING_SCENARIO =
-  "l4lCreateClientObjectives LWC UI Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lCreateClientObjectives";
 
-const APEX_EVENT_TRACKING_SCENARIO =
-  "l4lCreateClientObjectives LWC APEX Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lCreateClientObjectives";
 const columns = [
   { label: "Program", fieldName: "Program__c", type: "text" },
   { label: "SD", fieldName: "SD_Name__c", type: "text" },

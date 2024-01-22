@@ -10,8 +10,8 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "D3MiniBars";
 const TAG = "L4L-Session-Statistics-D3MiniBars";
 const SCENARIO = "Viewing D3 Client Objectiive mini line charts - LWC";
-const UI_EVENT_TRACKING_SCENARIO = "d3MiniBars LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO = "d3MiniBars LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: d3MiniBars";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: d3MiniBars";
 export default class D3MiniBars extends LightningElement {
   @api recordId;
   d3Initialized = false;

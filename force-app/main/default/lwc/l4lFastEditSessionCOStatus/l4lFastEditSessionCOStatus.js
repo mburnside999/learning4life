@@ -21,10 +21,8 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 const COMPONENT = "LWC: l4lFastEditSessionCOStatus";
 const TAG = "L4L-Fast-Edit-Client-Objectives";
 const SCENARIO = "Fast editing client objectives - LWC";
-const UI_EVENT_TRACKING_SCENARIO =
-  "l4lFastEditSessionCOStatus LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO =
-  "l4lFastEditSessionCOStatus LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lFastEditSessionCOStatus";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lFastEditSessionCOStatus";
 
 const COLOR = "color:olive"; //for console log formatting
 

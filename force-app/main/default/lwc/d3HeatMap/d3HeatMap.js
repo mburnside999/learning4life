@@ -12,8 +12,8 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "D3HeatMap";
 const TAG = "L4L-Session-Statistics-D3HeatMap";
 const SCENARIO = "View Program Mastery D3HeatMap - LWC";
-const UI_EVENT_TRACKING_SCENARIO = "d3HeatMap LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO = "d3HeatMap LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: d3HeatMap";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: d3HeatMap";
 export default class D3HeatMap extends LightningElement {
   @api lwcTitle = "Client Program Mastery";
   @api chartTitle = "D3 Chart";

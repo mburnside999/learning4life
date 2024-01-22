@@ -16,10 +16,9 @@ const COMPONENT = "LWC: l4lCreateClientBOC";
 const TAG = "L4L-Manage-Client-BOC";
 const COLOR = "color:green"; //for console log formatting
 const SCENARIO = "Create Client BOC - LWC";
-const UI_EVENT_TRACKING_SCENARIO = "l4lCreateClientBOC LWC UI Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lCreateClientBOC";
 
-const APEX_EVENT_TRACKING_SCENARIO =
-  "l4lCreateClientBOC LWC APEX Event Tracking";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lCreateClientBOC";
 
 const columns = [{ label: "Name", fieldName: "Name", type: "text" }];
 

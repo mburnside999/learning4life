@@ -18,8 +18,7 @@ const COMPONENT = "LWC: l4lCreateIncidentData";
 const TAG = "L4L-Manage-Session-Incidents";
 const COLOR = "color:purple"; //for console log formatting
 const SCENARIO = "Record session incidents - LWC"; //for console log formatting
-const UI_EVENT_TRACKING_SCENARIO =
-  "l4lCreateIncidentData LWC UI Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lCreateIncidentData";
 export default class L4lCreateIncidentData extends LightningElement {
   @api lwcTitle = "Create Incidental Data";
   @api recordId = "a3N2v000003Gr4VEAS"; //session 31 for testing

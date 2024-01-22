@@ -25,9 +25,8 @@ import L4LMC from "@salesforce/messageChannel/L4LSessionMessageChannel__c";
 
 const TAG = "L4L-Manage-Session-BOC";
 const SCENARIO = "Manage Session BOC for a client - LWC";
-const UI_EVENT_TRACKING_SCENARIO = "l4lGetSetSessionBOC LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO =
-  "l4lGetSetSessionBOC LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lGetSetSessionBOC";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lGetSetSessionBOC";
 //debugging
 const COMPONENT = "LWC: l4lGetSetSessionBOC";
 const COLOR = "color:blue"; //for console log formatting

@@ -33,8 +33,8 @@ import LightningConfirm from "lightning/confirm";
 const COMPONENT = "l4lClientBOC";
 const TAG = "L4L-Manage-Client-BOC";
 const SCENARIO = "View and Manage client BOC - LWC";
-const UI_EVENT_TRACKING_SCENARIO = "l4lClientBOC LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO = "l4lClientBOC LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lClientBOC";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lClientBOC";
 
 const COLOR = "color:red";
 

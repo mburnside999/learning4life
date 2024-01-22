@@ -11,8 +11,8 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "D3BOCHeatMap";
 const TAG = "L4L-Session-Statistics-D3BOCHeatMap";
 const SCENARIO = "View D3BOCHeatMap - LWC";
-const UI_EVENT_TRACKING_SCENARIO = "d3BOCHeatMap LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO = "d3BOCHeatMap LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: d3BOCHeatMap";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: d3BOCHeatMap";
 export default class D3BOCHeatMap extends LightningElement {
   @api lwcTitle = "Client BOC Analysis";
   @api chartTitle = "D3 Chart";

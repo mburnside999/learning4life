@@ -29,10 +29,8 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 const COMPONENT = "LWC: l4lPopulateSessionBOC";
 const TAG = "L4L-Populate-Session-Objectives";
 const SCENARIO = "REcord the Session BOC for a client - LWC";
-const UI_EVENT_TRACKING_SCENARIO =
-  "l4lPopulateSessionBOC LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO =
-  "l4lPopulateSessionBOC LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lPopulateSessionBOC";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lPopulateSessionBOC";
 
 const COLOR = "color:olive"; //for console log formatting
 

@@ -36,10 +36,8 @@ import LightningConfirm from "lightning/confirm";
 const COMPONENT = "l4lRelatedClientObjectives";
 const TAG = "L4L-Manage-Client-Objectives";
 const SCENARIO = "View and Manage client Objectives - LWC";
-const UI_EVENT_TRACKING_SCENARIO =
-  "l4lRelatedClientObjectives LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO =
-  "l4lRelatedClientObjectives LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lRelatedClientObjectives";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lRelatedClientObjectives";
 
 const COLOR = "color:red";
 

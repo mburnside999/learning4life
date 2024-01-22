@@ -5,10 +5,8 @@ import getSessionStats from "@salesforce/apex/L4LSessionStatsController.getSessi
 const COMPONENT = "l4lPopulateSessionStatsDataTable";
 const TAG = "L4L-Session-Statistics";
 const SCENARIO = "View and filter session statistics - LWC";
-const UI_EVENT_TRACKING_SCENARIO =
-  "l4lSessionStatsDatatable LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO =
-  "l4lSessionStatsDatatable LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: l4lSessionStatsDatatable";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: l4lSessionStatsDatatable";
 
 import { logInfo } from "c/l4lNebulaUtil";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";

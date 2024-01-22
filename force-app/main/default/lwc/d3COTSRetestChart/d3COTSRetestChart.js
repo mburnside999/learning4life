@@ -10,9 +10,8 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 const COMPONENT = "D3COTSRetestChart";
 const TAG = "L4L-Session-Statistics-D3COTSRetestChart";
 const SCENARIO = "Viewing the D3 Re-Test line chart - LWC";
-const UI_EVENT_TRACKING_SCENARIO = "d3COTSRetestChart LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO =
-  "d3COTSRetestChart LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: d3COTSRetestChart";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: d3COTSRetestChart";
 
 /**
  * Example taken from https://www.d3-graph-gallery.com/graph/lollipop_horizontal.html

@@ -7,8 +7,8 @@ import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCa
 const COMPONENT = "stagesV21";
 const TAG = "L4L-Manage-Client-Objectives";
 const SCENARIO = "StagesV21 - Client Objectives Board - LWC";
-const UI_EVENT_TRACKING_SCENARIO = "stagesV21 LWC UI Event Tracking";
-const APEX_EVENT_TRACKING_SCENARIO = "stages21 LWC APEX Event Tracking";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: stagesV21";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: stages21";
 
 export default class L4LStagesByArea extends LightningElement {
   // Obtain the Id of the current record from the page
