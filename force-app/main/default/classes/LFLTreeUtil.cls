@@ -8,6 +8,12 @@
  *
  */
 public with sharing class LFLTreeUtil {
+  static Map<Id, Program__c> programMap;
+  static Map<Id, Objective__c> objMap;
+  static Map<Id, SD__c> sdMap;
+  static Map<id, List<SD__c>> progToSDMap;
+  static Map<id, List<Objective__c>> SDToObjMap;
+
   @AuraEnabled(cacheable=true)
   public static String getJSONTree(String reserved) {
     final String SCENARIO = 'Tree Util - Apex';
@@ -22,39 +28,33 @@ public with sharing class LFLTreeUtil {
       'next-gen-nebula-apex'
     );
 
-    Map<Id, Program__c> programMap = new Map<Id, Program__c>(
+    programMap = new Map<Id, Program__c>(
       [
         SELECT id, name, status__c
         FROM Program__c
-        WHERE id IN (SELECT program__c FROM sd__c)
         ORDER BY name
       ]
     );
     Set<id> p = new Set<id>();
     p = programMap.keySet();
 
-    Map<Id, SD__c> sdMap = new Map<Id, SD__c>(
+    sdMap = new Map<Id, SD__c>(
       [
         SELECT id, program__c, name, status__c
         FROM SD__c
-        WHERE program__c IN :p
         ORDER BY name
       ]
     );
 
-    Set<id> s = new Set<id>();
-    s = sdMap.keySet();
-
-    Map<Id, Objective__c> objMap = new Map<Id, Objective__c>(
+    objMap = new Map<Id, Objective__c>(
       [
         SELECT id, SD__c, name, status__c
         FROM Objective__c
         ORDER BY name
       ]
     );
-    System.debug('zzzzzz ' + objMap);
 
-    Map<id, List<SD__c>> progToSDMap = new Map<id, List<SD__c>>();
+    progToSDMap = new Map<id, List<SD__c>>();
 
     for (Id key : sdMap.keySet()) {
       Id pid = sdMap.get(key).program__c;
@@ -70,7 +70,7 @@ public with sharing class LFLTreeUtil {
       }
     }
 
-    Map<id, List<Objective__c>> SDToObjMap = new Map<id, List<Objective__c>>();
+    SDToObjMap = new Map<id, List<Objective__c>>();
 
     for (Id key : objMap.keySet()) {
       Id sid = objMap.get(key).sd__c;
@@ -101,8 +101,11 @@ public with sharing class LFLTreeUtil {
       jsonStr += '"name":"' + pName + '",';
       jsonStr += '"status":"' + pStatus + '",';
       jsonStr += '"type":"Program",';
-
-      jsonStr += '"_children":' + getSDJSON(key, progToSDMap, SDToObjMap);
+      if (progToSDMap.containsKey(key)) {
+        jsonStr += '"_children":' + getSDJSON(key);
+      } else {
+        jsonStr += '"_children":' + '[]';
+      }
       jsonStr += '},';
     }
     jsonStr += ']';
@@ -114,33 +117,28 @@ public with sharing class LFLTreeUtil {
     return jsonStr;
   }
 
-  static String getSDJSON(
-    Id key,
-    Map<id, List<SD__c>> progToSDMap,
-    Map<id, List<Objective__c>> SDToObjMap
-  ) {
-    if (!progToSDMap.containsKey(key)) {
-      System.debug('xxxxxxxxx ' + key);
-    }
+  static String getSDJSON(Id key) {
     List<SD__c> sdlist = progToSDMap.get(key);
     String sdjsonStr = '[';
     String sdName;
     String sdStatus;
-    if (sdList != null) {
-      for (SD__c s : sdlist) {
-        sdName = (String) s.Name;
-        sdStatus = (String) s.Status__c;
-        sdjsonStr += '{';
-        sdjsonStr += '"label":"' + sdName + '",';
-        sdjsonStr += '"IdUrl":"/' + s.Id + '",';
-        sdjsonStr += '"name":"' + sdName + '",';
-        sdjsonStr += '"status":"' + sdStatus + '",';
-        sdjsonStr += '"type":"SD",';
-
-        sdjsonStr += '"_children":' + getObjJSON(s.id, SDToObjMap);
-        sdjsonStr += '},';
+    for (SD__c s : sdlist) {
+      sdName = (String) s.Name;
+      sdStatus = (String) s.Status__c;
+      sdjsonStr += '{';
+      sdjsonStr += '"label":"' + sdName + '",';
+      sdjsonStr += '"IdUrl":"/' + s.Id + '",';
+      sdjsonStr += '"name":"' + sdName + '",';
+      sdjsonStr += '"status":"' + sdStatus + '",';
+      sdjsonStr += '"type":"SD",';
+      if (SDToObjMap.containsKey(s.Id)) {
+        sdjsonStr += '"_children":' + getObjJSON(s.id);
+      } else {
+        sdjsonStr += '"_children":' + '[]';
       }
+      sdjsonStr += '},';
     }
+
     sdjsonStr += ']';
     String target = '},]';
     String replacement = '}]';
@@ -149,26 +147,24 @@ public with sharing class LFLTreeUtil {
     return sdjsonStr;
   }
 
-  static String getObjJSON(Id key, Map<Id, List<Objective__c>> SDToObjMap) {
+  static String getObjJSON(Id key) {
     List<Objective__c> olist = SDToObjMap.get(key);
     System.debug('=======> key=' + key);
     String ojsonStr = '[';
     String oName;
     String oStatus;
-    if (olist != null) {
-      for (Objective__c o : olist) {
-        oName = (String) o.Name;
-        oStatus = (String) o.Status__c;
+    for (Objective__c o : olist) {
+      oName = (String) o.Name;
+      oStatus = (String) o.Status__c;
 
-        ojsonStr += '{';
-        ojsonStr += '"label":"' + oName + '",';
-        ojsonStr += '"IdUrl":"/' + o.Id + '",';
-        ojsonStr += '"name":"' + oName + '",';
-        ojsonStr += '"status":"' + oStatus + '",';
-        ojsonStr += '"type":"Objective",';
-        ojsonStr += '"_children":[]';
-        ojsonStr += '},';
-      }
+      ojsonStr += '{';
+      ojsonStr += '"label":"' + oName + '",';
+      ojsonStr += '"IdUrl":"/' + o.Id + '",';
+      ojsonStr += '"name":"' + oName + '",';
+      ojsonStr += '"status":"' + oStatus + '",';
+      ojsonStr += '"type":"Objective",';
+      ojsonStr += '"_children":[]';
+      ojsonStr += '},';
     }
 
     ojsonStr += ']';
