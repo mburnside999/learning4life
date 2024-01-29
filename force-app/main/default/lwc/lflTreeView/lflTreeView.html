@@ -1,13 +1,23 @@
 <template>
   <div class="slds-m-top_medium slds-m-bottom_x-large">
     <h2 class="slds-text-heading_medium slds-m-bottom_medium">
-      Tree component with a many levels of depth. Click on the arrow icons to
-      expand or collapse a branch.
+      Programs, SDs and Objectives
     </h2>
 
+    <input
+      class="slds-input"
+      size="40"
+      type="text"
+      placeholder="You can filter Programs here..."
+      oninput={handleFilterKeyInput}
+    />
     <!-- Simple -->
     <div class="slds-p-around_medium lgc-bg">
-      <lightning-tree items={treeview} header="Programs"></lightning-tree>
+      <lightning-tree-grid
+        columns={gridColumns}
+        data={gridData}
+        key-field="name"
+      ></lightning-tree-grid>
     </div>
   </div>
 </template>

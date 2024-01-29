@@ -24,7 +24,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, Program__c> programMap = new Map<Id, Program__c>(
       [
-        SELECT id, name
+        SELECT id, name, status__c
         FROM Program__c
         ORDER BY name
       ]
@@ -34,7 +34,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, SD__c> sdMap = new Map<Id, SD__c>(
       [
-        SELECT id, program__c, name
+        SELECT id, program__c, name, status__c
         FROM SD__c
         WHERE program__c IN :p
         ORDER BY name
@@ -46,7 +46,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, Objective__c> objMap = new Map<Id, Objective__c>(
       [
-        SELECT id, SD__c, name
+        SELECT id, SD__c, name, status__c
         FROM Objective__c
         ORDER BY name
       ]
@@ -88,15 +88,20 @@ public with sharing class LFLTreeUtil {
     //System.debug(SDToObjMap);
 
     String pName;
+    String pStatus;
     for (Id key : programMap.keySet()) {
       //
       //
       pName = (String) programMap.get(key).Name;
+      pStatus = (String) programMap.get(key).Status__c;
       jsonStr += '{';
       jsonStr += '"label":"' + pName + '",';
+      jsonStr += '"IdUrl":"/' + key + '",';
       jsonStr += '"name":"' + pName + '",';
-      jsonStr += '"expanded":"true",';
-      jsonStr += '"items":' + getSDJSON(key, progToSDMap, SDToObjMap);
+      jsonStr += '"status":"' + pStatus + '",';
+      jsonStr += '"type":"Program",';
+
+      jsonStr += '"_children":' + getSDJSON(key, progToSDMap, SDToObjMap);
       jsonStr += '},';
     }
     jsonStr += ']';
@@ -119,13 +124,18 @@ public with sharing class LFLTreeUtil {
     List<SD__c> sdlist = progToSDMap.get(key);
     String sdjsonStr = '[';
     String sdName;
+    String sdStatus;
     for (SD__c s : sdlist) {
       sdName = (String) s.Name;
+      sdStatus = (String) s.Status__c;
       sdjsonStr += '{';
       sdjsonStr += '"label":"' + sdName + '",';
+      sdjsonStr += '"IdUrl":"/' + s.Id + '",';
       sdjsonStr += '"name":"' + sdName + '",';
-      sdjsonStr += '"expanded":"false",';
-      sdjsonStr += '"items":' + getObjJSON(s.id, SDToObjMap);
+      sdjsonStr += '"status":"' + sdStatus + '",';
+      sdjsonStr += '"type":"SD",';
+
+      sdjsonStr += '"_children":' + getObjJSON(s.id, SDToObjMap);
       sdjsonStr += '},';
     }
 
@@ -142,14 +152,19 @@ public with sharing class LFLTreeUtil {
     System.debug('=======> key=' + key);
     String ojsonStr = '[';
     String oName;
+    String oStatus;
     if (olist != null) {
       for (Objective__c o : olist) {
         oName = (String) o.Name;
+        oStatus = (String) o.Status__c;
+
         ojsonStr += '{';
         ojsonStr += '"label":"' + oName + '",';
+        ojsonStr += '"IdUrl":"/' + o.Id + '",';
         ojsonStr += '"name":"' + oName + '",';
-        ojsonStr += '"expanded":"false",';
-        ojsonStr += '"items":[]';
+        ojsonStr += '"status":"' + oStatus + '",';
+        ojsonStr += '"type":"Objective",';
+        ojsonStr += '"_children":[]';
         ojsonStr += '},';
       }
     }
