@@ -26,6 +26,7 @@ public with sharing class LFLTreeUtil {
       [
         SELECT id, name, status__c
         FROM Program__c
+        WHERE id IN (SELECT program__c FROM sd__c)
         ORDER BY name
       ]
     );
@@ -125,20 +126,21 @@ public with sharing class LFLTreeUtil {
     String sdjsonStr = '[';
     String sdName;
     String sdStatus;
-    for (SD__c s : sdlist) {
-      sdName = (String) s.Name;
-      sdStatus = (String) s.Status__c;
-      sdjsonStr += '{';
-      sdjsonStr += '"label":"' + sdName + '",';
-      sdjsonStr += '"IdUrl":"/' + s.Id + '",';
-      sdjsonStr += '"name":"' + sdName + '",';
-      sdjsonStr += '"status":"' + sdStatus + '",';
-      sdjsonStr += '"type":"SD",';
+    if (sdList != null) {
+      for (SD__c s : sdlist) {
+        sdName = (String) s.Name;
+        sdStatus = (String) s.Status__c;
+        sdjsonStr += '{';
+        sdjsonStr += '"label":"' + sdName + '",';
+        sdjsonStr += '"IdUrl":"/' + s.Id + '",';
+        sdjsonStr += '"name":"' + sdName + '",';
+        sdjsonStr += '"status":"' + sdStatus + '",';
+        sdjsonStr += '"type":"SD",';
 
-      sdjsonStr += '"_children":' + getObjJSON(s.id, SDToObjMap);
-      sdjsonStr += '},';
+        sdjsonStr += '"_children":' + getObjJSON(s.id, SDToObjMap);
+        sdjsonStr += '},';
+      }
     }
-
     sdjsonStr += ']';
     String target = '},]';
     String replacement = '}]';

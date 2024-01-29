@@ -23,6 +23,8 @@
 private class TestLFLTreeUtil {
   @isTest
   static void myUnitTest() {
+    Test.startTest();
+    LFLPopulateTestData.load();
     String result = LFLTreeUtil.getJSONTree('X');
     System.assert(result != null, 'expected a non null result');
   }
