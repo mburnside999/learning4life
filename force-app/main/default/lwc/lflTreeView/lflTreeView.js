@@ -1,4 +1,4 @@
-import { LightningElement, wire } from "lwc";
+import { LightningElement, api, wire } from "lwc";
 import getJSONTree from "@salesforce/apex/LFLTreeUtil.getJSONTree";
 
 const COLUMNS = [
@@ -10,7 +10,7 @@ const COLUMNS = [
   {
     type: "text",
     fieldName: "type",
-    label: "Type"
+    label: "Program, SD, Objective"
   },
   {
     type: "text",
@@ -29,11 +29,12 @@ import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 export default class LflTreeView extends LightningElement {
   gridData = [];
   gridColumns = COLUMNS;
+  @api lwcTitle = "Catalog Browser";
+
   @wire(getJSONTree, { reserved: "x" })
   wiredJSON(value) {
     const { data, error } = value;
     if (data) {
-      console.log("xxxxxxxxx");
       console.log(data);
       this.gridData = JSON.parse(data);
       this.allData = this.gridData;

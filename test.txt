@@ -2,4 +2,3 @@ sf project deploy start --metadata AuraDefinitionBundle --metadata ApexClass --m
 
 
 String j = LFLTreeUtil.getJSONTree('x');
-System.debug(j);

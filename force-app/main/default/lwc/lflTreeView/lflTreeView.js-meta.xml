@@ -9,5 +9,19 @@
         <target>lightning__AppPage</target>
         <target>lightning__HomePage</target>
     </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+          <property
+            name="lwcTitle"
+            type="String"
+            default="Catalog Browser"
+            label="Enter a LWC title"
+          />
+          
+    
+        </targetConfig>
+    
+      </targetConfigs>
     
 </LightningComponentBundle>

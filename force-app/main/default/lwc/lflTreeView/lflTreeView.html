@@ -1,23 +1,33 @@
 <template>
-  <div class="slds-m-top_medium slds-m-bottom_x-large">
-    <h2 class="slds-text-heading_medium slds-m-bottom_medium">
-      Programs, SDs and Objectives
-    </h2>
-
-    <input
-      class="slds-input"
-      size="40"
-      type="text"
-      placeholder="You can filter Programs here..."
-      oninput={handleFilterKeyInput}
-    />
-    <!-- Simple -->
-    <div class="slds-p-around_medium lgc-bg">
-      <lightning-tree-grid
-        columns={gridColumns}
-        data={gridData}
-        key-field="name"
-      ></lightning-tree-grid>
+  <lightning-card title={lwcTitle} icon-name="custom:custom63">
+    <div class="page-header page-section">
+      &nbsp;&nbsp;The catalog comprises 7,000+ items, organised into a hierarchy
+      of Programs > SDs> Objectives. You can use the collapsible sections on the
+      left to browse the catalog structure. <br /><br />
+      &nbsp;&nbsp;Need more details or need to edit? Use the Go To Record Page
+      link in the last column to see the item details.
     </div>
-  </div>
+    <div class="c-container">
+      <div class="slds-m-top_medium slds-m-bottom_x-large">
+        <input
+          class="slds-input"
+          size="40"
+          type="text"
+          placeholder="For best performance filter the Program names here..."
+          oninput={handleFilterKeyInput}
+        />
+        <br />
+        <!-- Simple -->
+        <div class="slds-p-around_medium lgc-bg">
+          <lightning-tree-grid
+            columns={gridColumns}
+            show-row-number-column
+            hide-checkbox-column
+            data={gridData}
+            key-field="name"
+          ></lightning-tree-grid>
+        </div>
+      </div>
+    </div>
+  </lightning-card>
 </template>
