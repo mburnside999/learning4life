@@ -1,22 +1,45 @@
 <template>
   <lightning-card title={lwcTitle} icon-name="custom:custom63">
-    <div class="page-header page-section">
-      &nbsp;&nbsp;The catalog comprises 7,000+ items, organised into a hierarchy
-      of Programs > SDs> Objectives. You can use the collapsible sections on the
-      left to browse the catalog structure. <br /><br />
-      &nbsp;&nbsp;Need more details or need to edit? Use the Go To Record Page
-      link in the last column to see the item details.
+    <div class="c-container">
+      <div class="slds-m-around_large">
+        <div class="page-header page-section">
+          The catalog comprises 7,000+ items, organised into a hierarchy of
+          Programs > SDs> Objectives. You can use the collapsible sections on
+          the left to browse the catalog structure.<br />
+          Need more details or need to edit? Use the Go To Record Page link in
+          the last column to see the item details.
+        </div>
+      </div>
     </div>
     <div class="c-container">
+      <div class="slds-m-around_large">
+        <div
+          if:true={isLoaded}
+          class="demo-only"
+          style="padding: 0.5rem; background: #16325c"
+        >
+          <div class="slds-text-color_inverse">{catalogShape}.</div>
+        </div>
+        <div if:false={isLoaded} class="slds-is-relative">
+          <h2>Please wait for moment while we load the Catalog...</h2>
+          <lightning-spinner
+            alternative-text="Catalog loading..."
+            size="large"
+            variant="brand"
+          >
+          </lightning-spinner>
+        </div>
+      </div>
       <div class="slds-m-top_medium slds-m-bottom_x-large">
-        <input
-          class="slds-input"
-          size="40"
-          type="text"
-          placeholder="For best performance filter the Program names here..."
-          oninput={handleFilterKeyInput}
-        />
-        <br />
+        <div class="slds-p-around_medium lgc-bg">
+          <lightning-input
+            if:true={isLoaded}
+            type="text"
+            label="Program Filter"
+            onchange={handleFilterKeyInput}
+          ></lightning-input>
+        </div>
+
         <!-- Simple -->
         <div class="slds-p-around_medium lgc-bg">
           <lightning-tree-grid
