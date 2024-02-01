@@ -1,4 +1,24 @@
 sf project deploy start --metadata AuraDefinitionBundle --metadata ApexClass --metadata ApexTrigger --metadata Flow --metadata LightningMessageChannel --target-org LFLPARTIAL --test-level RunSpecifiedTests --tests TestL4LController TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard TestLFLInvocableSessionStatistics TestLFLPopulateTestData TestLFLProgramStatusCascadeUtil TestCascadeProgramStatusTrg TestCascadeSDStatusTrg TestDaysSinceUpdatedTr TestLFLSessionStatsTrg TestClientObjectiveList TestL4LNebulaComponentController TestL4LExceptionRateCalculation TestL4LExceptionClientObjectiveMissing TestTrgUniqueObjectivePerClientObjective TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj TestL4LStagesByArea TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler
 
+String j = LFLTreeUtil.getJSONTreeFiltered('Colour')
+System.debug(j);
 
-String j = LFLTreeUtil.getJSONTree('x');
+
+select id,name,sd__r.name,
+sd__c,
+sd__r.program__r.name,
+sd__r.program__c from objective__c where name like '%Blue%' or sd__r.name like '%Blue%' or sd__r.program__r.name like '%Blue circle%'
+
+
+select id,
+name,
+status__c,
+sd__c,
+sd__r.name,
+sd__r.status__c,
+sd__r.program__c,
+sd__r.program__r.name,
+sd__r.program__r.status__c from objective__c 
+where name like '%blue circle%' 
+or sd__r.name like '%blue circle%'
+or sd__r.program__r.name like '%blue circle%'

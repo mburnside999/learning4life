@@ -28,4 +28,11 @@ private class TestLFLTreeUtil {
     String result = LFLTreeUtil.getJSONTree('X');
     System.assert(result != null, 'expected a non null result');
   }
+  @isTest
+  static void myUnitTest2() {
+    Test.startTest();
+    LFLPopulateTestData.load();
+    String result = LFLTreeUtil.getJSONTreeFiltered('obj-1');
+    System.assert(result != null, 'expected a non null result');
+  }
 }

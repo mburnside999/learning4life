@@ -10,6 +10,7 @@
 public with sharing class LFLTreeUtil {
   static Map<Id, Program__c> programMap;
   static Map<Id, Objective__c> objMap;
+
   static Map<Id, SD__c> sdMap;
   static Map<id, List<SD__c>> progToSDMap;
   static Map<id, List<Objective__c>> SDToObjMap;
@@ -28,17 +29,15 @@ public with sharing class LFLTreeUtil {
       'next-gen-nebula-apex'
     );
 
-    programMap = new Map<Id, Program__c>(
+    Map<Id, Program__c> programMap = new Map<Id, Program__c>(
       [
         SELECT id, name, status__c
         FROM Program__c
         ORDER BY name
       ]
     );
-    Set<id> p = new Set<id>();
-    p = programMap.keySet();
 
-    sdMap = new Map<Id, SD__c>(
+    Map<Id, SD__c> sdMap = new Map<Id, SD__c>(
       [
         SELECT id, program__c, name, status__c
         FROM SD__c
@@ -46,7 +45,7 @@ public with sharing class LFLTreeUtil {
       ]
     );
 
-    objMap = new Map<Id, Objective__c>(
+    Map<Id, Objective__c> objMap = new Map<Id, Objective__c>(
       [
         SELECT id, SD__c, name, status__c
         FROM Objective__c
@@ -117,8 +116,124 @@ public with sharing class LFLTreeUtil {
     return jsonStr;
   }
 
+  @AuraEnabled(cacheable=true)
+  public static String getJSONTreeFiltered(String searchStr) {
+    final String SCENARIO = 'Tree Util Filtering- Apex';
+
+    String jsonStr = '[';
+
+    L4LNebulaComponentController.setupCache();
+    L4LNebulaComponentController.logInfo(
+      null,
+      'in LFLTreeUtil.getJSONTreeFiltered()',
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
+    Map<Id, SD__c> sdMasterMap = new Map<Id, SD__c>(
+      [
+        SELECT id, program__c, name, status__c
+        FROM SD__c
+        ORDER BY name
+      ]
+    );
+
+    Map<Id, Program__c> programMasterMap = new Map<Id, Program__c>(
+      [
+        SELECT id, name, status__c
+        FROM Program__c
+        ORDER BY name
+      ]
+    );
+
+    Map<Id, Objective__c> objectiveMasterMap = new Map<Id, Objective__c>(
+      [
+        SELECT id, sd__c, name, status__c
+        FROM Objective__c
+        ORDER BY name
+      ]
+    );
+
+    String filteredObjectiveQueryString =
+      'select id,name,status__c,sd__c,sd__r.name,sd__r.status__c,sd__r.program__c,sd__r.program__r.name,sd__r.program__r.status__c from objective__c where name like \'%' +
+      searchStr +
+      '%\' or sd__r.name like \'%' +
+      searchStr +
+      '%\'' +
+      'or sd__r.program__r.name like \'%' +
+      searchStr +
+      '%\'';
+    System.debug(filteredObjectiveQueryString);
+    List<Objective__c> filteredObjectiveList = new List<Objective__c>(
+      (List<Objective__c>) Database.query(filteredObjectiveQueryString)
+    );
+
+    progToSDMap = new Map<id, List<SD__c>>();
+
+    for (Objective__c o : filteredObjectiveList) {
+      Id pid = o.sd__r.program__c;
+      Id sid = o.sd__c;
+      if (progToSDMap.containsKey(pid)) {
+        List<sd__c> sds = (List<SD__c>) progToSDMap.get(pid);
+        sds.add(sdMasterMap.get(sid));
+        progToSDMap.put(pid, sds);
+      } else {
+        List<sd__c> sds = new List<SD__c>();
+        sds.add(sdMasterMap.get(sid));
+        progToSDMap.put(pid, sds);
+      }
+    }
+
+    SDToObjMap = new Map<id, List<Objective__c>>();
+
+    for (Objective__c o : filteredObjectiveList) {
+      Id oid = o.Id;
+      Id sid = o.sd__c;
+      if (SDToObjMap.containsKey(sid)) {
+        List<objective__c> objs = (List<objective__c>) SDToObjMap.get(sid);
+        objs.add(objectiveMasterMap.get(oid));
+        SDToObjMap.put(sid, objs);
+      } else {
+        List<objective__c> objs = new List<objective__c>();
+        objs.add(objectiveMasterMap.get(oid));
+        SDToObjMap.put(sid, objs);
+      }
+    }
+
+    system.debug(SDToObjMap);
+
+    String pName;
+    String pStatus;
+    for (Id key : progToSDMap.keySet()) {
+      //
+      System.debug('key=' + key);
+      pName = (String) programMasterMap.get(key).Name;
+      pStatus = (String) programMasterMap.get(key).Status__c;
+      jsonStr += '{';
+      jsonStr += '"label":"' + pName + '",';
+      jsonStr += '"IdUrl":"/' + key + '",';
+      jsonStr += '"name":"' + pName + '",';
+      jsonStr += '"status":"' + pStatus + '",';
+      jsonStr += '"type":"Program",';
+      if (progToSDMap.containsKey(key)) {
+        System.debug('progToSDMap contains ' + key);
+        jsonStr += '"_children":' + getSDJSON(key);
+      } else {
+        jsonStr += '"_children":' + '[]';
+      }
+      jsonStr += '},';
+    }
+    jsonStr += ']';
+
+    String target = '},]';
+    String replacement = '}]';
+    jsonstr = jsonstr.replace(target, replacement);
+    //System.debug(jsonstr);
+    return jsonStr;
+  }
+
   static String getSDJSON(Id key) {
-    List<SD__c> sdlist = progToSDMap.get(key);
+    List<SD__c> sdlist = (List<SD__C>) progToSDMap.get(key);
     String sdjsonStr = '[';
     String sdName;
     String sdStatus;
@@ -149,7 +264,7 @@ public with sharing class LFLTreeUtil {
 
   static String getObjJSON(Id key) {
     List<Objective__c> olist = SDToObjMap.get(key);
-    System.debug('=======> key=' + key);
+    //System.debug('=======> key=' + key);
     String ojsonStr = '[';
     String oName;
     String oStatus;

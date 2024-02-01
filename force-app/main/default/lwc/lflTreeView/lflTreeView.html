@@ -30,14 +30,49 @@
           </lightning-spinner>
         </div>
       </div>
-      <div class="slds-m-top_medium slds-m-bottom_x-large">
-        <div class="slds-p-around_medium lgc-bg">
-          <lightning-input
-            if:true={isLoaded}
-            type="text"
-            label="Program Filter"
-            onchange={handleFilterKeyInput}
-          ></lightning-input>
+
+      <div class="slds-m-top_small slds-m-bottom_x-large">
+        <div class="slds-p-around_small lgc-bg">
+          <lightning-layout multiple-rows>
+            <lightning-layout-item size="4">
+              <lightning-input
+                label="Catalog Search"
+                if:true={isLoaded}
+                maxlength="20"
+                type="text"
+                placeholder="Search across our library of 6000+ Programs, SDs and Objectives"
+                value={searchValue}
+                data-name="search"
+                onchange={handleSearchValueChange}
+              ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1"><p></p></lightning-layout-item>
+            <lightning-layout-item size="4">
+              <lightning-input
+                if:true={isLoaded}
+                type="text"
+                placeholder="Type into this field to filter the search results below by Program"
+                label="Filter Search Results"
+                data-name="filter"
+                onchange={handleFilterKeyInput}
+              ></lightning-input>
+            </lightning-layout-item>
+          </lightning-layout>
+          <br />
+          <lightning-layout multiple-rows>
+            <lightning-layout-item>
+              <lightning-button
+                if:true={isLoaded}
+                label="Search"
+                onclick={handleSearchKeyword}
+              ></lightning-button>
+              <lightning-button
+                if:true={isLoaded}
+                label="Reset"
+                onclick={handleReset}
+              ></lightning-button>
+            </lightning-layout-item>
+          </lightning-layout>
         </div>
 
         <!-- Simple -->
