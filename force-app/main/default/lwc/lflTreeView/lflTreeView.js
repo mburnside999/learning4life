@@ -2,6 +2,8 @@ import { LightningElement, api, wire } from "lwc";
 import getJSONTree from "@salesforce/apex/LFLTreeUtil.getJSONTree";
 import getJSONTreeFiltered from "@salesforce/apex/LFLTreeUtil.getJSONTreeFiltered";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
+import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
+import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
 
 const COLUMNS = [
   {
@@ -27,7 +29,12 @@ const COLUMNS = [
   }
 ];
 
-import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
+const COMPONENT = "l4lTreeView";
+const TAG = "L4L-Manage-Catalog";
+const SCENARIO = "View Catalog Tree - LWC";
+const UI_EVENT_TRACKING_SCENARIO = "LWC UI: lflTreeView";
+const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: lflTreeView";
+
 export default class LflTreeView extends LightningElement {
   gridData = [];
   o = 0;
@@ -48,6 +55,47 @@ export default class LflTreeView extends LightningElement {
       this.error = error;
       this.gridData = undefined;
     }
+  }
+
+  /*******************************************************************************************************
+   * @name ConnectedCallback
+   * @description
+   * sets up logging
+   * sets up subscription handle for Messaging Service
+   * performs initial call to refresh()
+   *
+   * @param
+   * @return
+   */
+
+  connectedCallback() {
+    setNewSession()
+      .then((returnVal) => {
+        console.log("Success");
+        logDebug(
+          null,
+          `${COMPONENT}.connectedCallback(): call to L4LNebulaComponentController setupCache completed `,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+        logInfo(
+          null,
+          `${COMPONENT}.connectedCallback(): All good,session is commencing `,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+      })
+      .catch((error) => {
+        console.log("Error");
+        logError(
+          null,
+          `${COMPONENT}.connectedCallback() returned error: ${JSON.stringify(
+            error
+          )}`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+      });
   }
 
   get resultSize() {
@@ -74,36 +122,24 @@ export default class LflTreeView extends LightningElement {
     console.log("objtotal=" + objtotal);
 
     return (
-      " Programs: " + ptotal + ", SDs: " + sdtotal + ", Objectives: " + objtotal
+      "Displaying " +
+      ptotal +
+      " Programs, " +
+      sdtotal +
+      "  SDs, " +
+      objtotal +
+      " Objectives"
     );
   }
 
-  get countA() {
-    let total = 0;
-    this.gridData.forEach((entry) => (total += entry._children.length));
-    // this.gridData._children._children.forEach(
-    //   (entry) => (grandtotal += entry._children.length)
-    // );
-    return total;
-  }
-
-  get countB() {
-    let x = [];
-    let y = [];
-    let grandtotal = 0;
-
-    for (let i = 0; i < this.gridData.length; i++) {
-      x = this.gridData[i]._children;
-      console.log("zzzzzz" + x.length);
-      for (let j = 0; j < x.length; j++) {
-        y = x[j]._children;
-        grandtotal += y.length;
-      }
-      return grandtotal;
-    }
-  }
-
   handleFilterKeyInput(event) {
+    logInfo(
+      null,
+      `${COMPONENT}: handleFilterKeyInput: ${event.target.value.toLowerCase()}`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     const filterKey = event.target.value.toLowerCase();
     if (filterKey.length == 0) {
       //this.gridData = this.allData;
@@ -115,7 +151,22 @@ export default class LflTreeView extends LightningElement {
   }
 
   handleSearchKeyword() {
-    console.log("calling filter with parameter " + this.searchValue);
+    console.log("calling search with parameter " + this.searchValue);
+
+    logInfo(
+      null,
+      `${COMPONENT}: handleSearchKeyword: ${this.searchValue}`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
+    logInfo(
+      null,
+      `${COMPONENT}: Apex Call: getJSONTreeFiltered`,
+      `${APEX_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     getJSONTreeFiltered({
       searchStr: this.searchValue
     })
@@ -130,6 +181,13 @@ export default class LflTreeView extends LightningElement {
         this.allData = this.gridData;
       })
       .catch((error) => {
+        logError(
+          null,
+          `${COMPONENT}.handleSearchKeyword(): error=${JSON.stringify(error)}`,
+          `${SCENARIO}`,
+          `${TAG}`
+        );
+
         const event = new ShowToastEvent({
           title: "Error",
           variant: "error",
@@ -145,6 +203,13 @@ export default class LflTreeView extends LightningElement {
   }
 
   handleReset(event) {
+    logInfo(
+      null,
+      `${COMPONENT}: handleReset: Pressed reset`,
+      `${UI_EVENT_TRACKING_SCENARIO}`,
+      `${TAG}`
+    ); // adoption tracking
+
     this.template.querySelector('lightning-input[data-name="search"]').value =
       "";
     this.template.querySelector('lightning-input[data-name="filter"]').value =

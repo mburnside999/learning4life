@@ -29,7 +29,7 @@ public with sharing class LFLTreeUtil {
 
   @AuraEnabled(cacheable=true)
   public static String getJSONTree(String reserved) {
-    final String SCENARIO = 'Tree Util - Apex';
+    final String SCENARIO = 'Tree Util, full catalog - Apex';
 
     String jsonStr = '[';
 
@@ -148,7 +148,7 @@ public with sharing class LFLTreeUtil {
     L4LNebulaComponentController.setupCache();
     L4LNebulaComponentController.logInfo(
       null,
-      'in LFLTreeUtil.getJSONTreeFiltered()',
+      'in LFLTreeUtil.getJSONTreeFiltered(), searchStr=' + searchStr,
       SCENARIO,
       'next-gen-nebula-apex'
     );
@@ -186,7 +186,16 @@ public with sharing class LFLTreeUtil {
       'or sd__r.program__r.name like \'%' +
       searchStr +
       '%\'';
+
     System.debug(filteredObjectiveQueryString);
+    L4LNebulaComponentController.logDebug(
+      null,
+      'in LFLTreeUtil.getJSONTreeFiltered(), query string=' +
+      filteredObjectiveQueryString,
+      SCENARIO,
+      'next-gen-nebula-apex'
+    );
+
     List<Objective__c> filteredObjectiveList = new List<Objective__c>(
       (List<Objective__c>) Database.query(filteredObjectiveQueryString)
     );
@@ -222,8 +231,6 @@ public with sharing class LFLTreeUtil {
         SDToObjMap.put(sid, objs);
       }
     }
-
-    system.debug(SDToObjMap);
 
     String pName;
     String pStatus;
