@@ -207,7 +207,10 @@ public with sharing class LFLTreeUtil {
       Id sid = o.sd__c;
       if (progToSDMap.containsKey(pid)) {
         List<sd__c> sds = (List<SD__c>) progToSDMap.get(pid);
-        sds.add(sdMasterMap.get(sid));
+        SD__c sdtemp = sdMasterMap.get(sid);
+        if (!sds.contains(sdtemp)) {
+          sds.add(sdtemp);
+        }
         progToSDMap.put(pid, sds);
       } else {
         List<sd__c> sds = new List<SD__c>();
@@ -215,6 +218,7 @@ public with sharing class LFLTreeUtil {
         progToSDMap.put(pid, sds);
       }
     }
+    System.debug('progToSDMap=' + progToSDMap);
 
     SDToObjMap = new Map<id, List<Objective__c>>();
 
@@ -223,7 +227,10 @@ public with sharing class LFLTreeUtil {
       Id sid = o.sd__c;
       if (SDToObjMap.containsKey(sid)) {
         List<objective__c> objs = (List<objective__c>) SDToObjMap.get(sid);
-        objs.add(objectiveMasterMap.get(oid));
+        objective__c otemp = objectiveMasterMap.get(oid);
+        if (!objs.contains(otemp)) {
+          objs.add(otemp);
+        }
         SDToObjMap.put(sid, objs);
       } else {
         List<objective__c> objs = new List<objective__c>();
