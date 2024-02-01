@@ -15,6 +15,18 @@ public with sharing class LFLTreeUtil {
   static Map<id, List<SD__c>> progToSDMap;
   static Map<id, List<Objective__c>> SDToObjMap;
 
+  /*******************************************************************************************************
+   * @name getJSONTree
+   * @description  builds a complete JSON tree of the Catalog for rendering by lwc tree grid
+   *
+   *
+   * @param reserved not used
+
+   * @return JSON string
+   * @example
+   * String jsonStr = LFLTreeUtil.getJSONTree(string);
+   */
+
   @AuraEnabled(cacheable=true)
   public static String getJSONTree(String reserved) {
     final String SCENARIO = 'Tree Util - Apex';
@@ -116,6 +128,17 @@ public with sharing class LFLTreeUtil {
     return jsonStr;
   }
 
+  /*******************************************************************************************************
+   * @name getJSONTreeFiltered
+   * @description  builds a filtered JSON tree of the Catalog for rendering by lwc tree grid
+   *
+   *
+   * @param searchStr the search string
+   * @return JSON string
+   * @example
+   * String jsonStr = LFLTreeUtil.getJSONTreeFitered('Blue circle');
+   */
+
   @AuraEnabled(cacheable=true)
   public static String getJSONTreeFiltered(String searchStr) {
     final String SCENARIO = 'Tree Util Filtering- Apex';
@@ -216,7 +239,6 @@ public with sharing class LFLTreeUtil {
       jsonStr += '"status":"' + pStatus + '",';
       jsonStr += '"type":"Program",';
       if (progToSDMap.containsKey(key)) {
-        System.debug('progToSDMap contains ' + key);
         jsonStr += '"_children":' + getSDJSON(key);
       } else {
         jsonStr += '"_children":' + '[]';
@@ -231,6 +253,14 @@ public with sharing class LFLTreeUtil {
     //System.debug(jsonstr);
     return jsonStr;
   }
+
+  /*******************************************************************************************************
+   * @name getSDJSON
+   * @description helper for attaching SDs to the Program part
+   *
+   * @param key the Program Id
+   * @return JSON string
+   */
 
   static String getSDJSON(Id key) {
     List<SD__c> sdlist = (List<SD__C>) progToSDMap.get(key);
@@ -261,6 +291,14 @@ public with sharing class LFLTreeUtil {
     // System.debug(sdjsonStr);
     return sdjsonStr;
   }
+
+  /*******************************************************************************************************
+   * @name getObjJSON
+   * @description helper for attaching Objss to the Program part
+   *
+   * @param key the SD Id
+   * @return JSON string
+   */
 
   static String getObjJSON(Id key) {
     List<Objective__c> olist = SDToObjMap.get(key);
