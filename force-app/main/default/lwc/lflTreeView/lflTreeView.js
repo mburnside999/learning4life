@@ -4,7 +4,6 @@ import getJSONTreeFiltered from "@salesforce/apex/LFLTreeUtil.getJSONTreeFiltere
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import setNewSession from "@salesforce/apex/L4LNebulaComponentController.setupCache";
 import { logDebug, logInfo, logError } from "c/l4lNebulaUtil";
-import { RefreshEvent } from "lightning/refresh";
 
 const COLUMNS = [
   {
@@ -38,6 +37,9 @@ const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: lflTreeView";
 
 export default class LflTreeView extends LightningElement {
   gridData = [];
+  allData = [];
+  initData = [];
+
   o = 0;
   gridColumns = COLUMNS;
   @api lwcTitle = "Catalog Browser";
@@ -50,9 +52,7 @@ export default class LflTreeView extends LightningElement {
       this.gridData = JSON.parse(data);
       this.allData = JSON.parse(data);
       this.initData = JSON.parse(data);
-      console.log("@wire initData.length=" + this.initData.length);
-      console.log("@wire gridData.length=" + this.gridData.length);
-      console.log("@wire allData.length=" + this.allData.length);
+      this.displayGridLengths("XXXX @wire");
 
       this.error = undefined;
       this.isLoaded = true;
@@ -144,13 +144,14 @@ export default class LflTreeView extends LightningElement {
   handleFilterKeyInput(event) {
     //const filterKey = event.target.value.toLowerCase();
     const filterKey = event.target.value;
-    this.gridData = this.allData;
+    this.displayGridLengths("XXXX handleFilterKey");
+    //this.gridData = this.allData;
     if (filterKey.length == 0) {
-      if (this.searchValue) {
-        this.handleSearchKeyword();
-      }
-      this.gridData = this.initData;
-      console.log("REFRESH");
+      this.displayGridLengths("XXXX filterkey length 0");
+      // if (this.searchValue) {
+      //   this.handleSearchKeyword();
+      // }
+      this.gridData = JSON.parse(JSON.stringify(this.allData));
     }
 
     console.log("CATALOG");
@@ -159,7 +160,8 @@ export default class LflTreeView extends LightningElement {
 
     console.log("looking for " + searchString);
     let programs = [];
-    programs = this.allData;
+    //test
+    programs = this.gridData;
     // programs = JSON.parse(JSON.stringify(this.allData));
 
     let program;
@@ -221,8 +223,8 @@ export default class LflTreeView extends LightningElement {
           }
         }
 
-        console.log("Process object deletions,obj array = " + objarray);
-        console.log("Reversing...");
+        //console.log("Process object deletions,obj array = " + objarray);
+        //console.log("Reversing...");
 
         let reversedobjectarray = [];
 
@@ -231,11 +233,11 @@ export default class LflTreeView extends LightningElement {
           reversedobjectarray.push(valueAtIndex);
         }
 
-        console.log("reversedobjectarray=" + reversedobjectarray);
+        //console.log("reversedobjectarray=" + reversedobjectarray);
 
         for (let o = 0; o < reversedobjectarray.length; o++) {
           let ref = reversedobjectarray[o];
-          console.log("splicing " + JSON.stringify(sds[x]._children[ref]));
+          //console.log("splicing " + JSON.stringify(sds[x]._children[ref]));
           programs[i]._children[x]._children.splice(ref, 1);
           this.gridData = programs;
         }
@@ -249,35 +251,35 @@ export default class LflTreeView extends LightningElement {
             sdkeep = true;
             progkeep = true;
 
-            console.log(
-              "PARENT found, will keep sd, adjusted keep values: " +
-                sds[x].name +
-                " has searchString, sdkeep=" +
-                sdkeep +
-                " progkeep=" +
-                progkeep
-            );
+            // //console.log(
+            //   "PARENT found, will keep sd, adjusted keep values: " +
+            //     sds[x].name +
+            //     " has searchString, sdkeep=" +
+            //     sdkeep +
+            //     " progkeep=" +
+            //     progkeep
+            // );
           } else {
             sdkeep = false;
-            console.log(
-              "PARENT " + sds[x].name + " does not contain " + searchString
-            );
+            //console.log(
+            //"PARENT " + sds[x].name + " does not contain " + searchString
+            //);
           }
         }
 
         //sdkeep still false
         if (sdkeep == false) {
-          console.log("SD SPLICE" + this.gridData[i]._children[x].name);
-          console.log("SD SPLICE pushing _children[" + x + "] to sdarray");
+          //console.log("SD SPLICE" + this.gridData[i]._children[x].name);
+          //console.log("SD SPLICE pushing _children[" + x + "] to sdarray");
           sdarray.push(x);
         } else {
-          console.log("Keeping " + programs[i]._children[x].name);
+          //console.log("Keeping " + programs[i]._children[x].name);
         }
       }
 
-      console.log("Process SD deletions, sdarray = " + sdarray);
+      //console.log("Process SD deletions, sdarray = " + sdarray);
 
-      console.log("Reversing...");
+      //console.log("Reversing...");
 
       let reversedsdarray = [];
 
@@ -292,15 +294,12 @@ export default class LflTreeView extends LightningElement {
         console.log("splice " + JSON.stringify(sds[ref]));
         programs[i]._children.splice(ref, 1);
         this.gridData = programs;
-        console.log("@splicesd initData.length=" + this.initData.length);
-        console.log("@splicesd gridData.length=" + this.gridData.length);
-        console.log("@splicesd allData.length=" + this.allData.length);
       }
 
       if (
         this.gridData[i].name.toLowerCase().includes(searchString.toLowerCase())
       ) {
-        console.log("Program name contains search string, keeping");
+        //console.log("Program name contains search string, keeping");
         progkeep = true;
       }
 
@@ -309,8 +308,8 @@ export default class LflTreeView extends LightningElement {
       }
     }
 
-    console.log("Process Program deletions, progarray = " + progarray);
-    console.log("Reversing...");
+    //console.log("Process Program deletions, progarray = " + progarray);
+    //console.log("Reversing...");
 
     let reversedprogarray = [];
 
@@ -323,7 +322,7 @@ export default class LflTreeView extends LightningElement {
 
     for (let p = 0; p < reversedprogarray.length; p++) {
       let ref = reversedprogarray[p];
-      console.log("SPLICING PROG" + JSON.stringify(programs[ref]));
+      // console.log("SPLICING PROG" + JSON.stringify(programs[ref]));
       programs.splice(ref, 1);
       this.gridData = programs;
     }
@@ -333,8 +332,9 @@ export default class LflTreeView extends LightningElement {
     //   console.log(JSON.stringify(programs));
     //   console.log("this.gridData=programs");
     //   this.gridData = programs;
-    console.log("this.gridData.length=" + this.gridData.length);
-    console.log("this.gridData" + JSON.stringify(this.gridData));
+    // console.log("this.gridData.length=" + this.gridData.length);
+    //console.log("this.gridData" + JSON.stringify(this.gridData));
+    this.displayGridLengths("XXXXX in program splicing");
     //this.dispatchEvent(new RefreshEvent());
     //
     //this.dataGrid = programs.filter((so) => so.name != null);
@@ -344,16 +344,16 @@ export default class LflTreeView extends LightningElement {
         so.name == null || so.name.toLowerCase().includes(so.name.toLowerCase())
       );
     });
-    console.log("@filter initData.length=" + this.initData.length);
-    console.log("@filter gridData.length=" + this.gridData.length);
-    console.log("@filter allData.length=" + this.allData.length);
+    // console.log("@filter initData.length=" + this.initData.length);
+    // console.log("@filter gridData.length=" + this.gridData.length);
+    // console.log("@filter allData.length=" + this.allData.length);
     //
     // }
   }
 
   handleSearchKeyword() {
     console.log("calling search with parameter " + this.searchValue);
-
+    this.displayGridLengths("XXXXX entry to handleSearch");
     logInfo(
       null,
       `${COMPONENT}: handleSearchKeyword: ${this.searchValue}`,
@@ -380,9 +380,7 @@ export default class LflTreeView extends LightningElement {
         // );
         this.gridData = JSON.parse(result);
         this.allData = JSON.parse(result);
-        console.log("@search initData.length=" + this.initData.length);
-        console.log("@search gridData.length=" + this.gridData.length);
-        console.log("@search allData.length=" + this.allData.length);
+        this.displayGridLengths("XXXXX after getJSONFiltered in handleSearch");
       })
       .catch((error) => {
         logError(
@@ -434,9 +432,7 @@ export default class LflTreeView extends LightningElement {
         this.gridData = JSON.parse(result);
         this.allData = JSON.parse(result);
         this.initData = JSON.parse(result);
-        console.log("@search initData.length=" + this.initData.length);
-        console.log("@search gridData.length=" + this.gridData.length);
-        console.log("@search allData.length=" + this.allData.length);
+        this.displayGridLengths("XXXXX after getJSONTree in handleReset");
         //this.isloaded = true;
       })
       .catch((error) => {
@@ -457,5 +453,11 @@ export default class LflTreeView extends LightningElement {
           'lightning-input[data-name="filter"]'
         ).value = "";
       });
+  }
+
+  displayGridLengths(str) {
+    console.log(str + ": initData.length=" + this.initData.length);
+    console.log(str + ": gridData.length=" + this.gridData.length);
+    console.log(str + ": allData.length=" + this.allData.length);
   }
 }
