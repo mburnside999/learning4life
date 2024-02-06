@@ -423,7 +423,7 @@ export default class LflTreeView extends LightningElement {
   }
 
   handleReset(event) {
-    eval("$A.get('e.force:refreshView').fire();");
+    //eval("$A.get('e.force:refreshView').fire();");
     this.rgvalue = "collapse";
     logInfo(
       null,
@@ -436,6 +436,14 @@ export default class LflTreeView extends LightningElement {
       "";
     this.template.querySelector('lightning-input[data-name="filter"]').value =
       "";
+
+    this.gridData = JSON.parse(JSON.stringify(this.initData));
+    this.allData = JSON.parse(JSON.stringify(this.initData));
+
+    //     this.allData = JSON.parse(result);
+    //     this.initData = JSON.parse(result);
+    //     this.displayGridLengths("XXXXX after getJSONTree in handleReset");
+
     //this.isLoaded = false;
     // getJSONTree({
     //   searchStr: "reserved"
