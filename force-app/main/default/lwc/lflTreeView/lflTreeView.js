@@ -44,6 +44,7 @@ export default class LflTreeView extends LightningElement {
   gridColumns = COLUMNS;
   @api lwcTitle = "Catalog Browser";
   @api isLoaded = false;
+  objtotal;
   @wire(getJSONTree, { reserved: "reserved" })
   wiredJSON(value) {
     const { data, error } = value;
@@ -111,6 +112,14 @@ export default class LflTreeView extends LightningElement {
     return this.gridData.length;
   }
 
+  get showfilter() {
+    if (this.objtotal > 500) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   get catalogShape() {
     let y = [];
     let z = [];
@@ -129,7 +138,7 @@ export default class LflTreeView extends LightningElement {
     console.log("ptotal=" + ptotal);
     console.log("sdtotal=" + sdtotal);
     console.log("objtotal=" + objtotal);
-
+    this.objtotal = objtotal;
     return (
       "Displaying " +
       ptotal +
