@@ -45,6 +45,7 @@ export default class LflTreeView extends LightningElement {
   @api lwcTitle = "Catalog Browser";
   @api isLoaded = false;
   objtotal;
+  rgvalue = "collapse";
   @wire(getJSONTree, { reserved: "reserved" })
   wiredJSON(value) {
     const { data, error } = value;
@@ -151,6 +152,9 @@ export default class LflTreeView extends LightningElement {
   }
 
   handleFilterKeyInput(event) {
+    const mbgrid = this.template.querySelector("lightning-tree-grid");
+    mbgrid.collapseAll();
+    this.rgvalue = "collapse";
     //const filterKey = event.target.value.toLowerCase();
     const filterKey = event.target.value;
     this.displayGridLengths("XXXX handleFilterKey");
@@ -161,6 +165,7 @@ export default class LflTreeView extends LightningElement {
       //   this.handleSearchKeyword();
       // }
       this.gridData = JSON.parse(JSON.stringify(this.allData));
+      this.rgvalue = "collapse";
     }
 
     console.log("CATALOG");
@@ -347,6 +352,8 @@ export default class LflTreeView extends LightningElement {
     //this.dispatchEvent(new RefreshEvent());
     //
     //this.dataGrid = programs.filter((so) => so.name != null);
+
+    this.rgvalue = "collapse";
     this.gridData = programs.filter((so) => {
       //fakery to get a ui refresh
       return (
@@ -361,6 +368,9 @@ export default class LflTreeView extends LightningElement {
   }
 
   handleSearchKeyword() {
+    const mbgrid = this.template.querySelector("lightning-tree-grid");
+    mbgrid.collapseAll();
+    this.rgvalue = "collapse";
     console.log("calling search with parameter " + this.searchValue);
     this.displayGridLengths("XXXXX entry to handleSearch");
     logInfo(
@@ -416,6 +426,8 @@ export default class LflTreeView extends LightningElement {
   }
 
   handleReset(event) {
+    eval("$A.get('e.force:refreshView').fire();");
+    this.rgvalue = "collapse";
     logInfo(
       null,
       `${COMPONENT}: handleReset: Pressed reset`,
@@ -428,45 +440,64 @@ export default class LflTreeView extends LightningElement {
     this.template.querySelector('lightning-input[data-name="filter"]').value =
       "";
     //this.isLoaded = false;
-    getJSONTree({
-      searchStr: "reserved"
-    })
-      .then((result) => {
-        // set @track contacts variable with return contact list from server
-        // this.logit(
-        //   FINE,
-        //   `handleSearchKeyword(): result=${JSON.stringify(result)}`,
-        //   `handleSearchKeyword()`
-        // );
-        this.gridData = JSON.parse(result);
-        this.allData = JSON.parse(result);
-        this.initData = JSON.parse(result);
-        this.displayGridLengths("XXXXX after getJSONTree in handleReset");
-        //this.isloaded = true;
-      })
-      .catch((error) => {
-        const event = new ShowToastEvent({
-          title: "Error",
-          variant: "error",
-          message: error.body.message
-        });
-        this.dispatchEvent(event);
-        // reset contacts var with null
-      })
-      .finally(() => {
-        //this.isLoaded = true;
-        this.template.querySelector(
-          'lightning-input[data-name="search"]'
-        ).value = "";
-        this.template.querySelector(
-          'lightning-input[data-name="filter"]'
-        ).value = "";
-      });
+    // getJSONTree({
+    //   searchStr: "reserved"
+    // })
+    //   .then((result) => {
+    //     // set @track contacts variable with return contact list from server
+    //     // this.logit(
+    //     //   FINE,
+    //     //   `handleSearchKeyword(): result=${JSON.stringify(result)}`,
+    //     //   `handleSearchKeyword()`
+    //     // );
+    //     this.gridData = JSON.parse(result);
+    //     this.allData = JSON.parse(result);
+    //     this.initData = JSON.parse(result);
+    //     this.displayGridLengths("XXXXX after getJSONTree in handleReset");
+    //     //this.isloaded = true;
+    //   })
+    //   .catch((error) => {
+    //     const event = new ShowToastEvent({
+    //       title: "Error",
+    //       variant: "error",
+    //       message: error.body.message
+    //     });
+    //     this.dispatchEvent(event);
+    //     // reset contacts var with null
+    //   })
+    //   .finally(() => {
+    //     //this.isLoaded = true;
+    //     this.template.querySelector(
+    //       'lightning-input[data-name="search"]'
+    //     ).value = "";
+    //     this.template.querySelector(
+    //       'lightning-input[data-name="filter"]'
+    //     ).value = "";
+    //   });
   }
 
   displayGridLengths(str) {
     console.log(str + ": initData.length=" + this.initData.length);
     console.log(str + ": gridData.length=" + this.gridData.length);
     console.log(str + ": allData.length=" + this.allData.length);
+  }
+
+  get rgoptions() {
+    return [
+      { label: "Expand All", value: "expand" },
+      { label: "Collapse All", value: "collapse" }
+    ];
+  }
+  handleRGChange(event) {
+    console.log("option" + event.target.value);
+    //this.rgvalue = event.target.value; //This shows me the right option value based on selection
+    const mbgrid = this.template.querySelector("lightning-tree-grid");
+    if (event.target.value == "expand") {
+      console.log("expanding");
+      mbgrid.expandAll();
+    } else {
+      console.log("collapsing");
+      mbgrid.collapseAll();
+    }
   }
 }

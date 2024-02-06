@@ -52,15 +52,29 @@
                 if:true={isLoaded}
                 type="text"
                 disabled={showfilter}
-                placeholder="Filter (enabled for up to 500 search results)"
+                placeholder="Filter Results (enabled automatically for up to 500 Search results)"
                 label="Filter Search Results"
                 data-name="filter"
                 onchange={handleFilterKeyInput}
               ></lightning-input>
             </lightning-layout-item>
+            <lightning-layout-item size="1"><p></p></lightning-layout-item>
+
+            <lightning-layout-item size="2">
+              <lightning-radio-group
+                disabled={showFilter}
+                name="radioGroup"
+                options={rgoptions}
+                value={rgvalue}
+                type="radio"
+                onchange={handleRGChange}
+                variant="label-stacked"
+              ></lightning-radio-group>
+            </lightning-layout-item>
+            <lightning-layout-item> </lightning-layout-item>
           </lightning-layout>
           <br />
-          <lightning-layout multiple-rows>
+          <lightning-layout>
             <lightning-layout-item>
               <lightning-button
                 if:true={isLoaded}
