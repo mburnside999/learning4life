@@ -105,16 +105,13 @@ export default class LflTreeView extends LightningElement {
       });
   }
 
-  get grid() {
-    return this.gridData;
-  }
-
   get resultSize() {
     return this.gridData.length;
   }
 
   get showfilter() {
     if (this.objtotal > 500) {
+      console.log("more than 500 records.");
       return true;
     } else {
       return false;
@@ -484,8 +481,8 @@ export default class LflTreeView extends LightningElement {
 
   get rgoptions() {
     return [
-      { label: "Expand All", value: "expand" },
-      { label: "Collapse All", value: "collapse" }
+      { label: "Collapse All", value: "collapse" },
+      { label: "Expand All", value: "expand" }
     ];
   }
   handleRGChange(event) {
