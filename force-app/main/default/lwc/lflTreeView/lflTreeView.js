@@ -372,6 +372,8 @@ export default class LflTreeView extends LightningElement {
     // mbgrid.collapseAll();
 
     //this.rgvalue = "collapse";
+    this.template.querySelector('lightning-input[data-name="filter"]').value =
+      "";
     console.log("calling search with parameter " + this.searchValue);
     this.displayGridLengths("XXXXX entry to handleSearch");
     logInfo(
