@@ -51,7 +51,7 @@
               <lightning-input
                 if:true={isLoaded}
                 type="text"
-                disabled={showfilter}
+                disabled={disableFilter}
                 placeholder="Filter Results (enabled automatically for up to 500 Search results)"
                 label="Filter Search Results"
                 data-name="filter"
@@ -61,15 +61,15 @@
             <lightning-layout-item size="1"><p></p></lightning-layout-item>
 
             <lightning-layout-item size="2">
-              <lightning-radio-group
-                disabled={showfilter}
+              <!-- <lightning-radio-group
+                disabled={disableFilter}
                 name="radioGroup"
                 options={rgoptions}
                 value={rgvalue}
                 type="radio"
                 onchange={handleRGChange}
                 variant="label-stacked"
-              ></lightning-radio-group>
+              ></lightning-radio-group> -->
             </lightning-layout-item>
             <lightning-layout-item> </lightning-layout-item>
           </lightning-layout>
@@ -80,6 +80,18 @@
                 if:true={isLoaded}
                 label="Search"
                 onclick={handleSearchKeyword}
+              ></lightning-button>
+              <lightning-button
+                if:true={isLoaded}
+                disabled={disableFilter}
+                label="Expand"
+                onclick={handleExpand}
+              ></lightning-button>
+              <lightning-button
+                if:true={isLoaded}
+                disabled={disableFilter}
+                label="Collapse"
+                onclick={handleCollapse}
               ></lightning-button>
               <lightning-button
                 if:true={isLoaded}
@@ -97,7 +109,7 @@
             show-row-number-column
             hide-checkbox-column
             data={gridData}
-            key-field="name"
+            key-field="IdUrl"
           ></lightning-tree-grid>
         </div>
       </div>

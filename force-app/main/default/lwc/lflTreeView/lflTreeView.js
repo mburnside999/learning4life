@@ -46,6 +46,7 @@ export default class LflTreeView extends LightningElement {
   @api isLoaded = false;
   objtotal;
   rgvalue = "collapse";
+
   @wire(getJSONTree, { reserved: "reserved" })
   wiredJSON(value) {
     const { data, error } = value;
@@ -109,7 +110,7 @@ export default class LflTreeView extends LightningElement {
     return this.gridData.length;
   }
 
-  get showfilter() {
+  get disableFilter() {
     if (this.objtotal > 500) {
       console.log("more than 500 records.");
       return true;
@@ -151,7 +152,9 @@ export default class LflTreeView extends LightningElement {
   handleFilterKeyInput(event) {
     const mbgrid = this.template.querySelector("lightning-tree-grid");
     mbgrid.collapseAll();
+    console.log("AAAAA " + event.target.value.toLowerCase());
     this.rgvalue = "collapse";
+    this.gridData = JSON.parse(JSON.stringify(this.allData));
     //const filterKey = event.target.value.toLowerCase();
     const filterKey = event.target.value;
     this.displayGridLengths("XXXX handleFilterKey");
@@ -345,7 +348,7 @@ export default class LflTreeView extends LightningElement {
     //   this.gridData = programs;
     // console.log("this.gridData.length=" + this.gridData.length);
     //console.log("this.gridData" + JSON.stringify(this.gridData));
-    this.displayGridLengths("XXXXX in program splicing");
+    //this.displayGridLengths("XXXXX in program splicing");
     //this.dispatchEvent(new RefreshEvent());
     //
     //this.dataGrid = programs.filter((so) => so.name != null);
@@ -365,9 +368,10 @@ export default class LflTreeView extends LightningElement {
   }
 
   handleSearchKeyword() {
-    const mbgrid = this.template.querySelector("lightning-tree-grid");
-    mbgrid.collapseAll();
-    this.rgvalue = "collapse";
+    // const mbgrid = this.template.querySelector("lightning-tree-grid");
+    // mbgrid.collapseAll();
+
+    //this.rgvalue = "collapse";
     console.log("calling search with parameter " + this.searchValue);
     this.displayGridLengths("XXXXX entry to handleSearch");
     logInfo(
@@ -424,7 +428,10 @@ export default class LflTreeView extends LightningElement {
 
   handleReset(event) {
     //eval("$A.get('e.force:refreshView').fire();");
-    this.rgvalue = "collapse";
+
+    const mbgrid = this.template.querySelector("lightning-tree-grid");
+    mbgrid.collapseAll();
+
     logInfo(
       null,
       `${COMPONENT}: handleReset: Pressed reset`,
@@ -444,22 +451,16 @@ export default class LflTreeView extends LightningElement {
     //     this.initData = JSON.parse(result);
     //     this.displayGridLengths("XXXXX after getJSONTree in handleReset");
 
-    //this.isLoaded = false;
+    // this.isLoaded = false;
     // getJSONTree({
     //   searchStr: "reserved"
     // })
     //   .then((result) => {
-    //     // set @track contacts variable with return contact list from server
-    //     // this.logit(
-    //     //   FINE,
-    //     //   `handleSearchKeyword(): result=${JSON.stringify(result)}`,
-    //     //   `handleSearchKeyword()`
-    //     // );
     //     this.gridData = JSON.parse(result);
     //     this.allData = JSON.parse(result);
     //     this.initData = JSON.parse(result);
     //     this.displayGridLengths("XXXXX after getJSONTree in handleReset");
-    //     //this.isloaded = true;
+    //     this.isloaded = true;
     //   })
     //   .catch((error) => {
     //     const event = new ShowToastEvent({
@@ -471,7 +472,7 @@ export default class LflTreeView extends LightningElement {
     //     // reset contacts var with null
     //   })
     //   .finally(() => {
-    //     //this.isLoaded = true;
+    //     this.isLoaded = true;
     //     this.template.querySelector(
     //       'lightning-input[data-name="search"]'
     //     ).value = "";
@@ -479,6 +480,8 @@ export default class LflTreeView extends LightningElement {
     //       'lightning-input[data-name="filter"]'
     //     ).value = "";
     //   });
+    this.isLoaded = true;
+    this.displayGridLengths("XXXXX after getJSONTree in handleReset");
   }
 
   displayGridLengths(str) {
@@ -493,16 +496,27 @@ export default class LflTreeView extends LightningElement {
       { label: "Expand All", value: "expand" }
     ];
   }
-  handleRGChange(event) {
-    console.log("option" + event.target.value);
-    //this.rgvalue = event.target.value; //This shows me the right option value based on selection
-    const mbgrid = this.template.querySelector("lightning-tree-grid");
-    if (event.target.value == "expand") {
-      console.log("expanding");
-      mbgrid.expandAll();
-    } else {
-      console.log("collapsing");
-      mbgrid.collapseAll();
-    }
+
+  handleCollapse(event) {
+    const grid = this.template.querySelector("lightning-tree-grid");
+    grid.collapseAll();
   }
+
+  handleExpand(event) {
+    const grid = this.template.querySelector("lightning-tree-grid");
+    grid.expandAll();
+  }
+
+  // handleRGChange(event) {
+  //   console.log("XXXXXX option" + event.target.value);
+  //   //this.rgvalue = event.target.value; //This shows me the right option value based on selection
+  //   const mbgrid = this.template.querySelector("lightning-tree-grid");
+  //   if (event.target.value == "expand") {
+  //     console.log("expanding");
+  //     mbgrid.expandAll();
+  //   } else {
+  //     console.log("collapsing");
+  //     mbgrid.collapseAll();
+  //   }
+  // }
 }
