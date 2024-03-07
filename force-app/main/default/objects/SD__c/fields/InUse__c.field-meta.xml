@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>InUse__c</fullName>
     <defaultValue>false</defaultValue>
-    <description
-  >This field is used by the SD Map Tile apex to indicate if any of the Objectives in the SD have been assigned to the Client</description>
+    <description>This field is used by the SD Map Tile apex to indicate if any of the Objectives in the SD have been assigned to the Client</description>
     <externalId>false</externalId>
     <label>InUse</label>
     <trackHistory>false</trackHistory>
