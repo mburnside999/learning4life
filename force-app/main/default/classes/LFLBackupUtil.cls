@@ -76,7 +76,7 @@ public class LFLBackupUtil {
     mail.setSubject(orgName + ': ' + 'BACKUP library cleaned.');
 
     mail.setPlainTextBody(
-      'BackupUtil process completed.\n\nRetention Days=' +
+      'BackupUtil process completed.\n\nNew! Extended Retention Days=' +
         retentionDays +
         '\nRemoved: ' +
         removed +
