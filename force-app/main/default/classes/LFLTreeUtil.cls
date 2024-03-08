@@ -43,7 +43,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, Program__c> programMap = new Map<Id, Program__c>(
       [
-        SELECT id, name, status__c
+        SELECT id, PID__c, name, status__c
         FROM Program__c
         ORDER BY name
       ]
@@ -51,7 +51,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, SD__c> sdMap = new Map<Id, SD__c>(
       [
-        SELECT id, program__c, name, status__c
+        SELECT id, SDID__c, program__c, name, status__c
         FROM SD__c
         ORDER BY name
       ]
@@ -59,7 +59,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, Objective__c> objMap = new Map<Id, Objective__c>(
       [
-        SELECT id, SD__c, name, status__c
+        SELECT id, OID__c, SD__c, name, status__c
         FROM Objective__c
         ORDER BY name
       ]
@@ -101,15 +101,18 @@ public with sharing class LFLTreeUtil {
 
     String pName;
     String pStatus;
+    String pIdentifier;
     for (Id key : programMap.keySet()) {
       //
       //
       pName = (String) programMap.get(key).Name;
+      pIdentifier = (String) programMap.get(key).PID__c;
       pStatus = (String) programMap.get(key).Status__c;
       jsonStr += '{';
       jsonStr += '"label":"' + pName + '",';
       jsonStr += '"IdUrl":"/' + key + '",';
       jsonStr += '"name":"' + pName + '",';
+      jsonStr += '"identifier":"' + pIdentifier + '",';
       jsonStr += '"status":"' + pStatus + '",';
       jsonStr += '"type":"Program",';
       if (progToSDMap.containsKey(key)) {
@@ -155,7 +158,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, SD__c> sdMasterMap = new Map<Id, SD__c>(
       [
-        SELECT id, program__c, name, status__c
+        SELECT id, SDID__c, program__c, name, status__c
         FROM SD__c
         ORDER BY name
       ]
@@ -163,7 +166,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, Program__c> programMasterMap = new Map<Id, Program__c>(
       [
-        SELECT id, name, status__c
+        SELECT id, PID__c, name, status__c
         FROM Program__c
         ORDER BY name
       ]
@@ -171,7 +174,7 @@ public with sharing class LFLTreeUtil {
 
     Map<Id, Objective__c> objectiveMasterMap = new Map<Id, Objective__c>(
       [
-        SELECT id, sd__c, name, status__c
+        SELECT id, OID__c, sd__c, name, status__c
         FROM Objective__c
         ORDER BY name
       ]
@@ -241,15 +244,18 @@ public with sharing class LFLTreeUtil {
 
     String pName;
     String pStatus;
+    String pIdentifier;
     for (Id key : progToSDMap.keySet()) {
       //
       System.debug('key=' + key);
       pName = (String) programMasterMap.get(key).Name;
+      pIdentifier = (String) programMasterMap.get(key).PID__c;
       pStatus = (String) programMasterMap.get(key).Status__c;
       jsonStr += '{';
       jsonStr += '"label":"' + pName + '",';
       jsonStr += '"IdUrl":"/' + key + '",';
       jsonStr += '"name":"' + pName + '",';
+      jsonStr += '"identifier":"' + pIdentifier + '",';
       jsonStr += '"status":"' + pStatus + '",';
       jsonStr += '"type":"Program",';
       if (progToSDMap.containsKey(key)) {
@@ -281,13 +287,16 @@ public with sharing class LFLTreeUtil {
     String sdjsonStr = '[';
     String sdName;
     String sdStatus;
+    String sdIdentifier;
     for (SD__c s : sdlist) {
       sdName = (String) s.Name;
+      sdIdentifier = (String) s.SDID__c;
       sdStatus = (String) s.Status__c;
       sdjsonStr += '{';
       sdjsonStr += '"label":"' + sdName + '",';
       sdjsonStr += '"IdUrl":"/' + s.Id + '",';
       sdjsonStr += '"name":"' + sdName + '",';
+      sdjsonStr += '"identifier":"' + sdIdentifier + '",';
       sdjsonStr += '"status":"' + sdStatus + '",';
       sdjsonStr += '"type":"SD",';
       if (SDToObjMap.containsKey(s.Id)) {
@@ -320,14 +329,17 @@ public with sharing class LFLTreeUtil {
     String ojsonStr = '[';
     String oName;
     String oStatus;
+    String oIdentifier;
     for (Objective__c o : olist) {
       oName = (String) o.Name;
+      oIdentifier = (String) o.OID__c;
       oStatus = (String) o.Status__c;
 
       ojsonStr += '{';
       ojsonStr += '"label":"' + oName + '",';
       ojsonStr += '"IdUrl":"/' + o.Id + '",';
       ojsonStr += '"name":"' + oName + '",';
+      ojsonStr += '"identifier":"' + oIdentifier + '",';
       ojsonStr += '"status":"' + oStatus + '",';
       ojsonStr += '"type":"Objective",';
       ojsonStr += '"_children":[]';

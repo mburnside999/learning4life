@@ -13,6 +13,11 @@ const COLUMNS = [
   },
   {
     type: "text",
+    fieldName: "identifier",
+    label: "Catalog Ref."
+  },
+  {
+    type: "text",
     fieldName: "type",
     label: "Program, SD, Objective"
   },
