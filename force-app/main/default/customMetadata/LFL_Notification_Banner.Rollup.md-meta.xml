@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Rollup</label>
+    <protected>false</protected>
+    <values>
+        <field>Description__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>End__c</field>
+        <value xsi:type="xsd:date">2024-03-14</value>
+    </values>
+    <values>
+        <field>Message__c</field>
+        <value xsi:type="xsd:string">Did you know that Leornian can display Rollup values on records to save you time and provide insights. We&apos;ve added a few samples to your Client records, such as &quot;No of ACQ Objectives&quot; and &quot;No of Active BoC&quot; (they are in the top panel under the client name). It&apos;s automatic and always up to date. Suggestions welcome!</value>
+    </values>
+    <values>
+        <field>NotificationLink__c</field>
+        <value xsi:type="xsd:string">https://l4l.lightning.force.com/lightning/r/Account/0018t000002vfSfAAI/view</value>
+    </values>
+    <values>
+        <field>NotificationText__c</field>
+        <value xsi:type="xsd:string">Take a look on our test client</value>
+    </values>
+    <values>
+        <field>Published__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Start__c</field>
+        <value xsi:type="xsd:date">2024-03-07</value>
+    </values>
+</CustomMetadata>
