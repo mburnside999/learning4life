@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CBOC_Client__c</fullName>
     <externalId>false</externalId>
-    <formula
-  >Client_BOC__r.Client__r.PersonContact.FirstName&amp;&quot; &quot;&amp;Client_BOC__r.Client__r.PersonContact.LastName</formula>
+    <formula>Client_BOC__r.Client__r.PersonContact.FirstName&amp;&quot; &quot;&amp;Client_BOC__r.Client__r.PersonContact.LastName</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>CBOC Client</label>
     <required>false</required>

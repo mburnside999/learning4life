@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Intensity__c</fullName>
     <externalId>false</externalId>
@@ -35,6 +35,11 @@
                 <fullName>5</fullName>
                 <default>false</default>
                 <label>5</label>
+            </value>
+            <value>
+                <fullName>0</fullName>
+                <default>false</default>
+                <label>0</label>
             </value>
         </valueSetDefinition>
     </valueSet>
