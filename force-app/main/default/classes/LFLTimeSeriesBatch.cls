@@ -102,6 +102,8 @@ public class LFLTimeSeriesBatch implements Database.Batchable<sObject>, Database
     insert cotsrulist;
 
     TimeSeries_Log__c endlog = new TimeSeries_Log__c();
+    endlog.ts_count__c = recs;
+    endlog.ts_rollup_count__c = cotsrulist.size();
 
     endlog.comments__c =
       'Successfully processed ' +
