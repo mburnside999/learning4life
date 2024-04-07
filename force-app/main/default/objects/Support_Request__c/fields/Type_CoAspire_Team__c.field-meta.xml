@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_CoAspire_Team__c</fullName>
+    <externalId>false</externalId>
+    <label>Type (CoAspire Team)</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Creating/Onboarding/Giving Access to User(s)</fullName>
+                <default>false</default>
+                <label>Creating/Onboarding/Giving Access to User(s)</label>
+            </value>
+            <value>
+                <fullName>Training Users/Writing Knowledge Article</fullName>
+                <default>false</default>
+                <label>Training Users/Writing Knowledge Article</label>
+            </value>
+            <value>
+                <fullName>Simple Customisations (e.g. Fields, Updating Profiles, Reports, Dashboards)</fullName>
+                <default>false</default>
+                <label>Simple Customisations (e.g. Fields, Updating Profiles, Reports, Dashboards)</label>
+            </value>
+            <value>
+                <fullName>More Complex Customisations (e.g. Automations, Lightning App Pages)</fullName>
+                <default>false</default>
+                <label>More Complex Customisations (e.g. Automations, Lightning App Pages)</label>
+            </value>
+            <value>
+                <fullName>Technical Support from a Development Team to Fix a Bug</fullName>
+                <default>false</default>
+                <label>Technical Support from a Development Team to Fix a Bug</label>
+            </value>
+            <value>
+                <fullName>Feature Request for Development Team</fullName>
+                <default>false</default>
+                <label>Feature Request for Development Team</label>
+            </value>
+            <value>
+                <fullName>All Other Enquiries</fullName>
+                <default>false</default>
+                <label>All Other Enquiries</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
