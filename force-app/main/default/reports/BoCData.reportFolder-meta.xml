@@ -2,8 +2,8 @@
 <ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
     <folderShares>
         <accessLevel>Manage</accessLevel>
-        <sharedTo>mikeb@lfl.hyper</sharedTo>
+        <sharedTo>claire@l4l.prod</sharedTo>
         <sharedToType>User</sharedToType>
     </folderShares>
-    <name>LFL</name>
+    <name>BoC Data</name>
 </ReportFolder>

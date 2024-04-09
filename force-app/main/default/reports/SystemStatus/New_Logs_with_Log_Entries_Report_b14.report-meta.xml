@@ -1,44 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>CUST_NAME</field>
+        <field>CHILD_NAME</field>
+    </columns>
+    <columns>
+        <field>LogEntry__c.EntryScenario__c</field>
+    </columns>
+    <columns>
+        <field>Log__c.Comments__c</field>
+    </columns>
+    <columns>
+        <field>LogEntry__c.Message__c</field>
+    </columns>
+    <columns>
+        <field>Log__c.Status__c</field>
     </columns>
     <columns>
         <field>CUST_CREATED_DATE</field>
     </columns>
+    <columns>
+        <field>LogEntry__c.Timestamp__c</field>
+    </columns>
     <filter>
         <criteriaItems>
-            <column>TimeSeries_Log__c.TS_Log_DateTime__c</column>
+            <column>Log__c.TotalERRORLogEntries__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>greaterThan</operator>
+            <value>0</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Log__c.Status__c</column>
             <columnToColumn>false</columnToColumn>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>LAST_WEEK</value>
-        </criteriaItems>
-        <criteriaItems>
-            <column>TimeSeries_Log__c.Comments__c</column>
-            <columnToColumn>false</columnToColumn>
-            <isUnlocked>true</isUnlocked>
-            <operator>contains</operator>
-            <value>processed</value>
+            <value>New</value>
         </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <field>TimeSeries_Log__c.TS_Log_DateTime__c</field>
+        <dateGranularity>Day</dateGranularity>
+        <field>CUST_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
-    <name>TimeSeries Check Last Run</name>
+    <name>Detailed Error Log Entries</name>
     <params>
         <name>co</name>
         <value>1</value>
     </params>
-    <reportType>CustomEntity$TimeSeries_Log__c</reportType>
+    <reportType>CustomEntityCustomEntity$Log__c$LogEntry__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
-        <dateColumn>TimeSeries_Log__c.TS_Log_DateTime__c</dateColumn>
+        <dateColumn>Log__c.ClosedDate__c</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
     </timeFrameFilter>
 </Report>
