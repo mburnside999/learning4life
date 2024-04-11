@@ -673,7 +673,7 @@ Various,O-006840,Active,SD-000228,Instruction
 (Person) I want (activity),O-000143,Active,SD-000054,Communication opportunity
 (Person) I want (item) please,O-000146,Active,SD-000054,Communication opportunity
 (Person) I want (activity) please,O-000144,Active,SD-000054,Communication opportunity
-"1,2,3",O-000218,Active,SD-000054,Communication opportunity
+1 2 3,O-000218,Active,SD-000054,Communication opportunity
 2 word,O-000368,Active,SD-000054,Communication opportunity
 3 words,O-000468,Active,SD-000054,Communication opportunity
 4 words,O-000521,Active,SD-000054,Communication opportunity
@@ -2640,8 +2640,8 @@ Simon says,O-005753,Active,SD-000440,Social game
 Hopscotch,O-003517,Active,SD-000440,Social game
 Musical chairs,O-004375,Active,SD-000440,Social game
 Marco polo,O-004234,Active,SD-000440,Social game
-"Heads down, thumbs up",O-003390,Active,SD-000440,Social game
-"Red light, green light",O-005331,Active,SD-000440,Social game
+Heads down thumbs up,O-003390,Active,SD-000440,Social game
+Red light green light,O-005331,Active,SD-000440,Social game
 Doggy doggy,O-002133,Active,SD-000440,Social game
 Name,O-004417,Active,SD-000339,Q/A
 Age,O-000653,Active,SD-000339,Q/A
@@ -6081,7 +6081,7 @@ Ring stacker,O-005391,Active,SD-000234,Instruction w contextual cue
 20 seconds,O-000380,Active,SD-000457,Ta
 30 seconds,O-000481,Active,SD-000457,Ta
 1 minute,O-000173,Active,SD-000457,Ta
-"Dot, dot, dot",O-002155,Active,SD-000244,Language exposure
+Dot dot dot,O-002155,Active,SD-000244,Language exposure
 Scribble,O-005554,Active,SD-000244,Language exposure
 Circle,O-001663,Active,SD-000244,Language exposure
 Wavy,O-007171,Active,SD-000244,Language exposure
@@ -6763,7 +6763,7 @@ Your (generalised),O-007417,Active,SD-000354,Rec. My/Your
 F1 Discrimination,O-002513,Active,SD-000308,Planned model w item
 F4 Discrimination,O-002578,Active,SD-000308,Planned model w item
 When we eat we use (cutlery),O-007222,Active,SD-000278,Model rule
-"When we go outside, stay with (person)",O-007223,Active,SD-000278,Model rule
+When we go outside stay with (person),O-007223,Active,SD-000278,Model rule
 Loud vs quiet,O-004185,Active,SD-000487,VI
 Generalised,O-003093,Active,SD-000504,Volume
 Generalised �������� words,O-003116,Active,SD-000487,VI
@@ -6902,7 +6902,7 @@ Aquarium,O-000772,Active,SD-000117,Exposure
 Plane,O-005031,Active,SD-000117,Exposure
 5 finger breathing,O-000533,Active,SD-000276,Model
 String counting,O-006045,Active,SD-000276,Model
-"Stretch up, flop down",O-006044,Active,SD-000276,Model
+Stretch up flop down,O-006044,Active,SD-000276,Model
 Cheetah vs. Sloth,O-001602,Active,SD-000276,Model
 Facing person within 1m,O-002607,Active,SD-000190,Getting attention
 (animal) says (sound),O-000117,Active,SD-000449,Statement
