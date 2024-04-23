@@ -40,17 +40,19 @@ const SCENARIO = "View Catalog Tree - LWC";
 const UI_EVENT_TRACKING_SCENARIO = "LWC UI: lflTreeView";
 const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: lflTreeView";
 
+// set a upper limit for filtering
+const MAX_FILTER_RECORDS = 500;
+
 export default class LflTreeView extends LightningElement {
   gridData = [];
   allData = [];
   initData = [];
 
-  o = 0;
   gridColumns = COLUMNS;
   @api lwcTitle = "Catalog Browser";
   @api isLoaded = false;
-  objtotal;
-  rgvalue = "collapse";
+  totalobjectives;
+  showFilter;
 
   @wire(getJSONTree, { reserved: "reserved" })
   wiredJSON(value) {
@@ -60,7 +62,7 @@ export default class LflTreeView extends LightningElement {
       this.gridData = JSON.parse(data);
       this.allData = JSON.parse(data);
       this.initData = JSON.parse(data);
-      this.displayGridLengths("XXXX @wire");
+      //this.displayGridLengths("XXXX @wire");
 
       this.error = undefined;
       this.isLoaded = true;
@@ -116,8 +118,8 @@ export default class LflTreeView extends LightningElement {
   }
 
   get disableFilter() {
-    if (this.objtotal > 500) {
-      console.log("more than 500 records.");
+    if (this.totalobjectives > MAX_FILTER_RECORDS) {
+      console.log(`more than ${MAX_FILTER_RECORDS} records, disabling filter.`);
       return true;
     } else {
       return false;
@@ -125,262 +127,198 @@ export default class LflTreeView extends LightningElement {
   }
 
   get catalogShape() {
-    let y = [];
-    let z = [];
-    let ptotal = this.gridData.length;
-    let sdtotal = 0;
-    let objtotal = 0;
+    let _sdarray = [];
+    let _objarray = [];
+    let _totalprogs = this.gridData.length;
+    let _totalsds = 0;
+    let _totalobjectives = 0;
 
-    for (let i = 0; i < ptotal; i++) {
-      y = this.gridData[i]._children;
-      sdtotal += y.length;
-      for (let j = 0; j < y.length; j++) {
-        z = y[j]._children;
-        objtotal += z.length;
+    for (let i = 0; i < _totalprogs; i++) {
+      _sdarray = this.gridData[i]._children;
+      _totalsds += _sdarray.length;
+      for (let j = 0; j < _sdarray.length; j++) {
+        _objarray = _sdarray[j]._children;
+        _totalobjectives += _objarray.length;
       }
     }
-    console.log("ptotal=" + ptotal);
-    console.log("sdtotal=" + sdtotal);
-    console.log("objtotal=" + objtotal);
-    this.objtotal = objtotal;
+    console.log("_totalprogs=" + _totalprogs);
+    console.log("_totalsds=" + _totalsds);
+    console.log("_totalobjectives=" + _totalobjectives);
+    this.totalobjectives = _totalobjectives;
     return (
       "Displaying " +
-      ptotal +
+      _totalprogs +
       " Programs, " +
-      sdtotal +
+      _totalsds +
       "  SDs, " +
-      objtotal +
+      _totalobjectives +
       " Objectives"
     );
   }
 
   handleFilterKeyInput(event) {
-    const mbgrid = this.template.querySelector("lightning-tree-grid");
-    mbgrid.collapseAll();
-    console.log("AAAAA " + event.target.value.toLowerCase());
-    this.rgvalue = "collapse";
+    const lightning_tree_grid = this.template.querySelector(
+      "lightning-tree-grid"
+    );
+    lightning_tree_grid.collapseAll();
     this.gridData = JSON.parse(JSON.stringify(this.allData));
-    //const filterKey = event.target.value.toLowerCase();
     const filterKey = event.target.value;
-    this.displayGridLengths("XXXX handleFilterKey");
-    //this.gridData = this.allData;
     if (filterKey.length == 0) {
-      this.displayGridLengths("XXXX filterkey length 0");
-      // if (this.searchValue) {
-      //   this.handleSearchKeyword();
-      // }
       this.gridData = JSON.parse(JSON.stringify(this.allData));
-      this.rgvalue = "collapse";
     }
 
-    console.log("CATALOG");
-
     let searchString = filterKey;
+    console.log("looking for searchstring= " + searchString);
 
-    console.log("looking for " + searchString);
-    let programs = [];
-    //test
-    programs = this.gridData;
-    // programs = JSON.parse(JSON.stringify(this.allData));
+    let _programs = [];
+    _programs = this.gridData;
 
-    let program;
-    let sds;
-    let sd;
-    let obj;
-    let objectives;
+    let _program;
+    let _sds;
+    let _sd;
+    let _obj;
+    let _objectives;
 
-    let progkeep;
-    let sdkeep;
-    let progarray = [];
-    let sdarray = [];
-    let objarray = [];
+    //keep flags
+    let _keepprogram;
+    let _keepsd;
 
-    for (let i = 0; i < programs.length; i++) {
-      sdkeep = false;
-      progkeep = false;
-      program = programs[i];
-      console.log("\nprogram: " + program.name);
+    //arrays
+    let _progarray = [];
+    let _sdarray = [];
+    let _objarray = [];
 
-      sds = program._children;
-      sdarray = [];
-      for (let x = 0; x < sds.length; x++) {
-        sd = sds[x];
-        if (sd.name.includes(searchString)) {
-          progkeep = true;
+    for (let i = 0; i < _programs.length; i++) {
+      _keepsd = false;
+      _keepprogram = false;
+      _program = _programs[i];
+
+      _sds = _program._children;
+      _sdarray = [];
+      for (let x = 0; x < _sds.length; x++) {
+        _sd = _sds[x];
+        if (_sd.name.includes(searchString)) {
+          _keepprogram = true;
         }
 
-        console.log("==> sd: " + sd.name);
-        sdkeep = false;
-        objectives = sd._children;
-        objarray = [];
-        for (let y = 0; y < objectives.length; y++) {
-          obj = objectives[y];
-          console.log("candidate: " + JSON.stringify(obj));
+        console.log("==> sd: " + _sd.name);
+        _keepsd = false;
+        _objectives = _sd._children;
+        _objarray = [];
+        for (let y = 0; y < _objectives.length; y++) {
+          _obj = _objectives[y];
+          console.log("candidate: " + JSON.stringify(_obj));
           //console.log('considering ' + obj.name);
-          if (obj.name.toLowerCase().includes(searchString.toLowerCase())) {
+          if (_obj.name.toLowerCase().includes(searchString.toLowerCase())) {
             console.log(
               "y=" +
                 y +
                 " LEAF MATCH! leaf contains obj: " +
-                obj.name +
-                " setting sdkeep=true and progkeep=true"
+                _obj.name +
+                " setting _keepsd=true and _keepprogram=true"
             );
-            sdkeep = true;
-            progkeep = true;
+            _keepsd = true;
+            _keepprogram = true;
           } else {
             console.log(
               "y=" +
                 y +
                 " NO LEAF MATCH, pushing leaf to objarray -  " +
-                obj.name +
-                ", currently sdkeep=" +
-                sdkeep +
-                " progkeep=" +
-                progkeep
+                _obj.name +
+                ", currently _keepsd=" +
+                _keepsd +
+                " _keepprogram=" +
+                _keepprogram
             );
-            objarray.push(y);
+            _objarray.push(y);
           }
         }
 
-        //console.log("Process object deletions,obj array = " + objarray);
-        //console.log("Reversing...");
-
-        let reversedobjectarray = [];
-
-        for (let o = objarray.length - 1; o >= 0; o--) {
-          const valueAtIndex = objarray[o];
-          reversedobjectarray.push(valueAtIndex);
+        let _reversedobjectarray = [];
+        for (let o = _objarray.length - 1; o >= 0; o--) {
+          const valueAtIndex = _objarray[o];
+          _reversedobjectarray.push(valueAtIndex);
         }
 
-        //console.log("reversedobjectarray=" + reversedobjectarray);
-
-        for (let o = 0; o < reversedobjectarray.length; o++) {
-          let ref = reversedobjectarray[o];
+        for (let o = 0; o < _reversedobjectarray.length; o++) {
+          let _ref = _reversedobjectarray[o];
           //console.log("splicing " + JSON.stringify(sds[x]._children[ref]));
-          programs[i]._children[x]._children.splice(ref, 1);
-          this.gridData = programs;
+          _programs[i]._children[x]._children.splice(_ref, 1);
+          this.gridData = _programs;
         }
 
         console.log("Parent Analysis");
-        console.log("currently sdkeep = " + sdkeep);
+        console.log("currently _keepsd = " + _keepsd);
 
-        if (!sdkeep) {
-          console.log("sdkeep is FALSE");
-          if (sds[x].name.toLowerCase().includes(searchString.toLowerCase())) {
-            sdkeep = true;
-            progkeep = true;
-
-            // //console.log(
-            //   "PARENT found, will keep sd, adjusted keep values: " +
-            //     sds[x].name +
-            //     " has searchString, sdkeep=" +
-            //     sdkeep +
-            //     " progkeep=" +
-            //     progkeep
-            // );
+        if (!_keepsd) {
+          console.log("_keepsd is FALSE");
+          if (_sds[x].name.toLowerCase().includes(searchString.toLowerCase())) {
+            _keepsd = true;
+            _keepprogram = true;
           } else {
-            sdkeep = false;
-            //console.log(
-            //"PARENT " + sds[x].name + " does not contain " + searchString
-            //);
+            _keepsd = false;
           }
         }
 
         //sdkeep still false
-        if (sdkeep == false) {
-          //console.log("SD SPLICE" + this.gridData[i]._children[x].name);
-          //console.log("SD SPLICE pushing _children[" + x + "] to sdarray");
-          sdarray.push(x);
+        if (_keepsd == false) {
+          _sdarray.push(x);
         } else {
-          //console.log("Keeping " + programs[i]._children[x].name);
         }
       }
 
-      //console.log("Process SD deletions, sdarray = " + sdarray);
-
-      //console.log("Reversing...");
-
-      let reversedsdarray = [];
-
-      for (let o = sdarray.length - 1; o >= 0; o--) {
-        const valueAtIndex = sdarray[o];
-        reversedsdarray.push(valueAtIndex);
+      let _reversedsdarray = [];
+      for (let o = _sdarray.length - 1; o >= 0; o--) {
+        const valueAtIndex = _sdarray[o];
+        _reversedsdarray.push(valueAtIndex);
       }
-      console.log("reversedsdarray=" + reversedsdarray);
-
-      for (let sd = 0; sd < reversedsdarray.length; sd++) {
-        let ref = reversedsdarray[sd];
-        console.log("splice " + JSON.stringify(sds[ref]));
-        programs[i]._children.splice(ref, 1);
-        this.gridData = programs;
+      console.log("_reversedsdarray=" + _reversedsdarray);
+      for (let sd = 0; sd < _reversedsdarray.length; sd++) {
+        let ref = _reversedsdarray[sd];
+        console.log("splice " + JSON.stringify(_sds[ref]));
+        _programs[i]._children.splice(ref, 1);
+        this.gridData = _programs;
       }
 
       if (
         this.gridData[i].name.toLowerCase().includes(searchString.toLowerCase())
       ) {
-        //console.log("Program name contains search string, keeping");
-        progkeep = true;
+        _keepprogram = true;
       }
 
-      if (progkeep == false) {
-        progarray.push(i);
+      if (_keepprogram == false) {
+        _progarray.push(i);
       }
     }
 
-    //console.log("Process Program deletions, progarray = " + progarray);
-    //console.log("Reversing...");
+    let _reversedprogarray = [];
 
-    let reversedprogarray = [];
-
-    for (let p = progarray.length - 1; p >= 0; p--) {
-      const valueAtIndex = progarray[p];
-      reversedprogarray.push(valueAtIndex);
+    for (let p = _progarray.length - 1; p >= 0; p--) {
+      const valueAtIndex = _progarray[p];
+      _reversedprogarray.push(valueAtIndex);
     }
 
-    console.log("reversed progarray=" + reversedprogarray);
+    console.log("reversed progarray=" + _reversedprogarray);
 
-    for (let p = 0; p < reversedprogarray.length; p++) {
-      let ref = reversedprogarray[p];
-      // console.log("SPLICING PROG" + JSON.stringify(programs[ref]));
-      programs.splice(ref, 1);
-      this.gridData = programs;
+    for (let p = 0; p < _reversedprogarray.length; p++) {
+      let _progref = _reversedprogarray[p];
+      _programs.splice(_progref, 1);
+      this.gridData = _programs;
     }
 
-    //   console.log("this.gridData.length=" + this.gridData.length);
-    //   console.log("programs.length=" + programs.length);
-    //   console.log(JSON.stringify(programs));
-    //   console.log("this.gridData=programs");
-    //   this.gridData = programs;
-    // console.log("this.gridData.length=" + this.gridData.length);
-    //console.log("this.gridData" + JSON.stringify(this.gridData));
-    //this.displayGridLengths("XXXXX in program splicing");
-    //this.dispatchEvent(new RefreshEvent());
-    //
-    //this.dataGrid = programs.filter((so) => so.name != null);
-
-    this.rgvalue = "collapse";
-    this.gridData = programs.filter((so) => {
+    this.gridData = _programs.filter((so) => {
       //fakery to get a ui refresh
       return (
         so.name == null || so.name.toLowerCase().includes(so.name.toLowerCase())
       );
     });
-    // console.log("@filter initData.length=" + this.initData.length);
-    // console.log("@filter gridData.length=" + this.gridData.length);
-    // console.log("@filter allData.length=" + this.allData.length);
-    //
-    // }
   }
 
   handleSearchKeyword() {
-    // const mbgrid = this.template.querySelector("lightning-tree-grid");
-    // mbgrid.collapseAll();
-
-    //this.rgvalue = "collapse";
     this.template.querySelector('lightning-input[data-name="filter"]').value =
       "";
     console.log("calling search with parameter " + this.searchValue);
-    this.displayGridLengths("XXXXX entry to handleSearch");
+    //this.displayGridLengths("XXXXX entry to handleSearch");
     logInfo(
       null,
       `${COMPONENT}: handleSearchKeyword: ${this.searchValue}`,
@@ -399,15 +337,9 @@ export default class LflTreeView extends LightningElement {
       searchStr: this.searchValue
     })
       .then((result) => {
-        // set @track contacts variable with return contact list from server
-        // this.logit(
-        //   FINE,
-        //   `handleSearchKeyword(): result=${JSON.stringify(result)}`,
-        //   `handleSearchKeyword()`
-        // );
         this.gridData = JSON.parse(result);
         this.allData = JSON.parse(result);
-        this.displayGridLengths("XXXXX after getJSONFiltered in handleSearch");
+        //this.displayGridLengths("XXXXX after getJSONFiltered in handleSearch");
       })
       .catch((error) => {
         logError(
@@ -434,10 +366,10 @@ export default class LflTreeView extends LightningElement {
   }
 
   handleReset(event) {
-    //eval("$A.get('e.force:refreshView').fire();");
-
-    const mbgrid = this.template.querySelector("lightning-tree-grid");
-    mbgrid.collapseAll();
+    const lightning_tree_grid = this.template.querySelector(
+      "lightning-tree-grid"
+    );
+    lightning_tree_grid.collapseAll();
 
     logInfo(
       null,
@@ -445,7 +377,6 @@ export default class LflTreeView extends LightningElement {
       `${UI_EVENT_TRACKING_SCENARIO}`,
       `${TAG}`
     ); // adoption tracking
-
     this.template.querySelector('lightning-input[data-name="search"]').value =
       "";
     this.template.querySelector('lightning-input[data-name="filter"]').value =
@@ -454,54 +385,15 @@ export default class LflTreeView extends LightningElement {
     this.gridData = JSON.parse(JSON.stringify(this.initData));
     this.allData = JSON.parse(JSON.stringify(this.initData));
 
-    //     this.allData = JSON.parse(result);
-    //     this.initData = JSON.parse(result);
-    //     this.displayGridLengths("XXXXX after getJSONTree in handleReset");
-
-    // this.isLoaded = false;
-    // getJSONTree({
-    //   searchStr: "reserved"
-    // })
-    //   .then((result) => {
-    //     this.gridData = JSON.parse(result);
-    //     this.allData = JSON.parse(result);
-    //     this.initData = JSON.parse(result);
-    //     this.displayGridLengths("XXXXX after getJSONTree in handleReset");
-    //     this.isloaded = true;
-    //   })
-    //   .catch((error) => {
-    //     const event = new ShowToastEvent({
-    //       title: "Error",
-    //       variant: "error",
-    //       message: error.body.message
-    //     });
-    //     this.dispatchEvent(event);
-    //     // reset contacts var with null
-    //   })
-    //   .finally(() => {
-    //     this.isLoaded = true;
-    //     this.template.querySelector(
-    //       'lightning-input[data-name="search"]'
-    //     ).value = "";
-    //     this.template.querySelector(
-    //       'lightning-input[data-name="filter"]'
-    //     ).value = "";
-    //   });
     this.isLoaded = true;
-    this.displayGridLengths("XXXXX after getJSONTree in handleReset");
+    //this.displayGridLengths("XXXXX after getJSONTree in handleReset");
   }
 
+  //debugging helper
   displayGridLengths(str) {
     console.log(str + ": initData.length=" + this.initData.length);
     console.log(str + ": gridData.length=" + this.gridData.length);
     console.log(str + ": allData.length=" + this.allData.length);
-  }
-
-  get rgoptions() {
-    return [
-      { label: "Collapse All", value: "collapse" },
-      { label: "Expand All", value: "expand" }
-    ];
   }
 
   handleCollapse(event) {
@@ -513,17 +405,4 @@ export default class LflTreeView extends LightningElement {
     const grid = this.template.querySelector("lightning-tree-grid");
     grid.expandAll();
   }
-
-  // handleRGChange(event) {
-  //   console.log("XXXXXX option" + event.target.value);
-  //   //this.rgvalue = event.target.value; //This shows me the right option value based on selection
-  //   const mbgrid = this.template.querySelector("lightning-tree-grid");
-  //   if (event.target.value == "expand") {
-  //     console.log("expanding");
-  //     mbgrid.expandAll();
-  //   } else {
-  //     console.log("collapsing");
-  //     mbgrid.collapseAll();
-  //   }
-  // }
 }
