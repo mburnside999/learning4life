@@ -294,6 +294,7 @@ export default class L4lGetSetSessionBOC extends LightningElement {
       `${SCENARIO}`,
       `${TAG}`
     );
+
     getSessionBOC({ sess: this.recordId })
       .then((result) => {
         this.sessionboc = result.map((row) => ({
