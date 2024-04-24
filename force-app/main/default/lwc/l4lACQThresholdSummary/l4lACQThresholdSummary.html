@@ -1,12 +1,12 @@
 <template>
-  <lightning-card title="Threshold Analysis - Skills Acquired Over Time">
+  <lightning-card title={lwcTitle}>
     <div class="c-container">
       <lightning-layout>
         <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
-            Threshold 1
+            Contact Hours
             <lightning-combobox
               name="t1"
               label="Threshold-1 (Hrs)"
@@ -18,6 +18,30 @@
           </div>
         </lightning-layout-item>
 
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            Contact Hours Status
+            <template if:true={reachedt1}>
+              <div class="slds-text-color_success">Reached</div></template
+            >
+
+            <template if:false={reachedt1}>
+              <div class="slds-text-color_error">Not Reached Yet</div></template
+            >
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small">
+          <div
+            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
+          >
+            Actual Hours
+            <div class="slds-text-color_success">
+              {threshold1.actualHrsAtThreshold}
+            </div>
+          </div>
+        </lightning-layout-item>
         <!-- <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
@@ -38,49 +62,23 @@
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
             Acquired Skills
-            <div class="slds-text-color_default">
+            <div class="slds-text-color_success">
               {threshold1.acquiredTotal}
             </div>
           </div>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small">
-          <div
-            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
-          >
-            Actual Hrs.
-            <div class="slds-text-color_default">
-              {threshold1.actualHrsAtThreshold}
-            </div>
-          </div>
-        </lightning-layout-item>
-        <lightning-layout-item padding="around-small">
-          <div
-            class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
-          >
-            T1 Status
-            <template if:true={reachedt1}>
-              <div class="slds-text-color_success">Reached.</div></template
-            >
-
-            <template if:false={reachedt1}>
-              <div class="slds-text-color_error">
-                Not Reached Yet.
-              </div></template
-            >
-          </div>
-        </lightning-layout-item>
 
         <lightning-layout-item padding="around-small">
           <div
             class="custom-box slds-box slds-var-p-around_medium slds-text-align_center"
           >
+            Reached Date / Latest Date
+
             <template if:true={reachedt1}>
-              T1 Date Achieved
               <div class="slds-text-color_success">{t1DateStr}</div></template
             >
 
             <template if:false={reachedt1}>
-              Latest Session
               <div class="slds-text-color_error">{t1DateStr}</div></template
             >
           </div>
@@ -106,11 +104,6 @@
     </div>
   </lightning-card>
   <lightning-layout>
-    <lightning-layout-item padding="around-small">
-      <lightning-card>
-        <svg class="histo" lwc:dom="manual"></svg>
-      </lightning-card>
-    </lightning-layout-item>
     <lightning-layout-item>
       <lightning-card>
         <lightning-datatable
@@ -120,6 +113,11 @@
           columns={columns}
         >
         </lightning-datatable>
+      </lightning-card>
+    </lightning-layout-item>
+    <lightning-layout-item padding="around-small">
+      <lightning-card>
+        <svg class="histo" lwc:dom="manual"></svg>
       </lightning-card>
     </lightning-layout-item>
   </lightning-layout>

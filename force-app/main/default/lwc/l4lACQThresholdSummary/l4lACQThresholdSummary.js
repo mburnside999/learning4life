@@ -17,6 +17,8 @@ const columns = [
 ];
 export default class L4lACQThresholdSummary extends LightningElement {
   @api recordId = "0018t000002vfSfAAI"; //Andy
+  @api lwcTitle = "Acquired Skills Vs. Contact Hours";
+
   threshold1 = [];
   t1data = [];
   thresholdHrs;
@@ -159,7 +161,7 @@ export default class L4lACQThresholdSummary extends LightningElement {
     this.xAxisScale = Math.ceil(_max * 1.2);
 
     // set the dimensions and margins of the graph
-    var margin = { top: 50, right: 30, bottom: 60, left: 200 },
+    var margin = { top: 30, right: 30, bottom: 60, left: 200 },
       width = 900 - margin.left - margin.right,
       height = 600 - margin.top - margin.bottom;
 
@@ -233,6 +235,15 @@ export default class L4lACQThresholdSummary extends LightningElement {
     //   .style("fill", "grey")
     //   .style("max-width", 400)
     //   .text("Threshold Analysis");
+
+    svg
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", -10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px")
+      .style("fill", "grey")
+      .text(`Program Names Vs. # Acquired Skills`);
 
     svg
       .append("text")
