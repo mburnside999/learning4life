@@ -4,6 +4,12 @@ name: CI-LFLDEVPRO
 # Definition when the workflow should run
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "sfdx-project.json"
+      - "README.md"
 
 # Jobs to be executed
 jobs:
