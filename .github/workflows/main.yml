@@ -18,12 +18,12 @@ jobs:
     steps:
       # Checkout the code in the pull request
       - name: "Checkout source code"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Cache node_modules to speed up the process
       - name: Restore node_modules cache
         id: cache-npm
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: npm-${{ hashFiles('**/package-lock.json') }}
@@ -58,7 +58,7 @@ jobs:
           ~/sfdx/bin/sfdx version
       # Checkout the source code
       - name: "Checkout source code"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Store secret for review sandbox
       - name: "Populate auth file with LFL_PARTIAL_SANDBOX_URL secret"
