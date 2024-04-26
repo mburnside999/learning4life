@@ -1,32 +1,32 @@
 <template>
   <div class="picklistBlock" id="picklist">
-    <div if:true={showPicklist} class="picklist-container">
+    <div if:true="{showPicklist}" class="picklist-container">
       <lightning-combobox
         class="slds-popover slds-popover_edit slds-popover__body"
-        variant={variant}
-        name={name}
-        label={label}
-        value={value}
-        placeholder={placeholder}
-        options={options}
-        onchange={handleChange}
-        onblur={handleBlur}
+        variant="{variant}"
+        name="{name}"
+        label="{label}"
+        value="{value}"
+        placeholder="{placeholder}"
+        options="{options}"
+        onchange="{handleChange}"
+        onblur="{handleBlur}"
         dropdown-alignment="auto"
       >
       </lightning-combobox>
     </div>
     <div
-      if:false={showPicklist}
+      if:false="{showPicklist}"
       class="slds-table_edit_container slds-is-relative"
     >
       <span class="slds-grid slds-grid_align-spread slds-cell-edit">
-        <span class="slds-truncate" title={value}>{value}</span>
+        <span class="slds-truncate" title="{value}">{value}</span>
         <button
-          data-id={context}
+          data-id="{context}"
           class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small"
           tabindex="-1"
           title="Edit"
-          onclick={handleClick}
+          onclick="{handleClick}"
         >
           <svg
             class="slds-button__icon slds-button__icon_hint slds-button__icon_lock slds-button__icon_small slds-button__icon_edit slds-icon slds-icon-text-default slds-icon_xx-small"

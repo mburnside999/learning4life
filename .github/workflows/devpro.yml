@@ -1,5 +1,5 @@
 # A Unique name for this workflow
-name: CI-LFLPartialSandbox-DEPRECATED
+name: CI-LFLDEVPRO
 
 # Definition when the workflow should run
 on:
@@ -55,37 +55,37 @@ jobs:
         uses: actions/checkout@v4
 
       # Store secret for review sandbox
-      - name: "Populate auth file with LFL_PARTIAL_SANDBOX_URL secret"
+      - name: "Populate auth file with LFL_DEVPRO_SANDBOX_URL secret"
         shell: bash
         run: |
-          echo ${{ secrets.LFL_PARTIAL_SANDBOX_URL}} > ./LFL_PARTIAL_SANDBOX_URL.txt
-          secretFileSize=$(wc -c "./LFL_PARTIAL_SANDBOX_URL.txt" | awk '{print $1}')
+          echo ${{ secrets.LFL_DEVPRO_SANDBOX_URL}} > ./LFL_DEVPRO_SANDBOX_URL.txt
+          secretFileSize=$(wc -c "./LFL_DEVPRO_SANDBOX_URL.txt" | awk '{print $1}')
           if [ $secretFileSize == 1 ]; then
-              echo "Missing LFL_PARTIAL_SANDBOX_URL secret. Is this workflow running on a fork?";
+              echo "Missing LFL_DEVPRO_SANDBOX_URL secret. Is this workflow running on a fork?";
               exit 1;
           fi
       # Authenticate sandbox
       - name: "Authenticate Sandbox"
-        run: sf org login sfdx-url --sfdx-url-file ./LFL_PARTIAL_SANDBOX_URL.txt --alias LFLHyperPARTIAL --set-default
+        run: sf org login sfdx-url --sfdx-url-file ./LFL_DEVPRO_SANDBOX_URL.txt --alias LFLDEVPRO --set-default
 
       # Run Deploy Custom Objects
       #- name: "Deploy Custom Objects"
-      # run: sf project deploy start --metadata "CustomObject:Client_Objective__c, CustomObject:Client_Objective_TimeSeries__c,CustomObject:TimeSeries_Log__c,CustomObject:Incidental_Data__c,CustomObject:NDIS_Report__c,CustomObject:Objective__c,CustomObject:Program__c,CustomObject:SD__c,CustomObject:Session__c,CustomObject:Session_Obj__c,CustomObject:Session_Statistics__c" -u LFLHyperPARTIAL
+      # run: sf project deploy start --metadata "CustomObject:Client_Objective__c, CustomObject:Client_Objective_TimeSeries__c,CustomObject:TimeSeries_Log__c,CustomObject:Incidental_Data__c,CustomObject:NDIS_Report__c,CustomObject:Objective__c,CustomObject:Program__c,CustomObject:SD__c,CustomObject:Session__c,CustomObject:Session_Obj__c,CustomObject:Session_Statistics__c" -u LFLDEVPRO
 
       # Run Deploy CachePartitions
       - name: "Cache Partitions"
-        run: sf project deploy start --metadata PlatformCachePartition --target-org LFLHyperPARTIAL
+        run: sf project deploy start --metadata PlatformCachePartition --target-org LFLDEVPRO
 
       # Run Deploy CustomMetadata
       - name: "Custom Metadata"
-        run: sf project deploy start --metadata CustomMetadata --target-org LFLHyperPARTIAL
+        run: sf project deploy start --metadata CustomMetadata --target-org LFLDEVPRO
 
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
         run: >
           sf project deploy start --metadata AuraDefinitionBundle 
           --metadata ApexClass --metadata ApexTrigger --metadata Flow 
-          --metadata LightningMessageChannel --target-org LFLHyperPARTIAL 
+          --metadata LightningMessageChannel --target-org LFLDEVPRO 
           --test-level RunSpecifiedTests 
           --tests TestL4LController TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil 
           TestLFLSDWrapper TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper 
@@ -99,7 +99,7 @@ jobs:
 
       # Run Deploy LWC
       - name: "Deploy LWC"
-        run: sf project deploy start --metadata LightningComponentBundle --target-org LFLHyperPARTIAL
+        run: sf project deploy start --metadata LightningComponentBundle --target-org LFLDEVPRO
 
       # Run Run Apex tests
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
@@ -114,7 +114,7 @@ jobs:
           TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster 
           TestLFLInvocableListUnusedObj TestL4LStagesByArea TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler 
           TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler TestLFLTreeUtil 
-          --target-org LFLHyperPARTIAL --code-coverage --result-format human --output-dir ./tests/apex -w 20
+          --target-org LFLDEVPRO --code-coverage --result-format human --output-dir ./tests/apex -w 20
       # Delete temporary test file that Codecov is unable to parse
       #- name: "Delete coverage file (temporary step)"
       #  run: rm ./tests/apex/test-result-707*-codecoverage.json
