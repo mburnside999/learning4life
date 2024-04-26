@@ -15,6 +15,14 @@
         <value xsi:type="xsd:string">Hi everyone from the Mikes! We are in the process of updating the chart and screen labels so some screens may look a little different. Thanks for your support this year and have a great Christmas!</value>
     </values>
     <values>
+        <field>NotificationLink__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>NotificationText__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Published__c</field>
         <value xsi:type="xsd:boolean">true</value>
     </values>
