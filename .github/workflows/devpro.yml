@@ -84,7 +84,7 @@ jobs:
 
       # Run Deploy CustomMetadata
       - name: "Custom Metadata"
-        run: sf project deploy start --metadata CustomMetadata --target-org LFLDEVPRO
+        run: sf project deploy start --metadata CustomMetadata --target-org LFLDEVPRO --ignore-conflicts   
 
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
