@@ -31,6 +31,8 @@ private class TestLFLPopulateTestData {
     Integer p = [SELECT COUNT() FROM program__c];
     Integer so = [SELECT COUNT() FROM session_obj__c];
     Integer s = [SELECT COUNT() FROM session__c];
+    Integer t = [SELECT COUNT() FROM client_objective_timeseries__c];
+    Integer l = [SELECT COUNT() FROM timeseries_log__c];
 
     System.assert(a > 0, 'Expected records were created.');
     System.assert(sd > 0, 'Expected records were created.');
@@ -38,5 +40,7 @@ private class TestLFLPopulateTestData {
     System.assert(p > 0, 'Expected records were created.');
     System.assert(so > 0, 'Expected records were created.');
     System.assert(s > 0, 'Expected records were created.');
+    System.assert(t > 0, 'Expected records were created.');
+    System.assert(l > 0, 'Expected records were created.');
   }
 }

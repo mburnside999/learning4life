@@ -84,7 +84,7 @@ jobs:
 
       # Run Deploy CustomMetadata
       - name: "Custom Metadata"
-        run: sf project deploy start --metadata CustomMetadata --target-org LFLDEVPRO --ignore-conflicts   
+        run: sf project deploy start --metadata CustomMetadata --target-org LFLDEVPRO --ignore-conflicts
 
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
@@ -102,6 +102,7 @@ jobs:
           TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster 
           TestLFLInvocableListUnusedObj TestL4LStagesByArea TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler 
           TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler TestLFLTreeUtil
+          TestLFLBatchStatisticsGatherer TestLFLAggregateResultIterable LFLAggregateResultIterator
 
       # Run Deploy LWC
       - name: "Deploy LWC"
@@ -120,6 +121,7 @@ jobs:
           TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster 
           TestLFLInvocableListUnusedObj TestL4LStagesByArea TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler 
           TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler TestLFLTreeUtil 
+          TestLFLBatchStatisticsGatherer TestLFLAggregateResultIterable LFLAggregateResultIterator
           --target-org LFLDEVPRO --code-coverage --result-format human --output-dir ./tests/apex -w 20
       # Delete temporary test file that Codecov is unable to parse
       #- name: "Delete coverage file (temporary step)"

@@ -110,6 +110,7 @@ jobs:
           TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj TestL4LStagesByArea 
           TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler TestLFLLoginBannerController 
           TestLFLBackupUtil TestLFLBackupUtilScheduler TestLFLTreeUtil
+          TestLFLBatchStatisticsGatherer TestLFLAggregateResultIterable LFLAggregateResultIterator
 
       # Run Deploy LWC
       - name: "Deploy LWC"
@@ -129,6 +130,7 @@ jobs:
           TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj 
           TestL4LStagesByArea  TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler TestLFLLoginBannerController 
           TestLFLBackupUtil TestLFLBackupUtilScheduler TestLFLTreeUtil 
+          TestLFLBatchStatisticsGatherer TestLFLAggregateResultIterable LFLAggregateResultIterator
           --target-org LFLHyper 
           --code-coverage 
           --result-format human 

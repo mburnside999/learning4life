@@ -23,3 +23,11 @@ where name like '%blue circle%'
 or sd__r.name like '%blue circle%'
 or sd__r.program__r.name like '%blue circle%'
 //
+
+
+
+LFLBatchStatisticsGatherer l = new LFLBatchStatisticsGatherer();
+ID batchprocessid = Database.executeBatch(l);
+System.debug('xxxxx '+batchprocessid);
+
+LFLPopulateTestData.load();

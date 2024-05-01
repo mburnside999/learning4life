@@ -30,6 +30,8 @@ public with sharing class LFLPopulateTestData {
     delete [SELECT id FROM session__c];
     delete [SELECT id FROM NDIS_Report__c];
     delete [SELECT id FROM Session_Statistics__c];
+    delete [SELECT id FROM Timeseries_log__c];
+    delete [SELECT id FROM client_objective_timeseries__c];
 
     //create a test client
     String recTypeId = [
@@ -43,7 +45,8 @@ public with sharing class LFLPopulateTestData {
       FirstName = 'Test FName',
       LastName = 'Peterson',
       PersonHomePhone = '1234567',
-      PersonMobilePhone = '12345678'
+      PersonMobilePhone = '12345678',
+      Current__c = true
     );
 
     insert newAccount;
@@ -159,35 +162,78 @@ public with sharing class LFLPopulateTestData {
     );
     insert co4;
 
-    //
+    //TS
 
-    TimeSeries_Log__c tsl = new TimeSeries_Log__c(
+    TimeSeries_Log__c tsl1 = new TimeSeries_Log__c(
       Comments__c = 'xxx',
-      TS_Log_DateTime__c = Date.today()
+      TS_Log_DateTime__c = Date.today().addDays(-14)
     );
-    insert tsl;
+    insert tsl1;
 
-    Id tslid = tsl.Id;
+    Id tsl1id = tsl1.Id;
 
-    String tslname = [
+    String tsl1name = [
       SELECT name
       FROM timeseries_log__c
-      WHERE id = :tslid
+      WHERE id = :tsl1id
       LIMIT 1
     ]
     .Name;
 
     Client_Objective_Timeseries__c cots1 = new Client_Objective_Timeseries__c(
       Client__c = newAccount.Id,
-      RunID__c = tslname,
+      client_objective__c = co3.id,
+      RunID__c = tsl1name,
       Status__c = 'ACQ',
       last_tested__c = Date.today(),
       Active__c = true,
       Objective__c = o3.Id,
       Client_Objective_Notes__c = 'client objective notes',
-      TS_Load_DateTime__c = Date.today()
+      TS_Load_DateTime__c = Date.today().addDays(-14)
     );
     insert cots1;
+
+    TimeSeries_Log__c tsl2 = new TimeSeries_Log__c(
+      Comments__c = 'xxx',
+      TS_Log_DateTime__c = Date.today().addDays(-7)
+    );
+    insert tsl2;
+
+    Id tsl2id = tsl2.Id;
+
+    String tsl2name = [
+      SELECT name
+      FROM timeseries_log__c
+      WHERE id = :tsl2id
+      LIMIT 1
+    ]
+    .Name;
+
+    Client_Objective_Timeseries__c cots2 = new Client_Objective_Timeseries__c(
+      Client__c = newAccount.Id,
+      client_objective__c = co3.id,
+      RunID__c = tsl2name,
+      Status__c = 'ACQ',
+      last_tested__c = Date.today(),
+      Active__c = true,
+      Objective__c = o3.Id,
+      Client_Objective_Notes__c = 'client objective notes',
+      TS_Load_DateTime__c = Date.today().addDays(-7)
+    );
+    insert cots2;
+
+    Client_Objective_Timeseries__c cots3 = new Client_Objective_Timeseries__c(
+      Client__c = newAccount.Id,
+      client_objective__c = co4.id,
+      RunID__c = tsl2name,
+      Status__c = 'ACQ',
+      last_tested__c = Date.today(),
+      Active__c = true,
+      Objective__c = o4.Id,
+      Client_Objective_Notes__c = 'client objective notes',
+      TS_Load_DateTime__c = Date.today().addDays(-7)
+    );
+    insert cots3;
 
     //
 

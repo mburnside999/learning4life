@@ -19,14 +19,14 @@
  *
  * See the Apex Language Reference for more information about Testing and Code Coverage.
  */
-@isTest(SeeAllData=true)
+@isTest
 private class TestLFLBatchStatisticsGatherer {
   @isTest
   static void myUnitTest() {
-    // Test.startTest();
-    // LFLPopulateTestData.load();
-    // Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
-    // Test.stopTest();
+    Test.startTest();
+    LFLPopulateTestData.load();
+    Id clientId = [SELECT id FROM Account WHERE FirstName = 'Test FName'].Id;
+    Test.stopTest();
     LFLBatchStatisticsGatherer l = new LFLBatchStatisticsGatherer();
     ID batchprocessid = Database.executeBatch(l);
     System.debug('xxxxx ' + batchprocessid);
