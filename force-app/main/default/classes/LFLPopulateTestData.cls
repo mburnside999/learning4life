@@ -159,6 +159,38 @@ public with sharing class LFLPopulateTestData {
     );
     insert co4;
 
+    //
+
+    TimeSeries_Log__c tsl = new TimeSeries_Log__c(
+      Comments__c = 'xxx',
+      TS_Log_DateTime__c = Date.today()
+    );
+    insert tsl;
+
+    Id tslid = tsl.Id;
+
+    String tslname = [
+      SELECT name
+      FROM timeseries_log__c
+      WHERE id = :tslid
+      LIMIT 1
+    ]
+    .Name;
+
+    Client_Objective_Timeseries__c cots1 = new Client_Objective_Timeseries__c(
+      Client__c = newAccount.Id,
+      RunID__c = tslname,
+      Status__c = 'ACQ',
+      last_tested__c = Date.today(),
+      Active__c = true,
+      Objective__c = o3.Id,
+      Client_Objective_Notes__c = 'client objective notes',
+      TS_Load_DateTime__c = Date.today()
+    );
+    insert cots1;
+
+    //
+
     //create a session for our client
     Session__c session = new Session__c();
     session.Client__c = newAccount.Id;
