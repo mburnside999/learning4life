@@ -44,7 +44,7 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
       Date startd = (Date) tslogdates.get((String) ar.get('minRunId'));
       Date endd = (Date) tslogdates.get((String) ar.get('maxRunId'));
       Decimal elapsed = startd.daysBetween(endd) / 7;
-
+      elapsed += 1;
       System.debug(
         'client= ' +
           client +
