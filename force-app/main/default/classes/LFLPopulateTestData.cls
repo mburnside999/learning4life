@@ -241,11 +241,21 @@ public with sharing class LFLPopulateTestData {
     Session__c session = new Session__c();
     session.Client__c = newAccount.Id;
     Date d = Date.today();
-
     session.date__c = d.addDays(-3);
     session.session_length__c = 1;
+    session.status__c = 'Closed';
     session.session_location__c = 'Other';
     insert session;
+
+    //create a session for our client
+    Session__c session2 = new Session__c();
+    session2.Client__c = newAccount.Id;
+    Date d2 = Date.today();
+    session2.date__c = d2.addDays(-7);
+    session2.session_length__c = 1;
+    session2.status__c = 'Closed';
+    session2.session_location__c = 'Other';
+    insert session2;
 
     //create session objectives with C,I,P and N scores
 
