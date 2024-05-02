@@ -120,17 +120,16 @@ jobs:
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
         run: >
           sf apex run test --test-level  RunSpecifiedTests 
-          --tests TestL4LController TestL4LSessionStatsController TestL4LSDStageMap 
-          TestLFLUtil TestLFLSDWrapper TestL4LTimeSeries TestL4LTimeSeriesScheduler 
-          TestLFLClientObjectiveHelper TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard 
-          TestLFLInvocableSessionStatistics TestLFLPopulateTestData TestLFLProgramStatusCascadeUtil 
-          TestCascadeProgramStatusTrg TestCascadeSDStatusTrg TestDaysSinceUpdatedTrg TestLFLSessionStatsTrg 
-          TestClientObjectiveList TestL4LNebulaComponentController TestL4LExceptionRateCalculation 
-          TestL4LExceptionClientObjectiveMissing TestTrgUniqueObjectivePerClientObjective TestLFLTimeSeriesBatch 
-          TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster TestLFLInvocableListUnusedObj 
-          TestL4LStagesByArea  TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler TestLFLLoginBannerController 
-          TestLFLBackupUtil TestLFLBackupUtilScheduler TestLFLTreeUtil 
-          TestLFLBatchStatisticsGatherer TestLFLAggregateResultIterable LFLAggregateResultIterator
+          --tests TestL4LController 
+          TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper 
+          TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper 
+          TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard TestLFLInvocableSessionStatistics 
+          TestLFLPopulateTestData TestLFLProgramStatusCascadeUtil TestCascadeProgramStatusTrg TestCascadeSDStatusTrg 
+          TestDaysSinceUpdatedTrg TestLFLSessionStatsTrg TestClientObjectiveList TestL4LNebulaComponentController 
+          TestL4LExceptionRateCalculation TestL4LExceptionClientObjectiveMissing TestTrgUniqueObjectivePerClientObjective 
+          TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster 
+          TestLFLInvocableListUnusedObj TestL4LStagesByArea  TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler 
+          TestLFLTreeUtil TestLFLBatchStatisticsGatherer TestLFLBatchStatisticsGatherer2 TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 LFLAggregateResultIterator
           --target-org LFLHyper 
           --code-coverage 
           --result-format human 
