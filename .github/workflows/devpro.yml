@@ -93,7 +93,7 @@ jobs:
           --metadata ApexClass --metadata ApexTrigger --metadata Flow 
           --metadata LightningMessageChannel --target-org LFLDEVPRO 
           --test-level RunSpecifiedTests 
-          --tests --tests TestL4LController 
+          --tests TestL4LController 
           TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper 
           TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper 
           TestLFLInvocableMasteryStatistics TestLFLInvocableReportWizard TestLFLInvocableSessionStatistics 
