@@ -158,7 +158,7 @@ public with sharing class L4LSessionStatsController {
   /*******************************************************************************************************
    * @name getD3Stats
    * @description Uses SOQL to return a session statistics for a client.
-   * @deprecated
+   * @deprecated COMPLETELY COMMENTED OUT 7/5/24
    * @param clientId The client
    * @param showAcquired A Boolean, should we restrict to previous_status of ACQ
    * @return a list of session statistics

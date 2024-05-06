@@ -267,7 +267,7 @@ private class TestL4LSessionStatsController {
   /*******************************************************************************************************
    * @description Test getD3Stats method
    * @param void
-   *
+   * @deprecated COMMENTED OUT 7/5/24
    *
    * @example
    * TestL4LSessionStatsController.testGetD3Stats();
