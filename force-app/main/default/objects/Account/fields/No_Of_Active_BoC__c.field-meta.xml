@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>No_Of_Active_BoC__c</fullName>
     <externalId>false</externalId>
-    <label>No Of Active BoC</label>
+    <label># Active BoC - Current</label>
     <summaryFilterItems>
         <field>Client_BOC__c.Status__c</field>
         <operation>equals</operation>

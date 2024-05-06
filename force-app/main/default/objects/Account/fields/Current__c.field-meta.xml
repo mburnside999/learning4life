@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Current__c</fullName>
     <defaultValue>true</defaultValue>
-    <description>Client is currently receiving services from L4L</description>
+    <description>Client is currently receiving services from Abacus</description>
     <externalId>false</externalId>
-    <inlineHelpText
-  >Client is currently receiving services from L4L</inlineHelpText>
-    <label>Current</label>
+    <inlineHelpText>Client is currently receiving services from Abacus. A client has to be Current to generate fresh weekly statistics..</inlineHelpText>
+    <label>Currently Receiving Abacus Services</label>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Checkbox</type>
 </CustomField>

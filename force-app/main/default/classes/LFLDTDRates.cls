@@ -271,14 +271,15 @@ public with sharing class LFLDTDRates {
   public static String getAcquisitionRateforClientTurbo(String clientId) {
     String jsonStr;
 
+    //a list of session dates and durations for this client
     list<Session__c> sessionList = [
       SELECT date__c, session_length__c
       FROM Session__c
       WHERE client__c = :clientId
       ORDER BY date__c
     ];
-    System.debug('xxxxxx' + sessionList);
 
+    // the minimum COTS run that included an ACQ for this client
     Map<string, date> rundatemap = new Map<string, date>();
     list<aggregateresult> runDatesList = [
       SELECT RunId__c, min(TS_load_DateTime__c)
@@ -288,6 +289,7 @@ public with sharing class LFLDTDRates {
       ORDER BY runid__c
     ];
 
+    //leave now if there are no runs
     if (runDatesList.size() == 0) {
       jsonStr = '{"data":';
       jsonStr += '[{';
@@ -307,6 +309,34 @@ public with sharing class LFLDTDRates {
       return jsonStr;
     }
 
+    // extract earliest run details
+    String minRunId = (String) runDatesList[0].get('RunId__c');
+    DateTime minRunDateTime = (DateTime) runDatesList[0].get('expr0');
+    Date minRunDate = minRunDateTime.date();
+
+    // work out the most recent previous run
+    client_objective_timeseries__c priorcots = new Client_Objective_Timeseries__c();
+    priorcots = [
+      SELECT runid__c, ts_load_datetime__c
+      FROM client_objective_timeseries__c
+      WHERE runid__c < :minRunId
+      ORDER BY runid__c DESC
+      LIMIT 1
+    ];
+
+    // extract the details of the prior run
+    String priorRunId;
+    DateTime prior_ts_load_datetime;
+    Date prior_ts_load_date;
+    if (priorcots != null) {
+      priorRunId = priorcots.runId__c;
+      prior_ts_load_datetime = priorcots.ts_load_datetime__c;
+      prior_ts_load_date = prior_ts_load_datetime.date();
+      // add this single run as first entry in rundatemap (because sessions happened in the week prior to the the COTS runs)
+      rundatemap.put(priorRunId, prior_ts_load_date);
+    }
+
+    // now add the COTS runs that containeed ACQ for this client
     for (AggregateResult res : runDatesList) {
       Datetime dt = (DateTime) res.get('expr0');
       String runid = (String) res.get('RunId__c');
@@ -314,8 +344,7 @@ public with sharing class LFLDTDRates {
       rundatemap.put(runid, d);
     }
 
-    System.debug(rundatemap);
-
+    //process the COTS to aggregate ACQ for this client
     list<aggregateresult> limitDatesList = [
       SELECT runid__c, status__c, count(id)
       FROM client_objective_timeseries__c
@@ -325,6 +354,7 @@ public with sharing class LFLDTDRates {
       ORDER BY runid__c
     ];
 
+    // exit if not found
     if (limitDatesList.size() == 0) {
       jsonStr = '{"data":';
       jsonStr += '[{';
@@ -343,7 +373,7 @@ public with sharing class LFLDTDRates {
       jsonStr += ',"duration":' + 0 + '}';
       return jsonStr;
     }
-
+    //get ready to make some JSON
     Integer startAcquiredCount;
     Integer endAcquiredCount;
     Date startdt;
@@ -351,8 +381,64 @@ public with sharing class LFLDTDRates {
     Decimal totalHours = 0;
     Decimal totalWeeks = 0;
     Integer totalSessions = 0;
+    Date dayzero = minRunDate.addDays(7);
 
-    jsonStr = '[';
+    jsonStr = '['; // opening bracket
+
+    // before we build the real COTS based payload we need to build a single entry to seed the payload with the session info occurring before COTS run
+
+    list<AggregateResult> priorSessionList = [
+      SELECT client__c, sum(session_length__c), count(id)
+      FROM Session__c
+      WHERE client__c = :clientId AND date__c < :dayzero
+      GROUP BY client__c
+    ];
+
+    for (AggregateResult priorsession : priorSessionList) {
+      jsonStr += '{';
+      jsonStr += '"rate":' + (Integer) limitDatesList[0].get('expr0');
+      jsonStr +=
+        ',"startd":"' +
+        minRunDate.year() +
+        '-' +
+        minRunDate.month() +
+        '-' +
+        minRunDate.day() +
+        '"';
+      jsonStr +=
+        ',"endd":"' +
+        dayzero.year() +
+        '-' +
+        dayzero.month() +
+        '-' +
+        dayzero.day() +
+        '"';
+      jsonStr += ',"elapsed":' + 7;
+      jsonStr += ',"startAcquiredCount":' + 0;
+      jsonStr +=
+        ',"endAcquiredCount":' + (Integer) limitDatesList[0].get('expr0');
+      Integer numberAcquiredSeed = (Integer) limitDatesList[0].get('expr0');
+      Integer sessionCountSeed = (Integer) priorsession.get('expr1');
+      jsonStr += ',"numberAcquiredInPeriod":' + numberAcquiredSeed;
+      jsonStr += ',"sessionCount":' + sessionCountSeed;
+      jsonStr += ',"weeks":' + 1.0;
+
+      Decimal acquiredPerSessionSeed =
+        Decimal.valueOf(numberAcquiredSeed) / Decimal.valueOf(sessionCountSeed);
+
+      jsonStr += ',"acquiredPerSession":' + acquiredPerSessionSeed.setScale(2);
+
+      jsonStr +=
+        ',"totalSessionDurationHrs":' + (Decimal) priorsession.get('expr0');
+      jsonStr += '},';
+
+      //bump the globals
+      totalHours += (Decimal) priorsession.get('expr0');
+      totalSessions += (Integer) priorsession.get('expr1');
+      totalWeeks += 1;
+    }
+
+    // Now we have a seeded initial record the main game is to loop through the limitDatesList and sessionList to build JSON
 
     for (AggregateResult res : limitDatesList) {
       endAcquiredCount = (Integer) res.get('expr0');

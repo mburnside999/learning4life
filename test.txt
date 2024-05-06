@@ -43,8 +43,17 @@ or sd__r.program__r.name like '%blue circle%'
       GROUP BY client_objective__r.client__c
     ];
     System.debug(aggresults);
-LFLBatchStatisticsGatherer l = new LFLBatchStatisticsGatherer();
+
+LFLBatchStatisticsGatherer2 l = new LFLBatchStatisticsGatherer2();
 ID batchprocessid = Database.executeBatch(l);
 System.debug('xxxxx '+batchprocessid);
+
+
+
+select client__c client,client__r.lastname lastname,count(ID)cos from client_objective__c
+where status__c='ACQ'
+and client__r.current__c=True
+group by client__c,client__r.lastname
+
 
 LFLPopulateTestData.load();
