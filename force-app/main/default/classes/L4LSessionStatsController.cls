@@ -166,55 +166,55 @@ public with sharing class L4LSessionStatsController {
    * List<session_statistics__c> > ssList = L4LSessionStatsController.getD3Stats(clientId,true|false)
    */
 
-  @AuraEnabled(cacheable=true)
-  public static List<Session_Statistics__c> getD3Stats(
-    String clientId,
-    Boolean showAcquired
-  ) {
-    final String SCENARIO = 'Session Statistics - DEPRECATED  Apex';
-    L4LNebulaComponentController.setupCache();
-    L4LNebulaComponentController.logInfo(
-      clientId,
-      'L4LSessionStatsController.getD3Stats() clientId=' +
-        clientId +
-        ' showAcquired=' +
-        showAcquired,
-      SCENARIO,
-      'next-gen-nebula-apex'
-    );
+  // @AuraEnabled(cacheable=true)
+  // public static List<Session_Statistics__c> getD3Stats(
+  //   String clientId,
+  //   Boolean showAcquired
+  // ) {
+  //   final String SCENARIO = 'Session Statistics - DEPRECATED  Apex';
+  //   L4LNebulaComponentController.setupCache();
+  //   L4LNebulaComponentController.logInfo(
+  //     clientId,
+  //     'L4LSessionStatsController.getD3Stats() clientId=' +
+  //       clientId +
+  //       ' showAcquired=' +
+  //       showAcquired,
+  //     SCENARIO,
+  //     'next-gen-nebula-apex'
+  //   );
 
-    String querySessionStatsString =
-      'SELECT session__r.name, session__r.client__c, session__r.client__r.name, program_name__c, ' +
-      'objective__r.name  ,session__r.Date__c ,previous_status__c ,Percent_Correct__c, SD_Name__c, SD_And_Objective_Str__c ' +
-      'FROM Session_Statistics__c ' +
-      'WHERE session__r.client__c = :clientId ';
+  //   String querySessionStatsString =
+  //     'SELECT session__r.name, session__r.client__c, session__r.client__r.name, program_name__c, ' +
+  //     'objective__r.name  ,session__r.Date__c ,previous_status__c ,Percent_Correct__c, SD_Name__c, SD_And_Objective_Str__c ' +
+  //     'FROM Session_Statistics__c ' +
+  //     'WHERE session__r.client__c = :clientId ';
 
-    if (showAcquired) {
-      querySessionStatsString += ' AND previous_status__c = \'ACQ\' ';
-    }
+  //   if (showAcquired) {
+  //     querySessionStatsString += ' AND previous_status__c = \'ACQ\' ';
+  //   }
 
-    querySessionStatsString += 'ORDER BY session__r.name, objective__r.name ';
+  //   querySessionStatsString += 'ORDER BY session__r.name, objective__r.name ';
 
-    L4LNebulaComponentController.logDebug(
-      clientId,
-      'L4LSessionStatsController.getD3Stats() querySessionStatsString=' +
-      querySessionStatsString,
-      SCENARIO,
-      'next-gen-nebula-apex'
-    );
+  //   L4LNebulaComponentController.logDebug(
+  //     clientId,
+  //     'L4LSessionStatsController.getD3Stats() querySessionStatsString=' +
+  //     querySessionStatsString,
+  //     SCENARIO,
+  //     'next-gen-nebula-apex'
+  //   );
 
-    List<Session_Statistics__c> results = new List<Session_Statistics__c>();
-    results = Database.query(querySessionStatsString);
+  //   List<Session_Statistics__c> results = new List<Session_Statistics__c>();
+  //   results = Database.query(querySessionStatsString);
 
-    L4LNebulaComponentController.logDebug(
-      clientId,
-      'L4LSessionStatsController.getD3Stats() returning results=' + results,
-      SCENARIO,
-      'next-gen-nebula-apex'
-    );
+  //   L4LNebulaComponentController.logDebug(
+  //     clientId,
+  //     'L4LSessionStatsController.getD3Stats() returning results=' + results,
+  //     SCENARIO,
+  //     'next-gen-nebula-apex'
+  //   );
 
-    return results;
-  }
+  //   return results;
+  // }
 
   /*******************************************************************************************************
    * @name getD3StatsByProgram
