@@ -28,7 +28,6 @@ public with sharing class LFLDTDRateMaster {
   @AuraEnabled(cacheable=true)
   public static String getDTDRateArray(String clientId, Integer iters) {
     String jsonStr;
-
     //DEPRECATED
 
     // DateTime thismoment = DateTime.now();
