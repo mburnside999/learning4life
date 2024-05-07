@@ -1,0 +1,43 @@
+myProg -a "README.md"
+myProg -a "Untitled.ipynb"
+myProg -a "acc.csv"
+myProg -a "catalog"
+myProg -a "catalog.ipynb"
+myProg -a "codecov"
+myProg -a "config"
+myProg -a "deprecatedLWC"
+myProg -a "destructive"
+myProg -a "docs"
+myProg -a "force-app"
+myProg -a "jest.config.js"
+myProg -a "jsdoc.config.json"
+myProg -a "node_modules"
+myProg -a "package-lock.json"
+myProg -a "package.json"
+myProg -a "postcopysandbox"
+myProg -a "scripts"
+myProg -a "sfdx-project.json"
+myProg -a "test.txt"
+myProg -a "tests"
+sf project deploy start --metadata ApexClass:README.md ApexClass:TestREADME.md --target-org myorg
+sf project deploy start --metadata ApexClass:Untitled.ipynb ApexClass:TestUntitled.ipynb --target-org myorg
+sf project deploy start --metadata ApexClass:acc.csv ApexClass:Testacc.csv --target-org myorg
+sf project deploy start --metadata ApexClass:catalog ApexClass:Testcatalog --target-org myorg
+sf project deploy start --metadata ApexClass:catalog.ipynb ApexClass:Testcatalog.ipynb --target-org myorg
+sf project deploy start --metadata ApexClass:codecov ApexClass:Testcodecov --target-org myorg
+sf project deploy start --metadata ApexClass:config ApexClass:Testconfig --target-org myorg
+sf project deploy start --metadata ApexClass:deprecatedLWC ApexClass:TestdeprecatedLWC --target-org myorg
+sf project deploy start --metadata ApexClass:destructive ApexClass:Testdestructive --target-org myorg
+sf project deploy start --metadata ApexClass:docs ApexClass:Testdocs --target-org myorg
+sf project deploy start --metadata ApexClass:force-app ApexClass:Testforce-app --target-org myorg
+sf project deploy start --metadata ApexClass:jest.config.js ApexClass:Testjest.config.js --target-org myorg
+sf project deploy start --metadata ApexClass:jsdoc.config.json ApexClass:Testjsdoc.config.json --target-org myorg
+sf project deploy start --metadata ApexClass:node_modules ApexClass:Testnode_modules --target-org myorg
+sf project deploy start --metadata ApexClass:package-lock.json ApexClass:Testpackage-lock.json --target-org myorg
+sf project deploy start --metadata ApexClass:package.json ApexClass:Testpackage.json --target-org myorg
+sf project deploy start --metadata ApexClass:postcopysandbox ApexClass:Testpostcopysandbox --target-org myorg
+sf project deploy start --metadata ApexClass:script.txt ApexClass:Testscript.txt --target-org myorg
+sf project deploy start --metadata ApexClass:scripts ApexClass:Testscripts --target-org myorg
+sf project deploy start --metadata ApexClass:sfdx-project.json ApexClass:Testsfdx-project.json --target-org myorg
+sf project deploy start --metadata ApexClass:test.txt ApexClass:Testtest.txt --target-org myorg
+sf project deploy start --metadata ApexClass:tests ApexClass:Testtests --target-org myorg

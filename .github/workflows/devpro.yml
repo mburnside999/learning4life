@@ -103,7 +103,7 @@ jobs:
           TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster 
           TestLFLInvocableListUnusedObj TestL4LStagesByArea  TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler 
           TestLFLTreeUtil TestLFLBatchStatisticsGatherer TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer2Scheduler TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 LFLAggregateResultIterator
-          TestTestLFLLoginBannerController TestLFLBackupUtil
+          TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler
 
       # Run Deploy LWC
       - name: "Deploy LWC"
@@ -123,7 +123,7 @@ jobs:
           TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler TestLFLDTDRates TestLFLDTDRateMaster 
           TestLFLInvocableListUnusedObj TestL4LStagesByArea  TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler 
           TestLFLTreeUtil TestLFLBatchStatisticsGatherer TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer2Scheduler TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 LFLAggregateResultIterator
-          TestTestLFLLoginBannerController TestLFLBackupUtil
+          TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler
           --target-org LFLDEVPRO --code-coverage --result-format human --output-dir ./tests/apex -w 20
       # Delete temporary test file that Codecov is unable to parse
       #- name: "Delete coverage file (temporary step)"
