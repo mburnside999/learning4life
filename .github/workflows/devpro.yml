@@ -1,4 +1,4 @@
-onflicts # A Unique name for this workflow
+# A Unique name for this workflow
 name: CI-LFLDEVPRO
 
 # Definition when the workflow should run
