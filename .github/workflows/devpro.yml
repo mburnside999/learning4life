@@ -89,7 +89,7 @@ jobs:
       # Run Deploy Apex
       - name: "Deploy Apex and Run Specified Tests"
         run: >
-          sf project deploy start --metadata AuraDefinitionBundle 
+          sf project deploy start --ignore-conflicts --metadata AuraDefinitionBundle 
           --metadata ApexClass --metadata ApexTrigger --metadata Flow 
           --metadata LightningMessageChannel --target-org LFLDEVPRO 
           --test-level RunSpecifiedTests 
