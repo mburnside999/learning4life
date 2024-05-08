@@ -109,7 +109,7 @@ jobs:
 
       # Run Deploy LWC
       - name: "Deploy LWC"
-        run: sf project deploy --ignore-conflicts start --metadata LightningComponentBundle --target-org LFLDEVPRO
+        run: sf project deploy start --ignore-conflicts  --metadata LightningComponentBundle --target-org LFLDEVPRO
 
       # Run Run Apex tests
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
