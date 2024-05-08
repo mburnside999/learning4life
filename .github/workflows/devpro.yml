@@ -1,4 +1,4 @@
-# A Unique name for this workflow
+onflicts # A Unique name for this workflow
 name: CI-LFLDEVPRO
 
 # Definition when the workflow should run
@@ -80,7 +80,7 @@ jobs:
 
       # Run Deploy CachePartitions
       - name: "Cache Partitions"
-        run: sf project deploy start --metadata PlatformCachePartition --target-org LFLDEVPRO
+        run: sf project deploy start --ignore-conflicts --metadata PlatformCachePartition --target-org LFLDEVPRO
 
       # Run Deploy CustomMetadata
       - name: "Custom Metadata"
@@ -109,7 +109,7 @@ jobs:
 
       # Run Deploy LWC
       - name: "Deploy LWC"
-        run: sf project deploy start --metadata LightningComponentBundle --target-org LFLDEVPRO
+        run: sf project deploy --ignore-conflicts start --metadata LightningComponentBundle --target-org LFLDEVPRO
 
       # Run Run Apex tests
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
