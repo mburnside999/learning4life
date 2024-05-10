@@ -10,9 +10,9 @@
 
 global class LFLBatchStatisticsGatherer2 implements Database.Batchable<AggregateResult>, Database.Stateful {
   Integer i = 0;
-  String msg;
+  String msg = 'Client Statistics Generation\n';
+
   Map<Id, Integer> comap = new Map<Id, Integer>();
-  List<Account> accountList = new List<Account>();
   List<AggregateResult> coagglist = new List<AggregateResult>();
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
     coagglist = [
@@ -34,6 +34,7 @@ global class LFLBatchStatisticsGatherer2 implements Database.Batchable<Aggregate
     List<AggregateResult> scope
   ) {
     AggregateResult[] results = (AggregateResult[]) scope;
+    List<Account> accountList = new List<Account>();
 
     for (AggregateResult ar : scope) {
       i = i + 1;
@@ -81,46 +82,49 @@ global class LFLBatchStatisticsGatherer2 implements Database.Batchable<Aggregate
       a.stats_timestamp__c = DateTime.now();
       accountList.add(a);
 
-      msg +=
-        'Earliest: ' +
-        ar.get('mindate') +
-        ', Latest: ' +
-        ar.get('maxdate') +
-        +', Elapsed: ' +
-        elapsed +
-        ' weeks, Client: ' +
-        client +
-        ', Name: ' +
-        clientname +
-        ', Sessions: ' +
-        sessions +
-        ', Total Duration: ' +
-        totalduration +
-        ' acqCount: ' +
-        acqCount +
-        ' acqRate: ' +
-        acqRate.setScale(2) +
-        +'\n';
+      // msg +=
+      //   'Earliest: ' +
+      //   ar.get('mindate') +
+      //   ', Latest: ' +
+      //   ar.get('maxdate') +
+      //   +', Elapsed: ' +
+      //   elapsed +
+      //   ' weeks, Client: ' +
+      //   client +
+      //   ', Name: ' +
+      //   clientname +
+      //   ', Sessions: ' +
+      //   sessions +
+      //   ', Total Duration: ' +
+      //   totalduration +
+      //   ' acqCount: ' +
+      //   acqCount +
+      //   ' acqRate: ' +
+      //   acqRate.setScale(2) +
+      //   +'\n';
       //   // Process each result here as needed
     }
+    update accountList;
+    msg +=
+      'Batch update completed: ' +
+      accountList.size() +
+      ' client records updated\n';
   }
 
   global void finish(Database.BatchableContext bc) {
     System.debug('in LFLBatchStatisticsGatherer2.finish()');
 
-    //System.debug('updating Accounts');
-
-    update accountList;
+    msg += '\nBatch job competed: ' + i + ' records processed\n';
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     String orgname = UserInfo.getOrganizationName();
 
     mail.setToAddresses(new List<String>{ 'mburnside@salesforce.com' });
     mail.setReplyTo('batch@acme.com');
-    mail.setSenderDisplayName('Stats Batch Processing2');
-    mail.setSubject(orgname + ' Stats completed');
+    mail.setSenderDisplayName('Apex BatchStatisticsGatherer2');
+    mail.setSubject(orgname + ' BatchStatisticsGatherer2 completed.');
 
-    mail.setPlainTextBody('Successfully processed ' + i + ' records\n' + msg);
+    mail.setPlainTextBody(msg);
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
   }

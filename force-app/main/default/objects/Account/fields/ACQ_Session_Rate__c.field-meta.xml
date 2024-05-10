@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ACQ_Session_Rate__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>An estimate of the number of ACQ skills per Session for active clients. Calculation: # of ACQ skills / # of Closed Sessions</inlineHelpText>
     <label>ACQ/Session Rate (EXPERIMENTAL)</label>
     <precision>8</precision>
     <required>false</required>

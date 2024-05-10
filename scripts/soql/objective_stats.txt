@@ -1,0 +1,13 @@
+List<AggregateResult> lar = new List<AggregateResult>();
+lar =[select id,count_distinct(session__r.id),sum( from session_Statistics__c where objective__c='a0D5h00000JTz6fEAD']);
+System.debug(lar);
+
+
+LFLBatchStatisticsGatherer2 l = new LFLBatchStatisticsGatherer2();
+ID batchprocessid = Database.executeBatch(l);
+
+
+Id batchInstanceId = Database.executeBatch(
+      new LFLBatchStatisticsGatherer3(),
+      1000
+    );

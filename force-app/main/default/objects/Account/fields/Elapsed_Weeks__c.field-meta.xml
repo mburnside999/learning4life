@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Elapsed_Weeks__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The number of elapsed weeks between earliest and latest Closed sessions as at the time of gathering statistics.</inlineHelpText>
     <label>Elapsed Treatment Weeks</label>
     <precision>8</precision>
     <required>false</required>

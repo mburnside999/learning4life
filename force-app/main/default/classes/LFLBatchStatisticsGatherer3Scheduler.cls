@@ -1,6 +1,6 @@
 /**************************************************************
  * @author	Mike Burnside
- * @name LFLBatchStatisticsGatherer2Scheduler
+ * @name LFLBatchStatisticsGatherer3Scheduler
  * @date	2023
  * @group Learning For Life
  *
@@ -8,7 +8,7 @@
  *
  */
 
-global class LFLBatchStatisticsGatherer2Scheduler implements Schedulable {
+global class LFLBatchStatisticsGatherer3Scheduler implements Schedulable {
   /*******************************************************************************************************
    * @name execute
    * @description Execute method
@@ -20,7 +20,7 @@ global class LFLBatchStatisticsGatherer2Scheduler implements Schedulable {
   @ReadOnly
   global void execute(SchedulableContext SC) {
     Id batchInstanceId = Database.executeBatch(
-      new LFLBatchStatisticsGatherer2(),
+      new LFLBatchStatisticsGatherer3(),
       1000
     );
   }

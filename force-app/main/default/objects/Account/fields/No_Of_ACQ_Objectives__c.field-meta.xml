@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>No_Of_ACQ_Objectives__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The current number of Client Objectives marked as ACQ</inlineHelpText>
     <label># ACQ Objectives - Current</label>
     <summaryFilterItems>
         <field>Client_Objective__c.Status__c</field>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ACQ_Count__c</fullName>
+    <fullName>Avg_Sessions_Per_Week__c</fullName>
     <externalId>false</externalId>
-    <inlineHelpText>The number of ACQ skills at the time of  gathering the statistics</inlineHelpText>
-    <label># ACQ Objectives at Run</label>
+    <formula>No_Of_Closed_Sessions__c /  Elapsed_Weeks__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Avg # Sessions / Week</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>0</scale>
-    <trackFeedHistory>false</trackFeedHistory>
+    <scale>2</scale>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>

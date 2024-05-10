@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Total_Session_Duration__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The sum of all Session hours for Closed sessions as the time of gathering the statistics</inlineHelpText>
     <label>Total Session Hours</label>
     <precision>9</precision>
     <required>false</required>

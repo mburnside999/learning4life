@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>No_Of_Closed_Sessions__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The number of Closed sessions between the earliest and most recent session dates, as at the time of gathering statistics</inlineHelpText>
     <label># Closed Sessions</label>
     <precision>18</precision>
     <required>false</required>
