@@ -10,11 +10,14 @@
 
 global class LFLBatchStatisticsGatherer2 implements Database.Batchable<AggregateResult>, Database.Stateful {
   Integer i = 0;
-  String msg = 'Client Statistics Generation\n';
+  String msg = 'Client Statistics Generation\n-----------------------------\n';
+
+  integer batch = 0;
 
   Map<Id, Integer> comap = new Map<Id, Integer>();
   List<AggregateResult> coagglist = new List<AggregateResult>();
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
+    msg += '\nBatches\n-----------\n';
     coagglist = [
       SELECT client__c client, client__r.lastname lastname, count(ID) cos
       FROM client_objective__c
@@ -35,7 +38,7 @@ global class LFLBatchStatisticsGatherer2 implements Database.Batchable<Aggregate
   ) {
     AggregateResult[] results = (AggregateResult[]) scope;
     List<Account> accountList = new List<Account>();
-
+    batch = batch + 1;
     for (AggregateResult ar : scope) {
       i = i + 1;
       String client = (String) ar.get('client');
@@ -106,15 +109,18 @@ global class LFLBatchStatisticsGatherer2 implements Database.Batchable<Aggregate
     }
     update accountList;
     msg +=
-      'Batch update completed: ' +
+      'Batch: ' +
+      batch +
+      ': ' +
       accountList.size() +
-      ' client records updated\n';
+      ' Client records updated\n';
   }
 
   global void finish(Database.BatchableContext bc) {
     System.debug('in LFLBatchStatisticsGatherer2.finish()');
 
-    msg += '\nBatch job competed: ' + i + ' records processed\n';
+    msg += '\nJob Completion\n-------------------\n';
+    msg += 'Summary: ' + i + ' Client records processed\n';
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     String orgname = UserInfo.getOrganizationName();

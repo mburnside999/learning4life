@@ -10,8 +10,11 @@
 
 global class LFLBatchStatisticsGatherer3 implements Database.Batchable<AggregateResult>, Database.Stateful {
   Integer i = 0;
-  String msg = 'Objective Statistics Generation\n';
+  integer batch = 0;
+  String msg = 'Objective Statistics Generation\n--------------------------------------\n';
+
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
+    msg += '\nBatches\n-----------\n';
     return new LFLAggregateResultIterable3();
   }
 
@@ -21,7 +24,7 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
   ) {
     AggregateResult[] results = (AggregateResult[]) scope;
     List<Objective__c> objList = new List<Objective__c>();
-
+    batch = batch + 1;
     for (AggregateResult ar : scope) {
       i = i + 1;
       String objective = (String) ar.get('objective__c');
@@ -93,9 +96,11 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
     }
     update objList;
     msg +=
-      'Batch update completed: ' +
+      'Batch: ' +
+      batch +
+      ': ' +
       objList.size() +
-      ' objective records updated\n';
+      ' Objective records updated\n';
   }
 
   global void finish(Database.BatchableContext bc) {
@@ -104,8 +109,8 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
     //System.debug('updating Accounts');
     // update objList;
     // msg += objList.size() + ' Objective records updated\n';
-
-    msg += '\nBatch job competed: ' + i + ' records processed\n';
+    msg += '\nJob Completion\n-------------------\n';
+    msg += 'Summary: ' + i + ' Objective records processed\n';
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     String orgname = UserInfo.getOrganizationName();
@@ -115,7 +120,7 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
     mail.setSenderDisplayName('Apex BatchStatisticsGatherer3');
     mail.setSubject(orgname + ' BatchStatisticsGatherer3 completed.');
 
-    mail.setPlainTextBody('Successfully processed ' + i + ' records\n' + msg);
+    mail.setPlainTextBody(msg);
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
   }
