@@ -114,7 +114,7 @@ jobs:
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
         run: >
           sf apex run test --test-level  RunSpecifiedTests 
-          --tests --test-level RunSpecifiedTests 
+          --test-level RunSpecifiedTests 
           --tests TestL4LController  
           TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper  
           TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper  
