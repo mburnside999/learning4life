@@ -8,14 +8,13 @@
  *
  */
 
-global class LFLBatchStatisticsGatherer3 implements Database.Batchable<AggregateResult>, Database.Stateful {
+global class LFLBatchStatisticsGatherer4 implements Database.Batchable<AggregateResult>, Database.Stateful {
   Integer i = 0;
   integer batch = 0;
-  String msg = 'Objective Statistics Generation\n--------------------------------------\n';
-
+  String msg = 'SD Statistics Generation\n--------------------------------------\n';
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
     msg += '\nBatches\n-----------\n';
-    return new LFLAggregateResultIterable3();
+    return new LFLAggregateResultIterable4();
   }
 
   global void execute(
@@ -23,12 +22,12 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
     List<AggregateResult> scope
   ) {
     AggregateResult[] results = (AggregateResult[]) scope;
-    List<Objective__c> objList = new List<Objective__c>();
+    List<SD__c> sdList = new List<SD__c>();
     batch = batch + 1;
     for (AggregateResult ar : scope) {
       i = i + 1;
-      String objective = (String) ar.get('objective__c');
-      String objname = (String) ar.get('objname');
+      String sdid = (String) ar.get('sd__c');
+      String sdname = (String) ar.get('sdname');
 
       Decimal correct = (Decimal) ar.get('correct');
       Decimal incorrect = (Decimal) ar.get('incorrect');
@@ -41,7 +40,7 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
         (Decimal) (correct / (correct + incorrect + prompted + nonresponsive)) *
         100;
 
-      Objective__c o = new Objective__c(Id = objective);
+      SD__c sd = new SD__c(Id = sdid);
       // Date mindate = (Date) ar.get('mindate');
       // Date maxdate = (Date) ar.get('maxdate');
       // Decimal totalduration = (Decimal) ar.get('totalduration');
@@ -67,18 +66,17 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
       // } else {
       //   acqSessionRate = 0;
       // }
-      o.stats_timestamp__c = DateTime.now();
-      o.Percent_Correct__c = score;
-      o.Sessions__c = Integer.valueOf(sessions);
-      o.Clients__c = Integer.valueOf(clients);
-      o.Incorrect__c = Integer.valueOf(incorrect);
-      o.Correct__c = Integer.valueOf(correct);
-      o.Prompted__c = Integer.valueOf(prompted);
-      o.Non_Responsive__c = Integer.valueOf(nonresponsive);
-      o.Total_Responses__c = Integer.valueOf(
+      sd.stats_timestamp__c = DateTime.now();
+      sd.Percent_Correct__c = score;
+      sd.Sessions__c = Integer.valueOf(sessions);
+      sd.Clients__c = Integer.valueOf(clients);
+      sd.Incorrect__c = Integer.valueOf(incorrect);
+      sd.Correct__c = Integer.valueOf(correct);
+      sd.Prompted__c = Integer.valueOf(prompted);
+      sd.Non_Responsive__c = Integer.valueOf(nonresponsive);
+      sd.Total_Responses__c = Integer.valueOf(
         correct + incorrect + prompted + nonresponsive
       );
-
       // a.No_Of_Closed_sessions__c = sessions;
       // a.acq_rate__c = acqRate;
       // a.first_session__c = mindate;
@@ -87,7 +85,7 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
       // a.acq_session_rate__c = acqSessionRate;
       // a.acq_count__c = acqCount;
       // a.stats_timestamp__c = DateTime.now();
-      objList.add(o);
+      sdList.add(sd);
 
       // msg +=
       //   ' Objective: ' +
@@ -105,31 +103,26 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
       //   '\n';
       //   // Process each result here as needed
     }
-    update objList;
-    msg +=
-      'Batch: ' +
-      batch +
-      ': ' +
-      objList.size() +
-      ' Objective records updated\n';
+    update sdList;
+    msg += 'Batch: ' + batch + ': ' + sdList.size() + ' SD records updated\n';
   }
 
   global void finish(Database.BatchableContext bc) {
-    System.debug('in LFLBatchStatisticsGatherer3.finish()');
+    System.debug('in LFLBatchStatisticsGatherer4.finish()');
 
     //System.debug('updating Accounts');
     // update objList;
-    // msg += objList.size() + ' Objective records updated\n';
+    // msg += objList.size() + ' SD records updated\n';
     msg += '\nJob Completion\n-------------------\n';
-    msg += 'Summary: ' + i + ' Objective records processed\n';
+    msg += 'Summary: ' + i + ' SD records processed\n';
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     String orgname = UserInfo.getOrganizationName();
 
     mail.setToAddresses(new List<String>{ 'mburnside@salesforce.com' });
     mail.setReplyTo('batch@acme.com');
-    mail.setSenderDisplayName('Apex BatchStatisticsGatherer3');
-    mail.setSubject(orgname + ' BatchStatisticsGatherer3 completed.');
+    mail.setSenderDisplayName('Apex BatchStatisticsGatherer4');
+    mail.setSubject(orgname + ' BatchStatisticsGatherer4 completed.');
 
     mail.setPlainTextBody(msg);
 

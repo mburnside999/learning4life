@@ -11,3 +11,30 @@ Id batchInstanceId = Database.executeBatch(
       new LFLBatchStatisticsGatherer3(),
       1000
     );
+    Id batchInstanceId = Database.executeBatch(
+      new LFLBatchStatisticsGatherer2(),
+      1000
+    );
+
+      Id batchInstanceId = Database.executeBatch(
+      new LFLBatchStatisticsGatherer4(),
+      1000
+    );
+
+
+    SELECT
+        objective__r.sd__c,
+        objective__r.sd__r.Name sdname,
+        count(id) ssrecords,
+        count_distinct(session__c) sessions,
+        count_distinct(session__r.client__c) clients,
+        sum(TotalAcquiredCorrect__c) correct,
+        sum(TotalAcquiredInCorrect__c) incorrect,
+        sum(TotalAcquirednonREsponsive__c) noresponsive,
+        Sum(TotalAcquiredprompted__c) prompted
+      FROM session_Statistics__c
+      GROUP BY objective__r.sd__c, objective__r.sd__r.Name
+
+
+
+      sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable3 ApexClass:TestLFLAggregateResultIterable3 ApexClass:LFLBatchStatisticsGatherer3  ApexClass:LFLBatchStatisticsGatherer3Scheduler  ApexClass:TestLFLBatchStatisticsGatherer3Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable3 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer3Scheduler  --target-org LFLHyper -w 20
