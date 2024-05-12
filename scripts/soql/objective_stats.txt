@@ -1,6 +1,3 @@
-List<AggregateResult> lar = new List<AggregateResult>();
-lar =[select id,count_distinct(session__r.id),sum( from session_Statistics__c where objective__c='a0D5h00000JTz6fEAD']);
-System.debug(lar);
 
 
 LFLBatchStatisticsGatherer2 l = new LFLBatchStatisticsGatherer2();
@@ -21,20 +18,8 @@ Id batchInstanceId = Database.executeBatch(
       1000
     );
 
+sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable2 ApexClass:TestLFLAggregateResultIterable2 ApexClass:LFLBatchStatisticsGatherer2  ApexClass:LFLBatchStatisticsGatherer2Scheduler  ApexClass:TestLFLBatchStatisticsGatherer2Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable2 TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer2Scheduler  --target-org LFLHyper -w 20
 
-    SELECT
-        objective__r.sd__c,
-        objective__r.sd__r.Name sdname,
-        count(id) ssrecords,
-        count_distinct(session__c) sessions,
-        count_distinct(session__r.client__c) clients,
-        sum(TotalAcquiredCorrect__c) correct,
-        sum(TotalAcquiredInCorrect__c) incorrect,
-        sum(TotalAcquirednonREsponsive__c) noresponsive,
-        Sum(TotalAcquiredprompted__c) prompted
-      FROM session_Statistics__c
-      GROUP BY objective__r.sd__c, objective__r.sd__r.Name
+sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable3 ApexClass:TestLFLAggregateResultIterable3 ApexClass:LFLBatchStatisticsGatherer3  ApexClass:LFLBatchStatisticsGatherer3Scheduler  ApexClass:TestLFLBatchStatisticsGatherer3Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable3 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer3Scheduler  --target-org LFLHyper -w 20
 
-
-
-      sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable3 ApexClass:TestLFLAggregateResultIterable3 ApexClass:LFLBatchStatisticsGatherer3  ApexClass:LFLBatchStatisticsGatherer3Scheduler  ApexClass:TestLFLBatchStatisticsGatherer3Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable3 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer3Scheduler  --target-org LFLHyper -w 20
+sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable4 ApexClass:TestLFLAggregateResultIterable4 ApexClass:LFLBatchStatisticsGatherer4  ApexClass:LFLBatchStatisticsGatherer4Scheduler  ApexClass:TestLFLBatchStatisticsGatherer4Scheduler --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable4 TestLFLBatchStatisticsGatherer4 TestLFLBatchStatisticsGatherer4Scheduler --target-org LFLPARTIAL -w 20
