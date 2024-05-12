@@ -105,7 +105,7 @@ jobs:
           TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler  TestLFLTreeUtil TestLFLBatchStatisticsGatherer 
           TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer4 TestLFLBatchStatisticsGatherer2Scheduler TestLFLBatchStatisticsGatherer3Scheduler TestLFLBatchStatisticsGatherer4Scheduler TestLFLBatchStatisticsGathererScheduler 
           TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 TestLFLAggregateResultIterable3  TestLFLAggregateResultIterable4 LFLAggregateResultIterator 
-          TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler -w 20
+          TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler  -w 20
       # Run Deploy LWC
       - name: "Deploy LWC"
         run: sf project deploy start --metadata LightningComponentBundle --target-org LFLHyperPARTIAL
@@ -114,6 +114,7 @@ jobs:
       - name: "Run Specifed Apex Tests to Gather Code Coverage"
         run: >
           sf apex run test --test-level  RunSpecifiedTests 
+          --tests --test-level RunSpecifiedTests 
           --tests TestL4LController  
           TestL4LSessionStatsController TestL4LSDStageMap TestLFLUtil TestLFLSDWrapper  
           TestL4LTimeSeries TestL4LTimeSeriesScheduler TestLFLClientObjectiveHelper  
@@ -126,7 +127,7 @@ jobs:
           TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler  TestLFLTreeUtil TestLFLBatchStatisticsGatherer 
           TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer4 TestLFLBatchStatisticsGatherer2Scheduler TestLFLBatchStatisticsGatherer3Scheduler TestLFLBatchStatisticsGatherer4Scheduler TestLFLBatchStatisticsGathererScheduler 
           TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 TestLFLAggregateResultIterable3  TestLFLAggregateResultIterable4 LFLAggregateResultIterator 
-          TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler 
+          TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler  
           --target-org LFLHyperPARTIAL --code-coverage --result-format human --output-dir ./tests/apex -w 20
       # Delete temporary test file that Codecov is unable to parse
       #- name: "Delete coverage file (temporary step)"
