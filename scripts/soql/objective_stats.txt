@@ -19,7 +19,7 @@ Id batchInstanceId = Database.executeBatch(
     );
 
 
-//commands to deploy LFL statistics APEX classes to SFDC
+//commands to deploy statistics APEX classes to SFDC
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable2 ApexClass:TestLFLAggregateResultIterable2 ApexClass:LFLBatchStatisticsGatherer2  ApexClass:LFLBatchStatisticsGatherer2Scheduler  ApexClass:TestLFLBatchStatisticsGatherer2Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable2 TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer2Scheduler  --target-org LFPARTIAL -w 20
 
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable3 ApexClass:TestLFLAggregateResultIterable3 ApexClass:LFLBatchStatisticsGatherer3  ApexClass:LFLBatchStatisticsGatherer3Scheduler  ApexClass:TestLFLBatchStatisticsGatherer3Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable3 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer3Scheduler  --target-org LFLPARTIAL -w 20
