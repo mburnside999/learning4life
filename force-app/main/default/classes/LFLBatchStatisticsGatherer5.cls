@@ -11,7 +11,7 @@
 global class LFLBatchStatisticsGatherer5 implements Database.Batchable<AggregateResult>, Database.Stateful {
   Integer i = 0;
   integer batch = 0;
-  String msg = 'SD Statistics Generation\n--------------------------------------\n';
+  String msg = 'Program Statistics Generation\n--------------------------------------\n';
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
     msg += '\nBatches\n-----------\n';
     return new LFLAggregateResultIterable5();
