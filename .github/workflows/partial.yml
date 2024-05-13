@@ -103,8 +103,8 @@ jobs:
           TestTrgUniqueObjectivePerClientObjective  TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler 
           TestLFLDTDRates TestLFLDTDRateMaster  TestLFLInvocableListUnusedObj TestL4LStagesByArea  
           TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler  TestLFLTreeUtil TestLFLBatchStatisticsGatherer 
-          TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer4 TestLFLBatchStatisticsGatherer2Scheduler TestLFLBatchStatisticsGatherer3Scheduler TestLFLBatchStatisticsGatherer4Scheduler TestLFLBatchStatisticsGathererScheduler 
-          TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 TestLFLAggregateResultIterable3  TestLFLAggregateResultIterable4 LFLAggregateResultIterator 
+          TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer4 TestLFLBatchStatisticsGatherer2Scheduler TestLFLBatchStatisticsGatherer3Scheduler TestLFLBatchStatisticsGatherer4Scheduler TestLFLBatchStatisticsGatherer5 TestLFLBatchStatisticsGatherer5Scheduler TestLFLBatchStatisticsGathererScheduler 
+          TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 TestLFLAggregateResultIterable3  TestLFLAggregateResultIterable4 TestLFLAggregateResultIterable5 LFLAggregateResultIterator 
           TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler  -w 20
       # Run Deploy LWC
       - name: "Deploy LWC"
@@ -125,8 +125,8 @@ jobs:
           TestTrgUniqueObjectivePerClientObjective  TestLFLTimeSeriesBatch TestLFLTimeSeriesBatchScheduler 
           TestLFLDTDRates TestLFLDTDRateMaster  TestLFLInvocableListUnusedObj TestL4LStagesByArea  
           TestLFLTSBatchUtil TestLFLTSBatchUtilScheduler  TestLFLTreeUtil TestLFLBatchStatisticsGatherer 
-          TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer4 TestLFLBatchStatisticsGatherer2Scheduler TestLFLBatchStatisticsGatherer3Scheduler TestLFLBatchStatisticsGatherer4Scheduler TestLFLBatchStatisticsGathererScheduler 
-          TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 TestLFLAggregateResultIterable3  TestLFLAggregateResultIterable4 LFLAggregateResultIterator 
+          TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer4 TestLFLBatchStatisticsGatherer5 TestLFLBatchStatisticsGatherer2Scheduler TestLFLBatchStatisticsGatherer3Scheduler TestLFLBatchStatisticsGatherer4Scheduler TestLFLBatchStatisticsGatherer5Scheduler TestLFLBatchStatisticsGathererScheduler 
+          TestLFLAggregateResultIterable TestLFLAggregateResultIterable2 TestLFLAggregateResultIterable3  TestLFLAggregateResultIterable4 TestLFLAggregateResultIterable5 LFLAggregateResultIterator 
           TestLFLLoginBannerController TestLFLBackupUtil TestLFLBackupUtilScheduler  
           --target-org LFLHyperPARTIAL --code-coverage --result-format human --output-dir ./tests/apex -w 20
       # Delete temporary test file that Codecov is unable to parse
