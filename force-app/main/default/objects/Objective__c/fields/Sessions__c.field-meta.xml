@@ -3,6 +3,7 @@
     <fullName>Sessions__c</fullName>
     <externalId>false</externalId>
     <label>Sessions</label>
+    <inlineHelpText>The total number of Sessions associated with this Objective. Calculated by Stats Gatherer.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

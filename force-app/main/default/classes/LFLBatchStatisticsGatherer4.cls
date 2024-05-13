@@ -35,7 +35,8 @@ global class LFLBatchStatisticsGatherer4 implements Database.Batchable<Aggregate
       Decimal nonresponsive = (Decimal) ar.get('noresponsive');
       Decimal sessions = (Decimal) ar.get('sessions');
       Decimal clients = (Decimal) ar.get('clients');
-
+      Date earliest_session_date = (Date) ar.get('earliest_session_date');
+      Date latest_session_date = (Date) ar.get('latest_session_date');
       Decimal score =
         (Decimal) (correct / (correct + incorrect + prompted + nonresponsive)) *
         100;
@@ -77,6 +78,9 @@ global class LFLBatchStatisticsGatherer4 implements Database.Batchable<Aggregate
       sd.Total_Responses__c = Integer.valueOf(
         correct + incorrect + prompted + nonresponsive
       );
+      sd.Earliest_Session_Date__c = earliest_session_date;
+      sd.Latest_Session_Date__c = latest_session_date;
+
       // a.No_Of_Closed_sessions__c = sessions;
       // a.acq_rate__c = acqRate;
       // a.first_session__c = mindate;

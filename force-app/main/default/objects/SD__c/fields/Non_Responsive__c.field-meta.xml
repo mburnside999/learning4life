@@ -3,6 +3,7 @@
     <fullName>Non_Responsive__c</fullName>
     <externalId>false</externalId>
     <label>Non Responsive</label>
+    <inlineHelpText>The total number of Non-Responsive interactions. Calculated by Stats Gatherer.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

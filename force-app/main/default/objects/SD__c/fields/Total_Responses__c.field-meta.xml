@@ -4,6 +4,7 @@
     </fullName>
     <externalId>false</externalId>
     <label>Total Responses</label>
+    <inlineHelpText>The total number of responses across all Clients for this SD. Calculated by Stats Gatherer.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

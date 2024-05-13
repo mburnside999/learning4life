@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Incorrect
     </label>
+    <inlineHelpText>The total number of Incorrect responses. Calculated by Stats Gatherer.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

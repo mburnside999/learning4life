@@ -1,5 +1,22 @@
 
 
+SELECT
+        objective__c,
+        objective__r.name objname,
+        count(id) ssrecords,
+        count_distinct(session__c) sessions,
+        count_distinct(session__r.client__c) clients,
+        sum(TotalAcquiredCorrect__c) correct,
+        sum(TotalAcquiredInCorrect__c) incorrect,
+        sum(TotalAcquirednonREsponsive__c) noresponsive,
+        Sum(TotalAcquiredprompted__c) prompted,
+        Min(session__r.Date__c) firstsession,
+        Max(session__r.Date__c) latestsession
+      FROM session_Statistics__c
+      WHERE objective__c != NULL
+      GROUP BY objective__c, objective__r.name
+      limit 300
+
 LFLBatchStatisticsGatherer2 l = new LFLBatchStatisticsGatherer2();
 ID batchprocessid = Database.executeBatch(l);
 

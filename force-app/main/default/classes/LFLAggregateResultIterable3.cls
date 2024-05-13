@@ -10,7 +10,9 @@ public class LFLAggregateResultIterable3 implements Iterable<AggregateResult> {
         sum(TotalAcquiredCorrect__c) correct,
         sum(TotalAcquiredInCorrect__c) incorrect,
         sum(TotalAcquirednonREsponsive__c) noresponsive,
-        Sum(TotalAcquiredprompted__c) prompted
+        Sum(TotalAcquiredprompted__c) prompted,
+        Min(Session__r.Date__c) earliest_session_date,
+        Max(Session__r.Date__c) latest_session_date
       FROM session_Statistics__c
       WHERE objective__c != NULL
       GROUP BY objective__c, objective__r.name
