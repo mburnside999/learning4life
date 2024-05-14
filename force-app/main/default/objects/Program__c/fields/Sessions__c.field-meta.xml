@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Sessions__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The total number of Sessions associated with this Program. Calculated by Stats Gatherer.</inlineHelpText>
     <label>Sessions</label>
-    <inlineHelpText>The total number of Sessions associated with this Objective. Calculated by Stats Gatherer.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

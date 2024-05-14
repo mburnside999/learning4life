@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SD_Count__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The Total number of SDs in this Program. Calculated by Formula.</inlineHelpText>
     <label>SD Count</label>
     <summaryForeignKey>SD__c.Program__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>

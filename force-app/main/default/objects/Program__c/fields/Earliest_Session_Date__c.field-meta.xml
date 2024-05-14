@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Earliest_Session_Date__c</fullName>
     <externalId>false</externalId>
-    <inlineHelpText>The earliest date of a Session that tested this objective. Calculated by Stats Gatherer.</inlineHelpText>
+    <inlineHelpText>The earliest date of a Session that tested an objective in this Program. Calculated by Stats Gatherer.</inlineHelpText>
     <label>Earliest Session Date</label>
     <required>false</required>
     <trackHistory>false</trackHistory>

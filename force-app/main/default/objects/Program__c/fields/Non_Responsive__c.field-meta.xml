@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Non_Responsive__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The total number of Non-Responsive responses for Objectives associated with this Program. Calculated by Stats Gatherer.</inlineHelpText>
     <label>Non Responsive</label>
-    <inlineHelpText>The total number of Non-Responsive responses. Calculated by Stats Gatherer.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

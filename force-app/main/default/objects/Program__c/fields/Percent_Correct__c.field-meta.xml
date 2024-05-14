@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Percent_Correct__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The overall Percent Correct of objectives tested in this Program. Calculated by Stats Gatherer.</inlineHelpText>
     <label>Percent Correct</label>
-    <inlineHelpText>The overall Percent Correct. Calculated by Stats Gatherer.</inlineHelpText>
     <precision>8</precision>
     <required>false</required>
     <scale>2</scale>

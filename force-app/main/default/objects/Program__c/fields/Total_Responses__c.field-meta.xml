@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Total_Responses__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>The total number of responses across all Clients for this Program. Calculated by Stats Gatherer.</inlineHelpText>
     <label>Total Responses</label>
-    <inlineHelpText>The total number of responses across all Clients for this Objective. Calculated by Stats Gatherer.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
