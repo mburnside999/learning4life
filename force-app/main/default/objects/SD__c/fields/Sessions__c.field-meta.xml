@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Sessions__c</fullName>
     <externalId>false</externalId>
-    <label>Sessions</label>
     <inlineHelpText>The total number of Sessions associated with this SD. Calculated by Stats Gatherer.</inlineHelpText>
+    <label>Sessions</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

@@ -2,10 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Prompted__c</fullName>
     <externalId>false</externalId>
-    <label>Prompted
-    </label>
-    <inlineHelpText>The total number of Prompted responses. Calculated by Stats Gatherer.</inlineHelpText>
-
+    <inlineHelpText>The total number of Prompted responses for Objectives associated with this SD. Calculated by Stats Gatherer</inlineHelpText>
+    <label>Prompted</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

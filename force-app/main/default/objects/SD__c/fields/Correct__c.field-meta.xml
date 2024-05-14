@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Correct__c</fullName>
     <externalId>false</externalId>
-    <inlineHelpText>The total number of Correct responses. Calculated by Stats Gatherer</inlineHelpText>
+    <inlineHelpText>The total number of Correct responses for Objectives associated with this SD. Calculated by Stats Gatherer</inlineHelpText>
     <label>Correct</label>
     <precision>18</precision>
     <required>false</required>
