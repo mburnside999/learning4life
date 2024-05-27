@@ -1,0 +1,2 @@
+SELECT Active__c, Client_Name__c, Date_Absorbed__c, Date_Acquired__c, Date_CIP__c, Date_Introduced__c, Last_Tested__c
+  FROM Client_Objective__c

@@ -42,6 +42,12 @@ Id batchInstanceId = Database.executeBatch(
 
 
 //commands to deploy my APEX classes to SFDC
+
+
+
+sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable ApexClass:TestLFLAggregateResultIterable ApexClass:LFLBatchStatisticsGatherer ApexClass:TestLFLBatchStatisticsGatherer ApexClass:LFLBatchStatisticsGathererScheduler  ApexClass:TestLFLBatchStatisticsGathererScheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable TestLFLBatchStatisticsGatherer TestLFLBatchStatisticsGathererScheduler  --target-org LFLPARTIAL -w 20
+
+
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable2 ApexClass:TestLFLAggregateResultIterable2 ApexClass:LFLBatchStatisticsGatherer2  ApexClass:LFLBatchStatisticsGatherer2Scheduler  ApexClass:TestLFLBatchStatisticsGatherer2Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable2 TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer2Scheduler  --target-org LFPARTIAL -w 20
 
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable3 ApexClass:TestLFLAggregateResultIterable3 ApexClass:LFLBatchStatisticsGatherer3  ApexClass:LFLBatchStatisticsGatherer3Scheduler  ApexClass:TestLFLBatchStatisticsGatherer3Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable3 TestLFLBatchStatisticsGatherer3 TestLFLBatchStatisticsGatherer3Scheduler  --target-org LFLPARTIAL -w 20
@@ -49,3 +55,13 @@ sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable3 Apex
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable4 ApexClass:TestLFLAggregateResultIterable4 ApexClass:LFLBatchStatisticsGatherer4  ApexClass:LFLBatchStatisticsGatherer4Scheduler  ApexClass:TestLFLBatchStatisticsGatherer4Scheduler --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable4 TestLFLBatchStatisticsGatherer4 TestLFLBatchStatisticsGatherer4Scheduler --target-org LFLPARTIAL -w 20
 @gatherer5
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable5 ApexClass:TestLFLAggregateResultIterable5 ApexClass:LFLBatchStatisticsGatherer5 ApexClass:TestLFLBatchStatisticsGatherer5  ApexClass:LFLBatchStatisticsGatherer5Scheduler  ApexClass:TestLFLBatchStatisticsGatherer5Scheduler --test-level RunSpecifiedTests --tests ApexClass:TestLFLAggregateResultIterable5 TestLFLBatchStatisticsGatherer5 TestLFLBatchStatisticsGatherer5Scheduler --target-org LFLPARTIAL -w 20
+
+
+sf project deploy start --metadata ApexClass:L4LSessionStatsController ApexClass:TestL4LSessionStatsController  --test-level RunSpecifiedTests  --tests   TestL4LSessionStatsController   --target-org LFLPARTIAL -w 20
+
+
+
+Id batchInstanceId = Database.executeBatch(
+      new LFLBatchStatisticsGatherer(),
+      1000
+    );

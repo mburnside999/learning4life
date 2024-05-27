@@ -86,7 +86,25 @@
       </supportedFormFactors>
     </targetConfig>
     <targetConfig targets="lightningCommunity__Default">
-      <property name="recordId" type="String" default="{!Route.recordId}" />
+      <property name="recordId" type="String" default="{!recordId}" />
+      <property
+        name="lwcTitle"
+        type="String"
+        default="Client Objectives Timeseries"
+        label="Enter a LWC title"
+      />
+      <property
+        name="chartTitle"
+        type="String"
+        default="Objective Status Vs. Time"
+        label="Enter a chart title"
+      />
+      <property
+        name="chartSubTitle"
+        type="String"
+        default="Refreshed Sunday @10pm"
+        label="Enter a chart sub-title"
+      />
     </targetConfig>
   </targetConfigs>
 </LightningComponentBundle>

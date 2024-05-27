@@ -1,0 +1,13 @@
+for (aggregateresult ar: [select min(ts_load_datetime__c) mind,max(ts_load_datetime__c) maxd,client__r.lastname lastname,client_objective__c,status__c status from client_objective_timeseries__c where  client__r.lastname='ASH' and status__c!= null  group by client__r.lastname,client_objective__c,status__c order by client__r.lastname,client_objective__c,min(ts_load_datetime__c)]) {
+
+Datetime mindt = (DateTime)ar.get('mind');
+Datetime maxdt = (DateTime)ar.get('maxd');
+String status=(String)ar.get('status');
+String client=(String) ar.get('lastname');
+String coi=(String)ar.get('client_objective__c');
+Date startdate=mindt.Date();
+Date enddate=maxdt.Date();
+Integer duration=startdate.daysBetween(enddate);
+System.debug('client '+client+' co + '+coi+' status '+status+' startdate '+startdate+' enddate '+enddate+' duration '+duration);
+
+}

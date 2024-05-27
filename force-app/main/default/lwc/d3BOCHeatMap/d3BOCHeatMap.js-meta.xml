@@ -8,6 +8,8 @@
     <target>lightning__AppPage</target>
     <target>lightning__RecordPage</target>
     <target>lightning__HomePage</target>
+    <target>lightningCommunity__Page</target>
+    <target>lightningCommunity__Default</target>
 
   </targets>
   <targetConfigs>
@@ -83,6 +85,26 @@
         <supportedFormFactor type="Large" />
       </supportedFormFactors>
     </targetConfig>
-
+    <targetConfig targets="lightningCommunity__Default">
+      <property name="recordId" type="String" default="{!Route.recordId}" />
+      <property
+          name="lwcTitle"
+          type="String"
+          default="Client BOC"
+          label="Enter a LWC title"
+      />
+      <property
+          name="chartTitle"
+          type="String"
+          default="Behaviours of Concern Vs. Sessions"
+          label="Enter a chart title"
+      />
+      <property
+          name="chartSubTitle"
+          type="String"
+          default="BoC Subtitle"
+          label="Enter a chart subtitle"
+      />
+  </targetConfig>
   </targetConfigs>
 </LightningComponentBundle>

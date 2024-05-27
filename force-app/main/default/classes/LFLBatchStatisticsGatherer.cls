@@ -10,24 +10,35 @@
 
 global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateResult>, Database.Stateful {
   Integer i = 0;
-  String msg;
-  Map<String, Date> tslogdates = new Map<String, Date>();
+  Integer batch = 0;
+
+  String msg = 'Client Objective Last Tested/Last Tested Correct Generation\n----------------------------------------------------------------------------\n';
+
+  Map<String, client_objective__c> coObjectivesMap;
+  Map<Id, Map<String, client_objective__c>> coClientMap;
 
   List<Account> accountList = new List<Account>();
 
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
-    for (TimeSeries_Log__c tsl : [
-      SELECT name, ts_log_datetime__c
-      FROM timeseries_log__c
+    coObjectivesMap = new Map<String, client_objective__c>();
+    coClientMap = new Map<Id, Map<String, client_objective__c>>();
+    for (client_objective__c co : [
+      SELECT
+        id,
+        client__c,
+        objective__c,
+        name,
+        last_tested__c,
+        last_tested_correct__c
+      FROM client_objective__c
+      ORDER BY lastmodifieddate DESC
+      LIMIT 50000
     ]) {
-      Date d = Date.newInstance(
-        tsl.ts_log_datetime__c.year(),
-        tsl.ts_log_datetime__c.month(),
-        tsl.ts_log_datetime__c.day()
-      );
-      tslogdates.put(tsl.name, d);
+      String key = co.objective__c + '-' + co.client__c;
+      coObjectivesMap.put(key, co);
+      coClientMap.put(co.client__c, coObjectivesMap);
     }
-
+    msg += '\nBatches\n-----------\n';
     return new LFLAggregateResultIterable();
   }
 
@@ -36,76 +47,105 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
     List<AggregateResult> scope
   ) {
     AggregateResult[] results = (AggregateResult[]) scope;
+    batch = batch + 1;
+    Map<id, client_objective__c> updatesToCOMap = new Map<id, client_objective__c>();
 
-    for (AggregateResult ar : scope) {
-      i = i + 1;
+    for (AggregateResult ar : results) {
       String client = (String) ar.get('client');
-      Account a = new Account(Id = client);
-      Date startd = (Date) tslogdates.get((String) ar.get('minRunId'));
-      Date endd = (Date) tslogdates.get((String) ar.get('maxRunId'));
-      Decimal elapsed = startd.daysBetween(endd) / 7;
-      elapsed += 1;
-      System.debug(
-        'client= ' +
-          client +
-          ' startd' +
-          startd +
-          ' - ' +
-          endd +
-          ' = ' +
-          elapsed +
-          'weeks'
-      );
-      Integer distinctClients = (Integer) ar.get('distinctClients');
-      Integer distinctCOs = (Integer) ar.get('distinctCOs');
-      System.debug(' clients=' + distinctClients + ' cos=' + distinctCOs);
-      //calculate acq/client/week
-      Decimal acqRate = 0;
-      if (elapsed > 0) {
-        acqRate = (Decimal) (distinctCOs / distinctClients / elapsed);
-      } else {
-        acqRate = 0;
-      }
-      a.ACQ_Rate__c = acqRate;
-      accountList.add(a);
+      DateTime dt = (DateTime) ar.get('modifieddate');
+      Date modifieddate = (Date) dt.Date();
+      Boolean correct = (Boolean) ar.get('correct');
 
-      System.debug('Program: ' + client + ', acqRate: ' + acqRate.setScale(2));
+      String objective = (String) ar.get('objective');
+
+      if (!coClientMap.keySet().contains(client)) {
+        continue;
+      }
+
+      Map<String, client_objective__c> coObjectiveMap = (Map<String, client_objective__c>) coClientMap.get(
+        client
+      );
+      //System.debug('coObjetiveMap=>' + coObjectiveMap);
+      System.debug(
+        'SO Query==> modifieddate=' +
+          modifieddate +
+          ' objective=' +
+          objective +
+          ' correct=' +
+          correct
+      );
+
+      String key = objective + '-' + client;
+      //System.debug('key==>' + key);
+      if (coObjectiveMap.containsKey(key)) {
+        //protect against a CO that was deleted whilst it already had SO references
+        Client_Objective__c co = (client_objective__c) coObjectiveMap.get(key);
+        //System.debug('co===>' + co);
+        if (!updatesToCOMap.keySet().contains(co.Id)) {
+          System.debug('** new co for updatesToCOMap');
+
+          if (correct) {
+            System.debug('** Correct! **');
+            System.debug('setting last_tested_correct to ' + modifieddate);
+            co.last_tested_correct__c = modifieddate;
+          }
+          co.last_tested__c = modifieddate;
+          System.debug('new, proposed ' + co);
+          updatesToCOMap.put(co.Id, co);
+        } else {
+          System.debug('** existing co for updatesToCOMap');
+
+          Client_Objective__c co1 = (client_objective__c) updatesToCOMap.get(
+            co.Id
+          );
+          if (modifieddate >= co1.last_tested__c) {
+            co1.last_tested__c = modifieddate;
+          }
+          if (correct) {
+            System.debug(
+              '*** correct:' +
+                correct +
+                ' co1.bltc: ' +
+                co1.last_tested_correct__c
+            );
+            co1.last_tested_correct__c = modifieddate;
+          }
+          System.debug('existing, proposed ' + co1);
+          updatesToCOMap.put(co1.Id, co1);
+        }
+      }
+    }
+    System.debug(
+      '***** update map size ====> ' + updatesToCOMap.keySet().size()
+    );
+    if (!updatesToCOMap.isEmpty()) {
+      i += updatesToCOMap.keySet().size();
+      update updatesToCOMap.values();
       msg +=
-        'Earliest: ' +
-        ar.get('minRunId') +
-        ', Latest: ' +
-        ar.get('maxRunId') +
-        +', Elapsed: ' +
-        elapsed +
-        ' weeks, Client: ' +
-        client +
-        ', distinctCOs: ' +
-        distinctCOs +
-        ', AcqRate: ' +
-        acqRate.setScale(2) +
-        '\n';
-      //   // Process each result here as needed
+        'Batch: ' +
+        batch +
+        ': ' +
+        updatesToCOMap.keySet().size() +
+        ' Client Objective records updated\n';
     }
   }
 
   global void finish(Database.BatchableContext bc) {
     System.debug('in LFLBatchStatisticsGatherer.finish()');
 
-    System.debug('updating Accounts');
-
-    if (!Test.isRunningTest()) {
-      update accountList;
-    }
+    System.debug('updating Client Objectives');
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     String orgname = UserInfo.getOrganizationName();
+    msg += '\nJob Completion\n-------------------\n';
+    msg += 'Summary: ' + i + ' Client Objective records processed\n';
 
     mail.setToAddresses(new List<String>{ 'mburnside@salesforce.com' });
     mail.setReplyTo('batch@acme.com');
-    mail.setSenderDisplayName('Stats Batch Processing');
+    mail.setSenderDisplayName('Last Tested Stats Batch Processing');
     mail.setSubject(orgname + ' Stats completed');
 
-    mail.setPlainTextBody('Successfully processed ' + i + ' records\n' + msg);
+    mail.setPlainTextBody(msg);
 
     Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ mail });
   }

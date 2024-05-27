@@ -1,4 +1,4 @@
-Boolean updateRecords = false;
+Boolean updateRecords = true;
 integer i;
 String currentmax;
 for (AggregateResult ar : [

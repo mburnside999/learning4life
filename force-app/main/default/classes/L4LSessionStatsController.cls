@@ -1227,7 +1227,10 @@ public with sharing class L4LSessionStatsController {
       SCENARIO,
       'next-gen-nebula-apex'
     );
-
+    //quick fix to All problem
+    if (periodStr == 'All') {
+      periodStr = '1000';
+    }
     //first retrieve all the sesssions for this period
     String querySessionString = 'SELECT Id, Name, Date__c FROM Session__c ';
     querySessionString += ' WHERE client__c = :clientId ';

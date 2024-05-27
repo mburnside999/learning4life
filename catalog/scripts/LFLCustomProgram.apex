@@ -1,4 +1,4 @@
-Boolean updateRecords = false;
+Boolean updateRecords = true;
 integer i;
 String currentmax;
 for (AggregateResult ar : [
@@ -11,17 +11,17 @@ for (AggregateResult ar : [
   i = Integer.valueOf(currentmax.substringAfterLast('-')) + 1;
 }
 
-System.debug('Current MAX SDID=' + currentmax);
+System.debug('Current MAX PID=' + currentmax);
 System.debug(
   'Next integer to be assigned=' +
     i +
-    ', sequence would start at LFL-SD-' +
+    ', sequence would start at LFL-P-' +
     String.valueOf(i).leftPad(6, '0')
 );
 
 List<Program__c> listprog = new List<Program__c>();
 for (Program__c sd : [SELECT id, PID__c FROM Program__c WHERE PID__c = NULL]) {
-  String formattedPID = 'LFL-SD-' + String.valueOf(i).leftPad(6, '0');
+  String formattedPID = 'LFL-P-' + String.valueOf(i).leftPad(6, '0');
   sd.PID__c = formattedPID;
   listprog.add(sd);
   System.debug('New PID = ' + formattedPID);
