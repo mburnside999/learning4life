@@ -41,11 +41,31 @@ Id batchInstanceId = Database.executeBatch(
 
 
 
+    SELECT
+    session__r.client__c client,
+    objective__c objective,
+    correct__c correct,
+    max(createddate) createddate,
+    max(session__r.name) sessionname,
+    count(id) tests,
+    count_distinct(session__r.id) sessions
+  FROM session_obj__c
+  WHERE session__r.status__c = 'Closed' AND 
+   createddate=LAST_N_DAYS:14
+   and objective__c='a088t000000Ds6AAAS'
+  GROUP BY session__r.client__c, objective__c, correct__c
+  ORDER BY objective__c, correct__c, max(createddate)
+  LIMIT 5000
+
+
+
 //commands to deploy my APEX classes to SFDC
 
 
 
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable ApexClass:TestLFLAggregateResultIterable ApexClass:LFLBatchStatisticsGatherer ApexClass:TestLFLBatchStatisticsGatherer ApexClass:LFLBatchStatisticsGathererScheduler  ApexClass:TestLFLBatchStatisticsGathererScheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable TestLFLBatchStatisticsGatherer TestLFLBatchStatisticsGathererScheduler  --target-org LFLPARTIAL -w 20
+
+sf project deploy start    --metadata ApexTrigger:trgUpdateDateSinceCorrect ApexClass:TestDaysSinceUpdatedTrg --test-level RunSpecifiedTests  --tests  TestDaysSinceUpdatedTrg  --target-org LFLPARTIAL -w 20
 
 
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable2 ApexClass:TestLFLAggregateResultIterable2 ApexClass:LFLBatchStatisticsGatherer2  ApexClass:LFLBatchStatisticsGatherer2Scheduler  ApexClass:TestLFLBatchStatisticsGatherer2Scheduler    --test-level RunSpecifiedTests  --tests ApexClass:TestLFLAggregateResultIterable2 TestLFLBatchStatisticsGatherer2 TestLFLBatchStatisticsGatherer2Scheduler  --target-org LFPARTIAL -w 20
@@ -65,3 +85,30 @@ Id batchInstanceId = Database.executeBatch(
       new LFLBatchStatisticsGatherer(),
       1000
     );
+
+Map<String,Session__c> sessmap = new Map<String,Session__c>();
+for (Session__c s: [select id,name,date__c from session__c]) {
+sessmap.put(s.name,s);
+}
+
+   for (aggregateresult ar :[ SELECT
+        session__r.client__c client,
+        objective__c objective,
+        correct__c correct,
+        max(lastmodifieddate) modifieddate,
+        max(session__r.name)
+      FROM session_obj__c
+      WHERE
+         session__r.status__c = 'Closed'
+      GROUP BY session__r.client__c, objective__c, correct__c
+      ORDER BY objective__c
+      limit 500]) {
+      System.debug(ar);
+String  session = (String) ar.get('expr0');
+Datetime d=(Datetime) ar.get('modifieddate');
+System.debug('Date '+d+' session--->'+sessmap.get(session));
+}
+
+
+
+      

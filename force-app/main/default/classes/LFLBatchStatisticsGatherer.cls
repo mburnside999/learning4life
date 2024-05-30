@@ -16,10 +16,14 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
 
   Map<String, client_objective__c> coObjectivesMap;
   Map<Id, Map<String, client_objective__c>> coClientMap;
-
+  Map<String, Session__c> sessmap;
   List<Account> accountList = new List<Account>();
 
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
+    sessmap = new Map<String, Session__c>();
+    for (Session__c s : [SELECT id, name, date__c FROM session__c]) {
+      sessmap.put(s.name, s);
+    }
     coObjectivesMap = new Map<String, client_objective__c>();
     coClientMap = new Map<Id, Map<String, client_objective__c>>();
     for (client_objective__c co : [
@@ -29,9 +33,13 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
         objective__c,
         name,
         last_tested__c,
-        last_tested_correct__c
+        last_tested_correct__c,
+        last_tested_session__c,
+        last_tested_session_name__c,
+        last_tested_correct_session__c,
+        last_tested_correct_session_name__c
       FROM client_objective__c
-      ORDER BY lastmodifieddate DESC
+      ORDER BY createddate DESC
       LIMIT 50000
     ]) {
       String key = co.objective__c + '-' + co.client__c;
@@ -52,11 +60,13 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
 
     for (AggregateResult ar : results) {
       String client = (String) ar.get('client');
-      DateTime dt = (DateTime) ar.get('modifieddate');
-      Date modifieddate = (Date) dt.Date();
+      DateTime dt = (DateTime) ar.get('createddate');
+      Date createddate = (Date) dt.Date();
       Boolean correct = (Boolean) ar.get('correct');
+      String sessionname = (String) ar.get('sessionname');
 
       String objective = (String) ar.get('objective');
+      String sessionId = sessmap.get(sessionname).Id;
 
       if (!coClientMap.keySet().contains(client)) {
         continue;
@@ -67,8 +77,8 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
       );
       //System.debug('coObjetiveMap=>' + coObjectiveMap);
       System.debug(
-        'SO Query==> modifieddate=' +
-          modifieddate +
+        'SO Query==> createddate=' +
+          createddate +
           ' objective=' +
           objective +
           ' correct=' +
@@ -82,14 +92,24 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
         Client_Objective__c co = (client_objective__c) coObjectiveMap.get(key);
         //System.debug('co===>' + co);
         if (!updatesToCOMap.keySet().contains(co.Id)) {
-          System.debug('** new co for updatesToCOMap');
-
           if (correct) {
             System.debug('** Correct! **');
-            System.debug('setting last_tested_correct to ' + modifieddate);
-            co.last_tested_correct__c = modifieddate;
+
+            co.last_tested_correct__c = createddate;
+            co.last_tested_correct_session__c = sessionId;
+            co.last_tested_correct_session_name__c = sessionname;
+
+            if (
+              co.last_tested_correct__c == null ||
+              co.last_tested_correct__c > co.last_tested__c ||
+              co.last_tested_correct_session_name__c >
+              co.last_tested_session_name__c
+            ) {
+              co.last_tested__c = createddate;
+              co.last_tested_session__c = sessionId;
+              co.last_tested_session_name__c = sessionname;
+            }
           }
-          co.last_tested__c = modifieddate;
           System.debug('new, proposed ' + co);
           updatesToCOMap.put(co.Id, co);
         } else {
@@ -98,18 +118,45 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
           Client_Objective__c co1 = (client_objective__c) updatesToCOMap.get(
             co.Id
           );
-          if (modifieddate >= co1.last_tested__c) {
-            co1.last_tested__c = modifieddate;
+          //if (sessionname >= co1.last_tested_session_name__c) {
+          System.debug('getting co1 from updatesToCOMap');
+          System.debug('setting last tested fields');
+
+          if (!correct) {
+            co1.last_tested__c = createddate;
+            co1.last_tested_session__c = sessionId;
+            co1.last_tested_session_name__c = sessionname;
+            if (
+              co1.last_tested_correct__c == null ||
+              co1.last_tested_correct__c > co1.last_tested__c ||
+              co1.last_tested_correct_session_name__c >
+              co1.last_tested_session_name__c
+            ) {
+              co1.last_tested__c = createddate;
+              co1.last_tested_session__c = sessionId;
+              co1.last_tested_session_name__c = sessionname;
+            }
           }
+
           if (correct) {
-            System.debug(
-              '*** correct:' +
-                correct +
-                ' co1.bltc: ' +
-                co1.last_tested_correct__c
-            );
-            co1.last_tested_correct__c = modifieddate;
+            System.debug('** Correct! **');
+
+            co1.last_tested_correct__c = createddate;
+            co1.last_tested_correct_session__c = sessionId;
+            co1.last_tested_correct_session_name__c = sessionname;
+
+            if (
+              co1.last_tested_correct__c == null ||
+              co1.last_tested_correct__c > co.last_tested__c ||
+              co1.last_tested_correct_session_name__c >
+              co1.last_tested_session_name__c
+            ) {
+              co1.last_tested__c = createddate;
+              co1.last_tested_session__c = sessionId;
+              co1.last_tested_session_name__c = sessionname;
+            }
           }
+
           System.debug('existing, proposed ' + co1);
           updatesToCOMap.put(co1.Id, co1);
         }

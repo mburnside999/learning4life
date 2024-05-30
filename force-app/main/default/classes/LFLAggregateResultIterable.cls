@@ -5,11 +5,10 @@ public class LFLAggregateResultIterable implements Iterable<AggregateResult> {
         session__r.client__c client,
         objective__c objective,
         correct__c correct,
-        max(lastmodifieddate) modifieddate
+        max(createddate) createddate,
+        max(session__r.name) sessionname
       FROM session_obj__c
-      WHERE
-        lastmodifieddate = LAST_N_DAYS:14
-        AND session__r.status__c = 'Closed'
+      WHERE createddate = LAST_N_DAYS:14 AND session__r.status__c = 'Closed'
       GROUP BY session__r.client__c, objective__c, correct__c
       ORDER BY objective__c
     ];

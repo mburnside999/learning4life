@@ -1,5 +1,11 @@
 Map<Id, Map<String, client_objective__c>> coClientMap = new Map<Id, Map<String, client_objective__c>>();
 Map<String, client_objective__c> coObjectivesMap = new Map<String, client_objective__c>();
+
+Map<String, Session__c> sessmap = new Map<String, Session__c>();
+for (Session__c s : [SELECT id, name, date__c FROM session__c]) {
+  sessmap.put(s.name, s);
+}
+
 for (client_objective__c co : [
   SELECT
     id,
@@ -7,7 +13,11 @@ for (client_objective__c co : [
     objective__c,
     name,
     last_tested__c,
-    last_tested_correct__c
+    last_tested_correct__c,
+    last_tested_session__c,
+    last_tested_session_name__c,
+    last_tested_correct_session__c,
+    last_tested_correct_session_name__c
   FROM client_objective__c
   ORDER BY name
   LIMIT 50000
@@ -26,22 +36,23 @@ for (AggregateResult ar : [
     session__r.client__c client,
     objective__c objective,
     correct__c correct,
-    max(lastmodifieddate) modifieddate
+    max(createddate) createddate,
+    max(session__r.name) sessionname
   FROM session_obj__c
-  WHERE
-    lastmodifieddate < 2023-12-31T00:00:00Z
-    AND lastmodifieddate >= 2023-11-01T00:00:00Z
-    AND session__r.status__c = 'Closed'
+  WHERE session__r.status__c = 'Closed' AND 
+   createddate<=2022-12-31T00:00:00Z
   GROUP BY session__r.client__c, objective__c, correct__c
-  ORDER BY objective__c
-  LIMIT 2000
+  ORDER BY objective__c, correct__c, max(createddate)
+  LIMIT 5000
 ]) {
   String client = (String) ar.get('client');
-  DateTime dt = (DateTime) ar.get('modifieddate');
-  Date modifieddate = (Date) dt.Date();
+  DateTime dt = (DateTime) ar.get('createddate');
+  Date createddate = (Date) dt.Date();
   Boolean correct = (Boolean) ar.get('correct');
-
+  String sessionname = (String) ar.get('sessionname');
   String objective = (String) ar.get('objective');
+
+  String sessionId = sessmap.get(sessionname).Id;
 
   if (!coClientMap.keySet().contains(client)) {
     continue;
@@ -51,8 +62,8 @@ for (AggregateResult ar : [
   );
   //System.debug('coObjetiveMap=>' + coObjectiveMap);
   System.debug(
-    'SO Query==> modifieddate=' +
-      modifieddate +
+    'SO Query==> max(createddate)=' +
+      createddate +
       ' objective=' +
       objective +
       ' correct=' +
@@ -68,29 +79,90 @@ for (AggregateResult ar : [
     if (!updatesToCOMap.keySet().contains(co.Id)) {
       System.debug('** new co for updatesToCOMap');
 
+      System.debug('existing field values');
+      System.debug(co);
+
+      // System.debug('populating new field values');
+      // System.debug(
+      //   'last tested: ' +
+      //     createddate +
+      //     ' last_tested_Session:' +
+      //     sessionId +
+      //     ' last_tested_session_name:' +
+      //     sessionname
+      // );
+
+      if (!correct) {
+        co.last_tested__c = createddate;
+        co.last_tested_session__c = sessionId;
+        co.last_tested_session_name__c = sessionname;
+      }
+      System.debug('proposed field values');
+      System.debug(co);
+
       if (correct) {
         System.debug('** Correct! **');
-        System.debug('setting last_tested_correct to ' + modifieddate);
-        co.last_tested_correct__c = modifieddate;
+
+        co.last_tested_correct__c = createddate;
+        co.last_tested_correct_session__c = sessionId;
+        co.last_tested_correct_session_name__c = sessionname;
+
+        if (
+          co.last_tested_correct__c == null ||
+          co.last_tested_correct__c > co.last_tested__c ||
+          co.last_tested_correct_session_name__c >
+          co.last_tested_session_name__c
+        ) {
+          co.last_tested__c = createddate;
+          co.last_tested_session__c = sessionId;
+          co.last_tested_session_name__c = sessionname;
+        }
       }
-      co.last_tested__c = modifieddate;
       System.debug('new, proposed ' + co);
       updatesToCOMap.put(co.Id, co);
     } else {
       System.debug('** existing co for updatesToCOMap');
 
       Client_Objective__c co1 = (client_objective__c) updatesToCOMap.get(co.Id);
-      if (modifieddate >= co1.last_tested__c) {
-        co1.last_tested__c = modifieddate;
+      //if (sessionname >= co1.last_tested_session_name__c) {
+      System.debug('getting co1 from updatesToCOMap');
+      System.debug('setting last tested fields');
+
+      if (!correct) {
+        co1.last_tested__c = createddate;
+        co1.last_tested_session__c = sessionId;
+        co1.last_tested_session_name__c = sessionname;
+        if (
+          co1.last_tested_correct__c == null ||
+          co1.last_tested_correct__c > co1.last_tested__c ||
+          co1.last_tested_correct_session_name__c >
+          co1.last_tested_session_name__c
+        ) {
+          co1.last_tested__c = createddate;
+          co1.last_tested_session__c = sessionId;
+          co1.last_tested_session_name__c = sessionname;
+        }
       }
+
       if (correct) {
-        //   && ((modifieddate >= co1.last_tested_correct__c) ||
-        //   (co1.last_tested_correct__c == null))
-        System.debug(
-          '*** correct:' + correct + ' co1.bltc: ' + co1.last_tested_correct__c
-        );
-        co1.last_tested_correct__c = modifieddate;
+        System.debug('** Correct! **');
+
+        co1.last_tested_correct__c = createddate;
+        co1.last_tested_correct_session__c = sessionId;
+        co1.last_tested_correct_session_name__c = sessionname;
+
+        if (
+          co1.last_tested_correct__c == null ||
+          co1.last_tested_correct__c > co.last_tested__c ||
+          co1.last_tested_correct_session_name__c >
+          co1.last_tested_session_name__c
+        ) {
+          co1.last_tested__c = createddate;
+          co1.last_tested_session__c = sessionId;
+          co1.last_tested_session_name__c = sessionname;
+        }
       }
+
       System.debug('existing, proposed ' + co1);
       updatesToCOMap.put(co1.Id, co1);
     }
@@ -99,11 +171,5 @@ for (AggregateResult ar : [
 System.debug('***** update map size ====> ' + updatesToCOMap.keySet().size());
 if (!updatesToCOMap.isEmpty()) {
   System.debug('updating');
-  //update updatesToCOMap.values();
+  update updatesToCOMap.values();
 }
-
-// Id batchInstanceId = Database.executeBatch(
-//       new LFLBatchStatisticsGatherer(),
-//       1000
-//     );
-

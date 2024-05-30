@@ -127,6 +127,11 @@ public with sharing class LFLPopulateTestData {
       Status__c = 'HLD',
       Active__c = true,
       last_tested__c = Date.today(),
+      last_tested_correct__c = Date.today(),
+      last_tested_correct_session_name__c = 'AAA',
+      last_tested_session_name__c = 'AAAA',
+      last_tested_session__c = null,
+      last_tested_correct_session__c = null,
       Objective__c = o1.Id,
       Client_Objective_Notes__c = 'client objective notes'
     );
@@ -136,6 +141,11 @@ public with sharing class LFLPopulateTestData {
       Client__c = newAccount.Id,
       Status__c = 'OBJ',
       last_tested__c = Date.today(),
+      last_tested_correct__c = Date.today(),
+      last_tested_correct_session_name__c = 'AAA',
+      last_tested_session_name__c = 'AAAA',
+      last_tested_session__c = null,
+      last_tested_correct_session__c = null,
       Active__c = true,
       Objective__c = o2.Id,
       Client_Objective_Notes__c = 'client objective notes'
@@ -146,6 +156,11 @@ public with sharing class LFLPopulateTestData {
       Client__c = newAccount.Id,
       Status__c = 'ACQ',
       last_tested__c = Date.today(),
+      last_tested_correct__c = Date.today(),
+      last_tested_correct_session_name__c = 'AAA',
+      last_tested_session_name__c = 'AAAA',
+      last_tested_session__c = null,
+      last_tested_correct_session__c = null,
       Active__c = true,
       Objective__c = o3.Id,
       Client_Objective_Notes__c = 'client objective notes'
@@ -156,6 +171,11 @@ public with sharing class LFLPopulateTestData {
       Client__c = newAccount.Id,
       Status__c = 'CIP',
       last_tested__c = Date.today(),
+      last_tested_correct__c = Date.today(),
+      last_tested_correct_session_name__c = 'AAA',
+      last_tested_session_name__c = 'AAAA',
+      last_tested_session__c = null,
+      last_tested_correct_session__c = null,
       Active__c = true,
       Objective__c = o4.Id,
       Client_Objective_Notes__c = 'client objective notes'
@@ -305,6 +325,12 @@ public with sharing class LFLPopulateTestData {
     so4.Objective__c = o4.Id;
     so4.nonresponsive__c = true;
     insert so4;
+
+    Session_Obj__c so5 = new Session_Obj__c();
+    so5.Session__c = session.Id;
+    so5.Objective__c = o4.Id;
+    so5.correct__c = true;
+    insert so5;
 
     //fake up some session stats
 

@@ -4,22 +4,18 @@
     <columns>Client__c</columns>
     <columns>NAME</columns>
     <columns>Objective__c</columns>
-    <columns>Program_Name__c</columns>
-    <columns>SD_Name__c</columns>
-    <columns>Status__c</columns>
-    <columns>Frequency__c</columns>
     <columns>Days_Since_Tested_Correct__c</columns>
     <columns>Last_Tested_Correct__c</columns>
-    <columns>Re_Test_Recommended__c</columns>
     <columns>Last_Tested__c</columns>
     <columns>LAST_UPDATE</columns>
     <columns>Batch_Last_Tested__c</columns>
     <columns>Batch_Last_Tested_Correct__c</columns>
+    <columns>Last_Tested_Correct_Session__c</columns>
+    <columns>Last_Tested_Session__c</columns>
+    <columns>Last_Tested_Correct_Session_Name__c</columns>
+    <columns>Last_Tested_Session_Name__c</columns>
+    <columns>Last_Tested_Session_Link__c</columns>
+    <columns>Last_Tested_Correct_Session_Link__c</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>Client__c</field>
-        <operation>contains</operation>
-        <value>Peterson</value>
-    </filters>
     <label>All</label>
 </ListView>
