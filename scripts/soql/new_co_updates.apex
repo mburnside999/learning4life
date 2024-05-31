@@ -17,7 +17,8 @@ for (client_objective__c co : [
     last_tested_session__c,
     last_tested_session_name__c,
     last_tested_correct_session__c,
-    last_tested_correct_session_name__c
+    last_tested_correct_session_name__c,
+    stats_timestamp__c
   FROM client_objective__c
   ORDER BY name
   LIMIT 50000
@@ -39,8 +40,10 @@ for (AggregateResult ar : [
     max(createddate) createddate,
     max(session__r.name) sessionname
   FROM session_obj__c
-  WHERE session__r.status__c = 'Closed' AND 
-   createddate<=2022-12-31T00:00:00Z
+  WHERE
+    session__r.status__c = 'Closed'
+    AND createddate > 2023-12-01T00:00:00Z
+    AND createddate <= 2023-12-31T00:00:00Z
   GROUP BY session__r.client__c, objective__c, correct__c
   ORDER BY objective__c, correct__c, max(createddate)
   LIMIT 5000
@@ -119,6 +122,7 @@ for (AggregateResult ar : [
         }
       }
       System.debug('new, proposed ' + co);
+      co.stats_timestamp__c = DateTime.now();
       updatesToCOMap.put(co.Id, co);
     } else {
       System.debug('** existing co for updatesToCOMap');
@@ -164,6 +168,7 @@ for (AggregateResult ar : [
       }
 
       System.debug('existing, proposed ' + co1);
+      co1.stats_timestamp__c = DateTime.now();
       updatesToCOMap.put(co1.Id, co1);
     }
   }

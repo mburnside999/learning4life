@@ -1,0 +1,24 @@
+<aura:component
+  implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,flexipage:availableForAllPageTypes"
+>
+  <!-- This attribute saves the record ID -->
+
+  <aura:attribute name="SessionObject" type="Object" />
+  <aura:attribute name="recordLoadError" type="String" />
+  <aura:attribute name="clientId" type="String"/>
+
+  <force:recordData
+    aura:id="record"
+    recordId="{!v.recordId}"
+    fields="Client__c"
+    targetFields="{!v.SessionObject}"
+    targetError="{!v.recordLoadError}"
+    recordUpdated="{!c.doInit}"
+  />
+      <ltng:require styles="{!$Resource.popupCSS}" />
+
+    <c:d3HeatMap
+    recordId="{!v.clientId}"
+    onclose="{!c.closeMethodInAuraController}"
+  />
+</aura:component>

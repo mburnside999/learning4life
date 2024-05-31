@@ -16,8 +16,8 @@ const UI_EVENT_TRACKING_SCENARIO = "LWC UI: d3HeatMap";
 const APEX_EVENT_TRACKING_SCENARIO = "LWC Apex: d3HeatMap";
 export default class D3HeatMap extends LightningElement {
   @api lwcTitle = "Client Program Mastery";
-  @api chartTitle = "D3 Chart";
-  @api chartSubTitle = "D3 Chart";
+  @api chartTitle = "Results Vs. Sessions ";
+  @api chartSubTitle = "Colour Key: Red <50%, Yellow <90%, Red >= 90% ";
 
   low = 50;
   high = 90; //actual values come from custom metadata

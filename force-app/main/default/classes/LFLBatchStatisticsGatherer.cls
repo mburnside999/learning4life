@@ -37,7 +37,8 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
         last_tested_session__c,
         last_tested_session_name__c,
         last_tested_correct_session__c,
-        last_tested_correct_session_name__c
+        last_tested_correct_session_name__c,
+        stats_timestamp__c
       FROM client_objective__c
       ORDER BY createddate DESC
       LIMIT 50000
@@ -111,6 +112,7 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
             }
           }
           System.debug('new, proposed ' + co);
+          co.stats_timestamp__c = DateTime.now();
           updatesToCOMap.put(co.Id, co);
         } else {
           System.debug('** existing co for updatesToCOMap');
@@ -158,6 +160,7 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
           }
 
           System.debug('existing, proposed ' + co1);
+          co1.stats_timestamp__c = DateTime.now();
           updatesToCOMap.put(co1.Id, co1);
         }
       }
