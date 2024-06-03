@@ -5,7 +5,18 @@
 
   <aura:attribute name="SessionObject" type="Object" />
   <aura:attribute name="recordLoadError" type="String" />
-  <aura:attribute name="clientId" type="String"/>
+  <aura:attribute name="clientId" type="String" />
+  <div class="c-container">
+    <lightning:layout>
+      <lightning:layoutItem size="12" class="slds-text-align_right">
+        <lightning:button
+          variant="base"
+          label="Close"
+          onclick="{!c.closeAll}"
+        />
+      </lightning:layoutItem>
+    </lightning:layout>
+  </div>
 
   <force:recordData
     aura:id="record"
@@ -15,10 +26,21 @@
     targetError="{!v.recordLoadError}"
     recordUpdated="{!c.doInit}"
   />
-      <ltng:require styles="{!$Resource.popupCSS}" />
+  <ltng:require styles="{!$Resource.popupCSS}" />
 
-    <c:d3HeatMap
+  <c:d3HeatMap
     recordId="{!v.clientId}"
     onclose="{!c.closeMethodInAuraController}"
   />
+  <div class="c-container">
+    <lightning:layout>
+      <lightning:layoutItem size="12" class="slds-text-align_right">
+        <lightning:button
+          variant="base"
+          label="Close"
+          onclick="{!c.closeAll}"
+        />
+      </lightning:layoutItem>
+    </lightning:layout>
+  </div>
 </aura:component>

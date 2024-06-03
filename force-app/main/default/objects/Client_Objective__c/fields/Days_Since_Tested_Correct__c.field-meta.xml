@@ -6,6 +6,7 @@
     <formula>IF(NOT(ISNULL(Last_Tested_Correct__c)), today()-Last_Tested_Correct__c, null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Days Since Tested Correct</label>
+    <inlineHelpText>Number of elapsed days since this objective tested Correct.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

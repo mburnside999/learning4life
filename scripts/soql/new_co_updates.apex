@@ -42,8 +42,9 @@ for (AggregateResult ar : [
   FROM session_obj__c
   WHERE
     session__r.status__c = 'Closed'
-    AND createddate > 2023-12-01T00:00:00Z
-    AND createddate <= 2023-12-31T00:00:00Z
+    AND createddate > 2024-02-28T00:00:00Z
+    AND createddate <= 2024-03-04T00:00:00Z
+    and objective__c='a095h00000g1YccAAE'
   GROUP BY session__r.client__c, objective__c, correct__c
   ORDER BY objective__c, correct__c, max(createddate)
   LIMIT 5000

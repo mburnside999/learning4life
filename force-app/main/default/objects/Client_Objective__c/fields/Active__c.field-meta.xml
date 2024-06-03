@@ -4,6 +4,7 @@
     <defaultValue>true</defaultValue>
     <externalId>false</externalId>
     <label>Active</label>
+    <inlineHelpText>Only Active client objectives are available as DTDs during sessions.</inlineHelpText>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>

@@ -112,3 +112,18 @@ System.debug('Date '+d+' session--->'+sessmap.get(session));
 
 
       
+ SELECT
+    session__r.client__c client,
+    objective__c objective,
+    correct__c correct,
+    max(createddate) createddate,
+    max(session__r.name) sessionname
+  FROM session_obj__c
+  WHERE
+    session__r.status__c = 'Closed'
+    and objective__c='a0D5h00000K4vJ8EAJ'
+  GROUP BY session__r.client__c, objective__c, correct__c
+  ORDER BY objective__c, correct__c, max(createddate)
+
+
+  select name,correct__c,session__r.date__c,session__r.client__r.lastname,session__c from session_obj__c where objective__c='a0D5h00000K4vJ8EAJ'

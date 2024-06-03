@@ -11,6 +11,7 @@
 0)==1, ispickval(Status__c,&quot;ACQ&quot;),Active__c==true)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Re-Test Recommended</label>
+    <inlineHelpText>Based on the Frequency and Days Since Tested Correct, indicates whether this field should be re-tested.</inlineHelpText>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>

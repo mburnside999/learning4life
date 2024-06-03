@@ -5,6 +5,7 @@
     <formula>IF(NOT(ISNULL(Last_Tested__c)), today()-Last_Tested__c, null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Days Since Tested</label>
+    <inlineHelpText>Number of elapsed days since this objective was tested.</inlineHelpText>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

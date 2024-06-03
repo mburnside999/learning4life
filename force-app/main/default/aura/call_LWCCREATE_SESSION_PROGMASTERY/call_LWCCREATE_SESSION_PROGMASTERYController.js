@@ -9,6 +9,9 @@
 
     console.log(JSON.stringify(component.get("v.SessionObject")));
     var clientId = component.get("v.SessionObject").Client__c;
-    component.set("v.clientId",clientId);
+    component.set("v.clientId", clientId);
+  },
+  closeAll: function (component, event, helper) {
+    $A.get("e.force:closeQuickAction").fire();
   }
 });

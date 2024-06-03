@@ -3,6 +3,7 @@
     <fullName>Last_Tested__c</fullName>
     <externalId>false</externalId>
     <label>Last Tested</label>
+    <inlineHelpText>Date of the last time this objective was tested.</inlineHelpText>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
