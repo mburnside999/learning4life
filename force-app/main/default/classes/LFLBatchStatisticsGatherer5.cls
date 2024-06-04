@@ -12,7 +12,16 @@ global class LFLBatchStatisticsGatherer5 implements Database.Batchable<Aggregate
   Integer i = 0;
   integer batch = 0;
   String msg = 'Program Statistics Generation\n--------------------------------------\n';
+  LFL_Statistics_Gatherer_Log__c lflsgl = new LFL_Statistics_Gatherer_Log__c();
+
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
+    // write a gatherer log entry
+    lflsgl.LFLSG_Class__c = 'LFLBatchStatisticsGatherer5';
+    lflsgl.LFLSG_Objective__c = 'Update Program session counts, C/I/N/P totals and percentages';
+    lflsgl.LFLSG_Status__c = 'Processing';
+    insert lflsgl;
+    //
+
     msg += '\nBatches\n-----------\n';
     return new LFLAggregateResultIterable5();
   }
@@ -124,6 +133,10 @@ global class LFLBatchStatisticsGatherer5 implements Database.Batchable<Aggregate
     // msg += objList.size() + ' SD records updated\n';
     msg += '\nJob Completion\n-------------------\n';
     msg += 'Summary: ' + i + ' Program records processed\n';
+
+    lflsgl.LFLSG_Status__c = 'Success';
+    lflsgl.LFLSG_Message__c = 'Updated ' + i + ' Program records';
+    update lflsgl;
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     String orgname = UserInfo.getOrganizationName();

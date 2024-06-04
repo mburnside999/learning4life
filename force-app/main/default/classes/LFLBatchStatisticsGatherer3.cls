@@ -12,8 +12,16 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
   Integer i = 0;
   integer batch = 0;
   String msg = 'Objective Statistics Generation\n--------------------------------------\n';
+  LFL_Statistics_Gatherer_Log__c lflsgl = new LFL_Statistics_Gatherer_Log__c();
 
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
+    // write a gatherer log entry
+    lflsgl.LFLSG_Class__c = 'LFLBatchStatisticsGatherer3';
+    lflsgl.LFLSG_Objective__c = 'Update Objective session counts, C/I/N/P totals and percentages';
+    lflsgl.LFLSG_Status__c = 'Processing';
+    insert lflsgl;
+    //
+
     msg += '\nBatches\n-----------\n';
     return new LFLAggregateResultIterable3();
   }
@@ -124,6 +132,12 @@ global class LFLBatchStatisticsGatherer3 implements Database.Batchable<Aggregate
     //System.debug('updating Accounts');
     // update objList;
     // msg += objList.size() + ' Objective records updated\n';
+
+    // write a gatherer log entry
+    lflsgl.LFLSG_Status__c = 'Success';
+    lflsgl.LFLSG_Message__c = 'Updated ' + i + ' Objective records';
+    update lflsgl;
+
     msg += '\nJob Completion\n-------------------\n';
     msg += 'Summary: ' + i + ' Objective records processed\n';
 

@@ -18,8 +18,16 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
   Map<Id, Map<String, client_objective__c>> coClientMap;
   Map<String, Session__c> sessmap;
   List<Account> accountList = new List<Account>();
+  LFL_Statistics_Gatherer_Log__c lflsgl = new LFL_Statistics_Gatherer_Log__c();
 
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
+    // write a gatherer log entry
+    lflsgl.LFLSG_Class__c = 'LFLBatchStatisticsGatherer';
+    lflsgl.LFLSG_Objective__c = 'Update CO with Last Tested/Correct DTD dates';
+    lflsgl.LFLSG_Status__c = 'Processing';
+    insert lflsgl;
+    //
+
     sessmap = new Map<String, Session__c>();
     for (Session__c s : [SELECT id, name, date__c FROM session__c]) {
       sessmap.put(s.name, s);
@@ -182,8 +190,12 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
 
   global void finish(Database.BatchableContext bc) {
     System.debug('in LFLBatchStatisticsGatherer.finish()');
-
     System.debug('updating Client Objectives');
+
+    // write a gatherer log entry
+    lflsgl.LFLSG_Status__c = 'Success';
+    lflsgl.LFLSG_Message__c = 'Updated ' + i + ' Client Objective records';
+    update lflsgl;
 
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     String orgname = UserInfo.getOrganizationName();

@@ -16,7 +16,7 @@ SELECT
       GROUP BY objective__r.sd__r.program__c, objective__r.sd__r.program__r.Name
       limit 10
 
-LFLBatchStatisticsGatherer2 l = new LFLBatchStatisticsGatherer2();
+LFLBatchStatisticsGatherer l = new LFLBatchStatisticsGatherer();
 ID batchprocessid = Database.executeBatch(l);
 
 

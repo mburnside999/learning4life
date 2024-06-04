@@ -16,7 +16,17 @@ global class LFLBatchStatisticsGatherer2 implements Database.Batchable<Aggregate
 
   Map<Id, Integer> comap = new Map<Id, Integer>();
   List<AggregateResult> coagglist = new List<AggregateResult>();
+
+  LFL_Statistics_Gatherer_Log__c lflsgl = new LFL_Statistics_Gatherer_Log__c();
+
   global Iterable<AggregateResult> start(Database.BatchableContext bc) {
+    // write a gatherer log entry
+    lflsgl.LFLSG_Class__c = 'LFLBatchStatisticsGatherer2';
+    lflsgl.LFLSG_Objective__c = 'Update Client ACQ weekly/session rates/counts,elapsed weeks';
+    lflsgl.LFLSG_Status__c = 'Processing';
+    insert lflsgl;
+    //
+
     msg += '\nBatches\n-----------\n';
     coagglist = [
       SELECT client__c client, client__r.lastname lastname, count(ID) cos
@@ -122,12 +132,17 @@ global class LFLBatchStatisticsGatherer2 implements Database.Batchable<Aggregate
     msg += '\nJob Completion\n-------------------\n';
     msg += 'Summary: ' + i + ' Client records processed\n';
 
+    // write a gatherer log entry
+    lflsgl.LFLSG_Status__c = 'Success';
+    lflsgl.LFLSG_Message__c = 'Updated ' + i + ' Client records';
+    update lflsgl;
+
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     String orgname = UserInfo.getOrganizationName();
 
     mail.setToAddresses(new List<String>{ 'mburnside@salesforce.com' });
     mail.setReplyTo('batch@acme.com');
-    mail.setSenderDisplayName('Apex BatchStatisticsGatherer2');
+    mail.setSenderDisplayName('Apex LFBatchStatisticsGatherer2');
     mail.setSubject(orgname + ' BatchStatisticsGatherer2 completed.');
 
     mail.setPlainTextBody(msg);
