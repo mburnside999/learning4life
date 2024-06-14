@@ -10,6 +10,14 @@
       onchange={handleSearchKeyInput}
     >
     </lightning-input>
+    <br />
+    <lightning-input
+      type="checkbox"
+      name="showretest"
+      label="NEW! Filter Re-Test Due"
+      onchange={handleRetestCheckbox}
+    >
+    </lightning-input>
     <div class="c-container">
       <lightning-layout multiple-rows="true">
         <lightning-layout-item padding="around-small" size="12">
@@ -20,7 +28,7 @@
                 or, write your own Comment (these are applied to last item
                 recorded).
               </div> -->
-              <br />
+              <!-- <br /> -->
               <!-- <lightning-button  label="+C" onclick={handleIncrCorrect}></lightning-button>-->
               <!--<lightning-button  label="+I" onclick={handleIncrIncorrect}></lightning-button>-->
               <!--<lightning-button  label="+P" onclick={handleIncrPrompted}></lightning-button>-->

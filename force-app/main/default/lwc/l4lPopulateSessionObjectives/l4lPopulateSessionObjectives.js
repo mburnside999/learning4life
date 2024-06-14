@@ -59,6 +59,11 @@ const columns = [
     label: "Re-Test Due",
     fieldName: "Re_Test_Recommended__c",
     type: "boolean"
+  },
+  {
+    label: "Days Since Correct",
+    fieldName: "Days_Since_Tested_Correct__c",
+    type: "number"
   }
 ];
 
@@ -73,7 +78,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   @track columns = columns;
   @track recordsProcessed = 0;
   @track objectives;
-
+  @track objectivesSnapshot;
   @track correctCount = 0;
   @track nonResponsiveCount = 0;
   @track incorrectCount = 0;
@@ -84,6 +89,8 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   @track results = [];
   @track sessionresults = [];
   @track skillstring = [];
+
+  @track showRetestedOnly = false;
 
   @track soArray = [];
   rendered = false;
@@ -173,6 +180,7 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     })
       .then((result) => {
         this.objectives = result;
+        this.objectivesSnapshot = result;
 
         logDebug(
           this.recordId,
@@ -738,14 +746,21 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
   handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
 
-    this.objectives = this.filterableObjectives.filter(
-      (so) =>
-        so.Program_Name__c.toLowerCase().includes(searchKey) ||
-        (so.Status__c != null &&
-          so.Status__c.toLowerCase().includes(searchKey)) ||
-        so.SD_Name__c.toLowerCase().includes(searchKey) ||
-        so.Objective_Name__c.toLowerCase().includes(searchKey)
-    );
+    this.objectives = this.objectivesSnapshot =
+      this.filterableObjectives.filter((so) => {
+        console.log(
+          "boolean " + so.Re_Test_Recommended__c || !this.showRetestedOnly
+        );
+
+        return (
+          so.Program_Name__c.toLowerCase().includes(searchKey) ||
+          (so.Status__c != null &&
+            so.Status__c.toLowerCase().includes(searchKey)) ||
+          so.SD_Name__c.toLowerCase().includes(searchKey) ||
+          so.Objective_Name__c.toLowerCase().includes(searchKey)
+          // &&(so.Re_Test_Recommended__c || !this.showRetestedOnly)
+        );
+      });
 
     logDebug(
       this.recordId,
@@ -802,5 +817,19 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
     }
 
     console.log("========>" + this.commentValue);
+  }
+
+  handleRetestCheckbox(event) {
+    this.objectives = this.objectivesSnapshot;
+    if (event.target.checked == true) {
+      console.log("Checked");
+      this.showRetestedOnly = true;
+      this.objectives = this.objectives.filter(
+        (so) => so.Re_Test_Recommended__c == true
+      );
+    } else {
+      console.log("Unchecked");
+      this.showRetestedOnly = false;
+    }
   }
 }
