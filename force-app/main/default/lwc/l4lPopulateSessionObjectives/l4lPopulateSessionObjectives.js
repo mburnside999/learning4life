@@ -745,13 +745,16 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   handleSearchKeyInput(event) {
     const searchKey = event.target.value.toLowerCase();
+    console.log("searchKey=>" + searchKey + "<=");
+    if (searchKey.length == 0) {
+      console.log("setting null");
+      this.template.querySelector(
+        'lightning-input[data-name="showretest"]'
+      ).checked = false;
+    }
 
     this.objectives = this.objectivesSnapshot =
       this.filterableObjectives.filter((so) => {
-        console.log(
-          "boolean " + so.Re_Test_Recommended__c || !this.showRetestedOnly
-        );
-
         return (
           so.Program_Name__c.toLowerCase().includes(searchKey) ||
           (so.Status__c != null &&
@@ -821,11 +824,19 @@ export default class L4lPopulateSessionObjectives extends LightningElement {
 
   handleRetestCheckbox(event) {
     this.objectives = this.objectivesSnapshot;
+
+    console.log("Sorted?");
+
+    console.log(JSON.stringify(this.objectives));
+
     if (event.target.checked == true) {
       console.log("Checked");
       this.showRetestedOnly = true;
       this.objectives = this.objectives.filter(
         (so) => so.Re_Test_Recommended__c == true
+      );
+      this.objectives.sort((a, b) =>
+        b.Days_Since_Tested_Correct__c > a.Days_Since_Tested_Correct__c ? 1 : -1
       );
     } else {
       console.log("Unchecked");
