@@ -101,6 +101,24 @@ global class LFLBatchStatisticsGatherer implements Database.Batchable<AggregateR
         Client_Objective__c co = (client_objective__c) coObjectiveMap.get(key);
         //System.debug('co===>' + co);
         if (!updatesToCOMap.keySet().contains(co.Id)) {
+          if (!correct) {
+            co.last_tested__c = createddate;
+            co.last_tested_session__c = sessionId;
+            co.last_tested_session_name__c = sessionname;
+
+            if (
+              co.last_tested_correct__c > co.last_tested__c ||
+              co.last_tested_correct_session_name__c >
+              co.last_tested_session_name__c
+            ) {
+              co.last_tested__c = co.last_tested_correct__c;
+              co.last_tested_session__c = co.last_tested_correct_session__c;
+              co.last_tested_session_name__c = co.last_tested_correct_session_name__c;
+            }
+          }
+          System.debug('proposed field values');
+          System.debug(co);
+
           if (correct) {
             System.debug('** Correct! **');
 

@@ -14,7 +14,7 @@ public class LFLAggregateResultIterable3 implements Iterable<AggregateResult> {
         Min(Session__r.Date__c) earliest_session_date,
         Max(Session__r.Date__c) latest_session_date
       FROM session_Statistics__c
-      WHERE objective__c != NULL
+      WHERE objective__c != NULL AND lastmodifieddate = LAST_N_DAYS:500
       GROUP BY objective__c, objective__r.name
     ];
     return new LFLAggregateResultIterator(aggresults);
