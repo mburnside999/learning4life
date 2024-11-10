@@ -799,6 +799,12 @@ export default class L4lRelatedClientObjectives extends LightningElement {
       case "Mark OBJ":
         mode = "OBJ";
         break;
+      case "Mark ABS":
+        mode = "ABS";
+        break;
+      case "Mark HLD":
+        mode = "HLD";
+        break;
       case "Activate":
         mode = "Activate";
         break;

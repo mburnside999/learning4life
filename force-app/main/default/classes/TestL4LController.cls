@@ -832,12 +832,18 @@ private class TestL4LController {
       LIMIT 1
     ];
     Integer noOfCOsSet = 0;
+
     String val = 'ACQ';
     String jsonstr = JSON.serialize(cobjs);
-
     noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
     System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
     val = 'OBJ';
+    noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
+    System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
+    val = 'ABS';
+    noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
+    System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
+    val = 'HLD';
     noOfCOsSet = L4LController.setClientObjectivesByArray(jsonstr, val);
     System.assert(noOfCOsSet >= 0, 'Expected CO attribute to be set');
     val = 'WEEKLY';

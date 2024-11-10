@@ -49,3 +49,13 @@ System.debug(results);
 String s =L4LSessionStatsController.generateD3BOCJson('0018t000002vfSfAAI','30');
 System.debug(s);
 
+SELECT count(id) FROM Session_Obj__c 
+SELECT count(id),min(createddate),max(createddate) FROM Session_Obj__c where createddate<=last_year
+SELECT count(id),min(createddate),max(createddate) FROM Session_Obj__c group by calendar_quarter(createddate)
+SELECT count(id) FROM Session_Obj__c where session__r.client__r.name >= 'A' and session__r.client__r.name < 'G'
+SELECT count(id) FROM Session_Obj__c where session__r.client__r.name >= 'G' and session__r.client__r.name < 'Q'
+SELECT count(id) FROM Session_Obj__c where session__r.client__r.name >= 'q' 
+
+
+
+SELECT id, Title, createddate,ContentSize FROM ContentDocument WHERE Title LIKE '%BACKUP%' AND FileExtension = 'zip' 

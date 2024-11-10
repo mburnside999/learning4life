@@ -1663,6 +1663,20 @@ public with sharing class L4LController {
             recsUpdated += 1;
           }
         }
+        when 'ABS' {
+          if (co.Active__c == true) {
+            co.Status__c = 'ABS';
+            updCOList.add(co);
+            recsUpdated += 1;
+          }
+        }
+        when 'HLD' {
+          if (co.Active__c == true) {
+            co.Status__c = 'HLD';
+            updCOList.add(co);
+            recsUpdated += 1;
+          }
+        }
         when 'WEEKLY' {
           if (co.Active__c == true) {
             co.Frequency__c = 'Weekly';

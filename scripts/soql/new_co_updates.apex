@@ -42,9 +42,7 @@ for (AggregateResult ar : [
   FROM session_obj__c
   WHERE
     session__r.status__c = 'Closed'
-    AND createddate > 2024-02-28T00:00:00Z
-    AND createddate <= 2024-03-04T00:00:00Z
-    and objective__c='a095h00000g1YccAAE'
+    AND session__r.client__r.lastname in ('EMB','ELI','CSM','AKRf')
   GROUP BY session__r.client__c, objective__c, correct__c
   ORDER BY objective__c, correct__c, max(createddate)
   LIMIT 5000
@@ -100,6 +98,16 @@ for (AggregateResult ar : [
         co.last_tested__c = createddate;
         co.last_tested_session__c = sessionId;
         co.last_tested_session_name__c = sessionname;
+
+        if (
+          co.last_tested_correct__c > co.last_tested__c ||
+          co.last_tested_correct_session_name__c >
+          co.last_tested_session_name__c
+        ) {
+          co.last_tested__c = co.last_tested_correct__c;
+          co.last_tested_session__c = co.last_tested_correct_session__c;
+          co.last_tested_session_name__c = co.last_tested_correct_session_name__c;
+        }
       }
       System.debug('proposed field values');
       System.debug(co);

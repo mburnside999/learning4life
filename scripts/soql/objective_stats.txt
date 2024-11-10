@@ -76,7 +76,6 @@ sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable4 Apex
 @gatherer5
 sf project deploy start    --metadata ApexClass:LFLAggregateResultIterable5 ApexClass:TestLFLAggregateResultIterable5 ApexClass:LFLBatchStatisticsGatherer5 ApexClass:TestLFLBatchStatisticsGatherer5  ApexClass:LFLBatchStatisticsGatherer5Scheduler  ApexClass:TestLFLBatchStatisticsGatherer5Scheduler --test-level RunSpecifiedTests --tests ApexClass:TestLFLAggregateResultIterable5 TestLFLBatchStatisticsGatherer5 TestLFLBatchStatisticsGatherer5Scheduler --target-org LFLPARTIAL -w 20
 
-
 sf project deploy start --metadata ApexClass:L4LSessionStatsController ApexClass:TestL4LSessionStatsController  --test-level RunSpecifiedTests  --tests   TestL4LSessionStatsController   --target-org LFLPARTIAL -w 20
 
 
