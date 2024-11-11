@@ -12,7 +12,7 @@
  * coverage, and prevent regressions. All Apex classes are
  * required to have at least 75% code coverage in order to be deployed
  * to a production org. In addition, all triggers must have some code coverage.
- * 
+ *
  * The @isTest class annotation indicates this class only contains test
  * methods. Classes defined with the @isTest annotation do not count against
  * the org size limit for all Apex scripts.
@@ -21,18 +21,10 @@
  */
 @isTest
 private class TestLFLAggregateResultIterable {
-
-    @isTest
-    static void myUnitTest() {
-        LFLAggregateResultIterable l = new LFLAggregateResultIterable();
+  @isTest
+  static void myUnitTest() {
+    LFLAggregateResultIterable l = new LFLAggregateResultIterable();
     Iterator<aggregateresult> i = l.iterator();
-System.assert(i!=null,'iterator should have a value') ;   
+    System.assert(i != null, 'iterator should have a value');
+  }
 }
-
-
-}
-
-
-
-
-
