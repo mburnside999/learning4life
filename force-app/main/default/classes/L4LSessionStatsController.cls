@@ -630,7 +630,7 @@ public with sharing class L4LSessionStatsController {
     String clientId,
     String programStr,
     String sdStr,
-    Boolean showAcquired,
+    String statusStr,
     String periodStr,
     String stageStr,
     String therapistStr
@@ -646,8 +646,8 @@ public with sharing class L4LSessionStatsController {
         programStr +
         ' sdStr=' +
         sdStr +
-        ' showAcquired=' +
-        showAcquired +
+        ' statusStr=' +
+        statusStr +
         ' periodStr=' +
         periodStr +
         'stageStr= ' +
@@ -681,8 +681,10 @@ public with sharing class L4LSessionStatsController {
     } else {
       querySessionStatsString += ' AND objective__r.sd__r.Stage__c=:stageStr ';
     }
-    if (showAcquired) {
-      querySessionStatsString += ' AND previous_status__c = \'ACQ\' ';
+
+    if (statusStr == 'All') {
+    } else {
+      querySessionStatsString += ' AND previous_status__c  =:statusStr ';
     }
 
     if (periodStr == 'All') {
@@ -708,7 +710,7 @@ public with sharing class L4LSessionStatsController {
 
     List<Session_Statistics__c> results = new List<Session_Statistics__c>();
     results = Database.query(querySessionStatsString);
-
+    System.debug('results==>' + results);
     L4LNebulaComponentController.logDebug(
       clientId,
       'L4LSessionStatsController.getD3StatsByProgramAndSD() results=' + results,

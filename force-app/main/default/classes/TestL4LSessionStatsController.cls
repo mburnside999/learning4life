@@ -360,8 +360,8 @@ private class TestL4LSessionStatsController {
       clientId,
       'Color',
       'Identical',
-      false,
-      '180',
+      'All',
+      '500',
       'All',
       'All'
     );

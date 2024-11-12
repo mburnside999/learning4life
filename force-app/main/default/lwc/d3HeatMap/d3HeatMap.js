@@ -42,8 +42,10 @@ export default class D3HeatMap extends LightningElement {
   ];
 
   statusoptions = [
-    { label: "All", value: "false", isChecked: true },
-    { label: "ACQ", value: "true" }
+    { label: "All", value: "All", isChecked: true },
+    { label: "ACQ", value: "ACQ" },
+    { label: "OBJ", value: "OBJ" },
+    { label: "BLANK", value: "BLANK" }
   ];
 
   respondedoptions = [
@@ -87,7 +89,7 @@ export default class D3HeatMap extends LightningElement {
   therapistoptionval = "All";
   stageoptionval = "All";
   periodval = "30";
-  statusval = "false";
+  statusval = "All";
   respondedval = "true"; //true=include "N" values
 
   //the clientId from UI
@@ -176,7 +178,7 @@ export default class D3HeatMap extends LightningElement {
           sdStr: "All",
           periodStr: "30",
           stageStr: "All",
-          showAcquired: this.isSelected,
+          statusStr: "All",
           therapistStr: "All"
         }));
         console.log(_result);
@@ -807,7 +809,7 @@ export default class D3HeatMap extends LightningElement {
 
     logDebug(
       this.recordId,
-      `${COMPONENT}.composeOptions(): clientId=${this.recordId}, programStr=${programStr}, sdStr=${sdStr}, periodStr=${periodStr}, showAcquired=${statusStr}, stageStr=${stageStr}  `,
+      `${COMPONENT}.composeOptions(): clientId=${this.recordId}, programStr=${programStr}, sdStr=${sdStr}, periodStr=${periodStr}, statusStr=${statusStr}, stageStr=${stageStr}  `,
       `${SCENARIO}`,
       `${TAG}`
     );
@@ -835,7 +837,7 @@ export default class D3HeatMap extends LightningElement {
       programStr: programStr,
       sdStr: sdStr,
       periodStr: periodStr,
-      showAcquired: statusStr,
+      statusStr: statusStr,
       stageStr: stageStr,
       therapistStr: therapistStr
     })

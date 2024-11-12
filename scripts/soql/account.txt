@@ -405,7 +405,7 @@ L4LTimeSeries l = new L4LTimeSeries();
 
 
 
-
+SELECT session__r.name, session__r.client__c, session__r.client__r.name, program_name__c, objective__r.name  ,session__r.Date__c ,previous_status__c ,Percent_Correct__c,Responded_Percent_Correct__c,TotalAcquiredCorrect__c,TotalAcquiredIncorrect__c,TotalAcquiredNonResponsive__c,TotalAcquiredPrompted__c, SD_Name__c, SD_And_Objective_Str__c, session__r.Therapist_Name__c FROM Session_Statistics__c WHERE session__r.client__c = '0018t000002vfSfAAI'  AND session__r.Date__c = LAST_N_DAYS:90  ORDER BY session__r.name, objective__r.name 
 
 
   
