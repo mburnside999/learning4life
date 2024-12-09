@@ -6,7 +6,7 @@
   },
   "salesforcedx-vscode-core.show-cli-success-msg": false,
   "editor.formatOnSave": true,
-  "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home",
+  "salesforcedx-vscode-apex.java.home": "/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home",
   "prettier.enableDebugLogs": true,
   "salesforcedx-vscode-core.retrieve-test-code-coverage": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
